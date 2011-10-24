@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta name="viewport" content="height=device-height,width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;" />
+
+<title>Welcome to OHMAGE Login Page</title>
+
+<link rel="stylesheet" href="css/spinner.css" type="text/css">
+<link rel="stylesheet" href="http://m.ucla.edu/assets/css.php" type="text/css">
+
+<script type="text/javascript" src="http://m.ucla.edu/assets/js.php"></script> 
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script> 
+
+<script src="js/jquery.extensions.js" type="text/javascript"></script>
+<script src="js/api_lib.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+    //DEBUG ONLY
+    //Erase current cookie.
+    $.cookie("auth_token", null); 
+ 
+    
+    //If the authentication token already exists, redirect the user to the 
+    //campaigns view.
+    if($.cookie("auth_token") != null)
+    {   
+        document.location = 'campaigns_view.html'
+    }
+    else
+    {
+        $(document).ready(function() {
+            $("#login").click(login);           
+   	    });
+	
+    }
+   	 
+</script>
+
+    
+</head>
+<body>
+
+
+<h1 id="header"> 
+    <a href=""> 
+        <img src="img/apple_logo.png" alt="UCLA" width="30" height="30" />
+     </a> 
+    <span>Welcome to Ohmage!</span> 
+</h1> 
+
+    
+<form class="form-full form-padded">
+    
+    <h1 class="light form-first">Please Login to Proceed</h1>
+    
+    <label for="username">Username</label>
+    <input type="text" name="username" id="username" />
+    
+    <label for="password">Password</label>
+    <input type="text" name="password" id="password"/>
+    
+    <input type="button" id="login" name="submit" value="Secure Login" class="form-last" />
+    
+</form>
+
+<!--  Standard footer should be included in all pages regarding the mobile tour. -->
+<div id="footer"> 
+    <p>University of California &copy; 2010 UC Regents<br /> 
+    <a href="#">View Our Privacy Policy</a></p> 
+</div> 
+
+</body>
+</html>

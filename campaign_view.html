@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta name="viewport" content="height=device-height,width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;" />
+
+<title>Choose a Campaign to Continue</title>
+
+<link rel="stylesheet" href="css/spinner.css" type="text/css">
+<link rel="stylesheet" href="http://m.ucla.edu/assets/css.php" type="text/css">
+
+<script type="text/javascript" src="http://m.ucla.edu/assets/js.php"></script> 
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script> 
+
+<script src="js/jquery.extensions.js" type="text/javascript"></script>
+<script src="js/api_lib.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+
+     $(document).ready(function() {
+         
+         var campaignURN = $.getUrlVar('campaignURN');
+         
+         //If a specific campaign is not specified, take the user to the 
+         //campaigns view.
+         if(campaignURN == undefined)
+         {  
+             openCampaignsView();
+         }
+         
+            
+         //Attach an event listener to the top right buttion.
+         $('#button-top').click(function() {
+             openCampaignsView();
+         });
+		   
+         
+         var onSuccess = function(response)
+         {
+             
+             //Get the campaign section of the retreived JSON object.
+             var campaign = $.xml2json.parser(response.data[campaignURN].xml).campaign;
+             
+             //Get the list of surveys from the campaign.
+             var surveys  = campaign.surveys.survey;
+             
+             //If survey is returned as a single item, then go ahead and place
+             //it in an array. This is a kind of a dirty fix, if you have any 
+             //better ideas of approaching the situatin - please be my guest. 
+             if(surveys.length == undefined)
+             {
+                 surveys = [surveys];
+             }
+                 
+             
+             console.log(campaign);
+             
+             
+             var surveysMenu = $("#surveys_menu");
+             
+             //Iterate through each of the campaign's surveys and add it to the
+             //menu. 
+             for(var i = 0; i < surveys.length; i++)
+             {  
+              
+                //Create a list item for the menu.
+                var menuItem = $('<li>');
+
+                //If the list item is the last item in the menu, mark it 
+                //with menu-last class for assuring compatability. 
+                if(i == surveys.length - 1)
+                {
+                    menuItem.attr("class", "menu-last");       
+                }
+
+                //A span element describing the survey menu item.
+                var menuDesc = $('<span>');
+                menuDesc.attr("class", "smallprint");
+                menuDesc.text(surveys[i].description);
+                
+                var menuLink = $('<a>');
+                menuLink.text(surveys[i].title);
+                menuLink.attr("href", "javascript:openSurveyView(\'" + campaignURN + "\', \'" + surveys[i].id + "\')");
+                menuLink.append($('<br />'));
+                menuLink.append(menuDesc);  
+              
+                menuItem.append(menuLink);
+                
+                surveysMenu.append(menuItem);
+
+                 
+             }
+
+         }
+         
+         var onError = function(response)
+         {
+             
+         }
+         
+         downloadCampaignXMLConfig(campaignURN, onSuccess, onError);
+           
+     });
+     
+</script>
+
+    
+</head>
+<body>
+
+
+<a class="button-full button-padded" id="button-top">All Campaigns</a>
+
+<h1 id="header"> 
+    <a href=""> 
+        <img src="img/apple_logo.png" alt="OHMAGE" width="30" height="30" />
+     </a> 
+    <span>OHMAGE Campaigns</span> 
+</h1> 
+
+<div id="surveys" class="menu-full menu-detailed menu-padded">
+    <h1 class="light menu-first">Surveys</h1> 
+    
+    <ol id="surveys_menu"> 
+        <!-- AUTO GENERATED CAMPAIGN LIST -->
+    </ol>
+    
+</div>
+
+
+<!--  Standard footer should be included in all pages regarding the mobile tour. -->
+<div id="footer"> 
+    <p>University of California &copy; 2010 UC Regents<br /> 
+    <a href="#">View Our Privacy Policy</a></p> 
+</div> 
+
+</body>
+</html>
