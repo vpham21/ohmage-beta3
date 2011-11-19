@@ -1,4 +1,4 @@
-function PromptGen(promptDiv)
+function Prompt(promptDiv)
 {
     
     /**
@@ -6,7 +6,7 @@ function PromptGen(promptDiv)
     * 
     * The mapping also allows determining if a prompt type is supported.
     */
-    PromptGen.promptGenerators = 
+    Prompt.promptGenerators = 
     {
         "single_choice"        : single_choice,
         "single_choice_custom" : single_choice_custom,
@@ -27,7 +27,7 @@ function PromptGen(promptDiv)
      * @param promptType The prompt type (string) to check if it is supported.
      * @return true if the given prompt type is supported, false otherwise.
      */
-    PromptGen.isPromptSupported = function(promptType)
+    Prompt.isPromptSupported = function(promptType)
     {
         return PromptGen.promptGenerators[promptType] != undefined;
     }
@@ -131,24 +131,35 @@ function PromptGen(promptDiv)
         var contentTitle = MWFContent.createTitle(prompt.prompttext);
 
         var contentPar = $('<p>');
+        contentPar.attr("style", "text-align:center;")
        
         contentPar.html("0");
 
         contentDiv.append(contentTitle);
         contentDiv.append(contentPar);
         
-        var incCounter = function()
+        var changeCounter = function(e)
         {
             
+            if(e.currentTarget.innerHTML == '+')
+            {
+                contentPar.html(parseInt(contentPar.html()) + 1);
+            }
+            else
+            {
+                if(parseInt(contentPar.html()) > 0)
+                    {
+                        contentPar.html(parseInt(contentPar.html()) - 1);
+                    }
+            }
+            
         };
+
         
-        var decCounter = function()
-        {
-            
-        };
         
         promptDiv.append(contentDiv);
-        promptDiv.append(MWFLib.doubleButtonDiv("-", null, "+", null));
+        promptDiv.append(MWFLib.createDoubleButton("-", function(e) {changeCounter(e)}, 
+                                                   "+", function(e) {changeCounter(e)}));
         
 
     }
@@ -166,6 +177,10 @@ function PromptGen(promptDiv)
     
     function photo(prompt)
     {
-
+        
+        promptDiv.append(MWFLib.createSingleButton(prompt.prompttext, null));
     }
+    
+
+   
 }

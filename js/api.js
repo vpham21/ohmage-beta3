@@ -15,22 +15,20 @@ var AUTH_URL = '/app/user/auth_token';
 var CAMPAIGN_READ_URL = '/app/campaign/read';
 
 
-
-function login()
+function authCheck(redirectURL)
 {
-  authUser("zorayr.mwf", "zorayr.MWF1", "campaigns_view.html");
+    //If the authentication token already exists, redirect the user to the 
+    //campaigns view.
+    if($.cookie("auth_token") != null)
+    {   
+        redirect(redirectURL);
+    }
 }
-//login("zorayr.mwf", "zorayr.MWF1", "campaigns_view.html");
 
 function authUser(username, password, redirectURL)
 {
  
-    //If an authentication token is already set, then redirect the user without
-    //making an API call.
-    if($.cookie('auth_token') != null)
-    {
-        redirect(redirectURL);
-    }
+    authCheck(redirectURL);
     
     //On successful authentication, save the token in a cookie and then redirect
     //the user to the specified URL.
@@ -43,8 +41,7 @@ function authUser(username, password, redirectURL)
         redirect(redirectURL);
 
     }
-    
-
+   
     //ToDo: Use some cool display to indicate an error.
     var onError = function(response)
     {
@@ -72,84 +69,21 @@ function authUser(username, password, redirectURL)
 }
 
 
-/**
- * Retrieves and displays a list of available campaings. 
- * 
- * Campaigns that have already been downloaded will be loaded in 
- * #my_campaigns_menu and campaigns that are available to the user but are not 
- * yet downloaded will be displayed in #available_campaigns_menu. 
- * 
- * In case either available campaigns or my campaigns are empty, the div will
- * be hidden. If no campaigns are avaiable at all, then the user will be
- * notified with an appropriate message.
- * 
- * 
- */
-function loadCampaigns()
+function getCampaigns(onSuccess, onError)
 {
-    var onSuccess = function(response) {
-    			
-        var metadata = response.metadata;
-        var data     = response.data;
-
-        var availableCampaignsMenu = $("#available_campaigns_menu");
-        
-        //ToDo: This meny should contain campaigns that have been downloaded in
-        //offline storage.
-        var myCampaignsMenu        = $("#my_campaigns_menu");
-
-        //ToDo: Change this. 
-        $("#my_campaigns").hide();
-
-        for(var i = 0; i < metadata.number_of_results; i++)
-        {
-            //Campaign URN.
-            var urn = metadata.items[i];
-
-            //Create a list item for the menu.
-            var menuItem = $('<li>');
-
-            //If the list item is the last item in the menu, mark it 
-            //with menu-last class for assuring compatability. 
-            if(i == metadata.number_of_results - 1)
-            {
-                menuItem.attr("class", "menu-last");       
-            }
-
-            //Create a link to the campaign.
-            var campaignLink = $('<a>');
-            campaignLink.text(data[urn].name);
-            campaignLink.attr("href", 
-                              "javascript:openCampaignView('" + urn + "')");
-
-
-
-            menuItem.append(campaignLink);
-            availableCampaignsMenu.append(menuItem);
-
-
-        }
-
-	};
-    
-    var onError = function(response)
-    {
-        alert(response.errors[0].text);    
-    }
-
-    //Make the API call.
-    api( 
+    api
+    ( 
          "POST",
          CAMPAIGN_READ_URL,
          {
              auth_token: $.cookie('auth_token'),
              client: '1',
-             output_format: 'short'
+             output_format: 'long'
          },
          "JSON",
          onSuccess,
          onError 
-        );
+    );
 
 }
 
@@ -158,7 +92,7 @@ function loadCampaigns()
  */
 function openCampaignsView()
 {
-    redirect("campaigns_view.html");
+    redirect("campaigns.html");
 }
 
 /**
@@ -169,7 +103,7 @@ function openCampaignsView()
  */
 function openCampaignView(campaignURN)
 {
-    redirect("campaign_view.html?campaignURN=" + campaignURN);
+    redirect("campaign.html?campaignURN=" + campaignURN);
 }
 
 /**
@@ -180,14 +114,10 @@ function openCampaignView(campaignURN)
  */
 function openSurveyView(campaignURN, surveyID)
 {
-    redirect("survey_view.html?campaignURN=" + campaignURN + 
-                             "&surveyID=" + surveyID);
+    redirect("survey.html?campaignURN=" + campaignURN + 
+                           "&surveyID=" + surveyID);
 }
 
-function loadSurveys(campaignXML)
-{
-    
-}
 
 /**
  * Extracts and returns the campaign from the API's campaign read response.
@@ -267,31 +197,6 @@ function getPromptProperties(prompt)
 {
     return prompt.properties.property;
 }
-
-
-/**
- * If the campaign configuration file has already been loaded into the local
- * storage, then the method will load the cached version. 
- */
-function downloadCampaignXMLConfig(campaignURN, onSuccess, onError)
-{
-	
-    api(
-        "POST",
-        CAMPAIGN_READ_URL,
-        {
-            auth_token: $.cookie("auth_token"),
-            client: 1,
-            output_format: 'long',
-            campaign_urn_list:campaignURN
-        },	  
-        'JSON',
-        onSuccess,
-        onError
-      );
-	
-}
-
 
 /**
  * The method is the primary point of interaction with the Ohmage API.
@@ -384,7 +289,7 @@ function invoke(fun, args)
  */
 function redirect(url)
 {
-    if(url != undefined && url != null)
+    if(url)
     {
         document.location = url;
     }

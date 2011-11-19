@@ -2,6 +2,11 @@
 function PromptNav(prompts, promptDiv)
 {
     
+    if(prompts.length == undefined)
+    {
+        prompts = [prompts];
+    }
+        
     /**
      * This variable utilizes JavaScript's closure paradigm to allow private
      * methods to invoke public methods. 
@@ -81,6 +86,7 @@ function PromptNav(prompts, promptDiv)
         return prompts[currentPromptIndex];
     }
     
+    
     /**
      * Displays the next prompt, if availabe.
      */
@@ -129,10 +135,11 @@ function PromptNav(prompts, promptDiv)
     this.displayPrompt = function()
     {
         
-        console.log(prompts);
+        
         //Get the current prompt to display.
         var prompt = this.getCurrentPrompt();
         
+        console.log(prompt);
     
         
         //If the prompt type is supported, then display the prompt view. 
