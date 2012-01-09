@@ -129,19 +129,31 @@ mwf.decorator.Menu = function(title)
      * appending a new element. 
      * 
      * @param item The item to add to this menu.
+     * @param raw If true, then menu item will not be processed. In other words,
+     *            the added item will not initially be wrapped in an <li> tag.
+     *            
      * @return This menu - allows chained invocations.
      */
-    menu.addMenuItem = function(item)
+    menu.addMenuItem = function(item, raw)
     {   
+        raw = raw || false;
+        
         if(!this._items)
         {
             this._items = document.createElement('ol');    
             this.appendChild(this._items);
         }
         
-        var listItem = document.createElement('li');
-        listItem.appendChild(item);
         
+        var listItem = item;
+        
+        if(!raw)
+        {
+            listItem = document.createElement('li');
+            listItem.appendChild(item);
+        
+        }
+    
         if(this._items.children.length == 0)
         {
             if(this._title)
@@ -193,6 +205,36 @@ mwf.decorator.Menu = function(title)
         return this.addMenuItem(createLinkItem(text, url, details));   
     }
     
+    /**
+     * Adds a link item to this menu with a 16x16 icon on the left side.
+     * 
+     * @param text    The text of the link item. 
+     *                This will be enclosed within an <a> tag.
+     * @param url     The URL of the link item.
+     * @param img_url The URL of the 16x16 icon for this menu item.
+     * @param details An optional element that adds details section to the item.    
+     * 
+     * @return This menu - allows chained invocations.
+     */
+    menu.addMenuIconItem = function(text, url, img_url, details)
+    {
+        var linkItem = createLinkItem(text, url, details);
+
+        var icon = document.createElement('img');
+
+        //ToDo: Future developments should extract this out into a CSS class. 
+        icon.src = img_url;
+        icon.width  = 16;
+        icon.height = 16;
+        icon.style.verticalAlign='text-top';
+        icon.style.paddingRight = "5px";
+        
+        linkItem.insertBefore(icon, linkItem.firstChild);
+        
+        return this.addMenuItem(linkItem);
+   
+    }
+    
    
     /**
      * Creates a new radio input element and combines it with a link item to 
@@ -230,6 +272,25 @@ mwf.decorator.Menu = function(title)
        return this.addMenuItem(createOptionItem(name, value, label, details, false));
     }
     
+    menu.getSelectedOptions = function()
+    {
+        var selectedOptions = [];
+        
+        var menuItems = menu.getMenuItems();
+        
+        for(var i = 0; i < menuItems.length; i++)
+        {
+            var optionItem = menuItems[i].firstChild.firstChild;
+            
+            if(optionItem.checked){   
+                selectedOptions.push({name: optionItem.name, 
+                                      value: optionItem.value, 
+                                      id: optionItem.id});
+            }
+        }
+        
+        return selectedOptions;
+    }
         
     /**
      * Creates a new input element and combines it with a link item to create a
@@ -248,6 +309,7 @@ mwf.decorator.Menu = function(title)
      */
     var createOptionItem = function(name, value, label, details, isRadio)
     {
+        
         //Create the input element.
         var inputItem = document.createElement('input');
 
@@ -255,9 +317,12 @@ mwf.decorator.Menu = function(title)
         inputItem.type  = (isRadio)? "radio" : "checkbox";
         inputItem.name  = name;
         inputItem.value = value;
+        
+        //ToDo: This should be moved into a convinient CSS class instead.
+        inputItem.style.verticalAlign = 'text-top';
 
         //Create a standard menu link item and prepend the option button.
-        var linkItem = createLinkItem(label, "#", details);
+        var linkItem = createLinkItem(label, null, details);
         linkItem.insertBefore(inputItem, linkItem.firstChild);
 
         //Add an event handler that would toggle the option button's
@@ -268,6 +333,8 @@ mwf.decorator.Menu = function(title)
         
         return linkItem;
     }
+    
+    
     
     /**
      * Creates a link item, without adding it to the current menu.
@@ -283,8 +350,8 @@ mwf.decorator.Menu = function(title)
     {
         var linkItem = document.createElement('a');
         
-        linkItem.innerHTML = text;
-        linkItem.href = url;
+        linkItem.innerHTML = text || "";
+        linkItem.href = url || null;
         
         //If details is defined, then add the details text within a span tag.
         if(details)
@@ -334,7 +401,16 @@ mwf.decorator.Menu = function(title)
         return (this._items) ? this._items.lastChild : null;
     }
     
-
+    /**
+     * Returns all the elements within the current menu. If the current menu
+     * does not have any items, an empty array will be returned.
+     * 
+     * @return All items within the current array.
+     */
+    menu.getMenuItems = function()
+    {
+        return (this._items) ? this._items.children : [];
+    }
     
     /**
      * Returns the menu item at a certain index. If the index is negative or is
@@ -360,6 +436,33 @@ mwf.decorator.Menu = function(title)
     menu.size = function()
     {
         return (this._items) ? this._items.children.length : 0;
+    }
+     
+    /**
+     * Removes item at a given index.
+     * 
+     * @return True if the item was successfully removed, false otherwise. 
+     */
+    menu.removeMenuItemAt = function(index)
+    {
+        return this.removeItem(this.getMenuItemAt(index));
+    }
+
+    /**
+     * Removes the given item.
+     * 
+     * @return True if the item was successfully removed, false otherwise. 
+     */
+    menu.removeMenuItem = function(item)
+    {
+        if(this._items && item)
+        {
+            //The return value of the removeChild method is either the removed
+            //node, or null on failure.
+            return this._items.removeChild(item) != null;
+        }
+        
+        return false;
     }
     
     //If a default title has been set, then set the menu's title.

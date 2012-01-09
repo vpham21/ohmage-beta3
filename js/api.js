@@ -71,6 +71,22 @@ function authUser(username, password, redirectURL)
 
 function getCampaigns(onSuccess, onError)
 {
+    if(window.localStorage && window.localStorage.campaigns)
+    {
+        onSuccess(JSON.parse(window.localStorage.campaigns));
+        return;
+    }
+    
+    var _onSuccess = function(response)
+    {
+        if(window.localStorage)
+        {
+            window.localStorage.campaigns = JSON.stringify(response);
+        }
+        
+       onSuccess(response); 
+    }
+    
     api
     ( 
          "POST",
@@ -81,7 +97,7 @@ function getCampaigns(onSuccess, onError)
              output_format: 'long'
          },
          "JSON",
-         onSuccess,
+         _onSuccess,
          onError 
     );
 
@@ -119,84 +135,7 @@ function openSurveyView(campaignURN, surveyID)
 }
 
 
-/**
- * Extracts and returns the campaign from the API's campaign read response.
- * 
- * @param response    Response result from campaign read API call.
- * @param campaignURN The specific campaign URN to extract from the response. 
- */
-function getCampaign(response, campaignURN)
-{
-    return $.xml2json.parser(response.data[campaignURN].xml).campaign;
-}
 
-/**
- * Extracts and returns a list of surveys from the API's campaign read response.
- * 
- * @param response    Response result from campaign read API call.
- * @param campaignURN The survey's campaign's URN. Used to get the campaign from 
- *                    the response. 
- */
-function getSurveys(response, campaignURN)
-{
-    //Get the list of surveys from the campaign.
-    var surveys  = getCampaign(response, campaignURN).surveys.survey;
-
-    //If survey is returned as a single item, then go ahead and place
-    //it in an array. This is a kind of a dirty fix, if you have any 
-    //better ideas of approaching the situatin - please be my guest. 
-    if(surveys.length == undefined)
-    {
-        surveys = [surveys];
-    }
-    
-    return surveys;
-}
-
-/**
- * Extracts and returns a specific survey from a campaign.
- * 
- * @param response    Response result from campaign read API call.
- * @param campaignURN The survey's campaign's URN. Used to get the campaign from 
- *                    the response. 
- * @param surveyID    The specific survey ID to retrieve from the campaign.                   
- */
-function getSurvey(response, campaignURN, surveyID)
-{
-    //Get a list of all the possible surveys.
-    var surveys = getSurveys(response, campaignURN);
-    
-    //Iterate through the list of retrieved surveys. If a ID match is found, 
-    //return the survey.
-    for(var i = 0; i < surveys.length; i++)
-    {
-       if(surveys[i].id == surveyID)
-       {
-           return surveys[i];
-       }
-    }
-    
-    return null;
-}
-
-
-/**
- * Extracts and returns a list of prompts.
- * 
- * @param response    Response result from campaign read API call.
- * @param campaignURN The survey's campaign's URN. Used to get the campaign from 
- *                    the response. 
- * @param surveyID    The specific survey ID to retrieve from the campaign.                   
- */
-function getPrompts(response, campaignURN, surveyID)
-{
-    return getSurvey(response, campaignURN, surveyID).contentlist.prompt;
-}
-
-function getPromptProperties(prompt)
-{
-    return prompt.properties.property;
-}
 
 /**
  * The method is the primary point of interaction with the Ohmage API.

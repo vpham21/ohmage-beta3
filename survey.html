@@ -3,25 +3,36 @@
 <html>
 <head>
 
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<meta name="viewport" content="height=device-height,width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;" />
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="viewport" content="height=device-height,width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;" />
 
-<title>Choose a Campaign to Continue</title>
+    <title>Choose a Campaign to Continue</title>
+    
+    <style type="text/css">
+        @import url("http://m.ucla.edu/assets/css.php");
+    </style>
+    
+    <!-- IMPORT MWF JAVASCRIPT LIBRARY -->
+    <script type="text/javascript" src="http://m.ucla.edu/assets/js.php"></script>
+    <script type="text/javascript" src="js/mwf/decorator.js"> </script>
+    <script type="text/javascript" src="js/mwf/content.js"> </script>
+    <script type="text/javascript" src="js/mwf/button.js"> </script>
+    <script type="text/javascript" src="js/mwf/menu.js"> </script>
+    <script type="text/javascript" src="js/mwf/form.js"> </script>
 
-<link rel="stylesheet" href="css/spinner.css" type="text/css">
-<link rel="stylesheet" href="http://m.ucla.edu/assets/css.php" type="text/css">
+    <!-- IMPORT JQUERY AND EXTENSIONS -->
+    <script type="text/javascript" src="js/jquery/jquery.min.js"></script> 
+    <script type="text/javascript" src="js/jquery/jquery.extensions.js"></script>
 
-<script type="text/javascript" src="http://m.ucla.edu/assets/js.php"></script> 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script> 
+    <!-- IMPORT OHMAGE API JS LIB -->
+    <script type="text/javascript" src="js/api.js"></script>
+    <script type="text/javascript" src="js/campaigns.js"></script>
+    <script type="text/javascript" src="js/campaign.js"></script>
+    <script type="text/javascript" src="js/survey.js"></script>
+    <script type="text/javascript" src="js/prompt.js"></script>
+    <script type="text/javascript" src="js/navigation.js"></script>
 
-<script src="js/jquery.extensions.js" type="text/javascript"></script>
-<script src="js/mwf_lib.js" type="text/javascript"></script>
-<script src="js/api_lib.js" type="text/javascript"></script>
-
-<script src="js/prompt_gen.js" type="text/javascript"></script>
-<script src="js/prompt_nav.js" type="text/javascript"></script>
-
-<script type="text/javascript">
+    <script type="text/javascript">
 
 
      $(document).ready(function() {
@@ -33,9 +44,10 @@
          //Required for getting a specific survey from the campaign.
          var surveyID    = $.getUrlVar('surveyID');
          
-         //If a specific campaign is not specified, then take the user to the 
-         //campaigns view where he/she may choose a campaign.
-         if(campaignURN == undefined)
+         //If a specific campaign is not specified, take the user to the 
+         //campaigns view where the user may be able to choose an appropriate
+         //campaign.
+         if(!campaignURN)
          {  
             openCampaignsView();
          }
@@ -47,28 +59,22 @@
             openCampaignView(campaignURN); 
          }
          
-         //Attach an event listener to the top right buttion.
+         //Attach an event listener to the top right buttion that would open the
+         //current survey's campaign.
          $('#button-top').click(function() {
              openCampaignView(campaignURN);
          });
-             
          
-         var onSuccess = function(response)
-         {
-             var survey  = getSurvey(response, campaignURN, surveyID);
-             var prompts = getPrompts(response, campaignURN, surveyID); 
-             
-             var promptNav = new PromptNav(prompts, $("#prompt_view"));
-             promptNav.displayPrompt();
-             
-         }
          
-         var onError = function(response)
-         {
+         //Initialize and render the survey.
+         Survey.init(campaignURN, surveyID, function(survey)
+         {  
+             survey.render(document.getElementById('survey'));
              
-         }
+             console.log(survey.getPrompts())
+         });
          
-         downloadCampaignXMLConfig(campaignURN, onSuccess, onError);
+             
            
      });
      
@@ -87,19 +93,7 @@
     <span id="top_title">OHMAGE</span> 
 </h1> 
 
-<div id="prompt_view">
-    
-</div>
-
-<!-- 
-    SKIP BUTTON PLACEHOLDER - THIS MAY BE MERGED WITH THE NEXT/PREVIOUS BUTTONS 
--->
-<a id="skip_button" class="button-full button-padded" style="display:none;"></a>
-
-<div class="button-full button-padded">
-    <a id="prev_button" class="button-first">Previous</a>
-    <a id="next_button" class="button-last">Next</a>
-</div>
+<div id="survey"></div>
 
 
 <!--  Standard footer should be included in all pages regarding the mobile tour. -->

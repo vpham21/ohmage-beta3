@@ -1,82 +1,115 @@
 
-function PromptNav(prompts, promptDiv)
+function Navigation(survey, container)
 {
+    var prompts = survey.getPrompts();
     
-    if(prompts.length == undefined)
-    {
-        prompts = [prompts];
-    }
-        
     /**
      * This variable utilizes JavaScript's closure paradigm to allow private
      * methods to invoke public methods. 
      */
     var me = this;
-   
-    /**
-     * Instance of prompt generator for the specified prompt div. Use this to 
-     * display prompts in a given div and also use this to see if a prompt type
-     * is supported.
-     */
-    var promptGen = new PromptGen(promptDiv);
     
     /**
     * Stores the index of the currently displayed prompt. Initialized to the
     * first prompt.
     */
     var currentPromptIndex = 0;
+   
+    this.start = function(callback)
+    {
+        this.render();
+    }
+    
+    this.done = function()
+    {
+        
+    }
 
-    /**
-    * Next button that navigates to the next prompt.
-    */
-    var nextButton = $("#next_button");
-    
-    /**
-     * Previous button that navigates to the previous prompt.
-     */
-    var prevButton = $("#prev_button");
-    
-    /*
-     * Skip button that allows the user to skip a prompt. Initially, this button
-     * is invisable, and is only enabled when the prompt is skipable. 
-     */
-    var skipButton = $("#skip_button");
-    
    
     /**
      * Enables or disables next, previous, and skip buttons. This method is also
      * responsible for attaching the correct event handler for each button.
      */
-    function updateControlButtons()
+    this.getControlButtons = function()
     {
-        if(currentPromptIndex == 0)
-        {
-            //ToDo: Somehow disable the previous button.
-        }
+        var controlButtonsDiv = document.createElement('div');
         
-        //Ge the current prompt.
-        var currentPrompt = me.getCurrentPrompt();
+        var currentPrompt = this.getCurrentPrompt();
         
         //If the prompt is skippable, then enable the skip button and add an
         //event handler of the button.
-        if(currentPrompt.skippable == "true")
-        {
-            skipButton.text(currentPrompt.skiplabel);
-            skipButton.show();
+        if(currentPrompt.isSkippable())
+        {   
+            //Skip button that allows the user to skip a prompt. Initially, this button
+            //is invisable, and is only enabled when the prompt is skipable.  
+            var skipButton = mwf.decorator.SingleButton(currentPrompt.getSkipLabel());
+            
             skipButton.click(function() {
                 me.skipPrompt();
             });
+            
+            controlButtonsDiv.appendChild(skipButton);
         }
         
-        nextButton.click(function() {
-           me.nextPrompt();
-        });
+        //Handle single prompts. 
+        if(prompts.length == 1)
+        {
+            var submitButton = mwf.decorator.SingleButton("Submit");
+            
+            submitButton.click(function()
+            {
+                me.submit();
+            });
+        }
         
-        prevButton.click(function() 
-        {  
-            me.prevPrompt();
-        });
+        //Handle first prompt of a multi-prompt survey.
+        else if(currentPromptIndex == 0)
+        {
+            var nextButton = mwf.decorator.SingleButton("Next Prompt");
+            
+            nextButton.click(function()
+            {
+                me.nextPrompt();
+            });
+            
+            controlButtonsDiv.appendChild(nextButton);
+            
+        }
+        
+        //Handle last prompt of a multi-prompt survey.
+        else if(currentPromptIndex == prompts.length - 1)
+        {
+            var prevButton = mwf.decorator.SingleButton("Previous Prompt");
+            
+            prevButton.click(function()
+            {
+                me.previousPrompt();
+            });
+            
+            controlButtonsDiv.appendChild(prevButton);
+        }
+        
+        //Handle prompts in the middle.
+        else 
+        {
+            var controlButtons = mwf.decorator.SimpleDoubleButton("Previous", "Next");
+            
+            controlButtons.getFirstButton().click(function()
+            {
+                 me.previousPrompt();
+            });
+            
+            controlButtons.getSecondButton().click(function()
+            {
+                me.nextPrompt();
+            });
+            
+            controlButtonsDiv.appendChild(controlButtons);
+        }
+           
+       return controlButtonsDiv;
     }
+    
     
     /**
      * Returns currently displayed prompt.
@@ -87,96 +120,104 @@ function PromptNav(prompts, promptDiv)
     }
     
     
-    /**
-     * Displays the next prompt, if availabe.
-     */
-    this.nextPrompt = function()
+    this.render = function()
     {
-        currentPromptIndex ++; 
-        me.displayPrompt(); 
-    }
-    
-    /**
-     * Displays the previous prompt, if available.
-     */
-    this.prevPrompt = function()
-    {
-        currentPromptIndex --; 
-        me.displayPrompt(); 
-    }
-    
-     /**
-     * Goes to the next available prompt. This is very similar to the function 
-     * this.nextPrompt() but might change in the future.
-     */ 
-    this.skipPrompt = function()
-    {
-       me.nextPrompt();
-    }
-    
-    
-    /**
-     * Initially, validates data and if validation is passed, submit the prompt
-     * data and goes to the next prompt.
-     */
-    this.submitPrompt = function()
-    {
-        
-    }
-    
-    /**
-     * Fetches and invokes the prompt generator for the current prompt's type.
-     * The user will be notified of an error, if the prompt type is not
-     * supported. 
-     * 
-     * Arguments passed to the prompt generator are the actual prompt and the
-     * div element that would parent the prompt. 
-     */
-    this.displayPrompt = function()
-    {
-        
-        
-        //Get the current prompt to display.
-        var prompt = this.getCurrentPrompt();
-        
-        console.log(prompt);
-    
-        
-        //If the prompt type is supported, then display the prompt view. 
-        if(PromptGen.isPromptSupported(prompt.prompttype))
+   
+        var currentPrompt = this.getCurrentPrompt();
+     
+        if(!currentPrompt.renderSupported())
         {
-           
-            
-            console.log(promptGen);
-            //Generate the prompt.
-            promptGen.genPrompt(prompt);
-            
-            //Adjust the functionality of next and previous buttons.
-            updateControlButtons();
+             alert("Prompt type is not supported.");
+             return;
+
         }
 
-        //If the prompt type is not supported, alert the user.
-        //ToDo: This is stupid - a better approach for error handling is required.
-        else
-        {
-            alert("Prompt type is not supported.");
-            me.skipPrompt();
-        }
+        container.innerHTML = "";
         
+        container.appendChild(currentPrompt.render());
+        container.appendChild(this.getControlButtons());
         
        
     }
     
+    this.nextPrompt = function(){
+        
+        if(!this.processResponse())
+            return;
+        
+        if(currentPromptIndex < prompts.length){
+            currentPromptIndex++;
+            this.render();
+        }
+    }
+    
+    this.previousPrompt = function()
+    {
+        if(!this.processResponse())
+            return;
+        
+        if(currentPromptIndex > 0)
+        {
+            currentPromptIndex--;
+            this.render();
+        }
+    }
+    
+    this.skipPrompt = function()
+    {
+        this.nextPrompt();
+    }
+    
+    this.processResponse = function()
+    {
+        var prompt = this.getCurrentPrompt();
+        var validation = prompt.validate();
+        
+        if(!validation)
+        {
+            alert("Error Message:" + validation);
+            
+            return false;
+        }
+        else
+        {
+            //ToDo: Encapsulate these operations into a local storage class.
+            var responses = (window.localStorage.responses)? 
+                                JSON.parse(window.localStorage.responses):
+                                {};
+            
+            //Extract the survey response frmo the pool of 
+            //other survey responses.
+            var survey      = (responses[survey.getID()])? 
+                                responses[survey.getID()] : 
+                                {};
+
+            
+            //Extract the prompt responses from the survey.
+            var surveyResponses = survey.responses || (survey.responses = {});
+            
+            surveyResponses.push({prompt_id: prompt.getID(), value: prompt.getResponse()});
+            
+            
+            responses[survey.getID()] = surveyResponses;
+            
+            window.localStorage.responses = JSON.stringify(responses);
+            
+            return true;
+        }
+    }
+
+ 
+    
+}
 
 
-    
-    
 
+var SurveyResponse = function(id)
+{
+    this.survey_key = id;
     
-    
-    
-    
-    
+    this.time = new Date().getTime();
 }
 
 

@@ -13,7 +13,7 @@
  *  
  *  document.body.appendChild(content);
  *  
- * @namespace mwf.decorator.Menu
+ * @namespace mwf.decorator.Content
  * @dependency mwf.decorator
  * @author zkhalapyan
  * @copyright Copyright (c) 2010-11 UC Regents
@@ -71,6 +71,8 @@ mwf.decorator.Content = function(title, text)
             
             
         }
+        
+        return this;
     }
     
     /**
@@ -91,6 +93,8 @@ mwf.decorator.Content = function(title, text)
     content.addItem = function(contentItem)
     {
         mwf.decorator.append(this, contentItem, FIRST_MARKER, LAST_MARKER); 
+        
+        return this;
     }
     
     content.addButton = function(label, url, callback)
@@ -99,6 +103,8 @@ mwf.decorator.Content = function(title, text)
                              mwf.decorator.ContentButton(label, url, callback),
                              FIRST_MARKER,
                              LAST_MARKER);
+                             
+        return this;
     }
     
     /**

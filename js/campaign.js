@@ -10,11 +10,17 @@ function Campaign(campaign)
     console.log(this.campaign);
     console.log(this.campaignXML);
     
+    /**
+     * Returns the URN for this campaign.
+     */
     this.getURN = function()
     {
         return this.campaignXML["campaignurn"];
     }
     
+    /**
+     * Returns the description for this campaign.
+     */
     this.getDescription = function()
     {
         return campaign.description;
@@ -32,7 +38,7 @@ function Campaign(campaign)
         for(var i = 0; i < surveys.length; i++)
         {  
             
-            var url = "javascript:openSurveyView(\'" + campaignURN + 
+            var url = "javascript:openSurveyView(\'" + this.getURN() + 
                       "\', \'" + surveys[i].id + "\')";
             
             surveyMenu.addMenuLinkItem(surveys[i].title, 
@@ -41,11 +47,13 @@ function Campaign(campaign)
            
         }
         
-        container.append(surveyMenu);
+        container.appendChild(surveyMenu);
     }
 
     /**
      * Returns surveys associated with this campaign.
+     * 
+     * --TODO-- all parameter passing should be done via classes. no objects.
      */ 
     this.getSurveys = function()
     {
@@ -72,7 +80,7 @@ function Campaign(campaign)
        {
           if(surveys[i].id == id)
           {
-              return surveys[i];
+              return new Survey(surveys[i]);
           }
        }
 

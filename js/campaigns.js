@@ -15,7 +15,6 @@ function Campaigns(campaigns)
     
     this.render = function(container)
     {
-
         var availableCampaigns = mwf.decorator.Menu("Available Campaigns");
 
         for(var i = 0; i < metadata.number_of_results; i++)
@@ -29,7 +28,8 @@ function Campaigns(campaigns)
 
         }
 
-        container.append(availableCampaigns);
+        container.appendChild(availableCampaigns);
+        
 
     };
     
