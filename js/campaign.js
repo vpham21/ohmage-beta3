@@ -80,7 +80,7 @@ function Campaign(campaign)
        {
           if(surveys[i].id == id)
           {
-              return new Survey(surveys[i]);
+              return new Survey(surveys[i], this);
           }
        }
 

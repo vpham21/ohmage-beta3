@@ -170,14 +170,14 @@ mwf.decorator.Menu = function(title)
         
         this._items.appendChild(listItem);
         
-        return this;
+        return listItem;
     }
     
     /**
      * Adds a paragraph element with the specified text to the current menu.
      * 
      * @param text The text to be enclosed in a <p> tag and added to the menu.
-     * @return This menu - allows chained invocations.
+     * @return 
      */  
     menu.addMenuTextItem = function(text)
     {
@@ -198,7 +198,7 @@ mwf.decorator.Menu = function(title)
      * @param url     The URL of the link item.
      * @param details An optional element that adds details section to the item.    
      * 
-     * @return This menu - allows chained invocations.
+     * @return 
      */
     menu.addMenuLinkItem = function(text, url, details)
     {
@@ -280,12 +280,15 @@ mwf.decorator.Menu = function(title)
         
         for(var i = 0; i < menuItems.length; i++)
         {
-            var optionItem = menuItems[i].firstChild.firstChild;
-            
+            var linkItem = menuItems[i].firstChild;
+            var optionItem = linkItem.firstChild;
+  
+             
             if(optionItem.checked){   
                 selectedOptions.push({name: optionItem.name, 
                                       value: optionItem.value, 
-                                      id: optionItem.id});
+                                      id: optionItem.id,
+                                      label: linkItem.childNodes[1].nodeValue});
             }
         }
         

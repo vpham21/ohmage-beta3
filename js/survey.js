@@ -1,29 +1,45 @@
-var Survey = function(survey)
+var Survey = function(survey, campaign)
 {
+    /**
+     * This variable utilizes JavaScript's closure paradigm to allow private
+     * methods to invoke public methods. 
+     */
     var me = this;
     
     /**
      * Returns the title of the current survey.
+     * @return Current survey's title, or empty string if undefined. 
      */
     this.getTitle = function()
     {
-        return survey.title;
+        return survey.title || "";
     }
     
     /**
      * Returns the description of the current survey.
+     * @return Current survey's description, or emptry string if undefined.
      */
     this.getDescription = function()
     {
-        return survey.description;
+        return survey.description || "";
     }
     
     /**
      * Returns the ID of the current survey.
+     * @return Current survey's ID.
      */
     this.getID = function()
     {
         return survey.id;
+    }
+    
+    /**
+     * Returns a reference to this survey's campaign.
+     * @return Reference to this survey's campaign.
+     */
+    this.getCampaign = function()
+    {
+        return campaign;
     }
     
     /**
@@ -50,6 +66,7 @@ var Survey = function(survey)
         }
         
     }
+    
     
     this.render = function(container)
     {

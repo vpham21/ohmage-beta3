@@ -78,7 +78,9 @@ mwf.decorator.Button = function(label, url, callback)
         //If button's callback is set, then set the <a>'s onclick property.
         if(callback)
         {
-            button.onclick = callback;
+            button.onclick = function() {
+                callback()
+            };
         }   
     }
     
@@ -90,6 +92,31 @@ mwf.decorator.Button = function(label, url, callback)
    
     return button;
     
+}
+
+
+/**
+ * Creats a single button that is primarily used by responding to click events.
+ * 
+ * Example Use:
+ *  
+ *  var foo = function() { alert('I was clicked'); };
+ *  var button = mwf.decorator.SingleClickButton("Click Me", foo);
+ *  document.body.appendChild(button);
+ * 
+ * @param label    The visible label for the button.
+ * @param callback The onclick handler callback for this button.
+ */
+mwf.decorator.SingleClickButton = function(label, callback)
+{
+    return mwf.decorator.SingleButton(label, null, callback);
+}
+
+mwf.decorator.DoubleClickButton = function(firstLabel, firstCallback, 
+                                           secondLabel, secondCallback)
+{
+    return mwf.decorator.DoubleButton(firstLabel, null, firstCallback,
+                                      secondLabel, null, secondCallback);
 }
 
 /**

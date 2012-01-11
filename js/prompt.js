@@ -5,6 +5,11 @@ function Prompt(prompt)
     * methods to invoke public methods. 
     */
    var me = this;
+   
+   /**
+    * Stores error message in case validation fails.
+    */
+   var errorMsg = null;
     
    /**
     * Mapping between prompt type and prompt generating function. 
@@ -40,8 +45,21 @@ function Prompt(prompt)
     * 
     * @return True.
     */
-    this.validate = function(){
+    this.isValid = function(){
         return true;
+    }
+    
+    /**
+     * Returns validation error message or false if none. If this method is
+     * called without calling isValid on the current prompt, then isValid will
+     * be automatically called before retreiving the error message.
+     */
+    this.getErrorMessage = function()
+    {
+        if(errorMsg === null)
+            this.isValid();
+        
+        return (errorMsg)? errorMsg : false;
     }
     
     /**
@@ -89,6 +107,31 @@ function Prompt(prompt)
         return prompt.skiplabel;
     }
     
+    this.getMinValue = function()
+    {
+        var properties = this.getProperties();
+        
+        for(var i = 0; i < properties.length; i++)
+            if(properties[i].key == 'min')
+                return properties[i].label;
+        
+        return null;
+    }
+    
+    this.getMaxValue = function()
+    {
+        var properties = this.getProperties();
+        
+        for(var i = 0; i < properties.length; i++)
+            if(properties[i].key == 'max')
+                return properties[i].label;
+        
+        return null;
+    }
+    
+    /**
+     * Returns true if rendering for the current prompt is supported.
+     */
     this.renderSupported = function(){
         return promptGenerators[this.getType()] != undefined;
     }
@@ -99,7 +142,9 @@ function Prompt(prompt)
      */
     this.getDefaultValue = function()
     {
-        return prompt['default'];
+        //Access the default value of the prompt with array accessing schema
+        //in order to bypass JS keyword use 'default'.
+        return prompt['default'] || null;
     }
     
     this.render = function() {
@@ -121,47 +166,45 @@ function Prompt(prompt)
         return number();
     }
     
-    function single_choice()
+    function single_choice(isCustom)
     {
+        var choice_menu = createChoiceMenu(true, isCustom);
         
-        var properties = me.getProperties();
-
-        var menu = mwf.decorator.Menu(me.getText());
-        
-        for(var i = 0; i < properties.length; i++)
-        {   
-            menu.addMenuRadioItem(me.getType(),          //Name
-                                  properties[i].key,     //Value
-                                  properties[i].label);  //Label
+        me.isValid = function()
+        {
+            return choice_menu.getSelectedOptions().length == 1;   
         }
         
-        me.getResponse = function()
-        {
-            return (menu.getSelectedOptions())[0].value;
-        };
-        
-        me.validate = function()
-        {
-            return me.isSkippable() || menu.getSelectedOptions().length == 1;   
-        }
-        
-        return menu;
+        return choice_menu;
 
     }
+    
+    function multi_choice(isCustom)
+    {
+        var choice_menu = createChoiceMenu(false, isCustom);
+        
+        me.isValid = function()
+        {
+            return choice_menu.getSelectedOptions().length > 0;   
+        }
+        
+        return choice_menu;
+    }
+    
 
     function single_choice_custom()
     {
-        return custom_choice_form(single_choice(), true);
+        return createCustomChoiceMenu(single_choice(true), true);
     }
     
     function multi_choice_custom()
-    {
-        return custom_choice_form(multi_choice(), false);
+    {   
+        return createCustomChoiceMenu(multi_choice(true), false);
     }
     
-    function custom_choice_form(choice_menu, isSingleChoice)
+    var createCustomChoiceMenu = function(choice_menu, isSingleChoice)
     {
-
+        
         //Add an option in the menu for creating new options.
         choice_menu.addMenuIconItem('Add custom option', null, 'img/plus.png');
 
@@ -210,6 +253,10 @@ function Prompt(prompt)
 
             //Hide the 'add option button'.
             form.style.display = 'none';
+            
+            //Clear the user input textbox.
+            document.getElementById('new-choice').value = "";
+            
             return false;
         });
         
@@ -222,77 +269,178 @@ function Prompt(prompt)
     }
     
 
-    
-    function multi_choice()
+    var createChoiceMenu = function(isSingleChoice, isCustom)
     {
         var properties = me.getProperties();
-
+           
         var menu = mwf.decorator.Menu(me.getText());
         
         for(var i = 0; i < properties.length; i++)
         {   
-            menu.addMenuCheckboxItem(me.getType(), 
-                                     properties[i].key, 
-                                     properties[i].label);
+            //Handle single choice prompts.
+            if(isSingleChoice)
+            {
+                menu.addMenuRadioItem(me.getType(),          //Name
+                                      properties[i].key,     //Value
+                                      properties[i].label);  //Label
+            }
+            //Handle multiple choice prompts.
+            else
+            {
+                menu.addMenuCheckboxItem(me.getType(),         //Name
+                                         properties[i].key,    //Value
+                                         properties[i].label); //Label
+            }
+            
         }
-
+        
+                
+        me.getResponse = function()
+        {
+            var type = (isCustom) ? 'label' : 'value';
+            
+            if(isSingleChoice)
+            {
+                return (menu.getSelectedOptions())[0][type];
+            }
+            else
+            {
+                var responses = [];
+                var selection = menu.getSelectedOptions();
+            
+                for(var i = 0; i < selection.length; i++)
+                {
+                    responses.push(selection[i][type])
+                }
+        
+                return responses;
+            }
+            
+        };
+        
         return menu;
     }
     
     function number()
     { 
-        var menu = mwf.decorator.Menu(me.getText());
-        
-        var plus = document.createElement('p');
-        plus.innerHTML = '+';
-        plus.align = 'center';
-        plus.style.color = '#2685BB';
-        
-        var minus = document.createElement('p');
-        minus.innerHTML = '-';
-        minus.align = 'center';
-        minus.style.color = '#2685BB';
-        
+       
+        //Create the actual number counter field.
         var count = document.createElement('p');
-        count.align = 'center';
+        count.className = 'number-counter';
         
         //Set the default value. If the default value for the current prompt is
         //not specified, then set it to 0.
         count.innerHTML = me.getDefaultValue() || '0';
         
+        //Get the minimum and maximum allowed values for this number prompt. It
+        //is assumed that these values might be nulls.
+        var maxValue = me.getMaxValue();
+        var minValue = me.getMinValue();
         
-        menu.addMenuItem(plus);
-        menu.addMenuItem(count);
-        menu.addMenuItem(minus);
+
+        //Create the plus sign.
+        var plus = document.createElement('p');
+        plus.innerHTML = '+';
+   
         
-        menu.getMenuItemAt(0).onclick = function(e)
+        //Create the minus sign.
+        var minus = document.createElement('p');
+        minus.innerHTML = '-';
+        
+        
+        var updateSignStyle = function()
         {
-            count.innerHTML = parseInt(count.innerHTML) + 1;
+            //Get the integerer representation of the current value.
+            var currentValue = parseInt(count.innerHTML);
+        
+            plus.className = (currentValue < maxValue)? 'math-sign' : 
+                                                        'math-sign-disabled';
+                                                
+            minus.className = (currentValue > minValue)? 'math-sign' : 
+                                                         'math-sign-disabled';
         };
         
-        menu.getMenuItemAt(2).onclick = function(e)
+        updateSignStyle();
+        
+        var menu = mwf.decorator.Menu(me.getText());
+
+        //Add the plus sign to the menu and configure the click event handler 
+        //for this item.
+        menu.addMenuItem(plus).onclick = function(e)
         {
-            count.innerHTML = parseInt(count.innerHTML) - 1;
+            var currentValue = parseInt(count.innerHTML);
+            
+            if(currentValue < maxValue){
+                count.innerHTML =  currentValue + 1;
+            }
+            
+            updateSignStyle();
+      
+        };
+        
+        //Add the counter for the menu.
+        menu.addMenuItem(count);
+        
+        //Add the minus sign to the menu and configure the click event handler 
+        //for this item.
+        menu.addMenuItem(minus).onclick = function(e)
+        {
+            var currentValue = parseInt(count.innerHTML);
+            
+            if(currentValue > minValue){
+                count.innerHTML =  currentValue - 1;
+            }
+            
+            updateSignStyle();
+                
         };
         
         me.getResponse = function()
         {
             return parseInt(count.innerHTML);
-        }
-        
-        
+        };
         
         return menu;
     }
 
     function text()
     {
+        //Get the minimum and maximum text length allowed values for this
+        //prompt. It is assumed that these values might be nulls.
+        var maxValue = me.getMaxValue();
+        var minValue = me.getMinValue();
+        
         var form = mwf.decorator.Form(me.getText());
         
         var textarea = document.createElement('textarea');
         
         form.addItem(textarea);
         
+        me.isValid = function()
+        {
+            //Remove any heading or trailing white space.
+            textarea.value = textarea.value.replace(/^\s+|\s+$/g,"");
+            
+            //Get the length of the user input text.
+            var inputLength = textarea.value.length;
+            
+            if(inputLength < minValue){
+                errorMsg = "Please enter text more than " + minValue + " characters in length.";
+                return false;
+            }
+            
+            if(inputLength > maxValue){
+                errorMsg = "Please enter text no longer than " + maxValue + " characters.";
+                return false;
+            }
+            
+            return true;  
+        };
+        
+        me.getResponse = function()
+        {
+            return textarea.value.replace(/^\s+|\s+$/g,"");
+        };
         
         return form;
         
@@ -321,5 +469,4 @@ function Prompt(prompt)
         
     }
 
-   
 }
