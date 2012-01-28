@@ -147,3 +147,130 @@ mwf.decorator.Form = function(title)
     return form;
 }
 
+
+mwf.decorator.Form.createTimePicker = function(hours, minutes, seconds)
+{
+    //Initalize default values of null.
+    hours   = hours || null;
+    minutes = minutes || null;
+    seconds = seconds || null;
+    
+    var timePicker = mwf.decorator.Form('Time');
+    
+    var hSelect = FormElement.createSelect(Array.createRange(0, 23), hours);
+    var mSelect = FormElement.createSelect(Array.createRange(0, 59), minutes);
+    var sSelect = FormElement.createSelect(Array.createRange(0, 59), seconds);
+    
+    timePicker.appendChild(mwf.decorator.Form.createLabel('Hour:'));
+    timePicker.appendChild(hSelect);
+    
+    timePicker.appendChild(mwf.decorator.Form.createLabel('Minute:'));
+    timePicker.appendChild(mSelect);
+    
+    timePicker.appendChild(mwf.decorator.Form.createLabel('Seconds:'));
+    timePicker.appendChild(sSelect);
+    
+    return timePicker;
+
+}
+
+
+mwf.decorator.Form.createDatePicker = function(year, month, day)
+{
+    var date = new Date();
+    
+    function getDaysInMonth(month, year){
+        return 32 - new Date(year, month, 32).getDate();
+    }
+
+    var months = [
+        "January", 
+        "February", 
+        "March", 
+        "April", 
+        "May", 
+        "June", 
+        "July", 
+        "August", 
+        "September", 
+        "October", 
+        "November", 
+        "December"
+    ];
+    
+    var datePicker = mwf.decorator.Form('Date');
+    
+    //Change the default month, if set, to english representation. 
+    month = (month)? months[month] : null;
+    
+    var mSelect = FormElement.createSelect(months, month);
+    
+    
+    //If the user has specified a default year and month, then determine the 
+    //number of days in the month to be displayed. 
+    var daysInMonth = (year && month) ? getDaysInMonth(year, month) : 31;
+    
+    var dSelect = FormElement.createSelect(Array.createRange(1, daysInMonth), day);
+    
+    var ySelect = FormElement.createSelect(Array.createRange(date.getFullYear() - 10, date.getFullYear() + 10));
+    
+    datePicker.appendChild(mwf.decorator.Form.createLabel('Month:'));
+    datePicker.appendChild(mSelect);
+    
+    datePicker.appendChild(mwf.decorator.Form.createLabel('Day:'));
+    datePicker.appendChild(dSelect);
+    
+    datePicker.appendChild(mwf.decorator.Form.createLabel('Year:'));
+    datePicker.appendChild(ySelect);
+    
+    return datePicker;
+}
+
+var FormElement = function(){}
+
+FormElement.createSelect = function(options, selected)
+{
+    var select = document.createElement('select');
+    select.type = 'text';
+    
+    for(var i = 0; i < options.length; i++)
+    {
+        var optionTag = document.createElement('option');
+        
+        optionTag.value = options[i];
+        optionTag.innerHTML = options[i];
+        
+        if(options[i] == selected){
+            optionTag.selected = selected;
+        }   
+            
+        select.appendChild(optionTag);
+    }
+    
+    return select;
+
+}
+
+/**
+ * Creates a number array that ranges from [start, stop].
+ * 
+ * @param start int
+ * @param stop int 
+ */
+Array.createRange = function(start, stop)
+{
+    var list = [];
+
+    for(var i = start; i <= stop; i++){
+        list.push(i);
+    }
+
+    return list;
+}
+
+mwf.decorator.Form.createLabel = function(text)
+{
+    var labelTag = document.createElement('label');
+    labelTag.innerHTML = text;
+    return labelTag;
+}
