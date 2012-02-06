@@ -158,9 +158,8 @@ function api(type, url, data, dataType, onSuccess, onError)
 {
     var onResponse = function(response) {
         
-        console.log("Received API call response for URL " + url);
-        console.log(response);
-            
+        console.log("Received API call response for URL %s ", url, response);
+       
         switch(response.result)
         {
             case 'success':

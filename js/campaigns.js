@@ -8,28 +8,26 @@ function Campaigns(campaigns)
     /** 
      * Returns the campaign with the specified URN.
      */
-    this.getCampaign = function(urn)
-    {
+    this.getCampaign = function(urn) {
         return new Campaign(data[urn]);
-    }
+    };
     
     this.render = function(container)
     {
         var availableCampaigns = mwf.decorator.Menu("Available Campaigns");
 
-        for(var i = 0; i < metadata.number_of_results; i++)
-        {
-            //Campaign URN.
-            var urn = metadata.items[i];
-
-            var link = "javascript:openCampaignView('" + urn + "')";
-
-            availableCampaigns.addMenuLinkItem(data[urn].name, link);
-
+        var openCampaign = function(urn){
+            return function(){
+                openCampaignView(urn);
+            };
+        };
+        
+        for(var i = 0; i < metadata.number_of_results; i++){
+            availableCampaigns.addMenuLinkItem(data[metadata.items[i]].name, "#")
+                              .onclick = openCampaign(metadata.items[i]);
         }
 
         container.appendChild(availableCampaigns);
-        
 
     };
     
@@ -38,17 +36,14 @@ function Campaigns(campaigns)
 Campaigns.init = function(callback)
 {
     
-    var onSuccess = function(response) 
-    {
-        var campaigns = new Campaigns(response);
-        callback(campaigns);
+    var onSuccess = function(response) {
+        callback(new Campaigns(response));
     };
 
-    var onError = function(response)
-    {
+    var onError = function(response){
         //Pass in something cool to the callback function.
-    }
+    };
     
     //Make and API call to get the campaigns.
     getCampaigns(onSuccess, onError);
-}
+};

@@ -4,11 +4,30 @@
  */
 function Campaign(campaign)
 {
+    
+    /*
+     * There is apparently a very weird problem running JavaScript within 
+     * PhoneGap – the engine is so restrictive that when encountering the word 
+     * ‘default’, used within the prompt’s XML configuration file as a property 
+     * storing the default value, it interprets it as a keyword crushing the 
+     * system. This renders the XML2JSON conversion impossible. The only 
+     * solution I currently found was to replace all ‘default’  parameters within
+     * the XML string to ‘def’ prior to converting to JSON. I am assuming the 
+     * problem is from the XML2JSON plugin’s use of the dot operator instead of 
+     * the array-access syntax to do the parsing, but debugging the plugin is 
+     * not working – there are only two xml->json parsers and I have tested 
+     * both. Everything works fine on the desktop side, but once placed within 
+     * PhoneGap the bug comes up.
+     */
+    var cleanXML = campaign.xml.replace(/<default>/g, "<defaultValue>")
+                               .replace(/<\/default>/g, "</defaultValue>");
+    
+    //Convert the XML configuration to a JSON representation.
+    var json = $.xml2json.parser(cleanXML);
+    
     this.campaign     = campaign;
-    this.campaignXML  = $.xml2json.parser(campaign.xml).campaign;
-   
-    console.log(this.campaign);
-    console.log(this.campaignXML);
+    this.campaignXML  = json.campaign;
+    
     
     /**
      * Returns the URN for this campaign.
@@ -16,7 +35,7 @@ function Campaign(campaign)
     this.getURN = function()
     {
         return this.campaignXML["campaignurn"];
-    }
+    };
     
     /**
      * Returns the description for this campaign.
@@ -24,11 +43,11 @@ function Campaign(campaign)
     this.getDescription = function()
     {
         return campaign.description;
-    }
+    };
     
     this.render = function(container)
     {
-        
+    	
         var surveys = this.getSurveys();
         
         var surveyMenu = mwf.decorator.Menu("Available Surveys");
@@ -48,7 +67,7 @@ function Campaign(campaign)
         }
         
         container.appendChild(surveyMenu);
-    }
+    };
 
     /**
      * Returns surveys associated with this campaign.
@@ -64,7 +83,7 @@ function Campaign(campaign)
         //it in an array. This is a kind of a dirty fix, if you have any 
         //better ideas of approaching the situation - please be my guest. 
         return (!surveys.length)? [surveys] : surveys;
-    }
+    };
    
   /**
    * Returns a survey associated 
@@ -86,7 +105,7 @@ function Campaign(campaign)
 
        //If no match was found, return null.
        return null;
-   }
+   };
    
 
    
@@ -94,8 +113,9 @@ function Campaign(campaign)
 
 Campaign.init = function(urn, callback)
 {
+	
     Campaigns.init(function(campaigns)
     {
        callback(campaigns.getCampaign(urn));
     });
-}
+};

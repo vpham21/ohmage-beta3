@@ -108,7 +108,7 @@ mwf.decorator.Menu = function(title)
         
         return this;
         
-    }
+    };
     
     /**
      * Returns the current elements title if it's set; null otherwise. 
@@ -117,7 +117,7 @@ mwf.decorator.Menu = function(title)
     menu.getTitle = function()
     {
         return (this._title)? this._title : null;
-    }
+    };
     
     
     /**
@@ -171,7 +171,7 @@ mwf.decorator.Menu = function(title)
         this._items.appendChild(listItem);
         
         return listItem;
-    }
+    };
     
     /**
      * Adds a paragraph element with the specified text to the current menu.
@@ -188,7 +188,7 @@ mwf.decorator.Menu = function(title)
         
         //Add the paragraph item to the menu's ordered list.
         return this.addMenuItem(textItem);
-    }
+    };
     
      /**
      * Adds a link item to this menu.
@@ -203,7 +203,7 @@ mwf.decorator.Menu = function(title)
     menu.addMenuLinkItem = function(text, url, details)
     {
         return this.addMenuItem(createLinkItem(text, url, details));   
-    }
+    };
     
     /**
      * Adds a link item to this menu with a 16x16 icon on the left side.
@@ -233,7 +233,7 @@ mwf.decorator.Menu = function(title)
         
         return this.addMenuItem(linkItem);
    
-    }
+    };
     
    
     /**
@@ -252,7 +252,7 @@ mwf.decorator.Menu = function(title)
     menu.addMenuRadioItem = function(name, value, label, details)
     {
        return this.addMenuItem(createOptionItem(name, value, label, details, true));
-    }
+    };
     
     /**
      * Creates a new checkbox input element and combines it with a link item to 
@@ -270,7 +270,7 @@ mwf.decorator.Menu = function(title)
     menu.addMenuCheckboxItem = function(name, value, label, details)
     {
        return this.addMenuItem(createOptionItem(name, value, label, details, false));
-    }
+    };
     
     menu.getSelectedOptions = function()
     {
@@ -293,7 +293,7 @@ mwf.decorator.Menu = function(title)
         }
         
         return selectedOptions;
-    }
+    };
         
     /**
      * Creates a new input element and combines it with a link item to create a
@@ -335,7 +335,7 @@ mwf.decorator.Menu = function(title)
         };    
         
         return linkItem;
-    }
+    };
     
     
     
@@ -366,7 +366,7 @@ mwf.decorator.Menu = function(title)
         }
         
         return linkItem;
-    }
+    };
     
     /**
      * Creates a new <span> element with .smallprint class and with inner html
@@ -384,7 +384,7 @@ mwf.decorator.Menu = function(title)
         
         return detailsSpan;
         
-    }
+    };
     
     /**
      * Returns the first element of the menu, if it exists. Null otherwise.
@@ -393,7 +393,7 @@ mwf.decorator.Menu = function(title)
     menu.getFirstMenuItem = function()
     {
         return (this._items) ? this._items.firstChild : null;
-    }
+    };
     
     /**
      * Returns the last element of the menu, if it exists. Null otherwise.
@@ -402,7 +402,7 @@ mwf.decorator.Menu = function(title)
     menu.getLastMenuItem = function()
     {
         return (this._items) ? this._items.lastChild : null;
-    }
+    };
     
     /**
      * Returns all the elements within the current menu. If the current menu
@@ -413,7 +413,7 @@ mwf.decorator.Menu = function(title)
     menu.getMenuItems = function()
     {
         return (this._items) ? this._items.children : [];
-    }
+    };
     
     /**
      * Returns the menu item at a certain index. If the index is negative or is
@@ -429,7 +429,7 @@ mwf.decorator.Menu = function(title)
         }
         
         return null;
-    }
+    };
     
     /**
      * Returns the number of elements in the menu.
@@ -439,7 +439,7 @@ mwf.decorator.Menu = function(title)
     menu.size = function()
     {
         return (this._items) ? this._items.children.length : 0;
-    }
+    };
      
     /**
      * Removes item at a given index.
@@ -449,7 +449,7 @@ mwf.decorator.Menu = function(title)
     menu.removeMenuItemAt = function(index)
     {
         return this.removeItem(this.getMenuItemAt(index));
-    }
+    };
 
     /**
      * Removes the given item.
@@ -466,7 +466,7 @@ mwf.decorator.Menu = function(title)
         }
         
         return false;
-    }
+    };
     
     //If a default title has been set, then set the menu's title.
     if(title)
@@ -476,4 +476,4 @@ mwf.decorator.Menu = function(title)
     
     
     return menu;
-}
+};

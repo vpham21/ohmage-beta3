@@ -7,12 +7,15 @@
     <meta name="viewport" content="height=device-height,width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;" />
 
     <title>Choose a Campaign to Continue</title>
-    
+
     <style type="text/css">
         @import url("http://m.ucla.edu/assets/css.php");
         @import "css/prompts.css";
     </style>
-    
+
+    <!-- IMPORT PHONEGAP LIBRARY -->
+    <script type="text/javascript" src="js/phonegap/phonegap-1.0.0.js"> </script>
+
     <!-- IMPORT MWF JAVASCRIPT LIBRARY -->
     <script type="text/javascript" src="http://m.ucla.edu/assets/js.php?standard_libs=geolocation"></script>
     <script type="text/javascript" src="js/mwf/decorator.js"> </script>
@@ -22,7 +25,7 @@
     <script type="text/javascript" src="js/mwf/form.js"> </script>
 
     <!-- IMPORT JQUERY AND EXTENSIONS -->
-    <script type="text/javascript" src="js/jquery/jquery.min.js"></script> 
+    <script type="text/javascript" src="js/jquery/jquery.js"></script>
     <script type="text/javascript" src="js/jquery/jquery.extensions.js"></script>
     <script type="text/javascript" src="js/util/detect_timezone.js"></script>
 
@@ -30,78 +33,75 @@
     <script type="text/javascript" src="js/api.js"></script>
     <script type="text/javascript" src="js/campaigns.js"></script>
     <script type="text/javascript" src="js/campaign.js"></script>
+    <script type="text/javascript" src="js/SurveyResponse.js"></script>
     <script type="text/javascript" src="js/survey.js"></script>
-    <script type="text/javascript" src="js/prompt.js"></script>
+    <script type="text/javascript" src="js/Prompt.js"></script>
+    <script type="text/javascript" src="js/PromptHandler.js"></script>
     <script type="text/javascript" src="js/navigation.js"></script>
 
     <script type="text/javascript">
 
      $(document).ready(function() {
-         
-        
+
+
          //Required for retreiving specific campaign configuration file.
          var campaignURN = $.getUrlVar('campaignURN');
-         
+
          //Required for getting a specific survey from the campaign.
          var surveyID    = $.getUrlVar('surveyID');
-         
-         //If a specific campaign is not specified, take the user to the 
+
+         //If a specific campaign is not specified, take the user to the
          //campaigns view where the user may be able to choose an appropriate
          //campaign.
          if(!campaignURN)
-         {  
+         {
             openCampaignsView();
          }
-         
-         //If a specific survey is not specified, then take the user to the 
+
+         //If a specific survey is not specified, then take the user to the
          //campaign's survey view where he/she may choose a survey.
          else if(surveyID == undefined)
          {
-            openCampaignView(campaignURN); 
+            openCampaignView(campaignURN);
          }
-         
+
          //Attach an event listener to the top right buttion that would open the
          //current survey's campaign.
          $('#button-top').click(function() {
              openCampaignView(campaignURN);
          });
-         
-         
+
+
          //Initialize and render the survey.
-         Survey.init(campaignURN, surveyID, function(survey)
-         {  
+         Survey.init(campaignURN, surveyID, function(survey){
              survey.render(document.getElementById('survey'));
-             
-             console.log(survey.getPrompts())
          });
-         
-             
-           
+
      });
-     
+
 </script>
 
-    
+
 </head>
 <body>
 
 <a class="button-full button-padded" id="button-top">All Surveys</a>
 
-<h1 id="header"> 
-    <a href=""> 
+<h1 id="header">
+    <a href="">
         <img src="img/apple_logo.png" alt="OHMAGE" width="30" height="30" />
-     </a> 
-    <span id="top_title">OHMAGE</span> 
-</h1> 
+     </a>
+    <span id="top_title">OHMAGE</span>
+</h1>
 
 <div id="survey"></div>
 
 
 <!--  Standard footer should be included in all pages regarding the mobile tour. -->
-<div id="footer"> 
-    <p>University of California &copy; 2010 UC Regents<br /> 
-    <a href="#">View Our Privacy Policy</a></p> 
-</div> 
+<div id="footer">
+    <p>University of California &copy; 2010 UC Regents<br />
+    <a href="#">View Our Privacy Policy</a></p>
+</div>
 
 </body>
 </html>

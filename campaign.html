@@ -8,7 +8,13 @@
 
     <title>Choose a Campaign to Continue</title>
 
-    <link rel="stylesheet" href="http://m.ucla.edu/assets/css.php" type="text/css">
+    <style type="text/css">
+        @import url("http://m.ucla.edu/assets/css.php");
+    </style>
+    
+        
+    <!-- IMPORT PHONEGAP LIBRARY -->
+    <script type="text/javascript" src="js/phonegap/phonegap-1.3.0.js"> </script>
 
     <!-- IMPORT MWF JAVASCRIPT LIBRARY -->
     <script type="text/javascript" src="http://m.ucla.edu/assets/js.php"></script>
@@ -18,7 +24,7 @@
     <script type="text/javascript" src="js/mwf/menu.js"> </script>
 
     <!-- IMPORT JQUERY AND EXTENSIONS -->
-    <script type="text/javascript" src="js/jquery/jquery.min.js"></script> 
+    <script type="text/javascript" src="js/jquery/jquery.js"></script> 
     <script type="text/javascript" src="js/jquery/jquery.extensions.js"></script>
 
     <!-- IMPORT OHMAGE API JS LIB -->
@@ -51,7 +57,7 @@
              //Initialize and render the campaign.
              Campaign.init(campaignURN, function(campaign)
              {  
-                 campaign.render(document.getElementById('surveys'))
+                 campaign.render(document.getElementById('surveys'));
              });
              
          });
