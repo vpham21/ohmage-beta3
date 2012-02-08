@@ -156,18 +156,41 @@ function Prompt(prompt)
         return prompt.defaultvalue || null;
     };
 
+    /**
+     * Detects if the specified property is already in the property list of this
+     * prompt. The method returns true if the property is a duplicate, false
+     * otherwise.
+     */
+    var isDuplicatePropertyLabel = function(property){
+
+        var properties = me.getProperties();
+
+        for(var i = 0; i < properties.length; i++)
+        {
+            if(properties[i].label == property.label){
+                return true;
+            }
+        }
+
+        return false;
+    }
 
    /**
-    * Adds a new property to this prompt.
+    * Adds a new property to this prompt. If the property label already exists,
+    * then the method will have no side effects and will return false.
     */
    this.addProperty = function(label, key)
     {
         //By default, property key is the index of the array.
         var property = {key:key || me.getProperties().length, label:label};
 
-        me.getProperties().push(property);
+        if(!isDuplicatePropertyLabel(property)){
+            me.getProperties().push(property);
+            return property;
+        }else{
+            return false
+        }
 
-        return property;
     };
 
     /**

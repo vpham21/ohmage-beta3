@@ -1,34 +1,34 @@
 
 /**
- * 
+ *
  */
 function Campaign(campaign)
 {
-    
+
     /*
-     * There is apparently a very weird problem running JavaScript within 
-     * PhoneGap – the engine is so restrictive that when encountering the word 
-     * ‘default’, used within the prompt’s XML configuration file as a property 
-     * storing the default value, it interprets it as a keyword crushing the 
-     * system. This renders the XML2JSON conversion impossible. The only 
+     * There is apparently a very weird problem running JavaScript within
+     * PhoneGap – the engine is so restrictive that when encountering the word
+     * ‘default’, used within the prompt’s XML configuration file as a property
+     * storing the default value, it interprets it as a keyword crushing the
+     * system. This renders the XML2JSON conversion impossible. The only
      * solution I currently found was to replace all ‘default’  parameters within
-     * the XML string to ‘def’ prior to converting to JSON. I am assuming the 
-     * problem is from the XML2JSON plugin’s use of the dot operator instead of 
-     * the array-access syntax to do the parsing, but debugging the plugin is 
-     * not working – there are only two xml->json parsers and I have tested 
-     * both. Everything works fine on the desktop side, but once placed within 
+     * the XML string to ‘def’ prior to converting to JSON. I am assuming the
+     * problem is from the XML2JSON plugin’s use of the dot operator instead of
+     * the array-access syntax to do the parsing, but debugging the plugin is
+     * not working – there are only two xml->json parsers and I have tested
+     * both. Everything works fine on the desktop side, but once placed within
      * PhoneGap the bug comes up.
      */
     var cleanXML = campaign.xml.replace(/<default>/g, "<defaultValue>")
                                .replace(/<\/default>/g, "</defaultValue>");
-    
+
     //Convert the XML configuration to a JSON representation.
     var json = $.xml2json.parser(cleanXML);
-    
+
     this.campaign     = campaign;
     this.campaignXML  = json.campaign;
-    
-    
+
+
     /**
      * Returns the URN for this campaign.
      */
@@ -36,7 +36,7 @@ function Campaign(campaign)
     {
         return this.campaignXML["campaignurn"];
     };
-    
+
     /**
      * Returns the description for this campaign.
      */
@@ -44,56 +44,56 @@ function Campaign(campaign)
     {
         return campaign.description;
     };
-    
+
     this.render = function(container)
     {
-    	
+
         var surveys = this.getSurveys();
-        
+
         var surveyMenu = mwf.decorator.Menu("Available Surveys");
 
-        //Iterate through each of the campaign's surveys 
-        //and add it to the menu. 
+        //Iterate through each of the campaign's surveys
+        //and add it to the menu.
         for(var i = 0; i < surveys.length; i++)
-        {  
-            
-            var url = "javascript:openSurveyView(\'" + this.getURN() + 
+        {
+
+            var url = "javascript:openSurveyView(\'" + this.getURN() +
                       "\', \'" + surveys[i].id + "\')";
-            
-            surveyMenu.addMenuLinkItem(surveys[i].title, 
-                                       url, 
+
+            surveyMenu.addMenuLinkItem(surveys[i].title,
+                                       url,
                                        surveys[i].description);
-           
+
         }
-        
+
         container.appendChild(surveyMenu);
     };
 
     /**
      * Returns surveys associated with this campaign.
-     * 
+     *
      * --TODO-- all parameter passing should be done via classes. no objects.
-     */ 
+     */
     this.getSurveys = function()
     {
         //Get the list of surveys from the campaign.
         var surveys  = this.campaignXML.surveys.survey;
 
         //If survey is returned as a single item, then go ahead and place
-        //it in an array. This is a kind of a dirty fix, if you have any 
-        //better ideas of approaching the situation - please be my guest. 
+        //it in an array. This is a kind of a dirty fix, if you have any
+        //better ideas of approaching the situation - please be my guest.
         return (!surveys.length)? [surveys] : surveys;
     };
-   
+
   /**
-   * Returns a survey associated 
+   * Returns a survey associated
    */
    this.getSurvey = function(id)
    {
        //Get a list of all the possible surveys.
        var surveys = this.getSurveys();
-       
-       //Iterate through the list of retrieved surveys. If a ID match is found, 
+
+       //Iterate through the list of retrieved surveys. If a ID match is found,
        //return the survey.
        for(var i = 0; i < surveys.length; i++)
        {
@@ -106,16 +106,13 @@ function Campaign(campaign)
        //If no match was found, return null.
        return null;
    };
-   
 
-   
+
+
 }
 
-Campaign.init = function(urn, callback)
-{
-	
-    Campaigns.init(function(campaigns)
-    {
+Campaign.init = function(urn, callback){
+    Campaigns.init(function(campaigns){
        callback(campaigns.getCampaign(urn));
     });
 };

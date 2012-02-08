@@ -148,13 +148,21 @@ function PromptHandler(prompt)
                 e.preventDefault();
             }
 
+            //Get the value specified by the user.
             var newChoice = document.getElementById('new-choice').value;
+
+            //Create a new property with the value specified.
+            var prop = prompt.addProperty(newChoice);
+
+            //If the property is invalid, alert the user and cancel the add.
+            if(!prop){
+                alert('Option with that label already exists.');
+                return false;
+            }
 
             var addOptionItem = choice_menu.getLastMenuItem();
 
             choice_menu.removeMenuItem(addOptionItem);
-
-            var prop = prompt.addProperty(newChoice);
 
             //Depending on if the choices are single-choice or multiple-choice,
             //add either a radio button menu item or a checkbox menu item.
@@ -164,13 +172,18 @@ function PromptHandler(prompt)
                 choice_menu.addMenuCheckboxItem(prompt.getType(), prop.key, prop.label);
             }
 
-            choice_menu.addMenuItem(addOptionItem, true);
-
             //Hide the 'add option button'.
             form.style.display = 'none';
 
             //Clear the user input textbox.
             document.getElementById('new-choice').value = "";
+
+
+
+
+            choice_menu.addMenuItem(addOptionItem, true);
+
+
 
             return false;
         });
@@ -182,9 +195,6 @@ function PromptHandler(prompt)
         container.appendChild(form);
         return container;
     };
-
-
-
 
     this.hours_before_now = function()
     {
@@ -327,19 +337,19 @@ function PromptHandler(prompt)
 
         var image = document.createElement('img');
         image.style.width = "100%";
-        
+
         var imgForm = mwf.decorator.Form('Image');
-        
+
 
         imgForm.style.display = 'none';
         imgForm.addItem(image);
-        
+
         var takeImageButton = mwfd.SingleClickButton(prompt.getText(), function()
         {
 
             function onSuccess(imageURI) {
                 image.src = imageURI;
-        
+
                 imgForm.style.display = 'block';
                 image.alt = SurveyResponse.createUUID();
             }
@@ -387,23 +397,32 @@ function PromptHandler(prompt)
         };
 
         //Returns YYYY-MM-DD
-        var getFullYear = function(date){
+        var getFullDate = function(date){
             return date.getFullYear() + "-" +
                    leftPad(date.getMonth() + 1) + "-" +
-                   date.getDate();
+                   leftPad(date.getDate());
         };
 
 
         var date = new Date();
 
-
         var datePicker = document.createElement('input');
         datePicker.type = 'date';
-        datePicker.value = getFullYear(date);
+        datePicker.value = getFullDate(date);
+
+        //Handle browsers that don't support HTML5's input=date.
+        if(true || datePicker.type === 'text'){
+            $(datePicker).scroller({ dateFormat:'yyyy-mm-dd', dateOrder:'yymmdd' });
+        }
 
         var timePicker = document.createElement('input');
         timePicker.type = 'time';
         timePicker.value = leftPad(date.getHours()) + ":" + leftPad(date.getMinutes());
+
+        //Handle browsers that don't support HTML5's input=time.
+        if(timePicker.type === 'text'){
+            $(timePicker).scroller({ preset:'time', ampm: false, timeFormat:'HH:ii' });
+        }
 
         prompt.isValid = function()
         {

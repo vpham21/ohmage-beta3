@@ -1,11 +1,24 @@
 
-function SurveyResponse(id, uuid)
+function SurveyResponse(id, uuid, urn)
 {
     /**
      * This variable utilizes JavaScript's closure paradigm to allow private
      * methods to invoke public methods.
      */
     var me = this;
+
+    /**
+     * An optional variable that associates this survey response with the
+     * surveys' comapaign. This value should be used to create a Survey object
+     * from a SurveyResponse object.
+     */
+    this.campaign_urn = urn;
+
+    /**
+     * If set to true, the user has submitted the survey and is not allowed to
+     * make further modifications to the response.
+     */
+    this.submitted = false;
 
     /**
      * Enumaration object that describes location status.
@@ -25,7 +38,7 @@ function SurveyResponse(id, uuid)
     /**
      * A UUID unique to this survey response.
      */
-    this.survey_key = uuid || SurveyResponse.createUUID();
+    this.survey_key = uuid;
 
     /**
      * A string defining a survey in the campaign's associated configuration file
@@ -84,7 +97,7 @@ function SurveyResponse(id, uuid)
 
                 me.location.latitude  = pos.latitude;
                 me.location.longitute = pos.longitude;
-                me.location.accoracy  = pos.accuracy;
+                me.location.accuracy  = pos.accuracy;
 
                 //A string describing location status. Must be one of:
                 //unavailable, valid, inaccurate, stale.
@@ -128,15 +141,19 @@ function SurveyResponse(id, uuid)
     /**
      * Saves the current time as the survey completion time.
      */
-    this.recordSubmitTime = function()
+    var recordSubmitTime = function()
     {
-        this.time = new Date().getTime();
+        me.time = new Date().getTime();
     };
 
     this.submit = function(callback)
     {
-
+        recordSubmitTime();
+        this.submitted = true;
+        this.save();
     };
+
+
 }
 
 SurveyResponse.createUUID = function() {
@@ -156,7 +173,7 @@ SurveyResponse.createUUID = function() {
     return uuid;
 };
 
-SurveyResponse.init = function(id)
+SurveyResponse.init = function(id, urn)
 {
     var pool = SurveyResponse.getPool();
 
@@ -164,13 +181,21 @@ SurveyResponse.init = function(id)
     var uuid = SurveyResponse.createUUID();
 
 
-    pool[uuid] = new SurveyResponse(id, uuid);
+    pool[uuid] = new SurveyResponse(id, uuid, urn);
     SurveyResponse.setPool(pool);
 
     return pool[uuid];
 
-
 };
+
+/**
+ * The function restores a stored SurveyResponse object.
+ */
+SurveyResponse.restore = function(id)
+{
+    //ToDo: implement.
+    return null;
+}
 
 SurveyResponse.getSurvey = function(survey_key)
 {
@@ -186,7 +211,7 @@ SurveyResponse.saveSurvey = function(survey)
     var pool = SurveyResponse.getPool();
 
     //Save the specified survey in the pool, mapped to the UUID of the survey.
-    pool[survey.survey_id] = survey;
+    pool[survey.survey_key] = survey;
 
     //Save the pool in an external storage.
     SurveyResponse.setPool(pool);
