@@ -154,7 +154,7 @@ mwf.decorator.Menu = function(title)
         
         }
     
-        if(this._items.children.length == 0)
+        if(this._items.children.length === 0)
         {
             if(this._title)
             {
