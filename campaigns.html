@@ -8,57 +8,65 @@
     <title>Ohmage Campaigns</title>
 
     <style type="text/css">
-        @import url("http://m.ucla.edu/assets/css.php");
+        @import url("http://m.ucla.edu/old/assets/css.php");
     </style>
 
     <!-- IMPORT MWF JAVASCRIPT LIBRARY -->
-    <script type="text/javascript" src="http://m.ucla.edu/assets/js.php"></script>
+    <script type="text/javascript" src="http://m.ucla.edu/old/assets/js.php"></script>
     <script type="text/javascript" src="js/mwf/decorator.js"> </script>
     <script type="text/javascript" src="js/mwf/content.js"> </script>
     <script type="text/javascript" src="js/mwf/button.js"> </script>
     <script type="text/javascript" src="js/mwf/menu.js"> </script>
 
     <!-- IMPORT JQUERY AND EXTENSIONS -->
-    <script type="text/javascript" src="js/jquery/jquery.js"></script> 
+    <script type="text/javascript" src="js/jquery/jquery.js"></script>
     <script type="text/javascript" src="js/jquery/jquery.extensions.js"></script>
 
     <!-- IMPORT OHMAGE API JS LIB -->
     <script type="text/javascript" src="js/api.js"></script>
-    <script type="text/javascript" src="js/campaigns.js"></script>
+    <script type="text/javascript" src="js/Campaigns.js"></script>
 
     <script type="text/javascript">
 
-         $(document).ready(function() 
+         $(document).ready(function()
          {
+
+            //Attach an event listener to the top right buttion to navigate to
+            //the upload queue.
+            $('#button-top').click(function() {
+                openUploadQueueView();
+            });
+
             Campaigns.init(function(campaigns)
-            {    
+            {
                 campaigns.render(document.getElementById('campaigns'));
-            });      
+            });
          });
 
     </script>
 
-    
+
 </head>
 
 <body>
 
+    <a class="button-full button-padded" id="button-top">Upload Queue</a>
 
-    <h1 id="header"> 
-        <a href=""> 
+    <h1 id="header">
+        <a href="">
             <img src="img/apple_logo.png" alt="OHMAGE" width="30" height="30" />
-         </a> 
-        <span>OHMAGE Campaigns</span> 
-    </h1> 
+         </a>
+        <span>OHMAGE Campaigns</span>
+    </h1>
 
     <div id="campaigns"> </div>
 
 
     <!--  Standard footer should be included in all pages regarding the mobile tour. -->
-    <div id="footer"> 
-        <p>University of California &copy; 2010 UC Regents<br /> 
-        <a href="#">View Our Privacy Policy</a></p> 
-    </div> 
+    <div id="footer">
+        <p>University of California &copy; 2010 UC Regents<br />
+        <a href="#">View Our Privacy Policy</a></p>
+    </div>
 
 </body>
 </html>
