@@ -57,6 +57,22 @@ function UserAuthentication() {
         }else{
             return false;
         }
+    };
+
+    /**
+     * Returns the authentication token if it exists, or null otherwise.
+     * @return The authentication token if it exists, or null otherwise.
+     */
+    this.getAuthToken = function(){
+        return $.cookie(TOKEN_AUTH_COOKIE_NAME);
+    }
+
+    /**
+     * Returns the hashed password if it exists, or null otherwise.
+     * @return The hashed password if it exists, or null otherwise.
+     */
+    this.getHashedPassword = function(){
+        return $.cookie(HASH_AUTH_COOKIE_NAME);
     }
 
     /**
@@ -78,7 +94,7 @@ function UserAuthentication() {
             redirect(redirectURL);
         }
 
-    }
+    };
 
     /**
      * Method agnostic authentication check - this method will return true if
@@ -102,7 +118,7 @@ function UserAuthentication() {
         }
 
         return false;
-    }
+    };
 
     /**
      * Checks if the user is authorized via password hash. If an optional
@@ -116,7 +132,7 @@ function UserAuthentication() {
      */
     this.isUserAuthenticatedByHash = function(redirectURL){
         return authenticationCheck(HASH_AUTH_COOKIE_NAME, redirectURL);
-    }
+    };
 
     /**
      * Checks if the user is authenticated via auth token method. If an optional
@@ -130,7 +146,7 @@ function UserAuthentication() {
      */
     this.isUserAuthenticatedByToken = function(redirectURL){
         return authenticationCheck(TOKEN_AUTH_COOKIE_NAME, redirectURL);
-    }
+    };
 
     /**
      * Checks if the user is authenticated via the hashed password method. If
@@ -144,7 +160,7 @@ function UserAuthentication() {
      */
     this.authenticateByHash = function(username, password, callback){
 
-        if(this.isUserAuthorizedByHash()){
+        if(this.isUserAuthenticatedByHash()){
             callback(true);
         }
 
@@ -175,7 +191,7 @@ function UserAuthentication() {
            onError
          );
 
-    }
+    };
 
     /**
      * Checks if the user is authenticated via the auth token method. If
@@ -219,6 +235,6 @@ function UserAuthentication() {
            onError
          );
 
-    }
+    };
 
 }
