@@ -4,10 +4,7 @@
  */
 var OG_SERVER = 'https://dev.mobilizingcs.org';
 
-/**
- * The URL for the authentication server.
- */
-var AUTH_URL = '/app/user/auth_token';
+
 
 /**
  * URL for reading campaigns.
@@ -15,58 +12,6 @@ var AUTH_URL = '/app/user/auth_token';
 var CAMPAIGN_READ_URL = '/app/campaign/read';
 
 
-function authCheck(redirectURL)
-{
-    //If the authentication token already exists, redirect the user to the
-    //campaigns view.
-    if($.cookie("auth_token") !== null)
-    {
-        redirect(redirectURL);
-    }
-}
-
-function authUser(username, password, redirectURL)
-{
-
-    authCheck(redirectURL);
-
-    //On successful authentication, save the token in a cookie and then redirect
-    //the user to the specified URL.
-    var onSuccess = function(response)
-    {
-        //Save the authentication token in a cookie.
-        $.cookie('auth_token', response.token);
-
-        //Redirect the user.
-        redirect(redirectURL);
-
-    };
-
-    //ToDo: Use some cool display to indicate an error.
-    var onError = function(response)
-    {
-        alert(response.errors[0].text);
-    };
-
-
-
-   //Make an API call.
-   api(
-       "POST",
-       AUTH_URL,
-       {
-            user : username,
-            password: password,
-            client: '1'
-       },
-       'JSON',
-       onSuccess,
-       onError
-     );
-
-
-
-}
 
 
 function getCampaigns(onSuccess, onError)
