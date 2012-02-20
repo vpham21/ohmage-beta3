@@ -33,6 +33,11 @@ function UserAuthentication() {
     var HASH_AUTH_COOKIE_NAME = 'hashed-password';
 
     /**
+     * The anem of the cookie that stores usernames.
+     */
+    var USERNAME_COOKIE_NAME = 'username';
+
+    /**
      * Return true if cookie with the specified name exists. Optionally,
      * redirects the user to the provided redirect URL in case the user is
      * authenticated.
@@ -88,6 +93,7 @@ function UserAuthentication() {
         //Erase any authentication related cookies.
         $.cookie(TOKEN_AUTH_COOKIE_NAME, null);
         $.cookie(HASH_AUTH_COOKIE_NAME, null);
+        $.cookie(USERNAME_COOKIE_NAME, null);
 
         //If the redirect URL is specifieid, then redirect the user.
         if(redirectURL){
@@ -149,6 +155,14 @@ function UserAuthentication() {
     };
 
     /**
+     * Returns currently logged in user's username, or null if non exists.
+     * @return Currently logged in user's username, or null if non exists.
+     */
+    this.getUsername = function(){
+        return $.cookie(USERNAME_COOKIE_NAME);
+    }
+
+    /**
      * Checks if the user is authenticated via the hashed password method. If
      * the authentication was successful, then the callback method will be
      * invoked with a single boolean argument true, otherwise callback will be
@@ -169,6 +183,7 @@ function UserAuthentication() {
         var onSuccess = function(response){
             //Save the hashed password in a cookie.
             $.cookie(HASH_AUTH_COOKIE_NAME, response.hashed_password);
+            $.cookie(USERNAME_COOKIE_NAME, username);
             callback(true);
         };
 
@@ -214,6 +229,7 @@ function UserAuthentication() {
         var onSuccess = function(response){
             //Save the authentication token in a cookie and invoke the callback.
             $.cookie(TOKEN_AUTH_COOKIE_NAME, response.token);
+            $.cookie(USERNAME_COOKIE_NAME, username);
             callback(true);
         };
 
