@@ -20,7 +20,7 @@ function UserAuthentication() {
     /**
      * Authentication token cookie name.
      */
-    var TOKEN_AUTH_COOKIE_NAME = 'auth-token';
+    var TOKEN_AUTH_COOKIE_NAME = 'auth_token';
 
     /**
      * Endpoint for user authentication via hash password.
@@ -30,7 +30,7 @@ function UserAuthentication() {
     /**
      * Hash authentication cookie name.
      */
-    var HASH_AUTH_COOKIE_NAME = 'hashed-password';
+    var HASH_AUTH_COOKIE_NAME = 'hashed_password';
 
     /**
      * The anem of the cookie that stores usernames.
@@ -181,6 +181,8 @@ function UserAuthentication() {
         //On successful authentication, save the hashed password in a cookie and
         //then invoke the callback.
         var onSuccess = function(response){
+
+            console.log(response);
             //Save the hashed password in a cookie.
             $.cookie(HASH_AUTH_COOKIE_NAME, response.hashed_password);
             $.cookie(USERNAME_COOKIE_NAME, username);

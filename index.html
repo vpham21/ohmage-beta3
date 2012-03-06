@@ -9,6 +9,7 @@
 
 <style type="text/css">
     @import url("http://m.ucla.edu/old/assets/css.php");
+    @import url("css/grid.css");
 </style>
 
 <!-- IMPORT MWF JAVASCRIPT LIBRARY -->
@@ -17,36 +18,56 @@
 <!-- IMPORT PHONEGAP LIBRARY -->
 <script type="text/javascript" src="js/phonegap/phonegap-1.0.0.js"> </script>
 
+<!-- IMPORT MWF JAVASCRIPT LIBRARY -->
+<script type="text/javascript" src="http://m.ucla.edu/old/assets/js.php"></script>
+<script type="text/javascript" src="js/mwf/decorator.js"> </script>
+<script type="text/javascript" src="js/mwf/content.js"> </script>
+<script type="text/javascript" src="js/mwf/button.js"> </script>
+<script type="text/javascript" src="js/mwf/menu.js"> </script>
+
 <!-- IMPORT JQUERY AND EXTENSIONS -->
 <script type="text/javascript" src="js/jquery/jquery.js"></script>
 <script type="text/javascript" src="js/jquery/jquery.extensions.js"></script>
 
 <!-- IMPORT OHMAGE API JS LIB -->
 <script type="text/javascript" src="js/api.js"></script>
+<script type="text/javascript" src="js/UserAuthentication.js"></script>
 
 <script type="text/javascript">
 
-    //DEBUG ONLY
-    //Erase current cookie.
-
-    //$.cookie("auth_token", null);
-
-    authCheck("campaigns.html");
-
     $(document).ready(function()
     {
-       $("#login").click(function()
-       {
+        var auth = new UserAuthentication();
 
-          var username = "zorayr.mwf"; //$("#username").val();
-          var password = "zorayr.MWF1"; //$("#password").val();
 
-          authUser(username, password, "campaigns.html");
+        (function(){
 
-       });
+            mwf.decorator.TopButton((auth.isUserAuthenticated()) ? "Logout" : "Login", null, function(){
 
+                if(auth.isUserAuthenticated()){
+                    auth.logout();
+                }else{
+                    openAuthenticationPage();
+                }
+
+            }, true);
+
+        })();
+
+
+
+        var dashboard = mwf.decorator.Menu();
+
+        dashboard.addMenuImageItem('Campaigns', 'campaigns.html',    'img/dash/dash_campaigns.png');
+        dashboard.addMenuImageItem('Surveys',   'campaigns.html',    'img/dash/dash_surveys.png');
+        dashboard.addMenuImageItem('History',   'history.html',      'img/dash/dash_resphistory.png');
+        dashboard.addMenuImageItem('Queue',     'upload-queue.html', 'img/dash/dash_upqueue.png');
+        dashboard.addMenuImageItem('Profile',   'profile.html',      'img/dash/dash_profile.png');
+        dashboard.addMenuImageItem('Help',      'help.html',         'img/dash/dash_help.png');
+
+
+        $('#dashboard').append(dashboard);
     });
-
 
 </script>
 
@@ -54,34 +75,20 @@
 </head>
 <body>
 
+    <h1 id="header">
+        <a href="">
+            <img src="img/apple_logo.png" alt="Ohamge" width="30" height="30" />
+         </a>
+        <span>Welcome to Ohmage!</span>
+    </h1>
 
-<h1 id="header">
-    <a href="">
-        <img src="img/apple_logo.png" alt="Ohamge" width="30" height="30" />
-     </a>
-    <span>Welcome to Ohmage!</span>
-</h1>
+    <div id="dashboard" class="grid"></div>
 
-
-<form class="form-full form-padded">
-
-    <h1 class="light form-first">Please Login to Proceed</h1>
-
-    <label for="username">Username</label>
-    <input type="text" name="username" id="username" />
-
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password"/>
-
-    <input type="button" id="login" name="submit" value="Secure Login" class="form-last" />
-
-</form>
-
-<!--  Standard footer should be included in all pages regarding the mobile tour. -->
-<div id="footer">
-    <p>University of California &copy; 2010 UC Regents<br />
-    <a href="#">View Our Privacy Policy</a></p>
-</div>
+    <!--  Standard footer should be included in all pages regarding the mobile tour. -->
+    <div id="footer">
+        <p>University of California &copy; 2010 UC Regents<br />
+        <a href="#">View Our Privacy Policy</a></p>
+    </div>
 
 </body>
 </html>

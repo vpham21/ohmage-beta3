@@ -7,8 +7,8 @@
 function PromptHandler(prompt)
 {
     /**
-    * Namespace abbreviation for Mobile Web Framework JS Decorators library.
-    */
+     * Namespace abbreviation for Mobile Web Framework JS Decorators library.
+     */
     var mwfd = mwf.decorator;
 
     var DATE_REGEX = "[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])";
@@ -20,8 +20,7 @@ function PromptHandler(prompt)
 
         prompt.isValid = function()
         {
-            if(choiceMenu.getSelectedOptions().length !== 1)
-            {
+            if(choiceMenu.getSelectedOptions().length !== 1){
                 prompt.setErrorMessage("Please select a single option.");
                 return false;
             }
@@ -329,6 +328,8 @@ function PromptHandler(prompt)
 
     this.photo = function()
     {
+
+        //ToDo: Degrade down to file upload.
         if(!navigator.camera){
             return this.unsupported();
         }
@@ -348,10 +349,15 @@ function PromptHandler(prompt)
         {
 
             function onSuccess(imageURI) {
-                image.src = imageURI;
 
+                //Display the capture image.
+                image.src = imageURI;
                 imgForm.style.display = 'block';
-                image.alt = SurveyResponse.createUUID();
+
+                //Save the image and store the returned UUID within the image's
+                //alt attribute.
+                image.alt = SurveyResponse.saveImage(imageURI);
+
             }
 
             function onFail(message) {
@@ -411,7 +417,7 @@ function PromptHandler(prompt)
         datePicker.value = getFullDate(date);
 
         //Handle browsers that don't support HTML5's input=date.
-        if(true || datePicker.type === 'text'){
+        if(datePicker.type === 'text'){
             $(datePicker).scroller({ dateFormat:'yyyy-mm-dd', dateOrder:'yymmdd' });
         }
 

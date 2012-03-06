@@ -1,6 +1,7 @@
 
 /**
  *
+ * @author Zorayr Khalapyan
  */
 function Campaign(campaign)
 {
@@ -38,6 +39,13 @@ function Campaign(campaign)
     };
 
     /**
+     * Return's the campaign's creation timestamp.
+     */
+    this.getCreationTimestamp = function(){
+        return campaign.creation_timestamp;
+    };
+
+    /**
      * Returns the description for this campaign.
      */
     this.getDescription = function()
@@ -71,8 +79,6 @@ function Campaign(campaign)
 
     /**
      * Returns surveys associated with this campaign.
-     *
-     * --TODO-- all parameter passing should be done via classes. no objects.
      */
     this.getSurveys = function()
     {

@@ -1,6 +1,20 @@
-
+/**
+ * The class represents the responses gathered from the user for a particular
+ * survey.
+ *
+ * @author Zorayr Khalapyan
+ *
+ * @param id
+ * @param uuid The unique identifier for this survey response.
+ * @param urn The URN of the campaign associated with this survey.
+ */
 function SurveyResponse(id, uuid, urn)
 {
+    /**
+     * Namespace abbreviation for Mobile Web Framework JS Decorators library.
+     */
+    var mwfd = mwf.decorator;
+
     /**
      * This variable utilizes JavaScript's closure paradigm to allow private
      * methods to invoke public methods.
@@ -8,17 +22,17 @@ function SurveyResponse(id, uuid, urn)
     var me = this;
 
     /**
+     * Working data of the survey response. Saving and restoring surveys from
+     * local storage will only save and restore this data object.
+     */
+    this.data = {};
+
+    /**
      * An optional variable that associates this survey response with the
      * surveys' comapaign. This value should be used to create a Survey object
      * from a SurveyResponse object.
      */
-    this.campaign_urn = urn;
-
-    /**
-     * If set to true, the user has submitted the survey and is not allowed to
-     * make further modifications to the response.
-     */
-    this.submitted = false;
+    this.data.campaign_urn = urn;
 
     /**
      * Enumaration object that describes location status.
@@ -26,7 +40,8 @@ function SurveyResponse(id, uuid, urn)
      */
     var LocationStatus =
     {
-        //If the status is unavailable, it is an error to send a location object.
+        //If the status is unavailable,
+        //it is an error to send a location object.
         UNAVAILABLE : "unavailable",
 
         VALID       : "valid",
@@ -38,37 +53,37 @@ function SurveyResponse(id, uuid, urn)
     /**
      * A UUID unique to this survey response.
      */
-    this.survey_key = uuid;
+    this.data.survey_key = uuid;
 
     /**
-     * A string defining a survey in the campaign's associated configuration file
-     * at the XPath /surveys/survey/id.
+     * A string defining a survey in the campaign's associated configuration
+     * file at the XPath /surveys/survey/id.
      */
-    this.survey_id = id;
+    this.data.survey_id = id;
 
     /**
      * A string representing a standard time zone.
      */
-    this.timezone = jstz.determine_timezone().name();
+    this.data.timezone = jstz.determine_timezone().name();
 
     /**
      * An int specifying the number of milliseconds since the epoch.
      * This value will be set on survey response submission.
      */
-    this.time = null;
+    this.data.time = null;
 
     /**
      * An array composed of prompt responses and/or repeatable sets. By default
      * user has no responses.
      */
-    this.responses = {};
+    this.data.responses = {};
 
     /**
      * An object with variable properties that describes the survey's launch
      * context. See the trigger framework page for a description of the object's
      * contents. The object must contain the property launch_time.
      */
-    this.survey_lauch_context =
+    this.data.survey_launch_context =
     {
         launch_time     : new Date().getTime(),
         launch_timezone : jstz.determine_timezone().name(),
@@ -78,38 +93,38 @@ function SurveyResponse(id, uuid, urn)
     /**
      * An object for housing location data.
      */
-    this.location = null;
+    this.data.location = null;
 
     this.setLocation = function()
     {
-
         mwf.touch.geolocation.getPosition(
+
             function(pos){
 
                 //Create a new location object to house
                 //the location data.
-                me.location = {};
+                me.data.location = {};
 
                 //Currently, there is no way of determining the geolocation
                 //provider but it's almost always going to be from the GPS
                 //device.
-                me.location.provider = 'GPS';
+                me.data.location.provider = 'GPS';
 
-                me.location.latitude  = pos.latitude;
-                me.location.longitute = pos.longitude;
-                me.location.accuracy  = pos.accuracy;
+                me.data.location.latitude  = pos.latitude;
+                me.data.location.longitude = pos.longitude;
+                me.data.location.accuracy  = pos.accuracy;
 
                 //A string describing location status. Must be one of:
                 //unavailable, valid, inaccurate, stale.
-                me.location_status = LocationStatus.VALID;
+                me.data.location_status = LocationStatus.VALID;
 
                 //A long value representing the milliseconds since the epoch at
                 //hich time this location value was collected.
-                me.location.time = new Date().getTime();
+                me.data.location.time = new Date().getTime();
 
                 //The timezone ID for the timezone of the device when this
                 //location value was collected.
-                me.location.timezone = jstz.determine_timezone().name();
+                me.data.location.timezone = jstz.determine_timezone().name();
 
                 me.save();
             },
@@ -118,23 +133,67 @@ function SurveyResponse(id, uuid, urn)
             //appropriate location status.
             function(){
 
-                delete this.location;
+                delete this.data.location;
 
-                this.location_status = LocationStatus.UNAVAILABLE;
+                this.data.location_status = LocationStatus.UNAVAILABLE;
 
                 me.save();
             }
         );
     };
 
+    /**
+     * Returns data that can be uploaded to the surver as response data.
+     */
+    this.getUploadData = function(){
+
+        //The idea here is that during response collection, responses is treated
+        //as an object out of the idea that JavaScript does not support
+        //associative arrays and in order to search through a list of objects,
+        //it would have taken O(n) time. Instead, we use an object which has
+        //key-value pair access time of O(1), but needs some extra conversion
+        //before getting uploaded to the surver.
+        var responses = [];
+        for (var promptID in this.data.responses) {
+            responses.push({
+                prompt_id: promptID,
+                value: this.data.responses[promptID]
+            });
+        }
+
+        var uploadData = this.data;
+        uploadData.responses = responses;
+        return uploadData;
+    }
+
+    /**
+     * Replaces the current working data.
+     */
+    this.setData = function(data){
+        this.data = data;
+    };
+
+    /**
+     * Returns the current working data.
+     */
+    this.getData = function(){
+        return this.data;
+    }
+
+    /**
+     * Saves the current response in the response pool.
+     */
     this.save = function()
     {
         SurveyResponse.saveSurvey(this);
     };
 
+    /**
+     * Adds a response to the current response list.
+     */
     this.respond = function(promptID, value)
     {
-        this.responses[promptID] = value;
+        this.data.responses[promptID] = value;
         this.save();
     };
 
@@ -143,17 +202,42 @@ function SurveyResponse(id, uuid, urn)
      */
     var recordSubmitTime = function()
     {
-        me.time = new Date().getTime();
+        me.data.time = new Date().getTime();
     };
 
     this.submit = function(callback)
     {
+        //Save the submit time.
         recordSubmitTime();
-        this.submitted = true;
+
+        //Save the survey in the pool.
         this.save();
+
+        if(callback){
+            callback();
+        }
+
     };
 
+    this.getSurveyID = function(){
+      return this.data.survey_id;
+    };
 
+    this.getSurveyKey = function(){
+        return this.data.survey_key;
+    }
+
+    this.isSubmitted = function(){
+        return (this.data.time == null)? false : true;
+    };
+
+    this.getSubmitDate = function(){
+        return (new Date(this.data.time)).toString().substr(0, 24);
+    };
+
+    this.getCampaignURN = function(){
+        return this.data.campaign_urn;
+    }
 }
 
 SurveyResponse.createUUID = function() {
@@ -165,8 +249,11 @@ SurveyResponse.createUUID = function() {
         s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
     }
 
-    s[14] = "4";  // bits 12-15 of the time_hi_and_version field to 0010
-    s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);  // bits 6-7 of the clock_seq_hi_and_reserved to 01
+    // Bits 12-15 of the time_hi_and_version field to 0010.
+    s[14] = "4";
+
+    // Bits 6-7 of the clock_seq_hi_and_reserved to 01.
+    s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);
     s[8] = s[13] = s[18] = s[23] = "-";
 
     var uuid = s.join("");
@@ -180,8 +267,8 @@ SurveyResponse.init = function(id, urn)
     //Create a new UUID to be assigned to the survey.
     var uuid = SurveyResponse.createUUID();
 
-
     pool[uuid] = new SurveyResponse(id, uuid, urn);
+
     SurveyResponse.setPool(pool);
 
     return pool[uuid];
@@ -191,10 +278,19 @@ SurveyResponse.init = function(id, urn)
 /**
  * The function restores a stored SurveyResponse object.
  */
-SurveyResponse.restore = function(id)
+SurveyResponse.restoreSurvey = function(survey_key)
 {
-    //ToDo: implement.
-    return null;
+    //Get the survey from the response pool.
+    var data = SurveyResponse.getSurvey(survey_key);
+
+
+    var surveyResponse = new SurveyResponse(data.id,
+                                            data.survey_key,
+                                            data.campaign_urn);
+    surveyResponse.setData(data);
+
+    return surveyResponse;
+
 }
 
 SurveyResponse.getSurvey = function(survey_key)
@@ -211,14 +307,13 @@ SurveyResponse.saveSurvey = function(survey)
     var pool = SurveyResponse.getPool();
 
     //Save the specified survey in the pool, mapped to the UUID of the survey.
-    pool[survey.survey_key] = survey;
+    pool[survey.getSurveyKey()] = survey.getData();
 
     //Save the pool in an external storage.
     SurveyResponse.setPool(pool);
 };
 
-SurveyResponse.getPool = function()
-{
+SurveyResponse.getPool = function(){
     return (localStorage.pool)? JSON.parse(localStorage.pool): {};
 };
 
@@ -230,7 +325,6 @@ SurveyResponse.setPool = function(pool)
 /**
  * Saves the provided image URI and returns a UUID that mapps to that image's
  * URI.
- *
  */
 SurveyResponse.saveImage = function(imageURI)
 {

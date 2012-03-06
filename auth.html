@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+
+<meta name="viewport" content="height=device-height,width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;" />
+
+<title>Welcome to OHMAGE</title>
+
+<style type="text/css">
+    @import url("http://m.ucla.edu/old/assets/css.php");
+</style>
+
+<!-- IMPORT MWF JAVASCRIPT LIBRARY -->
+<script type="text/javascript" src="http://m.ucla.edu/old/assets/js.php"></script>
+
+<!-- IMPORT PHONEGAP LIBRARY -->
+<script type="text/javascript" src="js/phonegap/phonegap-1.0.0.js"> </script>
+
+<!-- IMPORT JQUERY AND EXTENSIONS -->
+<script type="text/javascript" src="js/jquery/jquery.js"></script>
+<script type="text/javascript" src="js/jquery/jquery.extensions.js"></script>
+
+<!-- IMPORT OHMAGE API JS LIB -->
+<script type="text/javascript" src="js/api.js"></script>
+<script type="text/javascript" src="js/UserAuthentication.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function()
+    {
+        var auth = new UserAuthentication();
+
+        auth.logOut();
+
+        $("#login").click(function()
+        {
+            var username = "zorayr.mwf"; //$("#username").val();
+            var password = "zorayr.MWF1"; //$("#password").val();
+
+            auth.authenticateByHash(username, password, function(success){
+               if(success){
+                   openDashboard();
+               }
+            });
+
+
+       });
+
+    });
+
+
+</script>
+
+
+</head>
+<body>
+
+
+<h1 id="header">
+    <a href="index.html">
+        <img src="img/apple_logo.png" alt="Ohamge" width="30" height="30" />
+     </a>
+    <span>Welcome to Ohmage!</span>
+</h1>
+
+
+<form class="form-full form-padded">
+
+    <h1 class="light form-first">Please Login to Proceed</h1>
+
+    <label for="username">Username</label>
+    <input type="text" name="username" id="username" />
+
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password"/>
+
+    <input type="button" id="login" name="submit" value="Secure Login" class="form-last" />
+
+</form>
+
+<!--  Standard footer should be included in all pages regarding the mobile tour. -->
+<div id="footer">
+    <p>University of California &copy; 2010 UC Regents<br />
+    <a href="#">View Our Privacy Policy</a></p>
+</div>
+
+</body>
+</html>

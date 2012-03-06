@@ -4,14 +4,19 @@
  */
 var OG_SERVER = 'https://dev.mobilizingcs.org';
 
-
+var PROXY_SERVER_URL = "http://localhost/og/proxy/proxy.php";
 
 /**
  * URL for reading campaigns.
  */
 var CAMPAIGN_READ_URL = '/app/campaign/read';
 
+var SURVEY_UPLOAD_URL = '/app/survey/upload';
 
+
+function getSurveyUploadProxyURL(){
+    return PROXY_SERVER_URL +  "?host=" + OG_SERVER + "&route=" + SURVEY_UPLOAD_URL;
+}
 
 
 function getCampaigns(onSuccess, onError)
@@ -32,11 +37,16 @@ function getCampaigns(onSuccess, onError)
        onSuccess(response);
     };
 
+    var auth = new UserAuthentication();
+
     api(
          "POST",
          CAMPAIGN_READ_URL,
          {
-             auth_token: $.cookie('auth_token'),
+             //User authentication information.
+             user: auth.getUsername(),
+             password: auth.getHashedPassword(),
+
              client: '1',
              output_format: 'long'
          },
@@ -88,8 +98,13 @@ function openSurveyView(campaignURN, surveyID)
                            "&surveyID=" + surveyID);
 }
 
+function openAuthenticationPage(){
+    redirect("auth.html");
+}
 
-
+function openDashboard(){
+    redirect("index.html");
+}
 
 /**
  * The method is the primary point of interaction with the Ohmage API.
