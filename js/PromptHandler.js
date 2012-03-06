@@ -348,15 +348,15 @@ function PromptHandler(prompt)
         var takeImageButton = mwfd.SingleClickButton(prompt.getText(), function()
         {
 
-            function onSuccess(imageURI) {
+            function onSuccess(imageData) {
 
                 //Display the capture image.
-                image.src = imageURI;
+                image.src =  "data:image/jpeg;base64," + imageData;
                 imgForm.style.display = 'block';
 
                 //Save the image and store the returned UUID within the image's
                 //alt attribute.
-                image.alt = SurveyResponse.saveImage(imageURI);
+                image.alt = SurveyResponse.saveImage(imageData);
 
             }
 
@@ -364,9 +364,9 @@ function PromptHandler(prompt)
                 alert('Failed because: ' + message);
             }
 
+            //ToDo: utilize <res> property in order to set up resolution quality.
             var cameraOptions = {
-                                quality: 50,
-                                destinationType: Camera.DestinationType.FILE_URI
+                                quality: 50
                                 };
 
             navigator.camera.getPicture(onSuccess, onFail, cameraOptions);
