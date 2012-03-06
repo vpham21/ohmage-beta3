@@ -65,7 +65,7 @@ function Campaign(campaign)
         for(var i = 0; i < surveys.length; i++)
         {
 
-            var url = "javascript:openSurveyView(\'" + this.getURN() +
+            var url = "javascript:PageNavigation.openSurveyView(\'" + this.getURN() +
                       "\', \'" + surveys[i].id + "\')";
 
             surveyMenu.addMenuLinkItem(surveys[i].title,

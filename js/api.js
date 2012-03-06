@@ -4,20 +4,15 @@
  */
 var OG_SERVER = 'https://dev.mobilizingcs.org';
 
-var PROXY_SERVER_URL = "http://localhost/og/proxy/proxy.php";
-
 /**
  * URL for reading campaigns.
  */
 var CAMPAIGN_READ_URL = '/app/campaign/read';
 
+/**
+ * URL for uploading surveys.
+ */
 var SURVEY_UPLOAD_URL = '/app/survey/upload';
-
-
-function getSurveyUploadProxyURL(){
-    return PROXY_SERVER_URL +  "?host=" + OG_SERVER + "&route=" + SURVEY_UPLOAD_URL;
-}
-
 
 function getCampaigns(onSuccess, onError)
 {
@@ -57,54 +52,6 @@ function getCampaigns(onSuccess, onError)
 
 }
 
-/**
- * Redirects the user to the page that displays a list of available campaigns.
- */
-function openCampaignsView()
-{
-    redirect("campaigns.html");
-}
-
-/**
- * Redirects the user to the page that displays the campaign's surveys.
- *
- * @param campaignURN The unique identifier of the campaign to display.
- *
- */
-function openCampaignView(campaignURN)
-{
-    redirect("campaign.html?campaignURN=" + campaignURN);
-}
-
-/**
- * Redirects the user to the page that displays a list of submitted but not yet
- * uploaded surveys..
- *
- */
-function openUploadQueueView()
-{
-    redirect("upload-queue.html");
-}
-
-/**
- * Redirects the user to the page that displays the campaign's surveys.
- *
- * @param campaignURN The unique identifier of the survey's campaign.
- * @param surveyID The unique identifier of the campaign's survey to display.
- */
-function openSurveyView(campaignURN, surveyID)
-{
-    redirect("survey.html?campaignURN=" + campaignURN +
-                           "&surveyID=" + surveyID);
-}
-
-function openAuthenticationPage(){
-    redirect("auth.html");
-}
-
-function openDashboard(){
-    redirect("index.html");
-}
 
 /**
  * The method is the primary point of interaction with the Ohmage API.
@@ -182,19 +129,3 @@ function invoke(fun, args)
   */
 }
 
-/**
- * Redirects the user to a specified URL. Although this can be easily achieved
- * via a simple document.location = "..." statement, the reason that this
- * method is prefered is because in a native environment redirection mechansim
- * might change.
- *
- * @param url The URL to redirect to. If null or undefined, the method exits
- *            without throwing any errors.
- */
-function redirect(url)
-{
-    if(url)
-    {
-        document.location = url;
-    }
-}

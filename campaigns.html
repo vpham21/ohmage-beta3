@@ -25,6 +25,7 @@
     <!-- IMPORT OHMAGE API JS LIB -->
 
     <script type="text/javascript" src="js/api.js"></script>
+    <script type="text/javascript" src="js/PageNavigation.js"></script>
     <script type="text/javascript" src="js/Campaigns.js"></script>
     <script type="text/javascript" src="js/UserAuthentication.js"></script>
 
@@ -36,13 +37,13 @@
             //Attach an event listener to the top right buttion to navigate to
             //the upload queue.
             $('#button-top').click(function() {
-                openUploadQueueView();
+                PageNavigation.openUploadQueueView();
             });
 
-            Campaigns.init(function(campaigns)
-            {
+            Campaigns.init(function(campaigns){
                 campaigns.render(document.getElementById('campaigns'));
             });
+            
          });
 
     </script>

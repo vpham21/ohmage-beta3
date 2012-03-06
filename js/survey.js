@@ -78,7 +78,7 @@ var Survey = function(survey, campaign)
         if(startButton === undefined){
             startButton = true;
         }
-        
+
         var content = mwfd.Content();
 
         content.setTitle(this.getTitle());
@@ -105,8 +105,7 @@ var Survey = function(survey, campaign)
         new Navigation(this, container).start(function(response){
 
             alert('Survey Done - time to send the response.');
-            console.log(response);
-            openCampaignView(me.getCampaign().getURN());
+            PageNavigation.openCampaignView(me.getCampaign().getURN());
 
         });
     }

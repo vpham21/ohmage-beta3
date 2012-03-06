@@ -24,7 +24,6 @@ var UploadQueue = function()
             var uploader = new SurveyResponseUploader(survey, response);
 
             uploader.upload(function(response){
-                console.log(response);
 
                 if(response.result === "success"){
                     displayUploadQueue();
@@ -34,7 +33,6 @@ var UploadQueue = function()
         });
 
         summaryViewContainer.appendChild(uploadSurvey);
-
 
         mwfd.TopButton("Upload Queue", null, function(){
             displayUploadQueue();
@@ -47,7 +45,7 @@ var UploadQueue = function()
     this.renderUploadQueue = function(container)
     {
         mwfd.TopButton("All Campaigns", null, function(){
-             openCampaignsView();
+             PageNavigation.openCampaignsView();
         }, true);
 
         var title = 'Pending Uploads';

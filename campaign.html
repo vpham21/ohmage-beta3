@@ -29,6 +29,7 @@
 
     <!-- IMPORT OHMAGE API JS LIB -->
     <script type="text/javascript" src="js/api.js"></script>
+    <script type="text/javascript" src="js/PageNavigation.js"></script>
     <script type="text/javascript" src="js/Campaigns.js"></script>
     <script type="text/javascript" src="js/Campaign.js"></script>
 
@@ -45,13 +46,13 @@
              //campaign.
              if(!campaignURN)
              {
-                 openCampaignsView();
+                 PageNavigation.openCampaignsView();
              }
 
              //Attach an event listener to the top right buttion to navigate the
              //user to the campaigns view.
              $('#button-top').click(function() {
-                 openCampaignsView();
+                 PageNavigation.openCampaignsView();
              });
 
              //Initialize and render the campaign.
@@ -72,7 +73,7 @@
 <a class="button-full button-padded" id="button-top">All Campaigns</a>
 
 <h1 id="header">
-    <a href="">
+    <a href="index.html">
         <img src="img/apple_logo.png" alt="OHMAGE" width="30" height="30" />
      </a>
     <span>OHMAGE Campaigns</span>

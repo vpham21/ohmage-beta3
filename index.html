@@ -31,6 +31,7 @@
 
 <!-- IMPORT OHMAGE API JS LIB -->
 <script type="text/javascript" src="js/api.js"></script>
+<script type="text/javascript" src="js/PageNavigation.js"></script>
 <script type="text/javascript" src="js/UserAuthentication.js"></script>
 
 <script type="text/javascript">
@@ -47,7 +48,7 @@
                 if(auth.isUserAuthenticated()){
                     auth.logout();
                 }else{
-                    openAuthenticationPage();
+                    PageNavigation.openAuthenticationPage();
                 }
 
             }, true);
