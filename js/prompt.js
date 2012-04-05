@@ -1,5 +1,4 @@
-function Prompt(prompt)
-{
+function Prompt(prompt){
 
    /**
     * This variable utilizes JavaScript's closure paradigm to allow private
@@ -13,7 +12,8 @@ function Prompt(prompt)
     var errorMsg = null;
 
     /**
-     * Default handler for the current prompt.
+     * Default handler for the current prompt. The handler knows how to display
+     * the prompt and analyze the response.
      */
     var handler = new PromptHandler(this);
 
@@ -22,7 +22,11 @@ function Prompt(prompt)
     * override this method. By default, every response is valid.
     *
     * @return True.
+    *
+    *
     */
+    //ToDo: this should become an adapater to PromptHandler
+    //i.e. return handler.isValid().
     this.isValid = function(){
         return true;
     };
@@ -67,6 +71,13 @@ function Prompt(prompt)
     };
 
     /**
+     * Returns the conditional statement associated with the current prompt.
+     */
+    this.getCondition = function(){
+        return prompt.condition || null;
+    }
+
+    /**
      * Returns the type of the current prompt.
      * @return the type of the current prompt.
      */
@@ -79,8 +90,20 @@ function Prompt(prompt)
      * include any properties, then an empty array will be returned.
      */
     this.getProperties = function(){
-        return (prompt.properties)? prompt.properties.property :
-                                    ((prompt.properties = {}).property = []);
+
+        if(!prompt.properties.property){
+            prompt.properties.property = [];
+        }
+
+        //If there is only a single property, then convert the property variable
+        //to an array and add the element.
+        if(!prompt.properties.property.length){
+            var singleElement = prompt.properties.property;
+            prompt.properties.property = [];
+            prompt.properties.property.push(singleElement);
+        }
+
+        return prompt.properties.property;
     };
 
     /**

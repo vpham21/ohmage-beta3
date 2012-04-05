@@ -11,7 +11,14 @@ function PromptHandler(prompt)
      */
     var mwfd = mwf.decorator;
 
+    /**
+     * Regular expression for validating the time component of a timestamp prompt.
+     */
     var DATE_REGEX = "[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])";
+
+    /**
+     * Regular expression for validating the time component of a timestamp prompt.
+     */
     var TIME_REGEX = "^(([0-9])|([0-1][0-9])|([2][0-3])):(([0-9])|([0-5][0-9]))$";
 
     this.single_choice = function(isCustom)
@@ -93,17 +100,13 @@ function PromptHandler(prompt)
         {
             var type = (isCustom) ? 'label' : 'value';
 
-            if(isSingleChoice)
-            {
+            if(isSingleChoice){
                 return (menu.getSelectedOptions())[0][type];
-            }
-            else
-            {
+            } else {
                 var responses = [];
                 var selection = menu.getSelectedOptions();
 
-                for(var i = 0; i < selection.length; i++)
-                {
+                for(var i = 0; i < selection.length; i++){
                     responses.push(selection[i][type]);
                 }
 
@@ -149,6 +152,11 @@ function PromptHandler(prompt)
 
             //Get the value specified by the user.
             var newChoice = document.getElementById('new-choice').value;
+
+            if(newChoice.length == 0){
+                alert('Please specify an option to add.');
+                return false;
+            }
 
             //Create a new property with the value specified.
             var prop = prompt.addProperty(newChoice);
