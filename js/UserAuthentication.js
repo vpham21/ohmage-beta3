@@ -1,3 +1,4 @@
+//ToDo: Use Singleton Pattern
 
 /**
  * The server is designed to be as stateless as possible. Since the server does
@@ -88,7 +89,7 @@ function UserAuthentication() {
      * @param redirectURL If specified, the logged out user will be redirected
      *        to this URL.
      */
-    this.logOut = function(redirectURL){
+    this.logout = function(redirectURL){
 
         //Erase any authentication related cookies.
         $.cookie(TOKEN_AUTH_COOKIE_NAME, null);

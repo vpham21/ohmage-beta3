@@ -10,10 +10,6 @@
  */
 function SurveyResponse(id, uuid, urn)
 {
-    /**
-     * Namespace abbreviation for Mobile Web Framework JS Decorators library.
-     */
-    var mwfd = mwf.decorator;
 
     /**
      * This variable utilizes JavaScript's closure paradigm to allow private
@@ -74,9 +70,10 @@ function SurveyResponse(id, uuid, urn)
 
     /**
      * An array composed of prompt responses and/or repeatable sets. By default
-     * user has no responses.
+     * user has no responses. This object is not to be confused with the
+     * responses object that will be submited to the server.
      */
-    this.data.responses = {};
+    this.data._responses = {};
 
     /**
      * An object with variable properties that describes the survey's launch
@@ -154,16 +151,39 @@ function SurveyResponse(id, uuid, urn)
         //key-value pair access time of O(1), but needs some extra conversion
         //before getting uploaded to the surver.
         var responses = [];
-        for (var promptID in this.data.responses) {
+
+        var images = {};
+
+        for (var promptID in this.data._responses) {
+
+            var response = this.data._responses[promptID];
+
             responses.push({
                 prompt_id: promptID,
-                value: this.data.responses[promptID]
+                value: response.value
             });
+
+            if(response.isImage){
+                var base64Image = SurveyResponse.getImage(response.value);
+                images[response.value] = base64Image.substring(base64Image.indexOf(',') + 1);
+            }
         }
 
-        var uploadData = this.data;
-        uploadData.responses = responses;
-        return uploadData;
+        var surveyResponse = {
+            survey_key           : this.data.survey_key,
+            time                 : this.data.time,
+            timezone             : this.data.timezone,
+            location_status      : this.data.location_status,
+            location             : this.data.location,
+            survey_id            : this.data.survey_id,
+            survey_launch_context: this.data.survey_launch_context,
+
+            //Single Prompt Response is a JSON object and not an array. Not sure
+            //why so, but its noted by the documentation.
+            responses: (responses.length == 1)? responses[0]:responses
+        }
+
+        return {"responses" : surveyResponse, "images": images};
     }
 
     /**
@@ -174,28 +194,75 @@ function SurveyResponse(id, uuid, urn)
     };
 
     /**
-     * Returns the current working data.
+     * Returns the current working data. The returned object contains all
+     * response identifiying information including campaign URN, location,
+     * location status, responses, survey_id, survey_key, survey launch context,
+     * time, and timezone.
      */
     this.getData = function(){
         return this.data;
-    }
+    };
+
+    this.getImages = function(){
+
+        var images = {};
+
+        for (var promptID in this.data._responses) {
+
+            var response = this.data._responses[promptID];
+
+
+        }
+
+        return images;
+    };
+
+    /**
+     *
+     */
+    this.getResponses = function(){
+        return this.data._responses;
+    };
 
     /**
      * Saves the current response in the response pool.
      */
-    this.save = function()
-    {
+    this.save = function(){
         SurveyResponse.saveSurvey(this);
     };
 
     /**
      * Adds a response to the current response list.
      */
-    this.respond = function(promptID, value)
-    {
-        this.data.responses[promptID] = value;
+    this.respond = function(promptID, value, isImage){
+        this.data._responses[promptID] = {"value": value, "isImage": isImage};
         this.save();
     };
+
+    /**
+     * Marks the specified prompt as skipped.
+     */
+    this.promptSkipped = function(promptID){
+        this.respond(promptID, SurveyResponse.SKIPPED_PROMPT_VALUE, false);
+    }
+
+    /**
+     * Marks the provided prompt as not displayed.
+     */
+    this.promptNotDisplayed = function(promptID){
+        this.respond(promptID, SurveyResponse.NOT_DISPLAYED_PROMPT_VALUE, false);
+    }
+
+    /**
+     * Returns the recorded response value for the given prompt,
+     * or null if not specified.
+     */
+    this.getResponse = function(promptID){
+
+        return (this.data._responses[promptID])?
+                    this.data._responses[promptID].value :
+                    null;
+    }
 
     /**
      * Saves the current time as the survey completion time.
@@ -225,7 +292,7 @@ function SurveyResponse(id, uuid, urn)
 
     this.getSurveyKey = function(){
         return this.data.survey_key;
-    }
+    };
 
     this.isSubmitted = function(){
         return (this.data.time == null)? false : true;
@@ -237,7 +304,7 @@ function SurveyResponse(id, uuid, urn)
 
     this.getCampaignURN = function(){
         return this.data.campaign_urn;
-    }
+    };
 }
 
 SurveyResponse.createUUID = function() {
@@ -313,6 +380,14 @@ SurveyResponse.saveSurvey = function(survey)
     SurveyResponse.setPool(pool);
 };
 
+SurveyResponse.deleteSurvey = function(survey){
+   var pool = SurveyResponse.getPool();
+
+   delete pool[survey.getSurveyKey()];
+
+   SurveyResponse.setPool(pool);
+}
+
 SurveyResponse.getPool = function(){
     return (localStorage.pool)? JSON.parse(localStorage.pool): {};
 };
@@ -338,10 +413,13 @@ SurveyResponse.saveImage = function(imageURI)
     return uuid;
 };
 
-SurveyResponse.setImages = function(images)
-{
+SurveyResponse.getImage = function(uuid){
+    return SurveyResponse.getImages()[uuid];
+};
+
+SurveyResponse.setImages = function(images){
     localStorage.images = JSON.stringify(images);
-}
+};
 
 SurveyResponse.getImages = function()
 {

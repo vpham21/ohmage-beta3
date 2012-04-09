@@ -15,6 +15,7 @@ function Prompt(prompt){
      * Default handler for the current prompt. The handler knows how to display
      * the prompt and analyze the response.
      */
+    //ToDo: This is very enefficent.
     var handler = new PromptHandler(this);
 
     /**
@@ -143,8 +144,6 @@ function Prompt(prompt){
             }
 
         }
-
-
         return null;
     };
 

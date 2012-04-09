@@ -2,7 +2,7 @@
 /**
  * OHMAGE server URL.
  */
-var OG_SERVER = 'https://dev.mobilizingcs.org';
+var OG_SERVER = 'https://dev.andwellness.org'; //"https://dev.mobilizingcs.org"
 
 /**
  * URL for reading campaigns.
@@ -16,16 +16,14 @@ var SURVEY_UPLOAD_URL = '/app/survey/upload';
 
 function getCampaigns(onSuccess, onError)
 {
-    if(window.localStorage && window.localStorage.campaigns)
-    {
+    if(window.localStorage && window.localStorage.campaigns){
         onSuccess(JSON.parse(window.localStorage.campaigns));
         return;
     }
 
     var _onSuccess = function(response)
     {
-        if(window.localStorage)
-        {
+        if(window.localStorage){
             window.localStorage.campaigns = JSON.stringify(response);
         }
 
@@ -117,15 +115,5 @@ function invoke(fun, args)
     if(fun && typeof fun === 'function'){
         fun(args);
     }
-
-  /*
-	var fn = window[callback];
-
-	if(typeof fn === 'function')
-	{
-          alert(fn);
-	    fn();
-	}
-  */
 }
 

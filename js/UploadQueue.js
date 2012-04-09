@@ -8,7 +8,7 @@ var UploadQueue = function()
      */
     var me = this;
 
-    var renderSummaryView = function(survey, response, container){
+    var renderSummaryView = function(survey, surveyResponse, container){
 
         var summaryViewContainer = document.createElement('div');
 
@@ -19,20 +19,32 @@ var UploadQueue = function()
             me.renderUploadQueue(container);
         }
 
-        var uploadSurvey = mwfd.SingleClickButton('Upload Survey', function() {
+        var uploadSurveyResponse = function() {
 
-            var uploader = new SurveyResponseUploader(survey, response);
+            var uploader = new SurveyResponseUploader(survey, surveyResponse);
 
             uploader.upload(function(response){
 
                 if(response.result === "success"){
+                    alert("Successfully uploaded your survey response.");
+                    SurveyResponse.deleteSurvey(surveyResponse);
                     displayUploadQueue();
+                }else{
+                    alert(response.errors[0].text);
                 }
 
             });
-        });
+        };
 
-        summaryViewContainer.appendChild(uploadSurvey);
+        var deleteSurveyResponse = function(){
+            var response = confirm("Are you sure you would like to delete your response?");
+            if(response){
+                SurveyResponse.deleteSurvey(surveyResponse);
+                displayUploadQueue();
+            }
+        }
+
+        summaryViewContainer.appendChild(mwfd.DoubleClickButton("Delete", deleteSurveyResponse, "Upload Survey", uploadSurveyResponse));
 
         mwfd.TopButton("Upload Queue", null, function(){
             displayUploadQueue();
@@ -52,7 +64,6 @@ var UploadQueue = function()
 
         var pool = SurveyResponse.getPool();
         var queueMenu = mwfd.Menu(title);
-
 
         for(var uuid in pool){
 
@@ -78,14 +89,13 @@ var UploadQueue = function()
 
         }
 
-    if(queueMenu.size() === 0){
-        var emptyQueue = mwfd.Content(title);
-        emptyQueue.addTextBlock('Upload queue is empty.');
-        container.appendChild(emptyQueue);
-    }
-    else{
-        container.appendChild(queueMenu);
-    }
+        if(queueMenu.size() === 0){
+            var emptyQueue = mwfd.Content(title);
+            emptyQueue.addTextBlock('Upload queue is empty.');
+            container.appendChild(emptyQueue);
+        } else{
+            container.appendChild(queueMenu);
+        }
 
 
 

@@ -6,29 +6,29 @@ function SurveyResponseUploader(survey, surveyResponse){
 
     var auth = new UserAuthentication();
 
-    //Add the necesssary form input elements.
+    var responseData = surveyResponse.getUploadData();
+
     var data = {
                     campaign_urn:surveyResponse.getCampaignURN(),
                     campaign_creation_timestamp: survey.getCampaign().getCreationTimestamp(),
                     user: auth.getUsername(),
                     password: auth.getHashedPassword(),
                     client: 'MWoC',
-                    surveys:  JSON.stringify([surveyResponse.getUploadData()])
-               }
-
-
-
+                    surveys:  JSON.stringify([responseData.responses]),
+                    images:  JSON.stringify(responseData.images)
+               };
 
     this.upload = function(callback){
 
-        $.ajax({
-          type: 'POST',
-          url: url,
-          data: data,
-          success: success,
-          dataType: dataType
-        });
+        api(
+             "POST",
+             SURVEY_UPLOAD_URL,
+             data,
+             "JSON",
+             callback,
+             callback
+        );
 
-    }
+    };
 
 }

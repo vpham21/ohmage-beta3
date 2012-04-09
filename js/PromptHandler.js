@@ -337,51 +337,80 @@ function PromptHandler(prompt)
     this.photo = function()
     {
 
-        //ToDo: Degrade down to file upload.
-        if(!navigator.camera){
-            return this.unsupported();
-        }
-
         var container = document.createElement('div');
 
+        var imgForm = mwf.decorator.Form('Image');
+        imgForm.style.display = 'none';
+        container.appendChild(imgForm);
+
+        //This will store the image preview.
         var image = document.createElement('img');
         image.style.width = "100%";
-
-        var imgForm = mwf.decorator.Form('Image');
-
-
-        imgForm.style.display = 'none';
         imgForm.addItem(image);
 
-        var takeImageButton = mwfd.SingleClickButton(prompt.getText(), function()
-        {
+        //This is the method that will be called after the user takes a picture
+        //or after the user uploads/selects a picture via the file input method.
+        var recordImage = function(imageData, encode){
 
-            function onSuccess(imageData) {
+            //Display the capture image.
+            image.src =  (encode) ? "data:image/jpeg;base64," : "" + imageData;
+            imgForm.style.display = 'block';
 
-                //Display the capture image.
-                image.src =  "data:image/jpeg;base64," + imageData;
-                imgForm.style.display = 'block';
+            //Save the image and store the returned UUID within the image's
+            //alt attribute.
+            image.alt = SurveyResponse.saveImage(imageData);
 
-                //Save the image and store the returned UUID within the image's
-                //alt attribute.
-                image.alt = SurveyResponse.saveImage(imageData);
+        };
+
+        //Detect PhoneGap camera support. If possible, allow the user to take a
+        //photo.
+        if(navigator.camera){
+            var takeImageButton = mwfd.SingleClickButton(prompt.getText(), function(){
+
+                function onSuccess(imageData) {
+                    recordImage(imageData, true);
+                }
+
+                function onFail(message) {
+                    alert('Failed because: ' + message);
+                }
+
+                //ToDo: utilize <res> property in order to set up resolution quality.
+                var cameraOptions = {quality: 50};
+
+                navigator.camera.getPicture(onSuccess, onFail, cameraOptions);
+            });
+
+            container.appendChild(takeImageButton);
+
+        //Downgrade to file input form.
+        } else {
+
+            var fileInputForm = mwfd.Form(prompt.getText());
+
+            var fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInputForm.addItem(fileInput);
+            fileInput.onchange = function(){
+
+                var input = this.files[0];
+
+                if(input){
+                    Base64.getBase64ImageFromInput(input, function(imageData){
+                        recordImage(imageData, false);
+                    });
+                }else{
+                    alert("Please select an image.");
+                }
 
             }
 
-            function onFail(message) {
-                alert('Failed because: ' + message);
-            }
+            container.appendChild(fileInputForm);
+        }
 
-            //ToDo: utilize <res> property in order to set up resolution quality.
-            var cameraOptions = {
-                                quality: 50
-                                };
 
-            navigator.camera.getPicture(onSuccess, onFail, cameraOptions);
-        });
+        prompt.isValid = function(){
 
-        prompt.isValid = function()
-        {
             if(!image.alt){
                 prompt.setErrorMessage("Please take an image to submit.");
                 return false;
@@ -391,13 +420,10 @@ function PromptHandler(prompt)
 
         };
 
-        prompt.getResponse = function()
-        {
-            return SurveyResponse.saveImage(image.alt, image.srs);
+        prompt.getResponse = function(){
+            return image.alt;
         };
 
-        container.appendChild(takeImageButton);
-        container.appendChild(imgForm);
         return container;
 
     };
@@ -426,7 +452,7 @@ function PromptHandler(prompt)
 
         //Handle browsers that don't support HTML5's input=date.
         if(datePicker.type === 'text'){
-            $(datePicker).scroller({ dateFormat:'yyyy-mm-dd', dateOrder:'yymmdd' });
+            $(datePicker).scroller({dateFormat:'yyyy-mm-dd', dateOrder:'yymmdd'});
         }
 
         var timePicker = document.createElement('input');
@@ -435,7 +461,7 @@ function PromptHandler(prompt)
 
         //Handle browsers that don't support HTML5's input=time.
         if(timePicker.type === 'text'){
-            $(timePicker).scroller({ preset:'time', ampm: false, timeFormat:'HH:ii' });
+            $(timePicker).scroller({preset:'time', ampm: false, timeFormat:'HH:ii'});
         }
 
         prompt.isValid = function()

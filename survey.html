@@ -15,7 +15,7 @@
     </style>
 
     <!-- IMPORT PHONEGAP LIBRARY -->
-    <script type="text/javascript" src="js/phonegap/phonegap-1.0.0.js"> </script>
+    <script type="text/javascript" src="js/phonegap/cordova-1.5.0.js"> </script>
 
     <!-- IMPORT MWF JAVASCRIPT LIBRARY -->
     <script type="text/javascript" src="http://m.ucla.edu/old/assets/js.php?standard_libs=geolocation"></script>
@@ -29,9 +29,11 @@
     <script type="text/javascript" src="js/jquery/jquery.js"></script>
     <script type="text/javascript" src="js/jquery/jquery.extensions.js"></script>
     <script type="text/javascript" src="js/util/detect_timezone.js"></script>
+    <script type="text/javascript" src="js/util/Base64.js"></script>
     <script type="text/javascript" src="mobiscroll/js/mobiscroll-1.5.3.js"></script>
 
     <!-- IMPORT OHMAGE API JS LIB -->
+    <script type="text/javascript" src="js/pegjs/ConditionalParser.js"></script>
     <script type="text/javascript" src="js/api.js"></script>
     <script type="text/javascript" src="js/PageNavigation.js"></script>
     <script type="text/javascript" src="js/Campaigns.js"></script>
@@ -56,22 +58,20 @@
          //If a specific campaign is not specified, take the user to the
          //campaigns view where the user may be able to choose an appropriate
          //campaign.
-         if(!campaignURN)
-         {
-            openCampaignsView();
+         if(!campaignURN){
+            PageNavigation.openCampaignsView();
          }
 
          //If a specific survey is not specified, then take the user to the
          //campaign's survey view where he/she may choose a survey.
-         else if(surveyID == undefined)
-         {
-            openCampaignView(campaignURN);
+         else if(surveyID == undefined){
+            PageNavigation.openCampaignView(campaignURN);
          }
 
          //Attach an event listener to the top right buttion that would open the
          //current survey's campaign.
          $('#button-top').click(function() {
-             openCampaignView(campaignURN);
+             PageNavigation.openCampaignView(campaignURN);
          });
 
 

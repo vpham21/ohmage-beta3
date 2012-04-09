@@ -64,7 +64,7 @@ function Campaign(campaign)
         //and add it to the menu.
         for(var i = 0; i < surveys.length; i++)
         {
-
+            //ToDo: Create a closure and subscribe to an event.
             var url = "javascript:PageNavigation.openSurveyView(\'" + this.getURN() +
                       "\', \'" + surveys[i].id + "\')";
 

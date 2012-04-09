@@ -1,5 +1,6 @@
 var Survey = function(survey, campaign)
 {
+
     /**
      * Namespace abbreviation for Mobile Web Framework JS Decorators library.
      */
@@ -15,8 +16,7 @@ var Survey = function(survey, campaign)
      * Returns the title of the current survey.
      * @return Current survey's title, or empty string if undefined.
      */
-    this.getTitle = function()
-    {
+    this.getTitle = function(){
         return survey.title || "";
     }
 
@@ -24,8 +24,7 @@ var Survey = function(survey, campaign)
      * Returns the description of the current survey.
      * @return Current survey's description, or emptry string if undefined.
      */
-    this.getDescription = function()
-    {
+    this.getDescription = function(){
         return survey.description || "";
     }
 
@@ -33,8 +32,7 @@ var Survey = function(survey, campaign)
      * Returns the ID of the current survey.
      * @return Current survey's ID.
      */
-    this.getID = function()
-    {
+    this.getID = function(){
         return survey.id;
     }
 
@@ -42,16 +40,15 @@ var Survey = function(survey, campaign)
      * Returns a reference to this survey's campaign.
      * @return Reference to this survey's campaign.
      */
-    this.getCampaign = function()
-    {
+    this.getCampaign = function(){
         return campaign;
     }
 
     /**
      * Returns an array of prompt objects associated with this survey.
      */
-    this.getPrompts = function()
-    {
+    this.getPrompts = function(){
+
         var promptList = survey.contentlist.prompt;
 
         if(promptList.length)
@@ -70,8 +67,11 @@ var Survey = function(survey, campaign)
             return [new Prompt(promptList)];
         }
 
-    }
+    };
 
+    this.getCondition = function(){
+
+    }
 
     this.render = function(container, startButton)
     {
@@ -100,8 +100,7 @@ var Survey = function(survey, campaign)
 
     }
 
-    this.start = function(container)
-    {
+    this.start = function(container){
         new Navigation(this, container).start(function(response){
 
             alert('Survey Done - time to send the response.');
