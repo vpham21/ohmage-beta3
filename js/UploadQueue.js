@@ -46,9 +46,7 @@ var UploadQueue = function()
                     displayUploadQueue();
 
                 }else{
-
                     alert(response.errors[0].text);
-
                 }
 
             });

@@ -37,18 +37,20 @@
     <script type="text/javascript" src="js/pegjs/ConditionalParser.js"></script>
     <script type="text/javascript" src="js/api.js"></script>
     <script type="text/javascript" src="js/PageNavigation.js"></script>
+    <script type="text/javascript" src="js/UserAuthentication.js"></script>
+    <script type="text/javascript" src="js/SurveyResponseUploader.js"></script>
     <script type="text/javascript" src="js/Campaigns.js"></script>
     <script type="text/javascript" src="js/Campaign.js"></script>
     <script type="text/javascript" src="js/SurveyResponse.js"></script>
     <script type="text/javascript" src="js/Survey.js"></script>
     <script type="text/javascript" src="js/Prompt.js"></script>
     <script type="text/javascript" src="js/PromptHandler.js"></script>
+
     <script type="text/javascript" src="js/navigation.js"></script>
 
     <script type="text/javascript">
 
      $(document).ready(function() {
-
 
          //Required for retreiving specific campaign configuration file.
          var campaignURN = $.getUrlVar('campaignURN');
@@ -75,7 +77,6 @@
              PageNavigation.openCampaignView(campaignURN);
          });
 
-
          //Initialize and render the survey.
          Survey.init(campaignURN, surveyID, function(survey){
              survey.render(document.getElementById('survey'));
@@ -99,7 +100,6 @@
 </h1>
 
 <div id="survey"></div>
-
 
 <!--  Standard footer should be included in all pages regarding the mobile tour. -->
 <div id="footer">

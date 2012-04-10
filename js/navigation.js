@@ -44,7 +44,6 @@ function Navigation(survey, container)
     }
 
     var failsCondition = function(){
-        console.log(surveyResponse.getResponses());
         return getCurrentCondition() && !ConditionalParser.parse(getCurrentCondition(), surveyResponse.getResponses());
     }
 

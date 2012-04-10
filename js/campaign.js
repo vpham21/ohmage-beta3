@@ -3,8 +3,7 @@
  *
  * @author Zorayr Khalapyan
  */
-function Campaign(campaign)
-{
+function Campaign(campaign){
 
     /*
      * There is apparently a very weird problem running JavaScript within
@@ -30,31 +29,7 @@ function Campaign(campaign)
     this.campaignXML  = json.campaign;
 
 
-    /**
-     * Returns the URN for this campaign.
-     */
-    this.getURN = function()
-    {
-        return this.campaignXML["campaignurn"];
-    };
-
-    /**
-     * Return's the campaign's creation timestamp.
-     */
-    this.getCreationTimestamp = function(){
-        return campaign.creation_timestamp;
-    };
-
-    /**
-     * Returns the description for this campaign.
-     */
-    this.getDescription = function()
-    {
-        return campaign.description;
-    };
-
-    this.render = function(container)
-    {
+    this.render = function(container){
 
         var surveys = this.getSurveys();
 
@@ -80,8 +55,8 @@ function Campaign(campaign)
     /**
      * Returns surveys associated with this campaign.
      */
-    this.getSurveys = function()
-    {
+    this.getSurveys = function(){
+        
         //Get the list of surveys from the campaign.
         var surveys  = this.campaignXML.surveys.survey;
 
@@ -91,11 +66,13 @@ function Campaign(campaign)
         return (!surveys.length)? [surveys] : surveys;
     };
 
-  /**
-   * Returns a survey associated
-   */
-   this.getSurvey = function(id)
-   {
+    /**
+    * Returns a survey associated with the provided survey ID. If the campaign,
+    * doesn't contain a survey with the provided ID, a null value will be
+    * returned.
+    */
+    this.getSurvey = function(id){
+
        //Get a list of all the possible surveys.
        var surveys = this.getSurveys();
 
@@ -111,8 +88,28 @@ function Campaign(campaign)
 
        //If no match was found, return null.
        return null;
-   };
+    };
 
+    /**
+     * Returns the URN for this campaign.
+     */
+    this.getURN = function(){
+        return this.campaignXML["campaignurn"];
+    };
+
+    /**
+     * Return's the campaign's creation timestamp.
+     */
+    this.getCreationTimestamp = function(){
+        return campaign.creation_timestamp;
+    };
+
+    /**
+     * Returns the description for this campaign.
+     */
+    this.getDescription = function(){
+        return campaign.description;
+    };
 
 
 }
