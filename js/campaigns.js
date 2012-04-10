@@ -23,8 +23,7 @@ function Campaigns(campaigns)
         };
 
         for(var i = 0; i < metadata.number_of_results; i++){
-            availableCampaigns.addMenuLinkItem(data[metadata.items[i]].name, "#")
-                              .onclick = openCampaign(metadata.items[i]);
+            availableCampaigns.addMenuLinkItem(data[metadata.items[i]].name, null).onclick = openCampaign(metadata.items[i]);
         }
 
         container.appendChild(availableCampaigns);

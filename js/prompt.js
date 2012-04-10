@@ -22,8 +22,11 @@ function Prompt(prompt){
      * Default handler for the current prompt. The handler knows how to display
      * the prompt and analyze the response.
      */
-    //ToDo: This is very enefficent.
     var handler = new PromptHandler(this);
+
+    this.render = function(){
+        return handler.render();
+    }
 
     /**
     * Default validator for this prompt. Each individual prompt type should
@@ -41,8 +44,7 @@ function Prompt(prompt){
      * called without calling isValid on the current prompt, then isValid will
      * be automatically called before retreiving the error message.
      */
-    this.getErrorMessage = function()
-    {
+    this.getErrorMessage = function(){
         if(errorMsg === null){
             isValid();
         }
@@ -54,8 +56,7 @@ function Prompt(prompt){
      * Set an error message for the current prompt.
      * @param message The new error message.
      */
-    this.setErrorMessage = function(message)
-    {
+    this.setErrorMessage = function(message){
         errorMsg = message;
     };
 
@@ -96,13 +97,17 @@ function Prompt(prompt){
      */
     this.getProperties = function(){
 
+        if(!prompt.properties){
+            prompt.properties = {};
+        }
+
         if(!prompt.properties.property){
             prompt.properties.property = [];
         }
 
         //If there is only a single property, then convert the property variable
         //to an array and add the element.
-        if(!prompt.properties.property.length){
+        if(prompt.properties.property.length == 1){
             var singleElement = prompt.properties.property;
             prompt.properties.property = [];
             prompt.properties.property.push(singleElement);
@@ -222,22 +227,7 @@ function Prompt(prompt){
 
     };
 
-    /**
-     * Returns true if rendering for the current prompt is supported.
-     * @return true if rendering for the current prompt is supported; false,
-     *         otherwise.
-     */
-    this.renderSupported = function(){
-       return typeof handler[this.getType()] === 'function';
-    };
 
-    /**
-     *
-     */
-    this.render = function() {
-        return (this.renderSupported())? handler[this.getType()]() :
-                                         handler.unsupported();
-    };
 
 
 

@@ -110,7 +110,7 @@ var UploadQueue = function()
                     for(var uuid in pendingResponses){
                         SurveyResponse.deleteSurvey(pendingResponses[uuid].response);
                     }
-                    renderUploadQueue();
+                    me.renderUploadQueue(container);
                 }
             };
             //Upload all button click handler.
@@ -123,7 +123,7 @@ var UploadQueue = function()
                         alert("Successfully uploaded " + count + " survey(s).");
                     }
 
-                    renderUploadQueue();
+                    me.renderUploadQueue(container);
 
                 });
             };
@@ -148,8 +148,6 @@ var UploadQueue = function()
 
             }));
         }
-
-
 
     };
 };

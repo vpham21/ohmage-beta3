@@ -19,7 +19,6 @@ var SurveyResponseUploader = function(survey, surveyResponse){
                };
 
     this.upload = function(callback){
-
         api(
              "POST",
              SURVEY_UPLOAD_URL,

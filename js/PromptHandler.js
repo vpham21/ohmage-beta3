@@ -2,92 +2,51 @@
 
 /**
  * PromptHandler is responsible for rendering individual prompts and also
- * overriding prompt.getResponse() and prompt.isValid().
+ * overriding prompt.getResponse() and prompt.isValid(), as appropriate.
  */
-function PromptHandler(prompt)
-{
+function PromptHandler(prompt){
+
+    /**
+     * Returns true if rendering for the current prompt is supported.
+     * @return true if rendering for the current prompt is supported; false,
+     *         otherwise.
+     */
+    this.renderSupported = function(){
+       return typeof handlers[prompt.getType()] === 'function';
+    };
+
+    /**
+     *
+     */
+    this.render = function() {
+        return (this.renderSupported())? handlers[prompt.getType()](prompt) :
+                                         handlers.unsupported(prompt);
+    };
+}
+
+PromptHandler.Handlers = function(){
+
     /**
      * Namespace abbreviation for Mobile Web Framework JS Decorators library.
      */
     var mwfd = mwf.decorator;
 
-    /**
-     * Regular expression for validating the time component of a timestamp prompt.
-     */
-    var DATE_REGEX = "[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])";
+    var createChoiceMenu = function(prompt, isSingleChoice, isCustom){
 
-    /**
-     * Regular expression for validating the time component of a timestamp prompt.
-     */
-    var TIME_REGEX = "^(([0-9])|([0-1][0-9])|([2][0-3])):(([0-9])|([0-5][0-9]))$";
-
-    this.single_choice = function(isCustom)
-    {
-        var choiceMenu = createChoiceMenu(true, isCustom);
-
-        prompt.isValid = function()
-        {
-            if(choiceMenu.getSelectedOptions().length !== 1){
-                prompt.setErrorMessage("Please select a single option.");
-                return false;
-            }
-
-            return true;
-
-        };
-
-        return choiceMenu;
-
-    };
-
-    this.multi_choice = function(isCustom)
-    {
-        var choiceMenu = createChoiceMenu(false, isCustom);
-
-        prompt.isValid = function()
-        {
-            if(choiceMenu.getSelectedOptions().length === 0)
-            {
-                prompt.setErrorMessage("Please select an option.");
-                return false;
-            }
-
-            return true;
-        };
-
-        return choiceMenu;
-    };
-
-
-    this.single_choice_custom = function()
-    {
-        return createCustomChoiceMenu(this.single_choice(true), true);
-    };
-
-    this.multi_choice_custom = function()
-    {
-        return createCustomChoiceMenu(this.multi_choice(true), false);
-    };
-
-    var createChoiceMenu = function(isSingleChoice, isCustom)
-    {
         var properties = prompt.getProperties();
 
         var menu = mwfd.Menu(prompt.getText());
 
-        for(var i = 0; i < properties.length; i++)
-        {
+        for(var i = 0; i < properties.length; i++){
+
             //Handle single choice prompts.
-            if(isSingleChoice)
-            {
+            if(isSingleChoice){
                 menu.addMenuRadioItem(prompt.getType(),      //Name
                                       properties[i].key,     //Value
                                       properties[i].label);  //Label
-            }
 
             //Handle multiple choice prompts.
-            else
-            {
+            } else {
                 menu.addMenuCheckboxItem(prompt.getType(),     //Name
                                          properties[i].key,    //Value
                                          properties[i].label); //Label
@@ -96,12 +55,13 @@ function PromptHandler(prompt)
         }
 
 
-        prompt.getResponse = function()
-        {
+        prompt.getResponse = function(){
+
             var type = (isCustom) ? 'label' : 'value';
 
             if(isSingleChoice){
                 return (menu.getSelectedOptions())[0][type];
+
             } else {
                 var responses = [];
                 var selection = menu.getSelectedOptions();
@@ -119,8 +79,7 @@ function PromptHandler(prompt)
 
     };
 
-    var createCustomChoiceMenu = function(choice_menu, isSingleChoice)
-    {
+    var createCustomChoiceMenu = function(prompt, choice_menu, isSingleChoice){
 
         //Add an option in the menu for creating new options.
         choice_menu.addMenuIconItem('Add custom option', null, 'img/plus.png');
@@ -138,14 +97,14 @@ function PromptHandler(prompt)
         //Add a new text box input field for specifying the new choice.
         form.addTextBox('new-choice', 'new-choice');
 
-        form.addSubmitButton('Create New Choice', function(e)
-        {
+        form.addSubmitButton('Create New Choice', function(e){
+
             //e.cancelBubble is supported by IE - this will kill the bubbling process.
             e.cancelBubble = true;
             e.returnValue = false;
 
             //e.stopPropagation works only in Firefox.
-            if (e.stopPropagation) {
+            if (e.stopPropagation){
                 e.stopPropagation();
                 e.preventDefault();
             }
@@ -185,12 +144,7 @@ function PromptHandler(prompt)
             //Clear the user input textbox.
             document.getElementById('new-choice').value = "";
 
-
-
-
             choice_menu.addMenuItem(addOptionItem, true);
-
-
 
             return false;
         });
@@ -203,13 +157,57 @@ function PromptHandler(prompt)
         return container;
     };
 
-    this.hours_before_now = function()
-    {
-        return this.number();
+
+    this.single_choice = function(prompt, isCustom){
+
+        var choiceMenu = createChoiceMenu(prompt, true, isCustom);
+
+        prompt.isValid = function(){
+
+            if(choiceMenu.getSelectedOptions().length !== 1){
+                prompt.setErrorMessage("Please select a single option.");
+                return false;
+            }
+
+            return true;
+
+        };
+
+        return choiceMenu;
+
     };
 
-    this.number = function()
-    {
+    this.multi_choice = function(prompt, isCustom){
+
+        var choiceMenu = createChoiceMenu(prompt, false, isCustom);
+
+        prompt.isValid = function(){
+
+            if(choiceMenu.getSelectedOptions().length === 0){
+                prompt.setErrorMessage("Please select an option.");
+                return false;
+            }
+
+            return true;
+        };
+
+        return choiceMenu;
+    };
+
+
+    this.single_choice_custom = function(prompt){
+        return createCustomChoiceMenu(prompt, this.single_choice(prompt, true), true);
+    };
+
+    this.multi_choice_custom = function(prompt){
+        return createCustomChoiceMenu(prompt, this.multi_choice(prompt, true), false);
+    };
+
+    this.hours_before_now = function(prompt){
+        return this.number(prompt);
+    };
+
+    this.number = function(prompt){
 
         //Create the actual number counter field.
         var count = document.createElement('p');
@@ -224,19 +222,18 @@ function PromptHandler(prompt)
         var maxValue = prompt.getMaxValue();
         var minValue = prompt.getMinValue();
 
-
         //Create the plus sign.
         var plus = document.createElement('p');
         plus.innerHTML = '+';
-
 
         //Create the minus sign.
         var minus = document.createElement('p');
         minus.innerHTML = '-';
 
+        //Either disables or enables the +/- depending on if the value is below
+        //or above the allowed range.
+        var updateSignStyle = function(){
 
-        var updateSignStyle = function()
-        {
             //Get the integerer representation of the current value.
             var currentValue = parseInt(count.innerHTML, 10);
 
@@ -253,8 +250,8 @@ function PromptHandler(prompt)
 
         //Add the plus sign to the menu and configure the click event handler
         //for this item.
-        menu.addMenuItem(plus).onclick = function(e)
-        {
+        menu.addMenuItem(plus).onclick = function(e){
+
             var currentValue = parseInt(count.innerHTML, 10);
 
             if(currentValue < maxValue){
@@ -270,8 +267,8 @@ function PromptHandler(prompt)
 
         //Add the minus sign to the menu and configure the click event handler
         //for this item.
-        menu.addMenuItem(minus).onclick = function(e)
-        {
+        menu.addMenuItem(minus).onclick = function(e){
+
             var currentValue = parseInt(count.innerHTML, 10);
 
             if(currentValue > minValue){
@@ -282,16 +279,15 @@ function PromptHandler(prompt)
 
         };
 
-        prompt.getResponse = function()
-        {
+        prompt.getResponse = function(){
             return parseInt(count.innerHTML, 10);
         };
 
         return menu;
     };
 
-    this.text = function()
-    {
+    this.text = function(prompt){
+
         //Get the minimum and maximum text length allowed values for this
         //prompt. It is assumed that these values might be nulls.
         var maxValue = prompt.getMaxValue();
@@ -334,8 +330,7 @@ function PromptHandler(prompt)
 
     };
 
-    this.photo = function()
-    {
+    this.photo = function(prompt){
 
         var container = document.createElement('div');
 
@@ -428,8 +423,13 @@ function PromptHandler(prompt)
 
     };
 
-    this.timestamp = function()
-    {
+    this.timestamp = function(prompt){
+
+        //Regular expression for validating the time component of a timestamp prompt.
+        var DATE_REGEX = "[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])";
+
+        //Regular expression for validating the time component of a timestamp prompt.
+        var TIME_REGEX = "^(([0-9])|([0-1][0-9])|([2][0-3])):(([0-9])|([0-5][0-9]))$";
 
         //Left pads 'd' to '0d', if necessary.
         var leftPad = function(number){
@@ -497,8 +497,8 @@ function PromptHandler(prompt)
     };
 
 
-    this.unsupported = function()
-    {
+    this.unsupported = function(prompt){
+
         var menu = mwfd.Menu(prompt.getText());
 
         menu.addMenuTextItem("Unfortunatly current prompt type is not supported.");
@@ -510,5 +510,6 @@ function PromptHandler(prompt)
 
         return menu;
     };
-
 }
+
+var handlers = new PromptHandler.Handlers();

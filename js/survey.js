@@ -64,7 +64,7 @@ var Survey = function(survey, campaign){
 
                         alert("Successfully uploaded your survey response.");
                         SurveyResponse.deleteSurvey(surveyResponse);
-                       
+
                     }else{
                         alert(response.errors[0].text);
                     }

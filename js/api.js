@@ -86,10 +86,11 @@ function api(type, url, data, dataType, onSuccess, onError)
                 break;
 
             default:
-                console.log("Unknown response.");
                 break;
         }
 	};
+
+    console.log("Initiating an API call for %s with the following data ", url, data);
 
     $.ajax(
     {

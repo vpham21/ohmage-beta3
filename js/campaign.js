@@ -5,6 +5,8 @@
  */
 function Campaign(campaign){
 
+    var me = this;
+
     /*
      * There is apparently a very weird problem running JavaScript within
      * PhoneGap – the engine is so restrictive that when encountering the word
@@ -31,25 +33,22 @@ function Campaign(campaign){
 
     this.render = function(container){
 
+        var campaignURN = this.getURN();
+
         var surveys = this.getSurveys();
 
         var surveyMenu = mwf.decorator.Menu("Available Surveys");
 
+        var callback = function(surveyID){
+            return function(){
+                PageNavigation.openSurveyView(campaignURN, surveyID);
+            };
+        };
+
         //Iterate through each of the campaign's surveys
         //and add it to the menu.
         for(var i = 0; i < surveys.length; i++){
-
-            var campaignURN = this.getURN();
-            var surveyID = surveys[i].id;
-            var item = surveyMenu.addMenuLinkItem(surveys[i].title, "", surveys[i].description);
-
-            item.onclick = (function(){
-                return function(){
-                    PageNavigation.openSurveyView(campaignURN, surveyID);
-                };
-            }());
-
-
+            surveyMenu.addMenuLinkItem(surveys[i].title, null, surveys[i].description).onclick = callback(surveys[i].id);;
         }
 
         container.appendChild(surveyMenu);
