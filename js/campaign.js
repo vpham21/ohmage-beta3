@@ -37,15 +37,18 @@ function Campaign(campaign){
 
         //Iterate through each of the campaign's surveys
         //and add it to the menu.
-        for(var i = 0; i < surveys.length; i++)
-        {
-            //ToDo: Create a closure and subscribe to an event.
-            var url = "javascript:PageNavigation.openSurveyView(\'" + this.getURN() +
-                      "\', \'" + surveys[i].id + "\')";
+        for(var i = 0; i < surveys.length; i++){
 
-            surveyMenu.addMenuLinkItem(surveys[i].title,
-                                       url,
-                                       surveys[i].description);
+            var campaignURN = this.getURN();
+            var surveyID = surveys[i].id;
+            var item = surveyMenu.addMenuLinkItem(surveys[i].title, "", surveys[i].description);
+
+            item.onclick = (function(){
+                return function(){
+                    PageNavigation.openSurveyView(campaignURN, surveyID);
+                };
+            }());
+
 
         }
 
@@ -56,7 +59,7 @@ function Campaign(campaign){
      * Returns surveys associated with this campaign.
      */
     this.getSurveys = function(){
-        
+
         //Get the list of surveys from the campaign.
         var surveys  = this.campaignXML.surveys.survey;
 
