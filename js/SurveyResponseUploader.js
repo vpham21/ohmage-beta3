@@ -2,7 +2,7 @@
  * SurveyResponseUploader is responsible for the actual upload of the response
  * data.
  */
-function SurveyResponseUploader(survey, surveyResponse){
+var SurveyResponseUploader = function(survey, surveyResponse){
 
     var auth = new UserAuthentication();
 
@@ -30,5 +30,46 @@ function SurveyResponseUploader(survey, surveyResponse){
         );
 
     };
+
+};
+
+SurveyResponseUploader.uploadAll = function(pendingResponses, callback){
+
+    var count = 0;
+
+    //Construct an array of IDs. This allows much easier access with an index.
+    var uuidList = [];
+    for(var uuid in pendingResponses){
+        uuidList.push(uuid);
+    }
+
+    var upload = function(i){
+
+        if(i >= uuidList.length){
+
+            if(callback)
+                callback(count);
+
+        }else{
+
+            var survey   = pendingResponses[uuidList[i]].survey;
+            var surveyResponse = pendingResponses[uuidList[i]].response;
+
+            (new SurveyResponseUploader(survey, surveyResponse)).upload(function(response){
+
+                 if(response.result === "success"){
+                    count++;
+                    SurveyResponse.deleteSurvey(surveyResponse);
+                }
+
+                upload(++i);
+            });
+
+        }
+
+    };
+
+    upload(0);
+
 
 }

@@ -140,6 +140,43 @@ function SurveyResponse(id, uuid, urn)
     };
 
     /**
+     * Adds a response to the current response list.
+     */
+    this.respond = function(promptID, value, isImage){
+        this.data._responses[promptID] = {"value": value, "isImage": isImage};
+        this.save();
+    };
+
+    /**
+     * Marks the specified prompt as skipped.
+     */
+    this.promptSkipped = function(promptID){
+        this.respond(promptID, SurveyResponse.SKIPPED_PROMPT_VALUE, false);
+    };
+
+    /**
+     * Marks the specified prompt as not displayed.
+     */
+    this.promptNotDisplayed = function(promptID){
+        this.respond(promptID, SurveyResponse.NOT_DISPLAYED_PROMPT_VALUE, false);
+    };
+
+    this.submit = function(callback)
+    {
+        //Save the submit time.
+        me.data.time = new Date().getTime();
+
+        //Save the survey in the pool.
+        this.save();
+
+        if(callback){
+            callback();
+        }
+
+    };
+
+
+    /**
      * Returns data that can be uploaded to the surver as response data.
      */
     this.getUploadData = function(){
@@ -187,41 +224,26 @@ function SurveyResponse(id, uuid, urn)
     }
 
     /**
-     * Replaces the current working data.
+     * Replaces the current working data. This is used for restoring a survey
+     * response from an external storage.
      */
     this.setData = function(data){
         this.data = data;
     };
 
     /**
-     * Returns the current working data. The returned object contains all
-     * response identifiying information including campaign URN, location,
-     * location status, responses, survey_id, survey_key, survey launch context,
-     * time, and timezone.
-     */
-    this.getData = function(){
-        return this.data;
-    };
-
-    this.getImages = function(){
-
-        var images = {};
-
-        for (var promptID in this.data._responses) {
-
-            var response = this.data._responses[promptID];
-
-
-        }
-
-        return images;
-    };
-
-    /**
-     *
+     * Returns the currently gathered user responses in a map form
+     * i.e. {prompt_id : prompt_value}. This method is used as the data source
+     * for conditional prompt evaluation.
      */
     this.getResponses = function(){
-        return this.data._responses;
+        var data = {};
+
+        for(var promptID in this.data._responses){
+            data[promptID] = this.data._responses[promptID].value;
+        }
+        
+        return data;
     };
 
     /**
@@ -231,27 +253,6 @@ function SurveyResponse(id, uuid, urn)
         SurveyResponse.saveSurvey(this);
     };
 
-    /**
-     * Adds a response to the current response list.
-     */
-    this.respond = function(promptID, value, isImage){
-        this.data._responses[promptID] = {"value": value, "isImage": isImage};
-        this.save();
-    };
-
-    /**
-     * Marks the specified prompt as skipped.
-     */
-    this.promptSkipped = function(promptID){
-        this.respond(promptID, SurveyResponse.SKIPPED_PROMPT_VALUE, false);
-    }
-
-    /**
-     * Marks the provided prompt as not displayed.
-     */
-    this.promptNotDisplayed = function(promptID){
-        this.respond(promptID, SurveyResponse.NOT_DISPLAYED_PROMPT_VALUE, false);
-    }
 
     /**
      * Returns the recorded response value for the given prompt,
@@ -265,25 +266,13 @@ function SurveyResponse(id, uuid, urn)
     }
 
     /**
-     * Saves the current time as the survey completion time.
+     * Returns the current working data. The returned object contains all
+     * response identifiying information including campaign URN, location,
+     * location status, responses, survey_id, survey_key, survey launch context,
+     * time, and timezone.
      */
-    var recordSubmitTime = function()
-    {
-        me.data.time = new Date().getTime();
-    };
-
-    this.submit = function(callback)
-    {
-        //Save the submit time.
-        recordSubmitTime();
-
-        //Save the survey in the pool.
-        this.save();
-
-        if(callback){
-            callback();
-        }
-
+    this.getData = function(){
+        return this.data;
     };
 
     this.getSurveyID = function(){
@@ -307,32 +296,12 @@ function SurveyResponse(id, uuid, urn)
     };
 }
 
-SurveyResponse.createUUID = function() {
-
-    // http://www.ietf.org/rfc/rfc4122.txt
-    var s = [];
-    var hexDigits = "0123456789abcdef";
-    for (var i = 0; i < 36; i++) {
-        s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
-    }
-
-    // Bits 12-15 of the time_hi_and_version field to 0010.
-    s[14] = "4";
-
-    // Bits 6-7 of the clock_seq_hi_and_reserved to 01.
-    s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);
-    s[8] = s[13] = s[18] = s[23] = "-";
-
-    var uuid = s.join("");
-    return uuid;
-};
-
 SurveyResponse.init = function(id, urn)
 {
     var pool = SurveyResponse.getPool();
 
     //Create a new UUID to be assigned to the survey.
-    var uuid = SurveyResponse.createUUID();
+    var uuid = UUIDGen.generate();
 
     pool[uuid] = new SurveyResponse(id, uuid, urn);
 
@@ -381,6 +350,7 @@ SurveyResponse.saveSurvey = function(survey)
 };
 
 SurveyResponse.deleteSurvey = function(survey){
+
    var pool = SurveyResponse.getPool();
 
    delete pool[survey.getSurveyKey()];
@@ -392,8 +362,7 @@ SurveyResponse.getPool = function(){
     return (localStorage.pool)? JSON.parse(localStorage.pool): {};
 };
 
-SurveyResponse.setPool = function(pool)
-{
+SurveyResponse.setPool = function(pool){
     localStorage.pool = JSON.stringify(pool);
 };
 
@@ -404,7 +373,7 @@ SurveyResponse.setPool = function(pool)
 SurveyResponse.saveImage = function(imageURI)
 {
     var images = SurveyResponse.getImages();
-    var uuid = SurveyResponse.createUUID();
+    var uuid = UUIDGen.generate();
 
     images[uuid] = imageURI;
 
@@ -421,10 +390,33 @@ SurveyResponse.setImages = function(images){
     localStorage.images = JSON.stringify(images);
 };
 
-SurveyResponse.getImages = function()
-{
+SurveyResponse.getImages = function(){
     return (localStorage.images)? JSON.parse(localStorage.images) : {};
 };
+
+SurveyResponse.getPendingResponses = function(){
+
+    var pendingResponses = {};
+
+    var pool = SurveyResponse.getPool();
+
+    for(var uuid in pool){
+
+        //Restore the survey response object.
+        var response = SurveyResponse.restoreSurvey(uuid);
+
+        //Skip survey responses that were not completed.
+        if(!response.isSubmitted()){
+            continue;
+        }
+
+        Survey.init(response.getCampaignURN(), response.getSurveyID(), function(survey){
+            pendingResponses[uuid] = {'survey': survey, 'response': response};
+        });
+    }
+
+    return pendingResponses;
+}
 
 /**
  * Value tag that indicates skipped prompt response value.

@@ -2,7 +2,8 @@
 /**
  * OHMAGE server URL.
  */
-var OG_SERVER = 'https://dev.andwellness.org'; //"https://dev.mobilizingcs.org"
+var OG_SERVER = "https://dev.mobilizingcs.org";
+//var OG_SERVER = "https://dev.andwellness.org";
 
 /**
  * URL for reading campaigns.

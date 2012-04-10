@@ -1,3 +1,10 @@
+
+
+/**
+ *
+ * Represents an individual prompt. The class provides functionality for getting
+ * the prompt's
+ */
 function Prompt(prompt){
 
    /**
@@ -24,10 +31,7 @@ function Prompt(prompt){
     *
     * @return True.
     *
-    *
     */
-    //ToDo: this should become an adapater to PromptHandler
-    //i.e. return handler.isValid().
     this.isValid = function(){
         return true;
     };
@@ -123,6 +127,9 @@ function Prompt(prompt){
         return prompt.skippable === "true";
     };
 
+    /**
+     * Returns the label that should be displayed inside the skip button.
+     */
     this.getSkipLabel = function(){
         return prompt.skiplabel;
     };
@@ -224,6 +231,9 @@ function Prompt(prompt){
        return typeof handler[this.getType()] === 'function';
     };
 
+    /**
+     *
+     */
     this.render = function() {
         return (this.renderSupported())? handler[this.getType()]() :
                                          handler.unsupported();
