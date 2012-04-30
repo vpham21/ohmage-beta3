@@ -3,84 +3,83 @@
 <html>
 <head>
 
-<meta name="viewport" content="height=device-height,width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;" />
+    <script type="text/javascript"> var checkpoint = true; </script>
 
-<title>Welcome to OHMAGE</title>
+    <meta name="viewport" content="height=device-height,width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;" />
 
-<style type="text/css">
-    @import url("http://m.ucla.edu/old/assets/css.php");
-    @import url("css/grid.css");
-</style>
+    <title>ohmage | dashboard</title>
 
-<!-- IMPORT MWF JAVASCRIPT LIBRARY -->
-<script type="text/javascript" src="http://m.ucla.edu/old/assets/js.php"></script>
+    <style type="text/css">
+        @import url("http://m.ucla.edu/old/assets/css.php");
+        @import url("css/grid.css");
+    </style>
 
-<!-- IMPORT PHONEGAP LIBRARY -->
-<script type="text/javascript" src="js/phonegap/phonegap-1.0.0.js"> </script>
+    <!-- IMPORT MWF JAVASCRIPT LIBRARY -->
+    <script type="text/javascript" src="http://m.ucla.edu/old/assets/js.php"></script>
 
-<!-- IMPORT MWF JAVASCRIPT LIBRARY -->
-<script type="text/javascript" src="http://m.ucla.edu/old/assets/js.php"></script>
-<script type="text/javascript" src="js/mwf/decorator.js"> </script>
-<script type="text/javascript" src="js/mwf/content.js"> </script>
-<script type="text/javascript" src="js/mwf/button.js"> </script>
-<script type="text/javascript" src="js/mwf/menu.js"> </script>
+    <!-- IMPORT PHONEGAP LIBRARY -->
+    <script type="text/javascript" src="js/phonegap/phonegap-1.0.0.js"> </script>
 
-<!-- IMPORT JQUERY AND EXTENSIONS -->
-<script type="text/javascript" src="js/jquery/jquery.js"></script>
-<script type="text/javascript" src="js/jquery/jquery.extensions.js"></script>
+    <!-- IMPORT MWF JAVASCRIPT LIBRARY -->
+    <script type="text/javascript" src="http://m.ucla.edu/old/assets/js.php"></script>
+    <script type="text/javascript" src="js/mwf/decorator.js"> </script>
+    <script type="text/javascript" src="js/mwf/content.js"> </script>
+    <script type="text/javascript" src="js/mwf/button.js"> </script>
+    <script type="text/javascript" src="js/mwf/menu.js"> </script>
 
-<!-- IMPORT OHMAGE API JS LIB -->
-<script type="text/javascript" src="js/api.js"></script>
-<script type="text/javascript" src="js/PageNavigation.js"></script>
-<script type="text/javascript" src="js/UserAuthentication.js"></script>
+    <!-- IMPORT JQUERY AND EXTENSIONS -->
+    <script type="text/javascript" src="js/jquery/jquery.js"></script>
+    <script type="text/javascript" src="js/jquery/jquery.extensions.js"></script>
 
-<script type="text/javascript">
+    <!-- IMPORT OHMAGE API JS LIB -->
+    <script type="text/javascript" src="js/api.js"></script>
+    <script type="text/javascript" src="js/PageNavigation.js"></script>
+    <script type="text/javascript" src="js/UserAuthentication.js"></script>
 
-    $(document).ready(function()
-    {
-        var auth = new UserAuthentication();
+    <script type="text/javascript">
 
+        $(document).ready(function(){
 
-        (function(){
+            (function(){
 
-            mwf.decorator.TopButton((auth.isUserAuthenticated()) ? "Logout" : "Login", null, function(){
+                mwf.decorator.TopButton((auth.isUserAuthenticated()) ? "Logout" : "Login", null, function(){
 
-                if(auth.isUserAuthenticated()){
-                    auth.logout();
-                }else{
-                    PageNavigation.openAuthenticationPage();
-                }
+                    if(auth.isUserAuthenticated()){
+                        auth.logout();
+                    }else{
+                        PageNavigation.openAuthenticationPage();
+                    }
 
-            }, true);
+                }, true);
 
-        })();
+            })();
 
+            var dashboard = mwf.decorator.Menu();
 
-
-        var dashboard = mwf.decorator.Menu();
-
-        dashboard.addMenuImageItem('Campaigns', 'campaigns.html',    'img/dash/dash_campaigns.png');
-        dashboard.addMenuImageItem('Surveys',   'campaigns.html',    'img/dash/dash_surveys.png');
-        dashboard.addMenuImageItem('History',   'history.html',      'img/dash/dash_resphistory.png');
-        dashboard.addMenuImageItem('Queue',     'upload-queue.html', 'img/dash/dash_upqueue.png');
-        dashboard.addMenuImageItem('Profile',   'profile.html',      'img/dash/dash_profile.png');
-        dashboard.addMenuImageItem('Help',      'help.html',         'img/dash/dash_help.png');
+            dashboard.addMenuImageItem('Campaigns', 'campaigns.html',    'img/dash/dash_campaigns.png');
+            dashboard.addMenuImageItem('Surveys',   'surveys.html',      'img/dash/dash_surveys.png');
+            dashboard.addMenuImageItem('History',   'history.html',      'img/dash/dash_resphistory.png');
+            dashboard.addMenuImageItem('Queue',     'upload-queue.html', 'img/dash/dash_upqueue.png');
+            dashboard.addMenuImageItem('Profile',   'profile.html',      'img/dash/dash_profile.png');
+            dashboard.addMenuImageItem('Help',      'help.html',         'img/dash/dash_help.png');
 
 
-        $('#dashboard').append(dashboard);
-    });
+            $('#dashboard').append(dashboard);
 
-</script>
+        });
+
+    </script>
 
 
 </head>
 <body>
 
     <h1 id="header">
-        <a href="">
-            <img src="img/apple_logo.png" alt="Ohamge" width="30" height="30" />
+        <a href="index.html">
+            <img src="img/ohmage-icon-gray-noshadow-30px.png" alt="ohmage" width="30" height="30" style="padding-left:3px; padding-top:3px;"/>
+            <span>ohmage</span>
          </a>
-        <span>Welcome to Ohmage!</span>
+
     </h1>
 
     <div id="dashboard" class="grid"></div>

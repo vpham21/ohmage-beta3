@@ -2,10 +2,10 @@
 
 <html>
 <head>
-
+    <script type="text/javascript"> var checkpoint = true; </script>
     <meta name="viewport" content="height=device-height,width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;" />
 
-    <title>Ohmage Campaigns</title>
+    <title>ohmage | campaigns</title>
 
     <style type="text/css">
         @import url("http://m.ucla.edu/old/assets/css.php");
@@ -23,27 +23,33 @@
     <script type="text/javascript" src="js/jquery/jquery.extensions.js"></script>
 
     <!-- IMPORT OHMAGE API JS LIB -->
-
-    <script type="text/javascript" src="js/api.js"></script>
+    <script type="text/javascript" src="js/LocalMap.js"></script>
     <script type="text/javascript" src="js/PageNavigation.js"></script>
-    <script type="text/javascript" src="js/Campaigns.js"></script>
+    <script type="text/javascript" src="js/api.js"></script>
     <script type="text/javascript" src="js/UserAuthentication.js"></script>
+    <script type="text/javascript" src="js/Campaign.js"></script>
+    <script type="text/javascript" src="js/Campaigns.js"></script>
+
 
     <script type="text/javascript">
 
-         $(document).ready(function()
-         {
+         $(document).ready(function(){
 
-            //Attach an event listener to the top right buttion to navigate to
-            //the upload queue.
-            $('#button-top').click(function() {
-                PageNavigation.openUploadQueueView();
-            });
+            //If set, only display installed campaigns.
+            var installed = $.getUrlVar('display-installed-campaigns') == null || $.getUrlVar('display-installed-campaigns') == "true";
 
-            Campaigns.init(function(campaigns){
-                campaigns.render(document.getElementById('campaigns'));
-            });
-            
+            var onSuccess = function(){
+                $('#campaigns').append(Campaigns.render(installed));
+            };
+
+            var onError = function(){
+                alert("Unable to download campaigns. Please try again later.")
+            }
+
+            Campaigns.download(false, onSuccess, onError);
+
+
+
          });
 
     </script>
@@ -53,13 +59,12 @@
 
 <body>
 
-    <a class="button-full button-padded" id="button-top">Upload Queue</a>
-
     <h1 id="header">
         <a href="index.html">
-            <img src="img/apple_logo.png" alt="OHMAGE" width="30" height="30" />
+            <img src="img/ohmage-icon-gray-noshadow-30px.png" alt="ohmage" width="30" height="30" style="padding-left:3px; padding-top:3px;"/>
+            <span>ohmage</span>
          </a>
-        <span>OHMAGE Campaigns</span>
+
     </h1>
 
     <div id="campaigns"> </div>

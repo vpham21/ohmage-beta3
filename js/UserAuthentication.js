@@ -1,4 +1,3 @@
-//ToDo: Use Singleton Pattern
 
 /**
  * The server is designed to be as stateless as possible. Since the server does
@@ -12,6 +11,8 @@
  * @author Zorayr Khalapyan
  */
 function UserAuthentication() {
+
+    var me = this;
 
     /**
      * Endpoint for user authentication via authentication token.
@@ -34,9 +35,11 @@ function UserAuthentication() {
     var HASH_AUTH_COOKIE_NAME = 'hashed_password';
 
     /**
-     * The anem of the cookie that stores usernames.
+     * The name of the cookie that stores usernames.
      */
     var USERNAME_COOKIE_NAME = 'username';
+
+    var AUTH_ERROR_STATE_COOKIE_NAME = 'auth-error';
 
     /**
      * Return true if cookie with the specified name exists. Optionally,
@@ -52,11 +55,13 @@ function UserAuthentication() {
      */
     var authenticationCheck = function(authCookieName, redirectURL){
 
+        if(me.isInAuthErrorState()){
+            return false;
+        }
+
         if($.cookie(authCookieName) !== null){
 
-            if(redirectURL){
-                redirect(redirectURL);
-            }
+            PageNavigation.redirect(redirectURL);
 
             return true;
 
@@ -64,6 +69,18 @@ function UserAuthentication() {
             return false;
         }
     };
+
+    this.isUserLocked = function(){
+        return this.getUsername() != null;
+    }
+
+    this.setAuthErrorState = function(state){
+        $.cookie(AUTH_ERROR_STATE_COOKIE_NAME, state);
+    };
+
+    this.isInAuthErrorState = function(){
+        return ($.cookie(AUTH_ERROR_STATE_COOKIE_NAME) == 'true')? true : false;
+    }
 
     /**
      * Returns the authentication token if it exists, or null otherwise.
@@ -87,7 +104,7 @@ function UserAuthentication() {
      * methods.
      *
      * @param redirectURL If specified, the logged out user will be redirected
-     *        to this URL.
+     *        to this URL. This variable is optional.
      */
     this.logout = function(redirectURL){
 
@@ -95,12 +112,20 @@ function UserAuthentication() {
         $.cookie(TOKEN_AUTH_COOKIE_NAME, null);
         $.cookie(HASH_AUTH_COOKIE_NAME, null);
         $.cookie(USERNAME_COOKIE_NAME, null);
+        $.cookie(AUTH_ERROR_STATE_COOKIE_NAME, null);
 
-        //If the redirect URL is specifieid, then redirect the user.
-        if(redirectURL){
-            redirect(redirectURL);
+        window.localStorage.clear();
+
+        PageNavigation.redirect(redirectURL);
+
+
+
+    };
+
+    this.checkpoint = function(){
+        if(!this.isUserAuthenticated()){
+            PageNavigation.redirect('auth.html');
         }
-
     };
 
     /**
@@ -116,9 +141,7 @@ function UserAuthentication() {
         if(this.isUserAuthenticatedByHash() ||
            this.isUserAuthenticatedByToken()){
 
-           if(redirectURL){
-                redirect(redirectURL);
-           }
+           PageNavigation.redirect(redirectURL);
 
            return true;
 
@@ -183,15 +206,17 @@ function UserAuthentication() {
         //then invoke the callback.
         var onSuccess = function(response){
 
-            console.log(response);
             //Save the hashed password in a cookie.
             $.cookie(HASH_AUTH_COOKIE_NAME, response.hashed_password);
             $.cookie(USERNAME_COOKIE_NAME, username);
+
+            me.setAuthErrorState(false);
+
             callback(true);
         };
 
         var onError = function(response){
-            callback(false, response.errors[0].text);
+            callback(false, (response) ? response.errors[0].text : null);
         };
 
 
@@ -233,15 +258,18 @@ function UserAuthentication() {
             //Save the authentication token in a cookie and invoke the callback.
             $.cookie(TOKEN_AUTH_COOKIE_NAME, response.token);
             $.cookie(USERNAME_COOKIE_NAME, username);
+
+            me.setAuthErrorState(false);
+
             callback(true);
         };
 
         var onError = function(response){
-            callback(false, response.errors[0].text);
+            callback(false, (response) ? response.errors[0].text : null);
         };
 
-       //Make an API call.
-       api(
+        //Make an API call.
+        api(
            "POST",
            TOKEN_AUTH_URL,
            {
@@ -255,5 +283,11 @@ function UserAuthentication() {
          );
 
     };
+}
 
+
+var auth = new UserAuthentication ();
+
+if(typeof(checkpoint) != 'undefined'){
+    auth.checkpoint();
 }

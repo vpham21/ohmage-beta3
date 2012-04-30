@@ -15,41 +15,7 @@ var CAMPAIGN_READ_URL = '/app/campaign/read';
  */
 var SURVEY_UPLOAD_URL = '/app/survey/upload';
 
-function getCampaigns(onSuccess, onError)
-{
-    if(window.localStorage && window.localStorage.campaigns){
-        onSuccess(JSON.parse(window.localStorage.campaigns));
-        return;
-    }
 
-    var _onSuccess = function(response)
-    {
-        if(window.localStorage){
-            window.localStorage.campaigns = JSON.stringify(response);
-        }
-
-       onSuccess(response);
-    };
-
-    var auth = new UserAuthentication();
-
-    api(
-         "POST",
-         CAMPAIGN_READ_URL,
-         {
-             //User authentication information.
-             user: auth.getUsername(),
-             password: auth.getHashedPassword(),
-
-             client: '1',
-             output_format: 'long'
-         },
-         "JSON",
-         _onSuccess,
-         onError
-    );
-
-}
 
 
 /**
@@ -69,9 +35,11 @@ function getCampaigns(onSuccess, onError)
  * @param onSuccess The callback on API call success.
  * @param onError   The callback on API call error.
  */
-function api(type, url, data, dataType, onSuccess, onError)
-{
-    var onResponse = function(response) {
+function api(type, url, data, dataType, onSuccess, onError, redirectOnAuthError){
+
+    redirectOnAuthError = (typeof(redirectOnAuthError) == 'undefined')? true : redirectOnAuthError;
+
+    var _onSuccess = function(response) {
 
         console.log("Received API call response for URL %s ", url, response);
 
@@ -81,14 +49,34 @@ function api(type, url, data, dataType, onSuccess, onError)
                 invoke(onSuccess, response);
                 break;
 
-            case 'failure':
+            case 'failure':{
+
                 invoke(onError, response);
+
+                //If the API request failed because of authentication related
+                //error, then redirect the user to the authentication page.
+                for(var i = 0; i < response.errors.length; i++){
+                    if(response.errors[i].code == '0200'){
+                        auth.setAuthErrorState(true);
+                        PageNavigation.openAuthenticationPage();
+                        break;
+                    }
+
+                };
+
                 break;
+            }
+
 
             default:
+                invoke(onSuccess, response);
                 break;
         }
 	};
+
+    var _onError = function(){
+        invoke(onError, false);
+    };
 
     console.log("Initiating an API call for %s with the following data ", url, data);
 
@@ -98,7 +86,8 @@ function api(type, url, data, dataType, onSuccess, onError)
         url : OG_SERVER + url,
         data: data,
         dataType: dataType,
-        success : onResponse
+        success : _onSuccess,
+        error : _onError
     });
 
 }

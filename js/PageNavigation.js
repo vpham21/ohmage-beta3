@@ -22,9 +22,9 @@ PageNavigation.redirect = function(url)
 /**
  * PageNavigation.redirects the user to the page that displays a list of available campaigns.
  */
-PageNavigation.openCampaignsView = function()
-{
-    PageNavigation.redirect("campaigns.html");
+PageNavigation.openCampaignsView = function(installed){
+    PageNavigation.redirect("campaigns.html?display-installed-campaigns=" + ((installed || typeof(installed) == "undefined")? "true" : "false"));
+
 }
 
 /**
@@ -35,7 +35,7 @@ PageNavigation.openCampaignsView = function()
  */
 PageNavigation.openCampaignView = function(campaignURN)
 {
-    PageNavigation.redirect("campaign.html?campaignURN=" + campaignURN);
+    PageNavigation.redirect("campaign.html?campaign-urn=" + campaignURN);
 }
 
 /**
@@ -43,8 +43,7 @@ PageNavigation.openCampaignView = function(campaignURN)
  * uploaded surveys..
  *
  */
-PageNavigation.openUploadQueueView = function()
-{
+PageNavigation.openUploadQueueView = function(){
     PageNavigation.redirect("upload-queue.html");
 }
 
@@ -54,10 +53,8 @@ PageNavigation.openUploadQueueView = function()
  * @param campaignURN The unique identifier of the survey's campaign.
  * @param surveyID The unique identifier of the campaign's survey to display.
  */
-PageNavigation.openSurveyView = function(campaignURN, surveyID)
-{
-    PageNavigation.redirect("survey.html?campaignURN=" + campaignURN +
-                           "&surveyID=" + surveyID);
+PageNavigation.openSurveyView = function(campaignURN, surveyID){
+    PageNavigation.redirect("survey.html?campaign-urn=" + campaignURN + "&survey-id=" + surveyID);
 }
 
 PageNavigation.openAuthenticationPage = function(){

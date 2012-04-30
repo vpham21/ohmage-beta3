@@ -2,11 +2,12 @@
 
 <html>
 <head>
+    <script type="text/javascript"> var checkpoint = true; </script>
 
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <meta name="viewport" content="height=device-height,width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;" />
 
-    <title>Choose a Campaign to Continue</title>
+    <title>ohmage |survey</title>
 
     <style type="text/css">
         @import url("http://m.ucla.edu/old/assets/css.php");
@@ -35,6 +36,7 @@
 
     <!-- IMPORT OHMAGE API JS LIB -->
     <script type="text/javascript" src="js/pegjs/ConditionalParser.js"></script>
+    <script type="text/javascript" src="js/LocalMap.js"></script>
     <script type="text/javascript" src="js/api.js"></script>
     <script type="text/javascript" src="js/PageNavigation.js"></script>
     <script type="text/javascript" src="js/UserAuthentication.js"></script>
@@ -53,10 +55,10 @@
      $(document).ready(function() {
 
          //Required for retreiving specific campaign configuration file.
-         var campaignURN = $.getUrlVar('campaignURN');
+         var campaignURN = $.getUrlVar('campaign-urn');
 
          //Required for getting a specific survey from the campaign.
-         var surveyID    = $.getUrlVar('surveyID');
+         var surveyID    = $.getUrlVar('survey-id');
 
          //If a specific campaign is not specified, take the user to the
          //campaigns view where the user may be able to choose an appropriate
@@ -71,16 +73,18 @@
             PageNavigation.openCampaignView(campaignURN);
          }
 
-         //Attach an event listener to the top right buttion that would open the
-         //current survey's campaign.
-         $('#button-top').click(function() {
-             PageNavigation.openCampaignView(campaignURN);
-         });
+         var campaign = new Campaign(campaignURN);
+         var survey = campaign.getSurvey(surveyID);
 
-         //Initialize and render the survey.
-         Survey.init(campaignURN, surveyID, function(survey){
-             survey.render(document.getElementById('survey'));
-         });
+         survey.start(document.getElementById('survey'));
+
+         mwf.decorator.TopButton("All Campaigns", null, function(){
+            if(confirm("Data from your current survey response will be lost. Are you sure you would like to continue?")){
+                PageNavigation.openCampaignsView(true);
+            }
+
+         }, true);
+
 
      });
 
@@ -90,22 +94,21 @@
 </head>
 <body>
 
-<a class="button-full button-padded" id="button-top">All Surveys</a>
+    <h1 id="header">
+        <a href="index.html">
+            <img src="img/ohmage-icon-gray-noshadow-30px.png" alt="ohmage" width="30" height="30" style="padding-left:3px; padding-top:3px;"/>
+            <span>ohmage</span>
+         </a>
 
-<h1 id="header">
-    <a href="index.html">
-        <img src="img/apple_logo.png" alt="OHMAGE" width="30" height="30" />
-     </a>
-    <span id="top_title">OHMAGE</span>
-</h1>
+    </h1>
 
-<div id="survey"></div>
+    <div id="survey"></div>
 
-<!--  Standard footer should be included in all pages regarding the mobile tour. -->
-<div id="footer">
-    <p>University of California &copy; 2010 UC Regents<br />
-    <a href="#">View Our Privacy Policy</a></p>
-</div>
+    <!--  Standard footer should be included in all pages regarding the mobile tour. -->
+    <div id="footer">
+        <p>University of California &copy; 2010 UC Regents<br />
+        <a href="#">View Our Privacy Policy</a></p>
+    </div>
 
 </body>
 </html>

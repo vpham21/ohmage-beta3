@@ -48,13 +48,16 @@ var Survey = function(survey, campaign){
     }
 
     /**
-     * Starts a new navigation object with the current survey.
+     * Starts a new navigation object with the current survey. This method
+     * should be used to start off the survey. The prompts will be displayed one
+     * by one, user response will be gathered in a SurveyResponse, etc.
      */
     this.start = function(container){
 
-        new Navigation(this, container).start(function(surveyResponse){
+        var onSurveyComplete = function(surveyResponse){
 
             var message = "Would you like to upload your response?";
+
             if(confirm(message)){
                 var uploader = new SurveyResponseUploader(me, surveyResponse);
 
@@ -76,10 +79,9 @@ var Survey = function(survey, campaign){
             }else{
                 PageNavigation.openCampaignView(me.getCampaign().getURN());
             }
+        };
 
-
-
-        });
+        new Navigation(this, container).start(onSurveyComplete);
     }
 
     /**
@@ -121,8 +123,8 @@ var Survey = function(survey, campaign){
 
         var promptList = survey.contentlist.prompt;
 
-        if(promptList.length)
-        {
+        if(promptList.length){
+
             var prompts = new Array();
 
             for(var i = 0; i < promptList.length; i++)
@@ -131,20 +133,9 @@ var Survey = function(survey, campaign){
             }
 
             return prompts;
-        }
-        else
-        {
+        } else {
             return [new Prompt(promptList)];
         }
 
     };
-}
-
-
-Survey.init = function(campaignURN, surveyID, callback)
-{
-     Campaign.init(campaignURN, function(campaign)
-     {
-         callback(campaign.getSurvey(surveyID));
-     });
 }

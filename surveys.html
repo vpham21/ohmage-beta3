@@ -3,69 +3,97 @@
 <html>
 <head>
     <script type="text/javascript"> var checkpoint = true; </script>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <meta name="viewport" content="height=device-height,width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;" />
 
-    <title>Survey Response Upload Queue</title>
+    <title>ohmage | surveys</title>
 
     <style type="text/css">
         @import url("http://m.ucla.edu/old/assets/css.php");
+        @import url("mobiscroll/css/mobiscroll-1.5.3.css");
+        @import url("css/prompts.css");
     </style>
 
+    <!-- IMPORT PHONEGAP LIBRARY -->
+    <script type="text/javascript" src="js/phonegap/cordova-1.5.0.js"> </script>
+
     <!-- IMPORT MWF JAVASCRIPT LIBRARY -->
-    <script type="text/javascript" src="http://m.ucla.edu/old/assets/js.php"></script>
+    <script type="text/javascript" src="http://m.ucla.edu/old/assets/js.php?standard_libs=geolocation"></script>
     <script type="text/javascript" src="js/mwf/decorator.js"> </script>
     <script type="text/javascript" src="js/mwf/content.js"> </script>
     <script type="text/javascript" src="js/mwf/button.js"> </script>
     <script type="text/javascript" src="js/mwf/menu.js"> </script>
+    <script type="text/javascript" src="js/mwf/form.js"> </script>
 
     <!-- IMPORT JQUERY AND EXTENSIONS -->
     <script type="text/javascript" src="js/jquery/jquery.js"></script>
     <script type="text/javascript" src="js/jquery/jquery.extensions.js"></script>
     <script type="text/javascript" src="js/util/detect_timezone.js"></script>
-
+    <script type="text/javascript" src="js/util/Base64.js"></script>
+    <script type="text/javascript" src="js/util/UUIDGen.js"></script>
+    <script type="text/javascript" src="mobiscroll/js/mobiscroll-1.5.3.js"></script>
 
     <!-- IMPORT OHMAGE API JS LIB -->
+    <script type="text/javascript" src="js/pegjs/ConditionalParser.js"></script>
     <script type="text/javascript" src="js/LocalMap.js"></script>
     <script type="text/javascript" src="js/api.js"></script>
     <script type="text/javascript" src="js/PageNavigation.js"></script>
     <script type="text/javascript" src="js/UserAuthentication.js"></script>
+    <script type="text/javascript" src="js/SurveyResponseUploader.js"></script>
     <script type="text/javascript" src="js/Campaigns.js"></script>
     <script type="text/javascript" src="js/Campaign.js"></script>
-    <script type="text/javascript" src="js/Prompt.js"></script>
-    <script type="text/javascript" src="js/PromptHandler.js"></script>
     <script type="text/javascript" src="js/SurveyResponse.js"></script>
     <script type="text/javascript" src="js/Survey.js"></script>
-    <script type="text/javascript" src="js/SurveyResponseUploader.js"></script>
-    <script type="text/javascript" src="js/UploadQueue.js"></script>
+    <script type="text/javascript" src="js/Prompt.js"></script>
+    <script type="text/javascript" src="js/PromptHandler.js"></script>
+
+    <script type="text/javascript" src="js/navigation.js"></script>
 
     <script type="text/javascript">
 
+     $(document).ready(function() {
 
-         $(document).ready(function(){
+         var surveyMenu = mwf.decorator.Menu("Available Surveys");
 
-             var queue = new UploadQueue();
+         var campaigns = Campaigns.getInstalledCampaigns();
 
-             queue.renderUploadQueue(document.getElementById('upload-queue-menu'));
+         for(var i = 0; i < campaigns.length; i++){
+            campaigns[i].render(surveyMenu);
+         }
 
-         });
+         if(surveyMenu.size() == 0){
+            surveyMenu.addMenuLinkItem("No Available Surveys", null, "Please install a campaign, to view available surveys.").onclick = function(){
+                PageNavigation.openCampaignsView(false);
+            };
+         };
 
-    </script>
+         $("#surveys").append(surveyMenu);
+         $("#surveys").append(mwf.decorator.SingleClickButton("Upload Queue", function(){
+                PageNavigation.openUploadQueueView();
+         }));
+
+         mwf.decorator.TopButton("All Campaigns", null, function(){
+            PageNavigation.openCampaignsView(true);
+         }, true);
+
+
+     });
+
+</script>
 
 
 </head>
-
 <body>
 
     <h1 id="header">
         <a href="index.html">
             <img src="img/ohmage-icon-gray-noshadow-30px.png" alt="ohmage" width="30" height="30" style="padding-left:3px; padding-top:3px;"/>
             <span>ohmage</span>
-        </a>
+         </a>
 
     </h1>
 
-    <div id="upload-queue-menu"> </div>
-
+    <div id="surveys"></div>
 
     <!--  Standard footer should be included in all pages regarding the mobile tour. -->
     <div id="footer">

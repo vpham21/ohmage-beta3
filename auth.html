@@ -3,90 +3,114 @@
 <html>
 <head>
 
-<meta name="viewport" content="height=device-height,width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;" />
+    <meta name="viewport" content="height=device-height,width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;" />
 
-<title>Welcome to OHMAGE</title>
+    <title>ohmage | login</title>
 
-<style type="text/css">
-    @import url("http://m.ucla.edu/old/assets/css.php");
-</style>
+    <style type="text/css">
+        @import url("http://m.ucla.edu/old/assets/css.php");
+    </style>
 
-<!-- IMPORT MWF JAVASCRIPT LIBRARY -->
-<script type="text/javascript" src="http://m.ucla.edu/old/assets/js.php"></script>
-
-<!-- IMPORT PHONEGAP LIBRARY -->
-<script type="text/javascript" src="js/phonegap/phonegap-1.0.0.js"> </script>
-
-<!-- IMPORT JQUERY AND EXTENSIONS -->
-<script type="text/javascript" src="js/jquery/jquery.js"></script>
-<script type="text/javascript" src="js/jquery/jquery.extensions.js"></script>
-
-<!-- IMPORT OHMAGE API JS LIB -->
-<script type="text/javascript" src="js/api.js"></script>
-<script type="text/javascript" src="js/PageNavigation.js"></script>
-<script type="text/javascript" src="js/UserAuthentication.js"></script>
+    <!-- IMPORT MWF JAVASCRIPT LIBRARY -->
+    <script type="text/javascript" src="http://m.ucla.edu/old/assets/js.php"></script>
+    <script type="text/javascript" src="js/mwf/decorator.js"> </script>
+    <script type="text/javascript" src="js/mwf/content.js"> </script>
+    <script type="text/javascript" src="js/mwf/button.js"> </script>
+    <script type="text/javascript" src="js/mwf/menu.js"> </script>
 
 
-<script type="text/javascript">
+    <!-- IMPORT PHONEGAP LIBRARY -->
+    <script type="text/javascript" src="js/phonegap/phonegap-1.0.0.js"> </script>
 
-    $(document).ready(function()
-    {
-        var auth = new UserAuthentication();
+    <!-- IMPORT JQUERY AND EXTENSIONS -->
+    <script type="text/javascript" src="js/jquery/jquery.js"></script>
+    <script type="text/javascript" src="js/jquery/jquery.extensions.js"></script>
 
-        auth.logout();
-
-        $("#login").click(function()
-        {
-            var username = "zorayr.mwf"; //$("#username").val();
-            var password = "zorayr.MWF1"; //$("#password").val();
-
-            //On successful authentication, redirects the user to the dashboard.
-            auth.authenticateByHash(username, password, function(success){
-               if(success){
-                   PageNavigation.openDashboard();
-               }
-            });
+    <!-- IMPORT OHMAGE API JS LIB -->
+    <script type="text/javascript" src="js/api.js"></script>
+    <script type="text/javascript" src="js/PageNavigation.js"></script>
+    <script type="text/javascript" src="js/UserAuthentication.js"></script>
 
 
-       });
+    <script type="text/javascript">
 
-    });
+        $(document).ready(function(){
+
+            if(auth.isUserLocked()){
+
+                $("#username").val(auth.getUsername())
+                              .attr('readonly', true);
 
 
-</script>
+                mwf.decorator.TopButton("Switch User", null, function(){
+                    if(confirm("All data will be lost. Are you sure you would like to proceed?")){
+                        auth.logout();
+
+                        $("#username").val("")
+                                      .attr('readonly', false);
+
+                        mwf.decorator.TopButton.remove();
+                    }
+                }, true);
+            }
+
+            $("#login").click(function(){
+                var username = "zorayr.mwf"; //$("#username").val();
+                var password = "zorayr.MWF1"; //$("#password").val();
+
+                //On successful authentication, redirects the user to the dashboard.
+                auth.authenticateByHash(username, password, function(success, response){
+                   if(success){
+                       PageNavigation.openDashboard();
+
+                   }else if(response){
+                       alert(response);
+
+                   }else{
+                       alert("Unable to login. Please try again.");
+                   }
+                });
+
+
+           });
+
+        });
+
+
+    </script>
 
 
 </head>
 <body>
 
 
-<h1 id="header">
-    <a href="index.html">
-        <img src="img/apple_logo.png" alt="Ohamge" width="30" height="30" />
-     </a>
-    <span>Welcome to Ohmage!</span>
-</h1>
+    <h1 id="header">
+        <a href="index.html">
+            <img src="img/ohmage-icon-gray-noshadow-30px.png" alt="ohmage" width="30" height="30" style="padding-left:3px; padding-top:3px;"/>
+            <span>ohmage</span>
+         </a>
 
+    </h1>
 
-<form class="form-full form-padded">
+    <form class="form-full form-padded">
 
-    <h1 class="light form-first">Please Login to Proceed</h1>
+        <h1 class="light form-first">Please Login to Proceed</h1>
 
-    <label for="username">Username</label>
-    <input type="text" name="username" id="username" />
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" />
 
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password"/>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password"/>
 
-    <input type="button" id="login" name="submit" value="Secure Login" class="form-last" />
+        <input type="button" id="login" name="submit" value="Secure Login" class="form-last" />
 
-</form>
+    </form>
 
-<!--  Standard footer should be included in all pages regarding the mobile tour. -->
-<div id="footer">
-    <p>University of California &copy; 2010 UC Regents<br />
-    <a href="#">View Our Privacy Policy</a></p>
-</div>
+    <!--  Standard footer should be included in all pages regarding the mobile tour. -->
+    <div id="footer">
+        <p>University of California &copy; 2010 UC Regents<br />
+        <a href="#">View Our Privacy Policy</a></p>
+    </div>
 
 </body>
 </html>

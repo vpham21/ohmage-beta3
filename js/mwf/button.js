@@ -271,7 +271,7 @@ mwf.decorator.TopButton = function(label, url, callback, place)
     topButton.setBasic(false);
 
     if(place){
-        
+
         if(document.getElementById('button-top')){
             document.body.removeChild(document.getElementById('button-top'));
         }
@@ -282,4 +282,8 @@ mwf.decorator.TopButton = function(label, url, callback, place)
     return topButton;
 }
 
-
+mwf.decorator.TopButton.remove = function(){
+    if(document.getElementById('button-top')){
+        document.body.removeChild(document.getElementById('button-top'));
+    }
+}
