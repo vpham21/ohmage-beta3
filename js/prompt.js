@@ -24,6 +24,36 @@ function Prompt(prompt){
      */
     var handler = new PromptHandler(this);
 
+    this.summarizeResponse = function(responseValue){
+        var summary = "";
+
+        switch(this.getType()){
+
+            case 'photo':
+                summary = "Photo";
+                break;
+
+            case 'single_choice':
+            case 'multi_choice':
+
+                var keys = new String(responseValue).split(',');
+                var labels = [];
+
+                for(var key in keys){
+                    labels.push(this.getProperty(key).label);
+                }
+
+                summary = labels.join(", ");
+
+                break;
+
+            default:
+                summary = responseValue;
+        }
+
+        return summary;
+    };
+
     this.render = function(){
         return handler.render();
     }
@@ -90,6 +120,18 @@ function Prompt(prompt){
     this.getType = function(){
         return prompt.prompttype;
     };
+
+    this.getProperty = function(key){
+        var properties = this.getProperties();
+
+        for(var i = 0; i < properties.length; i++){
+            if(properties[i].key == key){
+                return properties[i];
+            }
+        }
+
+        return null;
+    }
 
     /**
      * Returns a list of properties for this prompt. If the prompt does not
@@ -226,6 +268,8 @@ function Prompt(prompt){
         }
 
     };
+
+
 
 
 

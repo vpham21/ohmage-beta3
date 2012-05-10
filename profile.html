@@ -2,14 +2,23 @@
 
 <html>
 <head>
+
     <script type="text/javascript"> var checkpoint = true; </script>
+
     <meta name="viewport" content="height=device-height,width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;" />
 
-    <title>Survey Response Upload Queue</title>
+    <title>ohmage | profile</title>
 
     <style type="text/css">
         @import url("http://m.ucla.edu/old/assets/css.php");
+        @import url("css/grid.css");
     </style>
+
+    <!-- IMPORT MWF JAVASCRIPT LIBRARY -->
+    <script type="text/javascript" src="http://m.ucla.edu/old/assets/js.php"></script>
+
+    <!-- IMPORT PHONEGAP LIBRARY -->
+    <script type="text/javascript" src="js/phonegap/phonegap-1.0.0.js"> </script>
 
     <!-- IMPORT MWF JAVASCRIPT LIBRARY -->
     <script type="text/javascript" src="http://m.ucla.edu/old/assets/js.php"></script>
@@ -21,50 +30,36 @@
     <!-- IMPORT JQUERY AND EXTENSIONS -->
     <script type="text/javascript" src="js/jquery/jquery.js"></script>
     <script type="text/javascript" src="js/jquery/jquery.extensions.js"></script>
-    <script type="text/javascript" src="js/util/detect_timezone.js"></script>
-
 
     <!-- IMPORT OHMAGE API JS LIB -->
-    <script type="text/javascript" src="js/LocalMap.js"></script>
     <script type="text/javascript" src="js/api.js"></script>
     <script type="text/javascript" src="js/PageNavigation.js"></script>
     <script type="text/javascript" src="js/UserAuthentication.js"></script>
-    <script type="text/javascript" src="js/Campaigns.js"></script>
-    <script type="text/javascript" src="js/Campaign.js"></script>
-    <script type="text/javascript" src="js/Prompt.js"></script>
-    <script type="text/javascript" src="js/PromptHandler.js"></script>
-    <script type="text/javascript" src="js/SurveyResponse.js"></script>
-    <script type="text/javascript" src="js/Survey.js"></script>
-    <script type="text/javascript" src="js/SurveyResponseUploader.js"></script>
-    <script type="text/javascript" src="js/UploadQueue.js"></script>
+    <script type="text/javascript" src="js/Profile.js"></script>
 
     <script type="text/javascript">
 
-
-         $(document).ready(function(){
-
-             var queue = new UploadQueue();
-
-             queue.renderUploadQueue(document.getElementById('upload-queue-menu'));
-
-         });
+        $(document).ready(function(){
+            $('#profile').append(Profile.render());
+        });
 
     </script>
 
 
 </head>
-
 <body>
 
+    <a href="index.html" class="button-light not-basic" id="button-top">Dashboard</a>
+    
     <h1 id="header">
         <a href="index.html">
             <img src="img/ohmage-icon-gray-noshadow-30px.png" alt="ohmage" width="30" height="30" style="padding-left:3px; padding-top:3px;"/>
             <span>ohmage</span>
-        </a>
+         </a>
 
     </h1>
 
-    <div id="upload-queue-menu"> </div>
+    <div id="profile"> </div>
 
     <div id="footer">
         <p>Copyright &copy; 2012 MobilizeLabs<br />

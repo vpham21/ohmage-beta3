@@ -11,18 +11,18 @@ var UploadQueue = function()
     /**
      * Renders a summary of a single survey response.
      */
-    var renderSummaryView = function(survey, surveyResponse, container){
+    var renderResponseView = function(survey, surveyResponse, container){
 
         container.innerHTML = "";
 
-        var summaryViewContainer = document.createElement('div');
+        var responseViewContainer = document.createElement('div');
 
-        survey.render(summaryViewContainer, false);
+        survey.render(responseViewContainer, false);
 
         //Kind of a back button that removes the current survey, and restores
         //the original upload queue view.
         var displayUploadQueue = function(){
-            container.removeChild(summaryViewContainer);
+            container.removeChild(responseViewContainer);
             me.renderUploadQueue(container);
         }
 
@@ -42,7 +42,7 @@ var UploadQueue = function()
                 if(response.result === "success"){
 
                     alert("Successfully uploaded your survey response.");
-                    SurveyResponse.deleteSurvey(surveyResponse);
+                    SurveyResponse.deleteSurveyResponse(surveyResponse);
                     displayUploadQueue();
 
                 }else{
@@ -58,18 +58,43 @@ var UploadQueue = function()
 
             var response = confirm("Are you sure you would like to delete your response?");
             if(response){
-                SurveyResponse.deleteSurvey(surveyResponse);
+                SurveyResponse.deleteSurveyResponse(surveyResponse);
                 displayUploadQueue();
             }
         }
 
-        summaryViewContainer.appendChild(mwfd.DoubleClickButton("Delete", deleteSurveyResponse, "Upload Survey", uploadSurveyResponse));
+        responseViewContainer.appendChild(mwfd.DoubleClickButton("Delete", deleteSurveyResponse, "Upload", uploadSurveyResponse));
+
+        var viewSummaryButton = mwfd.SingleClickButton("View Summary", function(){
+            responseViewContainer.removeChild(viewSummaryButton);
+
+            var hideSummary = function(){
+
+                responseViewContainer.removeChild(hideSummaryButtonTop);
+                responseViewContainer.removeChild(summaryView);
+                responseViewContainer.removeChild(hideSummaryButtonBottom);
+
+                responseViewContainer.appendChild(viewSummaryButton);
+            };
+
+            var hideSummaryButtonTop = mwfd.SingleClickButton("Hide Summary", hideSummary);
+            responseViewContainer.appendChild(hideSummaryButtonTop);
+
+            var summaryView = surveyResponse.render();
+            responseViewContainer.appendChild(summaryView);
+
+            var hideSummaryButtonBottom = mwfd.SingleClickButton("Hide Summary", hideSummary);
+            responseViewContainer.appendChild(hideSummaryButtonBottom);
+
+        });
+
+        responseViewContainer.appendChild(viewSummaryButton);
 
         mwfd.TopButton("Upload Queue", null, function(){
             displayUploadQueue();
         }, true);
 
-        container.appendChild(summaryViewContainer);
+        container.appendChild(responseViewContainer);
 
     };
 
@@ -86,6 +111,12 @@ var UploadQueue = function()
         var pendingResponses = SurveyResponse.getPendingResponses();
         var queueMenu = mwfd.Menu(title);
 
+        var callback = function(survey, response){
+            return function(){
+                renderResponseView(survey, response, container);
+            };
+        };
+
         for(var uuid in pendingResponses){
 
             var survey   = pendingResponses[uuid].survey;
@@ -94,9 +125,8 @@ var UploadQueue = function()
             var details = "Submitted on " + response.getSubmitDate() + ".";
             var menuItem = queueMenu.addMenuLinkItem(survey.getTitle(), null, details);
 
-            menuItem.onclick = function(){
-                renderSummaryView(survey, response, container);
-            };
+
+            menuItem.onclick = callback(survey, response);
 
         }
 
@@ -108,7 +138,7 @@ var UploadQueue = function()
                 var response = confirm("Are you sure you would like to delete all your responses?");
                 if(response){
                     for(var uuid in pendingResponses){
-                        SurveyResponse.deleteSurvey(pendingResponses[uuid].response);
+                        SurveyResponse.deleteSurveyResponse(pendingResponses[uuid].response);
                     }
                     me.renderUploadQueue(container);
                 }

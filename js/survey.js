@@ -66,7 +66,7 @@ var Survey = function(survey, campaign){
                     if(response.result === "success"){
 
                         alert("Successfully uploaded your survey response.");
-                        SurveyResponse.deleteSurvey(surveyResponse);
+                        SurveyResponse.deleteSurveyResponse(surveyResponse);
 
                     }else{
                         alert(response.errors[0].text);
@@ -127,8 +127,7 @@ var Survey = function(survey, campaign){
 
             var prompts = new Array();
 
-            for(var i = 0; i < promptList.length; i++)
-            {
+            for(var i = 0; i < promptList.length; i++){
                 prompts[i] = new Prompt(promptList[i]);
             }
 
@@ -137,5 +136,18 @@ var Survey = function(survey, campaign){
             return [new Prompt(promptList)];
         }
 
+    };
+
+    this.getPrompt = function(id){
+
+        var prompts = this.getPrompts();
+
+        for(var i = 0; i < prompts.length; i++){
+            if(prompts[i].getID() == id){
+                return prompts[i];
+            }
+        }
+
+        return null;
     };
 }

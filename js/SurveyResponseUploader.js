@@ -18,7 +18,11 @@ var SurveyResponseUploader = function(survey, surveyResponse){
                     images:  JSON.stringify(responseData.images)
                };
 
+
+
     this.upload = function(callback){
+            console.log(data);
+    
         api(
              "POST",
              SURVEY_UPLOAD_URL,
@@ -58,7 +62,7 @@ SurveyResponseUploader.uploadAll = function(pendingResponses, callback){
 
                  if(response.result === "success"){
                     count++;
-                    SurveyResponse.deleteSurvey(surveyResponse);
+                    SurveyResponse.deleteSurveyResponse(surveyResponse);
                 }
 
                 upload(++i);

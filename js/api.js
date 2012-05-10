@@ -15,6 +15,11 @@ var CAMPAIGN_READ_URL = '/app/campaign/read';
  */
 var SURVEY_UPLOAD_URL = '/app/survey/upload';
 
+/**
+ * Allows users to change their passwords.
+ */
+var PASSWORD_CHANGE_URL = '/app/user/change_password';
+
 
 
 
@@ -53,16 +58,19 @@ function api(type, url, data, dataType, onSuccess, onError, redirectOnAuthError)
 
                 invoke(onError, response);
 
-                //If the API request failed because of authentication related
-                //error, then redirect the user to the authentication page.
-                for(var i = 0; i < response.errors.length; i++){
-                    if(response.errors[i].code == '0200'){
-                        auth.setAuthErrorState(true);
-                        PageNavigation.openAuthenticationPage();
-                        break;
-                    }
+                if(redirectOnAuthError){
+                    //If the API request failed because of authentication related
+                    //error, then redirect the user to the authentication page.
+                    for(var i = 0; i < response.errors.length; i++){
+                        if(response.errors[i].code == '0200'){
+                            auth.setAuthErrorState(true);
+                            PageNavigation.openAuthenticationPage();
+                            break;
+                        }
 
-                };
+                    }
+                }
+
 
                 break;
             }

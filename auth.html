@@ -43,9 +43,8 @@
 
 
                 mwf.decorator.TopButton("Switch User", null, function(){
-                    if(confirm("All data will be lost. Are you sure you would like to proceed?")){
-                        auth.logout();
-
+                    if(auth.logout()){
+                        
                         $("#username").val("")
                                       .attr('readonly', false);
 
@@ -54,12 +53,36 @@
                 }, true);
             }
 
+            var isInputValid = function(){
+
+                if($('#username').val().length == 0){
+                    alert('Please enter your username.');
+                    $('#username').focus();
+                    return false;
+                }
+
+                if($('#password').val().length == 0){
+                    alert('Please enter your password.');
+                    $('#password').focus();
+                    return false;
+                }
+
+                return true;
+
+            };
+
             $("#login").click(function(){
-                var username = "zorayr.mwf"; //$("#username").val();
-                var password = "zorayr.MWF1"; //$("#password").val();
+
+                if(!isInputValid()){
+                    return;
+                }
+
+                var username = $("#username").val();
+                var password = $("#password").val();
 
                 //On successful authentication, redirects the user to the dashboard.
                 auth.authenticateByHash(username, password, function(success, response){
+
                    if(success){
                        PageNavigation.openDashboard();
 
@@ -69,7 +92,7 @@
                    }else{
                        alert("Unable to login. Please try again.");
                    }
-                });
+                }, false);
 
 
            });
@@ -106,10 +129,9 @@
 
     </form>
 
-    <!--  Standard footer should be included in all pages regarding the mobile tour. -->
     <div id="footer">
-        <p>University of California &copy; 2010 UC Regents<br />
-        <a href="#">View Our Privacy Policy</a></p>
+        <p>Copyright &copy; 2012 MobilizeLabs<br />
+        <a href="privacy.html">View Our Privacy Policy</a></p>
     </div>
 
 </body>

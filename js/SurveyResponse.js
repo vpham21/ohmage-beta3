@@ -92,8 +92,8 @@ function SurveyResponse(id, uuid, urn)
      */
     this.data.location = null;
 
-    this.setLocation = function()
-    {
+    this.setLocation = function(){
+
         mwf.touch.geolocation.getPosition(
 
             function(pos){
@@ -161,8 +161,7 @@ function SurveyResponse(id, uuid, urn)
         this.respond(promptID, SurveyResponse.NOT_DISPLAYED_PROMPT_VALUE, false);
     };
 
-    this.submit = function(callback)
-    {
+    this.submit = function(callback){
         //Save the submit time.
         me.data.time = new Date().getTime();
 
@@ -173,6 +172,24 @@ function SurveyResponse(id, uuid, urn)
             callback();
         }
 
+    };
+
+    this.render = function(){
+
+        var survey = (new Campaign(this.getCampaignURN())).getSurvey(this.getSurveyID());
+
+        var menu = mwf.decorator.Menu(survey.getTitle() + " - Responses");
+
+        for (var promptID in this.data._responses) {
+            var prompt = survey.getPrompt(promptID);
+            var value  = this.data._responses[promptID].value;
+
+            menu.addMenuLinkItem(prompt.getText(), null, prompt.summarizeResponse(value));
+        }
+
+        $(menu).find("a").css('background', "transparent");
+
+        return menu;
     };
 
 
@@ -215,13 +232,16 @@ function SurveyResponse(id, uuid, urn)
             survey_id            : this.data.survey_id,
             survey_launch_context: this.data.survey_launch_context,
 
+            //UPDATE: Seems like they removed this from the Wiki docs.
             //Single Prompt Response is a JSON object and not an array. Not sure
             //why so, but its noted by the documentation.
-            responses: (responses.length == 1)? responses[0]:responses
+            //responses: (responses.length == 1)? responses[0]:responses
+
+            responses: responses
         }
 
         return {"responses" : surveyResponse, "images": images};
-    }
+    };
 
     /**
      * Replaces the current working data. This is used for restoring a survey
@@ -242,7 +262,7 @@ function SurveyResponse(id, uuid, urn)
         for(var promptID in this.data._responses){
             data[promptID] = this.data._responses[promptID].value;
         }
-        
+
         return data;
     };
 
@@ -250,7 +270,7 @@ function SurveyResponse(id, uuid, urn)
      * Saves the current response in the response pool.
      */
     this.save = function(){
-        SurveyResponse.saveSurvey(this);
+        SurveyResponse.saveSurveyResponse(this);
     };
 
 
@@ -263,7 +283,7 @@ function SurveyResponse(id, uuid, urn)
         return (this.data._responses[promptID])?
                     this.data._responses[promptID].value :
                     null;
-    }
+    };
 
     /**
      * Returns the current working data. The returned object contains all
@@ -296,30 +316,27 @@ function SurveyResponse(id, uuid, urn)
     };
 }
 
-SurveyResponse.init = function(id, urn)
-{
-    var pool = SurveyResponse.getPool();
 
-    //Create a new UUID to be assigned to the survey.
-    var uuid = UUIDGen.generate();
+SurveyResponse.responses = new LocalMap("suvey-responses");
 
-    pool[uuid] = new SurveyResponse(id, uuid, urn);
+SurveyResponse.init = function(id, urn){
+    return new SurveyResponse(id, UUIDGen.generate(), urn);
+};
 
-    SurveyResponse.setPool(pool);
-
-    return pool[uuid];
-
+SurveyResponse.saveSurveyResponse = function(surveyResponse){
+    SurveyResponse.responses.set(surveyResponse.getSurveyKey(), surveyResponse.getData());
 };
 
 /**
  * The function restores a stored SurveyResponse object.
  */
-SurveyResponse.restoreSurvey = function(survey_key)
-{
-    //Get the survey from the response pool.
-    var data = SurveyResponse.getSurvey(survey_key);
+SurveyResponse.restoreSurveyResponse = function(survey_key){
 
+    var data = SurveyResponse.responses.get(survey_key);
 
+    if(data === null){
+        return false;
+    }
     var surveyResponse = new SurveyResponse(data.id,
                                             data.survey_key,
                                             data.campaign_urn);
@@ -327,44 +344,13 @@ SurveyResponse.restoreSurvey = function(survey_key)
 
     return surveyResponse;
 
-}
-
-SurveyResponse.getSurvey = function(survey_key)
-{
-    //Get the pool of saved survey responses.
-    var pool = SurveyResponse.getPool();
-
-    return (pool[survey_key])? pool[survey_key] : null;
 };
 
-SurveyResponse.saveSurvey = function(survey)
-{
-    //Get the pool of survey responses.
-    var pool = SurveyResponse.getPool();
 
-    //Save the specified survey in the pool, mapped to the UUID of the survey.
-    pool[survey.getSurveyKey()] = survey.getData();
-
-    //Save the pool in an external storage.
-    SurveyResponse.setPool(pool);
+SurveyResponse.deleteSurveyResponse = function(surveyResponse){
+    SurveyResponse.responses.release(surveyResponse.getSurveyKey());
 };
 
-SurveyResponse.deleteSurvey = function(survey){
-
-   var pool = SurveyResponse.getPool();
-
-   delete pool[survey.getSurveyKey()];
-
-   SurveyResponse.setPool(pool);
-}
-
-SurveyResponse.getPool = function(){
-    return (localStorage.pool)? JSON.parse(localStorage.pool): {};
-};
-
-SurveyResponse.setPool = function(pool){
-    localStorage.pool = JSON.stringify(pool);
-};
 
 /**
  * Saves the provided image URI and returns a UUID that mapps to that image's
@@ -398,25 +384,46 @@ SurveyResponse.getPendingResponses = function(){
 
     var pendingResponses = {};
 
-    var pool = SurveyResponse.getPool();
-
-    for(var uuid in pool){
+    for(var uuid in SurveyResponse.responses.getMap()){
 
         //Restore the survey response object.
-        var response = SurveyResponse.restoreSurvey(uuid);
+        var response = SurveyResponse.restoreSurveyResponse(uuid);
 
         //Skip survey responses that were not completed.
         if(!response.isSubmitted()){
             continue;
         }
 
-        Survey.init(response.getCampaignURN(), response.getSurveyID(), function(survey){
-            pendingResponses[uuid] = {'survey': survey, 'response': response};
-        });
+        var campaign = new Campaign(response.getCampaignURN());
+        var survey = campaign.getSurvey(response.getSurveyID());
+        pendingResponses[uuid] = {'survey': survey, 'response': response};
+
     }
 
     return pendingResponses;
 }
+
+SurveyResponse.getUploadQueueSize = function(){
+
+    var size = 0;
+
+    for(var uuid in SurveyResponse.responses.getMap()){
+
+        //Restore the survey response object.
+        var response = SurveyResponse.restoreSurveyResponse(uuid);
+
+        //Skip survey responses that were not completed.
+        if(!response.isSubmitted()){
+            continue;
+        }
+
+        size++;
+    }
+    return size;
+
+
+};
+
 
 /**
  * Value tag that indicates skipped prompt response value.

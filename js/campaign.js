@@ -3,9 +3,25 @@ var Campaign = function(urn){
     var metadata = (new LocalMap("all-campaigns").get(urn));
     var campaign = (new LocalMap("campaign-configurations")).get(urn);
 
-    this.render = function(surveyMenu){
+    this.render = function(){
+        
+        if(this.isRunning()){
 
-        surveyMenu = surveyMenu || mwf.decorator.Menu("Available Surveys");
+            return this.renderSurveyList(mwf.decorator.Menu("Available Surveys"));
+
+        }else{
+
+            var errorContainer = mwf.decorator.Content('Inactive Campaign');
+
+            errorContainer.addTextBlock('This campaign is currently inactive and does not open for participation.');
+
+            return errorContainer;
+
+        }
+
+    };
+
+    this.renderSurveyList = function(surveyMenu){
 
         var callback = function(surveyID){
             return function(){
@@ -20,7 +36,7 @@ var Campaign = function(urn){
         }
 
         return surveyMenu;
-    };
+    }
 
     /**
      * Returns surveys associated with this campaign.
@@ -34,6 +50,10 @@ var Campaign = function(urn){
         //it in an array. This is a kind of a dirty fix, if you have any
         //better ideas of approaching the situation - please be my guest.
         return (!surveys.length)? [surveys] : surveys;
+    };
+
+    this.isRunning = function(){
+        return metadata.running_state == 'running';
     };
 
     /**

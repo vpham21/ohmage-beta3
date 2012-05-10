@@ -1,6 +1,6 @@
 var LocalMap = function(name){
 
-    var buffer = null;
+    //var buffer = null;
 
     var initMap = function(){
         if(!localStorage[name]){

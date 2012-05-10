@@ -30,11 +30,14 @@
     <!-- IMPORT JQUERY AND EXTENSIONS -->
     <script type="text/javascript" src="js/jquery/jquery.js"></script>
     <script type="text/javascript" src="js/jquery/jquery.extensions.js"></script>
+    <script type="text/javascript" src="js/util/detect_timezone.js"></script>
 
     <!-- IMPORT OHMAGE API JS LIB -->
+    <script type="text/javascript" src="js/LocalMap.js"></script>
     <script type="text/javascript" src="js/api.js"></script>
     <script type="text/javascript" src="js/PageNavigation.js"></script>
     <script type="text/javascript" src="js/UserAuthentication.js"></script>
+    <script type="text/javascript" src="js/SurveyResponse.js"></script>
 
     <script type="text/javascript">
 
@@ -54,12 +57,14 @@
 
             })();
 
+            var queueSize = SurveyResponse.getUploadQueueSize();
+            var queueLabel = "Queue (" + queueSize + ")";
+
             var dashboard = mwf.decorator.Menu();
 
             dashboard.addMenuImageItem('Campaigns', 'campaigns.html',    'img/dash/dash_campaigns.png');
             dashboard.addMenuImageItem('Surveys',   'surveys.html',      'img/dash/dash_surveys.png');
-            dashboard.addMenuImageItem('History',   'history.html',      'img/dash/dash_resphistory.png');
-            dashboard.addMenuImageItem('Queue',     'upload-queue.html', 'img/dash/dash_upqueue.png');
+            dashboard.addMenuImageItem( queueLabel, 'upload-queue.html', 'img/dash/dash_upqueue.png');
             dashboard.addMenuImageItem('Profile',   'profile.html',      'img/dash/dash_profile.png');
             dashboard.addMenuImageItem('Help',      'help.html',         'img/dash/dash_help.png');
 
@@ -84,10 +89,9 @@
 
     <div id="dashboard" class="grid"></div>
 
-    <!--  Standard footer should be included in all pages regarding the mobile tour. -->
     <div id="footer">
-        <p>University of California &copy; 2010 UC Regents<br />
-        <a href="#">View Our Privacy Policy</a></p>
+        <p>Copyright &copy; 2012 MobilizeLabs<br />
+        <a href="privacy.html">View Our Privacy Policy</a></p>
     </div>
 
 </body>

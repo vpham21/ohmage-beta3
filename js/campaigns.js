@@ -36,7 +36,7 @@ var Campaigns = new (function() {
         }
 
         var availableMenu = mwf.decorator.Menu("Available Campaigns");
-        var installedMenu = mwf.decorator.Menu("Installed Campaigns");
+        var installedMenu = mwf.decorator.Menu("My Campaigns");
 
         var install = function(urn){
             return function(){
@@ -81,7 +81,7 @@ var Campaigns = new (function() {
         if(!installed && availableMenu.size() > 0){
 
             if(installedCampaigns.length() > 0){
-                mwf.decorator.TopButton("View Installed", null, function(){
+                mwf.decorator.TopButton("My Campaigns", null, function(){
                     PageNavigation.openCampaignsView(true);
                 }, true);
             }
@@ -89,7 +89,7 @@ var Campaigns = new (function() {
             $(availableMenu).find("a").css('background', "url('img/plus.png') no-repeat 95% center");
 
             container.appendChild(availableMenu);
-            container.appendChild(mwf.decorator.SingleClickButton("Update Campaigns", function(){
+            container.appendChild(mwf.decorator.SingleClickButton("Refresh Campaigns", function(){
 
                 var onSuccess = function(){
                     PageNavigation.openCampaignsView(false);
