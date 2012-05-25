@@ -77,7 +77,7 @@ function Navigation(survey, container)
 
         //Handle invalid responses.
         if(!prompt.isValid()){
-            alert(prompt.getErrorMessage());
+            showMessage(prompt.getErrorMessage());
             return false;
         }
 

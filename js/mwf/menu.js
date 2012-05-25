@@ -335,7 +335,7 @@ mwf.decorator.Menu = function(title)
         inputItem.value = value;
 
         //ToDo: This should be moved into a convinient CSS class instead.
-        inputItem.style.verticalAlign = 'text-top';
+        inputItem.style.verticalAlign = 'bottom';
 
         //Create a standard menu link item and prepend the option button.
         var linkItem = createLinkItem(label, null, details);

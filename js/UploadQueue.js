@@ -41,12 +41,15 @@ var UploadQueue = function()
 
                 if(response.result === "success"){
 
-                    alert("Successfully uploaded your survey response.");
+                    showMessage("Successfully uploaded your survey response.", function(){
+                        displayUploadQueue();
+                    });
+
                     SurveyResponse.deleteSurveyResponse(surveyResponse);
-                    displayUploadQueue();
+
 
                 }else{
-                    alert(response.errors[0].text);
+                    showMessage(response.errors[0].text);
                 }
 
             });
@@ -146,14 +149,12 @@ var UploadQueue = function()
             //Upload all button click handler.
             var uploadAll = function(){
                 SurveyResponseUploader.uploadAll(pendingResponses, function(count){
+                    var message = (count == 0)? "Unable to upload any surveys at this time." :
+                                                "Successfully uploaded " + count + " survey(s).";
 
-                    if(count == 0){
-                        alert("Unable to upload any surveys at this time.");
-                    }else{
-                        alert("Successfully uploaded " + count + " survey(s).");
-                    }
-
-                    me.renderUploadQueue(container);
+                    showMessage(message, function(){
+                        me.renderUploadQueue(container);
+                    });
 
                 });
             };

@@ -8,19 +8,18 @@
     <title>ohmage | login</title>
 
     <style type="text/css">
-        @import url("http://m.ucla.edu/old/assets/css.php");
+        @import url("css/mwf.css");
     </style>
 
+    <!-- IMPORT PHONEGAP LIBRARY -->
+    <script type="text/javascript" src="js/phonegap/cordova-1.7.0.js"> </script>
+
     <!-- IMPORT MWF JAVASCRIPT LIBRARY -->
-    <script type="text/javascript" src="http://m.ucla.edu/old/assets/js.php"></script>
+    <script type="text/javascript" src="js/mwf/mwf.js"></script>
     <script type="text/javascript" src="js/mwf/decorator.js"> </script>
     <script type="text/javascript" src="js/mwf/content.js"> </script>
     <script type="text/javascript" src="js/mwf/button.js"> </script>
     <script type="text/javascript" src="js/mwf/menu.js"> </script>
-
-
-    <!-- IMPORT PHONEGAP LIBRARY -->
-    <script type="text/javascript" src="js/phonegap/phonegap-1.0.0.js"> </script>
 
     <!-- IMPORT JQUERY AND EXTENSIONS -->
     <script type="text/javascript" src="js/jquery/jquery.js"></script>
@@ -34,17 +33,19 @@
 
     <script type="text/javascript">
 
-        $(document).ready(function(){
+        invokeOnReady(function(){
 
             if(auth.isUserLocked()){
 
+                //If the user is in a locked state, force the username field to
+                //be read only.
                 $("#username").val(auth.getUsername())
                               .attr('readonly', true);
 
 
                 mwf.decorator.TopButton("Switch User", null, function(){
                     if(auth.logout()){
-                        
+
                         $("#username").val("")
                                       .attr('readonly', false);
 
@@ -56,14 +57,18 @@
             var isInputValid = function(){
 
                 if($('#username').val().length == 0){
-                    alert('Please enter your username.');
-                    $('#username').focus();
+                    showMessage('Please enter your username.', function(){
+                        $('#username').focus();
+                    });
+
                     return false;
                 }
 
                 if($('#password').val().length == 0){
-                    alert('Please enter your password.');
-                    $('#password').focus();
+                    showMessage('Please enter your password.', function(){
+                        $('#password').focus();
+                    });
+
                     return false;
                 }
 
@@ -87,10 +92,10 @@
                        PageNavigation.openDashboard();
 
                    }else if(response){
-                       alert(response);
+                       showMessage(response);
 
                    }else{
-                       alert("Unable to login. Please try again.");
+                       showMessage("Unable to login. Please try again.");
                    }
                 }, false);
 

@@ -92,13 +92,14 @@ var Campaigns = new (function() {
             container.appendChild(mwf.decorator.SingleClickButton("Refresh Campaigns", function(){
 
                 var onSuccess = function(){
-                    PageNavigation.openCampaignsView(false);
-                    alert("All campaigns have been updated.")
-                }
+                    showMessage("All campaigns have been updated.", function(){
+                        PageNavigation.openCampaignsView(false);
+                    });
+                };
 
                 var onError = function(){
-                    alert("Unable to download all campaigns. Please try again.");
-                }
+                    showMessage("Unable to download all campaigns. Please try again.");
+                };
 
                 Campaigns.download(true, onSuccess, onError);
             }));

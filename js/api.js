@@ -1,9 +1,8 @@
 
 /**
- * OHMAGE server URL.
+ * ohmage server URL.
  */
 var OG_SERVER = "https://dev.mobilizingcs.org";
-//var OG_SERVER = "https://dev.andwellness.org";
 
 /**
  * URL for reading campaigns.
@@ -19,9 +18,6 @@ var SURVEY_UPLOAD_URL = '/app/survey/upload';
  * Allows users to change their passwords.
  */
 var PASSWORD_CHANGE_URL = '/app/user/change_password';
-
-
-
 
 /**
  * The method is the primary point of interaction with the Ohmage API.
@@ -39,6 +35,7 @@ var PASSWORD_CHANGE_URL = '/app/user/change_password';
  * @param dataType  The data type for the AJAX call i.e. XML, JSON, JSONP.
  * @param onSuccess The callback on API call success.
  * @param onError   The callback on API call error.
+ * @param redirectOnAuthError
  */
 function api(type, url, data, dataType, onSuccess, onError, redirectOnAuthError){
 
@@ -88,8 +85,8 @@ function api(type, url, data, dataType, onSuccess, onError, redirectOnAuthError)
 
     console.log("Initiating an API call for %s with the following data ", url, data);
 
-    $.ajax(
-    {
+    $.ajax({
+
         type: type,
         url : OG_SERVER + url,
         data: data,
@@ -109,10 +106,52 @@ function api(type, url, data, dataType, onSuccess, onError, redirectOnAuthError)
  * @param fun  the name of the function to be invoked.
  * @param args the arguments to pass to the callback function.
  */
-function invoke(fun, args)
-{
+function invoke(fun, args){
     if(fun && typeof fun === 'function'){
         fun(args);
     }
 }
 
+/**
+ * Returns true if the application is running on an actual mobile device.
+ */
+function isOnDevice(){
+    return navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/);
+}
+
+/**
+ * Method for invoking functions once the DOM and the device are ready. This is
+ * a replacement function for the JQuery provided method i.e.
+ * $(document).ready(...).
+ */
+function invokeOnReady(callback){
+    $(document).ready(function(){
+        if (isOnDevice()) {
+            document.addEventListener("deviceready", callback, false);
+        } else {
+            invoke(callback);
+        }
+    });
+}
+
+function showMessage(message, callback, title, buttonName){
+
+    title = title || "ohmage";
+    buttonName = buttonName || 'OK';
+
+    if(navigator.notification){
+
+        navigator.notification.alert(
+            message,    // message
+            callback,   // callback
+            title,      // title
+            buttonName  // buttonName
+        );
+
+    }else{
+
+        alert(message);
+        invoke(callback)
+    }
+
+}

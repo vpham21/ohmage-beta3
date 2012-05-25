@@ -1,7 +1,4 @@
-var PageNavigation = function()
-{
-
-}
+var PageNavigation = function(){};
 
 /**
  * Method redirects the user to a specified URL. Although this can be easily
@@ -12,20 +9,19 @@ var PageNavigation = function()
  * @param url The URL to redirect to. If null or undefined, the method exits
  *            without throwing any errors.
  */
-PageNavigation.redirect = function(url)
-{
+PageNavigation.redirect = function(url){
     if(url){
         document.location = url;
     }
-}
+};
 
 /**
- * PageNavigation.redirects the user to the page that displays a list of available campaigns.
+ * Eedirects the user to the page that displays a list of available or installed
+ * campaigns.
  */
 PageNavigation.openCampaignsView = function(installed){
     PageNavigation.redirect("campaigns.html?display-installed-campaigns=" + ((installed || typeof(installed) == "undefined")? "true" : "false"));
-
-}
+};
 
 /**
  * PageNavigation.redirects the user to the page that displays the campaign's surveys.
@@ -33,10 +29,9 @@ PageNavigation.openCampaignsView = function(installed){
  * @param campaignURN The unique identifier of the campaign to display.
  *
  */
-PageNavigation.openCampaignView = function(campaignURN)
-{
+PageNavigation.openCampaignView = function(campaignURN){
     PageNavigation.redirect("campaign.html?campaign-urn=" + campaignURN);
-}
+};
 
 /**
  * PageNavigation.redirects the user to the page that displays a list of submitted but not yet
@@ -45,7 +40,7 @@ PageNavigation.openCampaignView = function(campaignURN)
  */
 PageNavigation.openUploadQueueView = function(){
     PageNavigation.redirect("upload-queue.html");
-}
+};
 
 /**
  * PageNavigation.redirects the user to the page that displays the campaign's surveys.
@@ -55,12 +50,12 @@ PageNavigation.openUploadQueueView = function(){
  */
 PageNavigation.openSurveyView = function(campaignURN, surveyID){
     PageNavigation.redirect("survey.html?campaign-urn=" + campaignURN + "&survey-id=" + surveyID);
-}
+};
 
 PageNavigation.openAuthenticationPage = function(){
     PageNavigation.redirect("auth.html");
-}
+};
 
 PageNavigation.openDashboard = function(){
     PageNavigation.redirect("index.html");
-}
+};

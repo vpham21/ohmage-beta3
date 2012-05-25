@@ -113,7 +113,7 @@ PromptHandler.Handlers = function(){
             var newChoice = document.getElementById('new-choice').value;
 
             if(newChoice.length == 0){
-                alert('Please specify an option to add.');
+                showMessage('Please specify an option to add.');
                 return false;
             }
 
@@ -122,7 +122,7 @@ PromptHandler.Handlers = function(){
 
             //If the property is invalid, alert the user and cancel the add.
             if(!prop){
-                alert('Option with that label already exists.');
+                showMessage('Option with that label already exists.');
                 return false;
             }
 
@@ -348,7 +348,7 @@ PromptHandler.Handlers = function(){
         var recordImage = function(imageData, encode){
 
             //Display the capture image.
-            image.src =  (encode) ? "data:image/jpeg;base64," : "" + imageData;
+            image.src =  ((encode) ? "data:image/jpeg;base64," : "") + imageData;
             imgForm.style.display = 'block';
 
             //Save the image and store the returned UUID within the image's
@@ -367,13 +367,12 @@ PromptHandler.Handlers = function(){
                 }
 
                 function onFail(message) {
-                    alert('Failed because: ' + message);
+                    showMessage('Failed because: ' + message);
                 }
 
-                //ToDo: utilize <res> property in order to set up resolution quality.
-                var cameraOptions = {quality: 50};
-
-                navigator.camera.getPicture(onSuccess, onFail, cameraOptions);
+                navigator.camera.getPicture(onSuccess, onFail, { quality: 25,
+                    destinationType: Camera.DestinationType.DATA_URL
+                });
             });
 
             container.appendChild(takeImageButton);
@@ -395,7 +394,7 @@ PromptHandler.Handlers = function(){
                         recordImage(imageData, false);
                     });
                 }else{
-                    alert("Please select an image.");
+                    showMessage("Please select an image.");
                 }
 
             }
@@ -451,7 +450,9 @@ PromptHandler.Handlers = function(){
         datePicker.value = getFullDate(date);
 
         //Handle browsers that don't support HTML5's input=date.
-        if(datePicker.type === 'text'){
+        //This is kind of a hack since Android browser engine sets the input
+        //type to 'date' but doesn't really support it.
+        if(datePicker.type === 'text' || navigator.userAgent.match(/(Android)/)){
             $(datePicker).scroller({dateFormat:'yyyy-mm-dd', dateOrder:'yymmdd'});
         }
 

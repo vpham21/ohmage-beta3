@@ -54,6 +54,7 @@ var Survey = function(survey, campaign){
      */
     this.start = function(container){
 
+        //Callback for when the user completes the survey.
         var onSurveyComplete = function(surveyResponse){
 
             var message = "Would you like to upload your response?";
@@ -63,16 +64,23 @@ var Survey = function(survey, campaign){
 
                 uploader.upload(function(response){
 
-                    if(response.result === "success"){
+                    //Invoked after displaying a message to the user i.e. alert.
+                    var callback = function(){
+                        PageNavigation.openCampaignView(me.getCampaign().getURN());
+                    };
 
-                        alert("Successfully uploaded your survey response.");
+                    //On successful survey upload, notify the user and delete
+                    //the response.
+                    if(response.result === "success"){
+                        showMessage("Successfully uploaded your survey response.", callback);
                         SurveyResponse.deleteSurveyResponse(surveyResponse);
 
+                    //On a failed survey response upload, notify the user with
+                    //an error message.
                     }else{
-                        alert(response.errors[0].text);
+                        showMessage(response.errors[0].text, callback);
                     }
 
-                    PageNavigation.openCampaignView(me.getCampaign().getURN());
 
                 });
 
@@ -81,6 +89,7 @@ var Survey = function(survey, campaign){
             }
         };
 
+        //Start the actual survey.
         new Navigation(this, container).start(onSurveyComplete);
     }
 

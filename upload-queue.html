@@ -8,11 +8,14 @@
     <title>Survey Response Upload Queue</title>
 
     <style type="text/css">
-        @import url("http://m.ucla.edu/old/assets/css.php");
+        @import url("css/mwf.css");
     </style>
 
+    <!-- IMPORT PHONEGAP LIBRARY -->
+    <script type="text/javascript" src="js/phonegap/cordova-1.7.0.js"> </script>
+
     <!-- IMPORT MWF JAVASCRIPT LIBRARY -->
-    <script type="text/javascript" src="http://m.ucla.edu/old/assets/js.php"></script>
+    <script type="text/javascript" src="js/mwf/mwf.js"></script>
     <script type="text/javascript" src="js/mwf/decorator.js"> </script>
     <script type="text/javascript" src="js/mwf/content.js"> </script>
     <script type="text/javascript" src="js/mwf/button.js"> </script>
@@ -22,7 +25,6 @@
     <script type="text/javascript" src="js/jquery/jquery.js"></script>
     <script type="text/javascript" src="js/jquery/jquery.extensions.js"></script>
     <script type="text/javascript" src="js/util/detect_timezone.js"></script>
-
 
     <!-- IMPORT OHMAGE API JS LIB -->
     <script type="text/javascript" src="js/LocalMap.js"></script>
@@ -41,7 +43,7 @@
     <script type="text/javascript">
 
 
-         $(document).ready(function(){
+         invokeOnReady(function(){
 
              var queue = new UploadQueue();
 
