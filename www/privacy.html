@@ -15,10 +15,53 @@
 
         <!-- IMPORT MWF JAVASCRIPT LIBRARY -->
         <script type="text/javascript" src="js/mwf/mwf.js"></script>
+        <script type="text/javascript" src="js/mwf/decorator.js"> </script>
+        <script type="text/javascript" src="js/mwf/content.js"> </script>
+        <script type="text/javascript" src="js/mwf/button.js"> </script>
+        <script type="text/javascript" src="js/mwf/menu.js"> </script>
+
+        <!-- IMPORT JQUERY AND EXTENSIONS -->
+        <script type="text/javascript" src="js/jquery/jquery.js"></script>
+        <script type="text/javascript" src="js/jquery/jquery.extensions.js"></script>
+        <script type="text/javascript" src="js/util/detect_timezone.js"></script>
+
+        <!-- IMPORT OHMAGE API JS LIB -->
+        <script type="text/javascript" src="js/LocalMap.js"></script>
+        <script type="text/javascript" src="js/api.js"></script>
+        <script type="text/javascript" src="js/PageNavigation.js"></script>
+        <script type="text/javascript" src="js/UserAuthentication.js"></script>
+        <script type="text/javascript" src="js/SurveyResponse.js"></script>
+
+        <script type="text/javascript">
+
+            invokeOnReady(function(){
+
+                (function(){
+
+                    var label = (auth.isUserAuthenticated()) ? "Dashboard" : "Login";
+                    var goBack = function(){
+
+                        if(auth.isUserAuthenticated()){
+                            PageNavigation.openDashboard();
+                        }else{
+                            PageNavigation.openAuthenticationPage();
+                        }
+
+                    };
+
+                    mwf.decorator.TopButton(label, null, goBack, true);
+
+                    $("#go-back-button").append(mwf.decorator.SingleClickButton(label, goBack));
+
+                })();
+
+            });
+
+        </script>
 
     </head>
     <body>
-        <a href="index.html" class="button-light not-basic" id="button-top">Dashboard</a>
+
 
         <h1 id="header">
             <a href="index.html">
@@ -137,9 +180,7 @@
 
         </div>
 
-        <div class="button-padded button-full button-light">
-            <a class="button-light" href="index.html">Dashboard</a>
-        </div>
+        <div id="go-back-button"></div>
 
         <div id="footer">
             <p>Copyright &copy; 2012 MobilizeLabs<br />
