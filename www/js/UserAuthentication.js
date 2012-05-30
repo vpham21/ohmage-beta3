@@ -193,7 +193,10 @@ function UserAuthentication() {
 
         window.localStorage.clear();
 
-        PageNavigation.redirect(redirectURL);
+        if(typeof(redirectURL) == "undefined")
+            PageNavigation.openAuthenticationPage();
+        else
+            PageNavigation.redirect(redirectURL);
 
         return true;
 
