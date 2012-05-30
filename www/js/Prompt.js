@@ -30,7 +30,8 @@ function Prompt(prompt){
         switch(this.getType()){
 
             case 'photo':
-                summary = "Photo";
+                summary = "<center><img src='" + SurveyResponse.getImage(responseValue) + "' width='100%' /></center>";
+
                 break;
 
             case 'single_choice':
@@ -149,7 +150,7 @@ function Prompt(prompt){
 
         //If there is only a single property, then convert the property variable
         //to an array and add the element.
-        if(prompt.properties.property.length == 1){
+        if(!prompt.properties.property.length){
             var singleElement = prompt.properties.property;
             prompt.properties.property = [];
             prompt.properties.property.push(singleElement);
