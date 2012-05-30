@@ -366,8 +366,8 @@ mwf.decorator.Menu = function(title)
     {
         var linkItem = document.createElement('a');
 
-        linkItem.innerHTML = text || "";
-        linkItem.href = url || null;
+        linkItem.innerHTML = (typeof(text) != "undefined") ? text : "";
+        linkItem.href = (typeof(url) != "undefined")? url : null;
 
         //If details is defined, then add the details text within a span tag.
         if(details)
