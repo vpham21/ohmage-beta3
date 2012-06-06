@@ -22,11 +22,12 @@ var SurveyResponseUploader = function(survey, surveyResponse){
     this.upload = function(callback){
 
         var _callback = function(response){
-            Spinner.hide();
+            Spinner.hide(function(){
+                if(callback){
+                    callback(response);
+                }
+            });
 
-            if(callback){
-                callback(response);
-            }
         };
 
         Spinner.show();
@@ -57,10 +58,12 @@ SurveyResponseUploader.uploadAll = function(pendingResponses, callback){
     var upload = function(i){
 
         if(i >= uuidList.length){
-            Spinner.hide();
-            if(callback){
-                callback(count);
-            }
+            Spinner.hide(function(){
+                if(callback){
+                    callback(count);
+                }
+            });
+
         }else{
 
             var survey   = pendingResponses[uuidList[i]].survey;

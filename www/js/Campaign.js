@@ -104,22 +104,33 @@ Campaign.install = function(urn, onSuccess, onError){
 
     Spinner.show();
 
+    var _onError = function(response){
+
+        Spinner.hide(function(){
+            if(onError){
+                onError(response);
+            }
+        });
+    };
+
     var _onSuccess = function(response) {
 
-        Spinner.hide();
+        Spinner.hide(function(){
 
-        if(response.result === "success"){
+            if(response.result === "success"){
 
-            var installedCampaigns = new LocalMap("installed-campaigns");
-            installedCampaigns.set(urn, Math.round(new Date().getTime() / 1000));
+                var installedCampaigns = new LocalMap("installed-campaigns");
+                installedCampaigns.set(urn, Math.round(new Date().getTime() / 1000));
 
-            var campaignConfigurations = new LocalMap("campaign-configurations");
-            campaignConfigurations.set(urn, Campaign.parse(response.data[urn].xml));
+                var campaignConfigurations = new LocalMap("campaign-configurations");
+                campaignConfigurations.set(urn, Campaign.parse(response.data[urn].xml));
 
-            if(onSuccess){
-                onSuccess();
+                if(onSuccess){
+                    onSuccess();
+                }
             }
-        }
+        });
+
 
 
     };
@@ -136,7 +147,7 @@ Campaign.install = function(urn, onSuccess, onError){
          },
          "JSON",
          _onSuccess,
-         onError
+         _onError
     );
 
 }

@@ -101,7 +101,7 @@ var Spinner = new (function(){
      */
     var detectOrientation = function(){
 
-        if(!window.orientation)
+        if(!window.orientation || !isLoading)
             return;
 
         //This is some crazy magic that I never want to visit again.
@@ -168,7 +168,7 @@ var Spinner = new (function(){
      * Removes the spinner transparent background and also the loading sign with the
      * cancel link.
      */
-    this.hide = function(){
+    this.hide = function(callback){
 
         if(!isLoading){
             return;
@@ -176,15 +176,12 @@ var Spinner = new (function(){
             isLoading = false;
         }
 
-        var fadeOutCallback = function(){
-            $("#spinner-background").remove();
-            $("#spinner-container").remove();
-        };
-
-
-        $("#spinner-background").fadeOut(10);
-        $("#spinner-container").fadeOut(10, fadeOutCallback);
-
+        $("#spinner-background").fadeOut(25);
+        $("#spinner-container").fadeOut(25, function(){
+            $("#spinner-background,#spinner-container").remove();
+            if(callback)
+                callback();
+        });
 
         if(timer){
             clearInterval(timer);

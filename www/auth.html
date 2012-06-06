@@ -91,17 +91,18 @@
                 //On successful authentication, redirects the user to the dashboard.
                 auth.authenticateByHash(username, password, function(success, response){
 
-                   Spinner.hide();
+                   Spinner.hide(function(){
+                       if(success){
+                           PageNavigation.openDashboard();
 
-                   if(success){
-                       PageNavigation.openDashboard();
+                       }else if(response){
+                           showMessage(response);
+                       }else{
+                           showMessage("Unable to login. Please try again.");
+                       }
+                   });
 
-                   }else if(response){
-                       showMessage(response);
 
-                   }else{
-                       showMessage("Unable to login. Please try again.");
-                   }
                 }, false);
 
 

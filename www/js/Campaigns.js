@@ -122,24 +122,35 @@ var Campaigns = new (function() {
             return;
         }
 
+        var _onError = function(response){
+
+            Spinner.hide(function(){
+                if(onError){
+                    onError(response);
+                }
+            });
+        };
+
         var _onSuccess = function(response) {
 
-            Spinner.hide();
+            Spinner.hide(function(){
 
-            if(response.result === "success"){
+                if(response.result === "success"){
 
-                var campaigns = new LocalMap("all-campaigns");
+                    var campaigns = new LocalMap("all-campaigns");
 
-                campaigns.erase();
+                    campaigns.erase();
 
-                for(var urn in response.data){
-                    campaigns.set(urn, response.data[urn]);
+                    for(var urn in response.data){
+                        campaigns.set(urn, response.data[urn]);
+                    }
+
+                    if(onSuccess){
+                        onSuccess();
+                    }
                 }
+            });
 
-                if(onSuccess){
-                    onSuccess();
-                }
-            }
 
         };
 
@@ -156,7 +167,7 @@ var Campaigns = new (function() {
              },
              "JSON",
              _onSuccess,
-             onError
+             _onError
         );
     }
 
