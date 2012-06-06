@@ -9,6 +9,7 @@
 
     <style type="text/css">
         @import url("css/mwf.css");
+        @import url("css/spinner.css");
     </style>
 
     <!-- IMPORT PHONEGAP LIBRARY -->
@@ -32,7 +33,7 @@
     <script type="text/javascript" src="js/UserAuthentication.js"></script>
     <script type="text/javascript" src="js/Campaign.js"></script>
     <script type="text/javascript" src="js/Campaigns.js"></script>
-
+    <script type="text/javascript" src="js/util/Spinner.js"></script>
 
     <script type="text/javascript">
 
@@ -50,8 +51,6 @@
             }
 
             Campaigns.download(false, onSuccess, onError);
-
-
 
          });
 
@@ -73,7 +72,6 @@
     </h1>
 
     <div id="campaigns"> </div>
-
 
     <div id="footer">
         <p>Copyright &copy; 2012 MobilizeLabs<br />

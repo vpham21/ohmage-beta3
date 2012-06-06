@@ -42,11 +42,9 @@ var UploadQueue = function()
                 if(response.result === "success"){
 
                     showMessage("Successfully uploaded your survey response.", function(){
+                        SurveyResponse.deleteSurveyResponse(surveyResponse);
                         displayUploadQueue();
                     });
-
-                    SurveyResponse.deleteSurveyResponse(surveyResponse);
-
 
                 }else{
                     showMessage(response.errors[0].text);
@@ -67,7 +65,7 @@ var UploadQueue = function()
                     displayUploadQueue();
                 }
             }, "Yes,No");
-  
+
         }
 
         responseViewContainer.appendChild(mwfd.DoubleClickButton("Delete", deleteSurveyResponse, "Upload", uploadSurveyResponse));

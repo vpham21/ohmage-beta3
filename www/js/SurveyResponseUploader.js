@@ -20,13 +20,24 @@ var SurveyResponseUploader = function(survey, surveyResponse){
 
 
     this.upload = function(callback){
+
+        var _callback = function(response){
+            Spinner.hide();
+
+            if(callback){
+                callback(response);
+            }
+        };
+
+        Spinner.show();
+
         api(
              "POST",
              SURVEY_UPLOAD_URL,
              data,
              "JSON",
-             callback,
-             callback
+             _callback,
+             _callback
         );
 
     };
@@ -46,10 +57,10 @@ SurveyResponseUploader.uploadAll = function(pendingResponses, callback){
     var upload = function(i){
 
         if(i >= uuidList.length){
-
-            if(callback)
+            Spinner.hide();
+            if(callback){
                 callback(count);
-
+            }
         }else{
 
             var survey   = pendingResponses[uuidList[i]].survey;
@@ -69,6 +80,7 @@ SurveyResponseUploader.uploadAll = function(pendingResponses, callback){
 
     };
 
+    Spinner.show();
     upload(0);
 
 

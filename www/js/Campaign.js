@@ -4,7 +4,7 @@ var Campaign = function(urn){
     var campaign = (new LocalMap("campaign-configurations")).get(urn);
 
     this.render = function(){
-        
+
         if(this.isRunning()){
 
             return this.renderSurveyList(mwf.decorator.Menu("Available Surveys"));
@@ -102,7 +102,11 @@ var Campaign = function(urn){
 
 Campaign.install = function(urn, onSuccess, onError){
 
+    Spinner.show();
+
     var _onSuccess = function(response) {
+
+        Spinner.hide();
 
         if(response.result === "success"){
 

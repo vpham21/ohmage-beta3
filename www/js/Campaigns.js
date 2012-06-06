@@ -124,6 +124,8 @@ var Campaigns = new (function() {
 
         var _onSuccess = function(response) {
 
+            Spinner.hide();
+
             if(response.result === "success"){
 
                 var campaigns = new LocalMap("all-campaigns");
@@ -139,8 +141,9 @@ var Campaigns = new (function() {
                 }
             }
 
-
         };
+
+        Spinner.show();
 
         api(
              "POST",

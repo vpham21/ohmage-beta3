@@ -174,6 +174,6 @@ function showConfirm(message, callback, buttonLabels, title){
 
     //Default to the usual JS confirm method.
     }else{
-        invoke(callback, cofirm(message));
+        invoke(callback, confirm(message));
     }
 }
