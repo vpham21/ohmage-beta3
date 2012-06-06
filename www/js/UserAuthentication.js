@@ -181,25 +181,26 @@ function UserAuthentication() {
      *        to this URL. This variable is optional.
      */
     this.logout = function(redirectURL){
+        var message = "All data will be lost. Are you sure you would like to proceed?";
 
-        if(!confirm("All data will be lost. Are you sure you would like to proceed?"))
-            return false;
+        showConfirm(message, function(yes){
+            if(yes){
 
-        //Erase any authentication related cookies.
-        $.cookie(TOKEN_AUTH_COOKIE_NAME, null);
-        $.cookie(HASH_AUTH_COOKIE_NAME, null);
-        $.cookie(USERNAME_COOKIE_NAME, null);
-        $.cookie(AUTH_ERROR_STATE_COOKIE_NAME, null);
+                //Erase any authentication related cookies.
+                $.cookie(TOKEN_AUTH_COOKIE_NAME, null);
+                $.cookie(HASH_AUTH_COOKIE_NAME, null);
+                $.cookie(USERNAME_COOKIE_NAME, null);
+                $.cookie(AUTH_ERROR_STATE_COOKIE_NAME, null);
 
-        window.localStorage.clear();
+                window.localStorage.clear();
 
-        if(typeof(redirectURL) == "undefined")
-            PageNavigation.openAuthenticationPage();
-        else
-            PageNavigation.redirect(redirectURL);
+                if(typeof(redirectURL) == "undefined")
+                    PageNavigation.openAuthenticationPage();
+                else
+                    PageNavigation.redirect(redirectURL);
 
-        return true;
-
+            }
+        }, "Yes,No");
     };
 
     this.checkpoint = function(){

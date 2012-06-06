@@ -215,7 +215,7 @@ PromptHandler.Handlers = function(){
 
         //Set the default value. If the default value for the current prompt is
         //not specified, then set it to 0.
-        count.innerHTML = prompt.getDefaultValue() || '0';
+        count.innerHTML = prompt.getDefaultValue() || "0";
 
         //Get the minimum and maximum allowed values for this number prompt. It
         //is assumed that these values might be nulls.
@@ -280,7 +280,7 @@ PromptHandler.Handlers = function(){
         };
 
         prompt.getResponse = function(){
-            return parseInt(count.innerHTML, 10);
+            return "" + parseInt(count.innerHTML, 10);
         };
 
         return menu;

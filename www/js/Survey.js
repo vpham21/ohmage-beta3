@@ -57,36 +57,41 @@ var Survey = function(survey, campaign){
         //Callback for when the user completes the survey.
         var onSurveyComplete = function(surveyResponse){
 
+            var title = 'ohmage';
+            var buttonLabels = 'Yes,No';
             var message = "Would you like to upload your response?";
+            var callback = function(yes){
 
-            if(confirm(message)){
-                var uploader = new SurveyResponseUploader(me, surveyResponse);
+                //Positive confirmation.
+                if(yes){
+                    var uploader = new SurveyResponseUploader(me, surveyResponse);
 
-                uploader.upload(function(response){
+                    uploader.upload(function(response){
 
-                    //Invoked after displaying a message to the user i.e. alert.
-                    var callback = function(){
-                        PageNavigation.openCampaignView(me.getCampaign().getURN());
-                    };
+                        //Invoked after displaying a message to the user i.e. alert.
+                        var callback = function(){
+                            PageNavigation.openCampaignView(me.getCampaign().getURN());
+                        };
 
-                    //On successful survey upload, notify the user and delete
-                    //the response.
-                    if(response.result === "success"){
-                        showMessage("Successfully uploaded your survey response.", callback);
-                        SurveyResponse.deleteSurveyResponse(surveyResponse);
+                        //On successful survey upload, notify the user and delete
+                        //the response.
+                        if(response.result === "success"){
+                            showMessage("Successfully uploaded your survey response.", callback);
+                            SurveyResponse.deleteSurveyResponse(surveyResponse);
 
-                    //On a failed survey response upload, notify the user with
-                    //an error message.
-                    }else{
-                        showMessage(response.errors[0].text, callback);
-                    }
+                        //On a failed survey response upload, notify the user with
+                        //an error message.
+                        }else{
+                            showMessage(response.errors[0].text, callback);
+                        }
+                    });
 
-
-                });
-
-            }else{
-                PageNavigation.openCampaignView(me.getCampaign().getURN());
+                }else{                  
+                    PageNavigation.openCampaignView(me.getCampaign().getURN());
+                }
             }
+
+            showConfirm(message, callback, buttonLabels, title);
         };
 
         //Start the actual survey.

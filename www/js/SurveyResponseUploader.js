@@ -4,10 +4,9 @@
  */
 var SurveyResponseUploader = function(survey, surveyResponse){
 
-    var auth = new UserAuthentication();
-
     var responseData = surveyResponse.getUploadData();
 
+    console.log(JSON.stringify([responseData.responses]));
     var data = {
                     campaign_urn:surveyResponse.getCampaignURN(),
                     campaign_creation_timestamp: survey.getCampaign().getCreationTimestamp(),
@@ -21,8 +20,6 @@ var SurveyResponseUploader = function(survey, surveyResponse){
 
 
     this.upload = function(callback){
-            console.log(data);
-    
         api(
              "POST",
              SURVEY_UPLOAD_URL,

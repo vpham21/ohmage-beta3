@@ -139,7 +139,7 @@ function showMessage(message, callback, title, buttonName){
     title = title || "ohmage";
     buttonName = buttonName || 'OK';
 
-    if(navigator.notification){
+    if(navigator.notification && navigator.notification.alert){
 
         navigator.notification.alert(
             message,    // message
@@ -154,4 +154,26 @@ function showMessage(message, callback, title, buttonName){
         invoke(callback)
     }
 
+}
+
+function showConfirm(message, callback, buttonLabels, title){
+
+    //Set default values if not specified by the user.
+    buttonLabels = buttonLabels || 'OK, Cancel';
+    title = title || "ohmage";
+
+    //Use Cordova version of the confirm box if possible.
+    if(navigator.notification && navigator.notification.confirm){
+
+            navigator.notification.confirm(
+                message,      // message
+                callback,     // callback
+                title,        // title
+                buttonLabels  // buttonName
+            );
+
+    //Default to the usual JS confirm method.
+    }else{
+        invoke(callback, cofirm(message));
+    }
 }

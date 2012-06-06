@@ -59,11 +59,15 @@ var UploadQueue = function()
         //will be prompted for confirmation before deleting the survey response.
         var deleteSurveyResponse = function(){
 
-            var response = confirm("Are you sure you would like to delete your response?");
-            if(response){
-                SurveyResponse.deleteSurveyResponse(surveyResponse);
-                displayUploadQueue();
-            }
+            var message = "Are you sure you would like to delete your response?";
+
+            showConfirm(message, function(yes){
+                if(yes){
+                    SurveyResponse.deleteSurveyResponse(surveyResponse);
+                    displayUploadQueue();
+                }
+            }, "Yes,No");
+  
         }
 
         responseViewContainer.appendChild(mwfd.DoubleClickButton("Delete", deleteSurveyResponse, "Upload", uploadSurveyResponse));
@@ -85,6 +89,7 @@ var UploadQueue = function()
 
             var summaryView = surveyResponse.render();
             responseViewContainer.appendChild(summaryView);
+
 
             var hideSummaryButtonBottom = mwfd.SingleClickButton("Hide Summary", hideSummary);
             responseViewContainer.appendChild(hideSummaryButtonBottom);
@@ -138,14 +143,24 @@ var UploadQueue = function()
 
             //Delete all button click handler.
             var deleteAll = function(){
-                var response = confirm("Are you sure you would like to delete all your responses?");
-                if(response){
-                    for(var uuid in pendingResponses){
-                        SurveyResponse.deleteSurveyResponse(pendingResponses[uuid].response);
+
+                var message = "Are you sure you would like to delete all your responses?";
+                var buttonLabels = 'Yes,No';
+
+
+                var callback = function(yes){
+                    if(yes){
+                        for(var uuid in pendingResponses){
+                            SurveyResponse.deleteSurveyResponse(pendingResponses[uuid].response);
+                        }
+                        me.renderUploadQueue(container);
                     }
-                    me.renderUploadQueue(container);
-                }
+                };
+
+                showConfirm(message, callback, buttonLabels);
+
             };
+
             //Upload all button click handler.
             var uploadAll = function(){
                 SurveyResponseUploader.uploadAll(pendingResponses, function(count){
