@@ -79,9 +79,13 @@
          survey.start(document.getElementById('survey'));
 
          mwf.decorator.TopButton("All Campaigns", null, function(){
-            if(confirm("Data from your current survey response will be lost. Are you sure you would like to continue?")){
-                PageNavigation.openCampaignsView(true);
-            }
+            var message = "Data from your current survey response will be lost. Are you sure you would like to continue?";
+
+            showConfirm(message, function(yes){
+                if(yes){
+                    PageNavigation.openCampaignsView(true);
+                }
+            }, "Yes,No");
 
          }, true);
 
