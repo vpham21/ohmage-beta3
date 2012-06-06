@@ -165,9 +165,15 @@ function showConfirm(message, callback, buttonLabels, title){
     //Use Cordova version of the confirm box if possible.
     if(navigator.notification && navigator.notification.confirm){
 
+            var _callback = function(index){
+                if(callback){
+                    callback(index == 1);
+                }
+            };
+
             navigator.notification.confirm(
                 message,      // message
-                callback,     // callback
+                _callback,     // callback
                 title,        // title
                 buttonLabels  // buttonName
             );
