@@ -192,6 +192,26 @@ function SurveyResponse(id, uuid, urn)
         return menu;
     };
 
+    /**
+     * Returns UUIDs of all images associated with this response.
+     * @return Array of UUIDs.
+     */
+    this.getImageIds = function(){
+
+        var images = [];
+
+        for (var promptID in this.data._responses) {
+
+            var response = this.data._responses[promptID];
+
+            if(response.isImage){
+                images.push(response.value);
+            }
+        }
+
+        return images;
+
+    };
 
     /**
      * Returns data that can be uploaded to the surver as response data.
@@ -346,8 +366,18 @@ SurveyResponse.restoreSurveyResponse = function(survey_key){
 
 };
 
-
+/**
+ * Deletes the survey response with it associated images if any.
+ */
 SurveyResponse.deleteSurveyResponse = function(surveyResponse){
+
+    //Delete response images.
+    var images = surveyResponse.getImageIds();
+    for(var i = 0; i < images.length; i++){
+        SurveyResponse.deleteImage(images[i]);
+    }
+
+    //Delete the response from the local storage map.
     SurveyResponse.responses.release(surveyResponse.getSurveyKey());
 };
 
@@ -370,6 +400,15 @@ SurveyResponse.saveImage = function(imageURI)
 
 SurveyResponse.getImage = function(uuid){
     return SurveyResponse.getImages()[uuid];
+};
+
+SurveyResponse.deleteImage = function(uuid){
+    var images = SurveyResponse.getImages();
+
+    if(images[uuid])
+        delete images[uuid];
+
+    SurveyResponse.setImages(images);
 };
 
 SurveyResponse.setImages = function(images){
