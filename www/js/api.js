@@ -119,6 +119,10 @@ function isOnDevice(){
     return navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/);
 }
 
+function isDeviceiOS(){
+    return navigator.userAgent.match(/(iPhone)/);
+}
+
 /**
  * Method for invoking functions once the DOM and the device are ready. This is
  * a replacement function for the JQuery provided method i.e.
@@ -159,14 +163,22 @@ function showMessage(message, callback, title, buttonName){
 function showConfirm(message, callback, buttonLabels, title){
 
     //Set default values if not specified by the user.
-    buttonLabels = buttonLabels || 'OK, Cancel';
+    buttonLabels = buttonLabels || 'OK,Cancel';
+    var buttonList = buttonLabels.split(',');
+
     title = title || "ohmage";
+
 
     //Use Cordova version of the confirm box if possible.
     if(navigator.notification && navigator.notification.confirm){
 
             var _callback = function(index){
                 if(callback){
+
+
+                    if(isDeviceiOS())
+                        index = buttonList.length - index;
+                    alert(index);
                     callback(index == 1);
                 }
             };
