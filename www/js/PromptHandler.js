@@ -213,9 +213,17 @@ PromptHandler.Handlers = function(){
         var count = document.createElement('p');
         count.className = 'number-counter';
 
+        //console.log("MIN: " + prompt.getMinValue() + " MAX: " + prompt.getMaxValue() + " DEFAULT: " + prompt.getDefaultValue());
+
         //Set the default value. If the default value for the current prompt is
-        //not specified, then set it to 0.
-        count.innerHTML = prompt.getDefaultValue() || "0";
+        //not specified, then try to use the minimum value. If this is also  then set it to 0.
+        if(prompt.getDefaultValue() != null){
+            count.innerHTML = prompt.getDefaultValue();
+        } else if(prompt.getMinValue() != null){
+            count.innerHTML = prompt.getMinValue();
+        } else{
+            count.innerHTML = "0";
+        }
 
         //Get the minimum and maximum allowed values for this number prompt. It
         //is assumed that these values might be nulls.

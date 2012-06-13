@@ -230,7 +230,7 @@ function Prompt(prompt){
     {
         //Access the default value of the prompt with array accessing schema
         //in order to bypass JS keyword use 'default'.
-        return prompt.defaultvalue || null;
+        return (typeof(prompt.defaultvalue) != 'undefined')? prompt.defaultvalue : null;
     };
 
     /**
