@@ -41,13 +41,13 @@ PromptHandler.Handlers = function(){
 
             //Handle single choice prompts.
             if(isSingleChoice){
-                menu.addMenuRadioItem(prompt.getType(),      //Name
+                menu.addMenuRadioItem(prompt.getID(),        //Name
                                       properties[i].key,     //Value
                                       properties[i].label);  //Label
 
             //Handle multiple choice prompts.
             } else {
-                menu.addMenuCheckboxItem(prompt.getType(),     //Name
+                menu.addMenuCheckboxItem(prompt.getID(),       //Name
                                          properties[i].key,    //Value
                                          properties[i].label); //Label
             }
@@ -57,11 +57,15 @@ PromptHandler.Handlers = function(){
 
         prompt.getResponse = function(){
 
+            //If the prompt type allows custom choice, then extract the value
+            //of the user selection instead of the provided answer key.
             var type = (isCustom) ? 'label' : 'value';
 
+            //Handle single choice answers.
             if(isSingleChoice){
                 return (menu.getSelectedOptions())[0][type];
 
+            //Handle multiple choice answers.
             } else {
                 var responses = [];
                 var selection = menu.getSelectedOptions();
@@ -378,7 +382,7 @@ PromptHandler.Handlers = function(){
                     showMessage('Failed because: ' + message);
                 }
 
-                navigator.camera.getPicture(onSuccess, onFail, { quality: 25,
+                navigator.camera.getPicture(onSuccess, onFail, {quality: 25,
                     destinationType: Camera.DestinationType.DATA_URL
                 });
             });
