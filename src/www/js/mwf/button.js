@@ -50,10 +50,8 @@ mwf.decorator.Button = function(label, url, callback)
      * Sets a new label for this button. The label is what's visible to the
      * front user and is encapsulated inside an anchor tag.
      */
-    button.setLabel = function(label)
-    {
-        if(label)
-        {
+    button.setLabel = function(label){
+        if(label){
             this.innerHTML = label;
         }
     }
@@ -62,10 +60,8 @@ mwf.decorator.Button = function(label, url, callback)
      * Sets the URL for this button. The URL will be actually be the value of
      * the href attribute of the underlying anchor tag.
      */
-    button.setURL = function(url)
-    {
-        if(url)
-        {
+    button.setURL = function(url){
+        if(url){
             this.href = url;
         }
     }
@@ -73,14 +69,10 @@ mwf.decorator.Button = function(label, url, callback)
     /**
      * Sets the on click listener for this button.
      */
-    button.click = function(callback)
-    {
-        //If button's callback is set, then set the <a>'s onclick property.
-        if(callback)
-        {
-            button.onclick = function() {
-                callback()
-            };
+    button.click = function(callback){
+        //If button's callback is set, then set the <a>'s onclick/ontouchend property.
+        if(callback){
+            mwf.decorator.attachTouchHandler(button, callback);
         }
     }
 
@@ -107,14 +99,13 @@ mwf.decorator.Button = function(label, url, callback)
  * @param label    The visible label for the button.
  * @param callback The onclick handler callback for this button.
  */
-mwf.decorator.SingleClickButton = function(label, callback)
-{
+mwf.decorator.SingleClickButton = function(label, callback){
     return mwf.decorator.SingleButton(label, null, callback);
 }
 
 mwf.decorator.DoubleClickButton = function(firstLabel, firstCallback,
-                                           secondLabel, secondCallback)
-{
+                                           secondLabel, secondCallback){
+
     return mwf.decorator.DoubleButton(firstLabel, null, firstCallback,
                                       secondLabel, null, secondCallback);
 }
@@ -134,8 +125,7 @@ mwf.decorator.DoubleClickButton = function(firstLabel, firstCallback,
  * @param url      The URL for the anchor within the button.
  * @param callback The onclick handler callback for this button.
  */
-mwf.decorator.SingleButton = function(label, url, callback)
-{
+mwf.decorator.SingleButton = function(label, url, callback){
 
    var container = document.createElement('div');
 
@@ -181,8 +171,7 @@ mwf.decorator.SingleButton = function(label, url, callback)
  * @param firstLabel     The visible label for the first button.
  * @param secondLabel    The visible label for the second button.
  */
-mwf.decorator.SimpleDoubleButton = function(firstLabel, secondLabel)
-{
+mwf.decorator.SimpleDoubleButton = function(firstLabel, secondLabel){
     return mwf.decorator.DoubleButton(firstLabel, null, null,
                                       secondLabel, null, null);
 }
@@ -225,13 +214,11 @@ mwf.decorator.DoubleButton = function(firstLabel, firstUrl, firstCallback,
    mwf.decorator.addAttributes(container, attributes);
 
 
-   container.getFirstButton = function()
-   {
+   container.getFirstButton = function(){
        return firstButton;
    }
 
-   container.getSecondButton = function()
-   {
+   container.getSecondButton = function(){
        return secondButton;
    }
 
@@ -254,15 +241,13 @@ mwf.decorator.DoubleButton = function(firstLabel, firstUrl, firstCallback,
  * @param place    If set to true then the top button will be appended to the
  *                 document. Previous top button, if exists, will be replaced.
  */
-mwf.decorator.TopButton = function(label, url, callback, place)
-{
+mwf.decorator.TopButton = function(label, url, callback, place){
 
     var topButton = mwf.decorator.Button(label, url, callback);
     topButton.id = "button-top";
 
     //This part cannot really be done by attributes, as it's a negation.
-    topButton.setBasic = function(isBasic)
-    {
+    topButton.setBasic = function(isBasic){
        mwf.decorator.toggleClass(!isBasic, topButton, "not-basic");
        return this;
     }
@@ -271,7 +256,6 @@ mwf.decorator.TopButton = function(label, url, callback, place)
     topButton.setBasic(false);
 
     if(place){
-
         if(document.getElementById('button-top')){
             document.body.removeChild(document.getElementById('button-top'));
         }

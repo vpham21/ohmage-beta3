@@ -65,7 +65,7 @@ mwf.touch.geolocation = new function()
             default:
                 mwf.touch.geolication.setError('No geolocation support available.');
                 onError('No geolocation support available.');
-                return;
+                return false;
         }
 
         geo.getCurrentPosition(

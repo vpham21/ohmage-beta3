@@ -341,11 +341,18 @@ mwf.decorator.Menu = function(title)
         var linkItem = createLinkItem(label, null, details);
         linkItem.insertBefore(inputItem, linkItem.firstChild);
 
+        var toggle = function(event){
+           if(event.srcElement != inputItem)
+                inputItem.checked =  (isRadio)? true : !inputItem.checked;
+
+        };
+
         //Add an event handler that would toggle the option button's
         //checked attribute on link click.
-        linkItem.onclick = function() {
-           this.children[0].checked = !this.children[0].checked;
-        };
+        //inputItem.onclick = toggle;
+        linkItem.onclick = toggle;
+
+
 
         return linkItem;
     };
