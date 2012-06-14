@@ -54,6 +54,13 @@ var Campaigns = new (function() {
 
         for(var urn in allCampaigns.getMap()){
 
+            var campaign = new Campaign(urn);
+            
+            //Ignore inactive campaigns.
+            if(!campaign.isRunning()){
+                continue;
+            }
+
             //Campaign has been installed.
             if(installedCampaigns.isSet(urn)){
                 installedMenu.addMenuLinkItem(allCampaigns.get(urn).name, null).onclick = open(urn);
