@@ -47,6 +47,12 @@ function SurveyResponse(id, uuid, urn)
     };
 
     /**
+     * Initially, location status is set to unavailable. This should change
+     * after invoking setLocation(..), or manuallySetLocation(..).
+     */
+    this.data.location_status = LocationStatus.UNAVAILABLE;
+
+    /**
      * A UUID unique to this survey response.
      */
     this.data.survey_key = uuid;
@@ -92,7 +98,29 @@ function SurveyResponse(id, uuid, urn)
      */
     this.data.location = null;
 
-    this.setLocation = function(){
+    /**
+     * Returns true if the location has been set.
+     *
+     * @return true if the location for this survey response has been set.
+     */
+    this.isLocationAvailable = function(){
+        return this.data.location != null;
+    };
+
+    this.manuallySetLocation = function(location){
+        this.data.location_status = LocationStatus.VALID;
+        this.data.location = location;
+    }
+
+    /**
+     * Invokes the geolocation API in order to get the current GPS location for
+     * this survey response. Callback will be invoked on either error or success
+     * with a single boolean parameter success/true, error/false.
+     */
+    this.setLocation = function(callback){
+
+        this.data.location_status = LocationStatus.UNAVAILABLE;
+        this.data.location = null;
 
         mwf.touch.geolocation.getPosition(
 
@@ -124,17 +152,25 @@ function SurveyResponse(id, uuid, urn)
                 me.data.location.timezone = jstz.determine_timezone().name();
 
                 me.save();
+
+                if(callback){
+                    callback(true);
+                }
             },
 
             //On error, delete the location object if any and also set an
             //appropriate location status.
-            function(){
+            function(message){
 
-                delete this.data.location;
-
-                this.data.location_status = LocationStatus.UNAVAILABLE;
+                me.data.location = null;
+                me.data.location_status = LocationStatus.UNAVAILABLE;
 
                 me.save();
+
+                if(callback){
+                    callback(false);
+                }
+
             }
         );
     };
@@ -248,7 +284,6 @@ function SurveyResponse(id, uuid, urn)
             time                 : this.data.time,
             timezone             : this.data.timezone,
             location_status      : this.data.location_status,
-            location             : this.data.location,
             survey_id            : this.data.survey_id,
             survey_launch_context: this.data.survey_launch_context,
 
@@ -258,6 +293,11 @@ function SurveyResponse(id, uuid, urn)
             //responses: (responses.length == 1)? responses[0]:responses
 
             responses: responses
+        }
+
+        //Only set location, if available.
+        if(this.data.location != null){
+            surveyResponse.location = this.data.location;
         }
 
         return {"responses" : surveyResponse, "images": images};

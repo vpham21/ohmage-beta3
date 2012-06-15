@@ -22,7 +22,7 @@ var Spinner = new (function(){
      * Preload spinner image.
      */
     var spinnerImage = $('<img>')
-                           .attr('src', 'img/spinner.gif')
+                           .attr('src', 'img/spinner.gif' + '?' + new Date().getTime())
                            .addClass('spinner-img')
                            .attr('id','spinner-img');
     var isLoading = false;
@@ -61,8 +61,9 @@ var Spinner = new (function(){
             isLoading = true;
         }
 
-        $("#spinner-img").attr('src', 'img/spinner.gif');
-        
+        $("#spinner-img").attr('src','')
+                         .attr('src', 'img/spinner.gif' + "?" + new Date().getTime());
+
         //Display the transparent background.
         showBackground();
 

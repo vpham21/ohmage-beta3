@@ -18,44 +18,42 @@ mwf.touch = {};
  *   mwf.touch.geolocation.flush()
  */
 
-mwf.touch.geolocation = new function()
-{
+mwf.touch.geolocation = new function(){
+
     var type = -1;
     var position = null;
     var highAccuracy = true;
     var timeout = 3000;
 
-    this.getType = function()
-    {
+    this.getType = function(){
+
         if(type < 0)
             type = navigator.geolocation
                    ? 1
                    : google.gears
                      ? 2
                      : 0;
+
         return type;
     }
 
-    this.getTypeName = function()
-    {
-        switch(this.getType())
-        {
+    this.getTypeName = function(){
+
+        switch(this.getType()){
             case 1: return 'HTML5 Geolocation';
             case 2: return 'Google Gears';
             default: return 'Unsupported';
         }
     }
 
-    this.isSupported = function()
-    {
+    this.isSupported = function(){
         return this.getType() > 0;
     }
 
-    this.getPosition = function(onSuccess, onError)
-    {
+    this.getPosition = function(onSuccess, onError){
+
         var geo;
-        switch(this.getType())
-        {
+        switch(this.getType()){
             case 1:
                 geo = navigator.geolocation;
                 break;
@@ -77,22 +75,23 @@ mwf.touch.geolocation = new function()
                         'accuracy':position.coords.accuracy
                     });
 
-            }, function() {
-                if(typeof onSuccess != 'undefined')
-                    onError('Google Gears Geolocation failure.');
+            }, function(error) {
+                if(typeof onSuccess != 'undefined'){
+                    onError('code: '    + error.code    + '\n' +
+                            'message: ' + error.message + '\n');
+                }
+
             },
             {enableHighAccuracy:highAccuracy, maximumAge:timeout});
 
         return true;
     }
 
-    this.setTimeout = function(ms)
-    {
+    this.setTimeout = function(ms){
         timeout = ms;
     }
 
-    this.setHighAccuracy = function(bool)
-    {
+    this.setHighAccuracy = function(bool){
         highAccuracy = bool;
     }
 }
