@@ -197,8 +197,7 @@ function Navigation(survey, container)
      * @param callback Function that will be invoked when the survey has been
      *                 completed.
      */
-    this.start = function(callback)
-    {
+    this.start = function(callback){
         //Update survey response geolocation information.
         surveyResponse.setLocation();
 
@@ -208,7 +207,21 @@ function Navigation(survey, container)
         //Save the callback to be invoked when the survey has been completed.
         surveyDoneCallback = callback;
 
-    }
+    };
+
+    /**
+     * Aborts the current survey participation and deletes the users responses.
+     * This method should be called to do the clean up before the user navigates
+     * to another page without completing the survey. If this method is not
+     * invoked,
+     */
+    this.abort = function(){
+        if(surveyResponse != null && !surveyResponse.isSubmitted()){
+            console.log('aborting current navigation - 2');
+            SurveyResponse.deleteSurveyResponse(surveyResponse);
+        }
+
+    };
 }
 
 

@@ -84,6 +84,7 @@
 
             showConfirm(message, function(yes){
                 if(yes){
+                    survey.abort();
                     PageNavigation.openCampaignsView(true);
                 }
             }, "Yes,No");

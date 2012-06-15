@@ -48,6 +48,25 @@ var Survey = function(survey, campaign){
     }
 
     /**
+     * If the survey is currently rendered, this stores the navigation object
+     * used to iterate through different prompts.
+     */
+    this.currentNavigation = null;
+
+    /**
+     * This method should be called before exiting the survey before submitting
+     * it.
+     */
+    this.abort = function(){
+        console.log('abort was called');
+        console.log(this.currentNavigation);
+        if(this.currentNavigation != null){
+            console.log("aborting current navigation.")
+            this.currentNavigation.abort();
+        }
+    };
+
+    /**
      * Starts a new navigation object with the current survey. This method
      * should be used to start off the survey. The prompts will be displayed one
      * by one, user response will be gathered in a SurveyResponse, etc.
@@ -86,7 +105,7 @@ var Survey = function(survey, campaign){
                         }
                     });
 
-                }else{                  
+                }else{
                     PageNavigation.openCampaignView(me.getCampaign().getURN());
                 }
             }
@@ -95,7 +114,8 @@ var Survey = function(survey, campaign){
         };
 
         //Start the actual survey.
-        new Navigation(this, container).start(onSurveyComplete);
+        this.currentNavigation = new Navigation(this, container);
+        this.currentNavigation.start(onSurveyComplete);
     }
 
     /**
@@ -152,6 +172,11 @@ var Survey = function(survey, campaign){
 
     };
 
+    /**
+     * Returns a prompt, given a prompt ID.
+     * @param id ID of the prompt to return.
+     * @return Prompt object or null.
+     */
     this.getPrompt = function(id){
 
         var prompts = this.getPrompts();
