@@ -140,8 +140,12 @@ function Prompt(prompt){
      */
     this.getProperties = function(){
 
+        //This handles GIT issue: 62.
+        //Handle the case where there is no properties defined at all.
         if(!prompt.properties){
             prompt.properties = {};
+            prompt.properties.property = [];
+            return prompt.properties.property;
         }
 
         if(!prompt.properties.property){
@@ -151,9 +155,7 @@ function Prompt(prompt){
         //If there is only a single property, then convert the property variable
         //to an array and add the element.
         if(!prompt.properties.property.length){
-            var singleElement = prompt.properties.property;
-            prompt.properties.property = [];
-            prompt.properties.property.push(singleElement);
+            prompt.properties.property.push(prompt.properties.property);
         }
 
         return prompt.properties.property;
