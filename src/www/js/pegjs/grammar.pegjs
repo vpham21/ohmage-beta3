@@ -44,9 +44,18 @@
 }
 
 
-sentence = [(] sentence:sentence [)] {return sentence}
-         / l:expression c:conjunction r:sentence {return conj(l, c, r);}
-         / expression /
+statement =  l:sentence c:conjunction r:sentence {return conj(l, c, r)}
+           / sentence
+
+sentence =  l:parenthetical c:conjunction r:parenthetical {return conj(l, c, r);}
+          / l:parenthetical c:conjunction r:expression {return conj(l, c, r);}
+          / l:expression c:conjunction r:parenthetical {return conj(l, c, r); }
+          / l:expression c:conjunction r:expression {return conj(l, c, r);}
+          / parenthetical
+          / expression
+
+parenthetical = "(" s:sentence ")" {return s}
+
 
 expression = id:id c:condition value:value {return cond(data[id], c, value)}
 
@@ -57,4 +66,3 @@ condition = ' == ' / ' != ' / ' > ' / ' < ' / ' >= ' / ' <= '
 value = value:[a-zA-Z0-9_]+ {return concat(value);}
 
 conjunction = ' and ' / ' or '
-
