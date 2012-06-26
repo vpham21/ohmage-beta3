@@ -178,7 +178,7 @@ function showConfirm(message, callback, buttonLabels, title){
 
                     if(isDeviceiOS())
                         index = buttonList.length - index;
-                    alert(index);
+
                     callback(index == 1);
                 }
             };
