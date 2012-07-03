@@ -2,16 +2,16 @@
 
 <html>
 <head>
-
     <script type="text/javascript"> var checkpoint = true; </script>
-
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <meta name="viewport" content="height=device-height,width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;" />
 
-    <title>ohmage | dashboard</title>
+    <title>ohmage | surveys</title>
 
     <style type="text/css">
         @import url("css/mwf.css");
-        @import url("css/grid.css");
+        @import url("mobiscroll/css/mobiscroll-1.5.3.css");
+        @import url("css/prompts.css");
         @import url("css/spinner.css");
     </style>
 
@@ -24,56 +24,64 @@
     <script type="text/javascript" src="js/mwf/content.js"> </script>
     <script type="text/javascript" src="js/mwf/button.js"> </script>
     <script type="text/javascript" src="js/mwf/menu.js"> </script>
+    <script type="text/javascript" src="js/mwf/form.js"> </script>
 
     <!-- IMPORT JQUERY AND EXTENSIONS -->
     <script type="text/javascript" src="js/jquery/jquery.js"></script>
     <script type="text/javascript" src="js/jquery/jquery.extensions.js"></script>
     <script type="text/javascript" src="js/util/detect_timezone.js"></script>
+    <script type="text/javascript" src="js/util/Base64.js"></script>
+    <script type="text/javascript" src="js/util/UUIDGen.js"></script>
+    <script type="text/javascript" src="mobiscroll/js/mobiscroll-1.5.3.js"></script>
 
     <!-- IMPORT OHMAGE API JS LIB -->
+    <script type="text/javascript" src="js/pegjs/ConditionalParser.js"></script>
     <script type="text/javascript" src="js/LocalMap.js"></script>
     <script type="text/javascript" src="js/api.js"></script>
     <script type="text/javascript" src="js/PageNavigation.js"></script>
     <script type="text/javascript" src="js/UserAuthentication.js"></script>
+    <script type="text/javascript" src="js/SurveyResponseUploader.js"></script>
+    <script type="text/javascript" src="js/Campaigns.js"></script>
+    <script type="text/javascript" src="js/Campaign.js"></script>
     <script type="text/javascript" src="js/SurveyResponse.js"></script>
+    <script type="text/javascript" src="js/Survey.js"></script>
+    <script type="text/javascript" src="js/Prompt.js"></script>
+    <script type="text/javascript" src="js/PromptHandler.js"></script>
+    <script type="text/javascript" src="js/navigation.js"></script>
     <script type="text/javascript" src="js/util/Spinner.js"></script>
 
     <script type="text/javascript">
 
-        invokeOnReady(function(){
+     invokeOnReady(function(){
 
-            (function(){
+         var surveyMenu = mwf.decorator.Menu("Available Surveys");
 
-                mwf.decorator.TopButton((auth.isUserAuthenticated()) ? "Logout" : "Login", null, function(){
+         var campaigns = Campaigns.getInstalledCampaigns();
 
-                    if(auth.isUserAuthenticated()){
-                        auth.logout();
-                    }else{
-                        PageNavigation.openAuthenticationPage();
-                    }
+         for(var i = 0; i < campaigns.length; i++){
+             if(campaigns[i].isRunning())
+                campaigns[i].renderSurveyList(surveyMenu);
+         }
 
-                }, true);
+         if(surveyMenu.size() == 0){
+            surveyMenu.addMenuLinkItem("No Available Surveys", null, "Please install a campaign, to view available surveys.").onclick = function(){
+                PageNavigation.openCampaignsView(false);
+            };
+         };
 
-            })();
+         $("#surveys").append(surveyMenu);
+         $("#surveys").append(mwf.decorator.SingleClickButton("Upload Queue", function(){
+                PageNavigation.openUploadQueueView();
+         }));
 
-            var queueSize = SurveyResponse.getUploadQueueSize();
-            var queueLabel = "Queue (" + queueSize + ")";
-
-            var dashboard = mwf.decorator.Menu();
-
-            dashboard.addMenuImageItem('Campaigns', 'campaigns.html',    'img/dash/dash_campaigns.png');
-            dashboard.addMenuImageItem('Surveys',   'surveys.html',      'img/dash/dash_surveys.png');
-            dashboard.addMenuImageItem( queueLabel, 'upload-queue.html', 'img/dash/dash_upqueue.png');
-            dashboard.addMenuImageItem('Profile',   'profile.html',      'img/dash/dash_profile.png');
-            dashboard.addMenuImageItem('Help',      'help.html',         'img/dash/dash_help.png');
-
-
-            $('#dashboard').append(dashboard);
-
-        });
+         mwf.decorator.TopButton("All Campaigns", null, function(){
+            PageNavigation.openCampaignsView(true);
+         }, true);
 
 
-    </script>
+     });
+
+</script>
 
 
 </head>
@@ -87,7 +95,7 @@
 
     </h1>
 
-    <div id="dashboard" class="grid"></div>
+    <div id="surveys"></div>
 
     <div id="footer">
         <p>Copyright &copy; 2012 MobilizeLabs<br />

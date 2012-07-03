@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8412BC8A15A2A46600779C63 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 84FAA25C159438D60092BD82 /* Default.png */; };
 		84453092156CEB4300CAF78A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84453091156CEB4300CAF78A /* Foundation.framework */; };
 		84453094156CEB4300CAF78A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84453093156CEB4300CAF78A /* UIKit.framework */; };
 		84453096156CEB4300CAF78A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84453095156CEB4300CAF78A /* CoreGraphics.framework */; };
@@ -27,11 +28,6 @@
 		844530BE156CEB4300CAF78A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 844530BC156CEB4300CAF78A /* Localizable.strings */; };
 		844530C2156CEB4300CAF78A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 844530C0156CEB4300CAF78A /* Localizable.strings */; };
 		844530C6156CEB4300CAF78A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 844530C4156CEB4300CAF78A /* Localizable.strings */; };
-		844530C9156CEB4300CAF78A /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 844530C8156CEB4300CAF78A /* icon.png */; };
-		844530CB156CEB4300CAF78A /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 844530CA156CEB4300CAF78A /* icon@2x.png */; };
-		844530CD156CEB4300CAF78A /* icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 844530CC156CEB4300CAF78A /* icon-72.png */; };
-		844530D0156CEB4300CAF78A /* Default~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 844530CF156CEB4300CAF78A /* Default~iphone.png */; };
-		844530D2156CEB4300CAF78A /* Default@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 844530D1156CEB4300CAF78A /* Default@2x~iphone.png */; };
 		844530D4156CEB4400CAF78A /* Capture.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 844530D3156CEB4400CAF78A /* Capture.bundle */; };
 		844530D6156CEB4400CAF78A /* Cordova.plist in Resources */ = {isa = PBXBuildFile; fileRef = 844530D5156CEB4400CAF78A /* Cordova.plist */; };
 		844530DA156CEB4400CAF78A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 844530D9156CEB4400CAF78A /* AppDelegate.m */; };
@@ -41,6 +37,8 @@
 		844531C2156CF91400CAF78A /* ohmage-icon-gray-noshadow-114px.png in Resources */ = {isa = PBXBuildFile; fileRef = 844531C1156CF91400CAF78A /* ohmage-icon-gray-noshadow-114px.png */; };
 		844531C4156CF9B600CAF78A /* ohmage-icon-gray-noshadow-57px.png in Resources */ = {isa = PBXBuildFile; fileRef = 844531C3156CF9B600CAF78A /* ohmage-icon-gray-noshadow-57px.png */; };
 		844531EE156DDB1F00CAF78A /* www in Resources */ = {isa = PBXBuildFile; fileRef = 844531ED156DDB1F00CAF78A /* www */; };
+		84AF1DF015A2B285002A4427 /* ohmage-icon-gray-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 84AF1DEF15A2B285002A4427 /* ohmage-icon-gray-72.png */; };
+		84FAA25F159438D60092BD82 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84FAA25D159438D60092BD82 /* Default@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,11 +65,6 @@
 		844530BD156CEB4300CAF78A /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = Resources/es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		844530C1156CEB4300CAF78A /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = Resources/de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		844530C5156CEB4300CAF78A /* se */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = se; path = Resources/se.lproj/Localizable.strings; sourceTree = "<group>"; };
-		844530C8156CEB4300CAF78A /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = Resources/icons/icon.png; sourceTree = "<group>"; };
-		844530CA156CEB4300CAF78A /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "Resources/icons/icon@2x.png"; sourceTree = "<group>"; };
-		844530CC156CEB4300CAF78A /* icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-72.png"; path = "Resources/icons/icon-72.png"; sourceTree = "<group>"; };
-		844530CF156CEB4300CAF78A /* Default~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default~iphone.png"; path = "Resources/splash/Default~iphone.png"; sourceTree = "<group>"; };
-		844530D1156CEB4300CAF78A /* Default@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x~iphone.png"; path = "Resources/splash/Default@2x~iphone.png"; sourceTree = "<group>"; };
 		844530D3156CEB4400CAF78A /* Capture.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Capture.bundle; path = Resources/Capture.bundle; sourceTree = "<group>"; };
 		844530D5156CEB4400CAF78A /* Cordova.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Cordova.plist; sourceTree = "<group>"; };
 		844530D8156CEB4400CAF78A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Classes/AppDelegate.h; sourceTree = "<group>"; };
@@ -84,6 +77,9 @@
 		844531C1156CF91400CAF78A /* ohmage-icon-gray-noshadow-114px.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ohmage-icon-gray-noshadow-114px.png"; sourceTree = "<group>"; };
 		844531C3156CF9B600CAF78A /* ohmage-icon-gray-noshadow-57px.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ohmage-icon-gray-noshadow-57px.png"; sourceTree = "<group>"; };
 		844531ED156DDB1F00CAF78A /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = "<group>"; };
+		84AF1DEF15A2B285002A4427 /* ohmage-icon-gray-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ohmage-icon-gray-72.png"; sourceTree = "<group>"; };
+		84FAA25C159438D60092BD82 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		84FAA25D159438D60092BD82 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +117,9 @@
 		8445307F156CEB4300CAF78A = {
 			isa = PBXGroup;
 			children = (
+				84AF1DEF15A2B285002A4427 /* ohmage-icon-gray-72.png */,
+				84FAA25C159438D60092BD82 /* Default.png */,
+				84FAA25D159438D60092BD82 /* Default@2x.png */,
 				844531ED156DDB1F00CAF78A /* www */,
 				844531C3156CF9B600CAF78A /* ohmage-icon-gray-noshadow-57px.png */,
 				844531C1156CF91400CAF78A /* ohmage-icon-gray-noshadow-114px.png */,
@@ -192,8 +191,6 @@
 				844530BB156CEB4300CAF78A /* es.lproj */,
 				844530BF156CEB4300CAF78A /* de.lproj */,
 				844530C3156CEB4300CAF78A /* se.lproj */,
-				844530C7156CEB4300CAF78A /* icons */,
-				844530CE156CEB4300CAF78A /* splash */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -228,25 +225,6 @@
 				844530C4156CEB4300CAF78A /* Localizable.strings */,
 			);
 			name = se.lproj;
-			sourceTree = "<group>";
-		};
-		844530C7156CEB4300CAF78A /* icons */ = {
-			isa = PBXGroup;
-			children = (
-				844530C8156CEB4300CAF78A /* icon.png */,
-				844530CA156CEB4300CAF78A /* icon@2x.png */,
-				844530CC156CEB4300CAF78A /* icon-72.png */,
-			);
-			name = icons;
-			sourceTree = "<group>";
-		};
-		844530CE156CEB4300CAF78A /* splash */ = {
-			isa = PBXGroup;
-			children = (
-				844530CF156CEB4300CAF78A /* Default~iphone.png */,
-				844530D1156CEB4300CAF78A /* Default@2x~iphone.png */,
-			);
-			name = splash;
 			sourceTree = "<group>";
 		};
 		844530D7156CEB4400CAF78A /* Classes */ = {
@@ -329,11 +307,6 @@
 				844530BE156CEB4300CAF78A /* Localizable.strings in Resources */,
 				844530C2156CEB4300CAF78A /* Localizable.strings in Resources */,
 				844530C6156CEB4300CAF78A /* Localizable.strings in Resources */,
-				844530C9156CEB4300CAF78A /* icon.png in Resources */,
-				844530CB156CEB4300CAF78A /* icon@2x.png in Resources */,
-				844530CD156CEB4300CAF78A /* icon-72.png in Resources */,
-				844530D0156CEB4300CAF78A /* Default~iphone.png in Resources */,
-				844530D2156CEB4300CAF78A /* Default@2x~iphone.png in Resources */,
 				844530D4156CEB4400CAF78A /* Capture.bundle in Resources */,
 				844530D6156CEB4400CAF78A /* Cordova.plist in Resources */,
 				844530DF156CEB4400CAF78A /* MainViewController.xib in Resources */,
@@ -341,6 +314,9 @@
 				844531C2156CF91400CAF78A /* ohmage-icon-gray-noshadow-114px.png in Resources */,
 				844531C4156CF9B600CAF78A /* ohmage-icon-gray-noshadow-57px.png in Resources */,
 				844531EE156DDB1F00CAF78A /* www in Resources */,
+				84FAA25F159438D60092BD82 /* Default@2x.png in Resources */,
+				8412BC8A15A2A46600779C63 /* Default.png in Resources */,
+				84AF1DF015A2B285002A4427 /* ohmage-icon-gray-72.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -478,7 +454,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = /Users/Shared/Cordova/Frameworks;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -489,6 +465,7 @@
 					"CORDOVA_FRAMEWORK=1",
 				);
 				INFOPLIST_FILE = "MWoC/MWoC-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = (
 					"-weak_framework",
 					UIKit,
@@ -510,7 +487,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = /Users/Shared/Cordova/Frameworks;
@@ -521,6 +498,7 @@
 					"CORDOVA_FRAMEWORK=1",
 				);
 				INFOPLIST_FILE = "MWoC/MWoC-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = (
 					"-weak_framework",
 					UIKit,

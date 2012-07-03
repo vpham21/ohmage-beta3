@@ -14,8 +14,7 @@
 	<array>
 		<string>ohmage-icon-gray-noshadow-57px.png</string>
 		<string>ohmage-icon-gray-noshadow-114px.png</string>
-		<string>icon-72.png</string>
-		<string>icon-72@2x.png</string>
+		<string>ohmage-icon-gray-72.png</string>
 	</array>
 	<key>CFBundleIcons</key>
 	<dict>
@@ -25,8 +24,7 @@
 			<array>
 				<string>ohmage-icon-gray-noshadow-57px.png</string>
 				<string>ohmage-icon-gray-noshadow-114px.png</string>
-				<string>icon-72.png</string>
-				<string>icon-72@2x.png</string>
+				<string>ohmage-icon-gray-72.png</string>
 			</array>
 			<key>UIPrerenderedIcon</key>
 			<false/>

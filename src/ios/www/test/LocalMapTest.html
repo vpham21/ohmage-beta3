@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="../js/LocalMap.js"></script>
+        <script type="text/javascript">
+
+            var map = new LocalMap('namespace');
+            map.set("var1", "Hello World");
+            map.set("var2", "Hello World");
+            map.set("var3", "Hello World");
+            map.set("var4", "Hello World");
+            map.set("var5", "Hello World");
+
+            LocalMap.destroy();
+
+            console.log(map.get("var"));
+
+
+        </script>
+
+    </head>
+    <body>
+        <div>TODO write content</div>
+    </body>
+</html>

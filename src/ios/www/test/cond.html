@@ -1,0 +1,26 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <script src="../js/pegjs/ConditionalParser.js"></script>
+
+        <script>
+            var data = {id_1: 'v1', id_2: 'v2', id_3 : 'v3'};
+            console.log(ConditionalParser.parse("id_1 == v1", data));
+
+            data = {id_1: '!v1', id_2: 'v2', id_3 : 'v3'};
+            console.log(ConditionalParser.parse("id_1 == v1", data));
+        </script>
+    </head>
+    <body>
+
+    </body>
+</html>
+
+

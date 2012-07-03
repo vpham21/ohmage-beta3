@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Menu Decorators Demo</title>
+        
+        <meta name="viewport" content="height=device-height,width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;" />
+        <link rel="stylesheet" href="http://m.ucla.edu/assets/css.php" type="text/css">
+        <script type="text/javascript" src="http://m.ucla.edu/assets/js.php"></script> 
+        <script type="text/javascript" src="http://128.97.62.81/og/js/mwf/decorator.js"></script>
+        <script type="text/javascript" src="http://128.97.62.81/og/js/mwf/menu.js"></script>
+        <script type="text/javascript" src="http://128.97.62.81/og/js/mwf/button.js"> </script>
+        
+
+    </head>
+    <body>
+         <script>
+            
+            
+            /*******************
+             * LINK MENU DEMO. *
+             *******************/
+            var linkMenu = new mwf.decorator.Menu();
+            
+            console.log(linkMenu);
+           
+            linkMenu.setTitle("Simple Link Menu");
+           
+            linkMenu.addMenuLinkItem("Mobile Web Framework", "http://mwf.ucla.edu");
+            linkMenu.addMenuLinkItem("UCLA Mobile Page", "http://m.ucla.edu");
+            
+            document.body.appendChild(linkMenu.render());
+                  
+            
+            /********************
+             * RADIO MENU DEMO. *
+             ********************/
+            var radioMenu = new mwf.decorator.Menu();
+            
+            radioMenu.setTitle("Simple Radio Buttons Menu");
+            
+            radioMenu.addMenuRadioItem("name", "good", "It's pretty good, I like it.");
+            radioMenu.addMenuRadioItem("name", "not_so_bad", "It's not so bad.");
+            radioMenu.addMenuRadioItem("name", "horrible", "Totally horrible - waste of employee resources.");
+            
+            document.body.appendChild(radioMenu.render());
+            
+            
+            /*********************************
+             * BLUE/DETAILED LINK MENU DEMO. *
+             *********************************/
+            var linkMenuBlue = new mwf.decorator.Menu();
+           
+            linkMenuBlue.setIsBlue(true);
+            linkMenuBlue.setTitle("Simple Blue Link Menu w/ Details");
+           
+            linkMenuBlue.addMenuLinkItem("Mobile Web Framework", "http://mwf.ucla.edu", "Check out more details about the framework here.");
+            linkMenuBlue.addMenuLinkItem("UCLA Mobile Page", "http://m.ucla.edu", "Experience mobile UCLA on any mobile device.");
+            
+            document.body.appendChild(linkMenuBlue.render());
+            
+            
+            /************************
+             * BUTTON FACTORY DEMO. *
+             ************************/
+            /*
+            var buttonFactory = new mwf.decorator.ButtonFactory();
+            
+            var singleButtonDark  = buttonFactory.renderSingleButton("Single Button", "http://google.com");
+            
+            buttonFactory.setIsLight(false);
+            
+            var singleButtonLight =  buttonFactory.renderSingleButton("Single Button Light", "http://google.com");
+            document.body.appendChild(singleButton);
+            */
+           
+            
+        </script>
+    </body>
+</html>

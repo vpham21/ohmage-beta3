@@ -7,7 +7,7 @@
 
     <meta name="viewport" content="height=device-height,width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;" />
 
-    <title>ohmage | dashboard</title>
+    <title>ohmage | profile</title>
 
     <style type="text/css">
         @import url("css/mwf.css");
@@ -28,56 +28,27 @@
     <!-- IMPORT JQUERY AND EXTENSIONS -->
     <script type="text/javascript" src="js/jquery/jquery.js"></script>
     <script type="text/javascript" src="js/jquery/jquery.extensions.js"></script>
-    <script type="text/javascript" src="js/util/detect_timezone.js"></script>
 
     <!-- IMPORT OHMAGE API JS LIB -->
-    <script type="text/javascript" src="js/LocalMap.js"></script>
     <script type="text/javascript" src="js/api.js"></script>
     <script type="text/javascript" src="js/PageNavigation.js"></script>
     <script type="text/javascript" src="js/UserAuthentication.js"></script>
-    <script type="text/javascript" src="js/SurveyResponse.js"></script>
+    <script type="text/javascript" src="js/Profile.js"></script>
     <script type="text/javascript" src="js/util/Spinner.js"></script>
 
     <script type="text/javascript">
 
         invokeOnReady(function(){
-
-            (function(){
-
-                mwf.decorator.TopButton((auth.isUserAuthenticated()) ? "Logout" : "Login", null, function(){
-
-                    if(auth.isUserAuthenticated()){
-                        auth.logout();
-                    }else{
-                        PageNavigation.openAuthenticationPage();
-                    }
-
-                }, true);
-
-            })();
-
-            var queueSize = SurveyResponse.getUploadQueueSize();
-            var queueLabel = "Queue (" + queueSize + ")";
-
-            var dashboard = mwf.decorator.Menu();
-
-            dashboard.addMenuImageItem('Campaigns', 'campaigns.html',    'img/dash/dash_campaigns.png');
-            dashboard.addMenuImageItem('Surveys',   'surveys.html',      'img/dash/dash_surveys.png');
-            dashboard.addMenuImageItem( queueLabel, 'upload-queue.html', 'img/dash/dash_upqueue.png');
-            dashboard.addMenuImageItem('Profile',   'profile.html',      'img/dash/dash_profile.png');
-            dashboard.addMenuImageItem('Help',      'help.html',         'img/dash/dash_help.png');
-
-
-            $('#dashboard').append(dashboard);
-
+            $('#profile').append(Profile.render());
         });
-
 
     </script>
 
 
 </head>
 <body>
+
+    <a href="index.html" class="button-light not-basic" id="button-top">Dashboard</a>
 
     <h1 id="header">
         <a href="index.html">
@@ -87,7 +58,7 @@
 
     </h1>
 
-    <div id="dashboard" class="grid"></div>
+    <div id="profile"> </div>
 
     <div id="footer">
         <p>Copyright &copy; 2012 MobilizeLabs<br />

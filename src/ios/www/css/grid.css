@@ -1,0 +1,45 @@
+div.grid {
+    border: none;
+    width: 300px;
+    margin:0px auto;
+}
+
+div.grid ol {
+
+	margin-left: auto !important;
+	margin-right: auto !important;
+    text-align: left !important;
+
+    border: none;
+}
+
+div.grid ol li {
+    border-top: 0px;
+    display: inline-block;
+    list-style: none;
+    list-style-type: none;
+    padding: 0px !important;
+    margin: 5px !important;
+    border: 0px;
+    background-color: transparent !important;
+    vertical-align: top;
+}
+
+div.grid ol a {
+
+    color: #343d3d;
+    font-size: 13px;
+    text-align: center;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    background-color: transparent !important;
+    background-image: none !important;
+}
+
+div.grid ol img {
+    display: block;
+    width: 90px;
+    height: 90px;
+}

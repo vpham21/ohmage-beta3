@@ -2,16 +2,13 @@
 
 <html>
 <head>
-
     <script type="text/javascript"> var checkpoint = true; </script>
-
     <meta name="viewport" content="height=device-height,width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;" />
 
-    <title>ohmage | dashboard</title>
+    <title>ohmage | campaigns</title>
 
     <style type="text/css">
         @import url("css/mwf.css");
-        @import url("css/grid.css");
         @import url("css/spinner.css");
     </style>
 
@@ -28,56 +25,43 @@
     <!-- IMPORT JQUERY AND EXTENSIONS -->
     <script type="text/javascript" src="js/jquery/jquery.js"></script>
     <script type="text/javascript" src="js/jquery/jquery.extensions.js"></script>
-    <script type="text/javascript" src="js/util/detect_timezone.js"></script>
 
     <!-- IMPORT OHMAGE API JS LIB -->
     <script type="text/javascript" src="js/LocalMap.js"></script>
-    <script type="text/javascript" src="js/api.js"></script>
     <script type="text/javascript" src="js/PageNavigation.js"></script>
+    <script type="text/javascript" src="js/api.js"></script>
     <script type="text/javascript" src="js/UserAuthentication.js"></script>
-    <script type="text/javascript" src="js/SurveyResponse.js"></script>
+    <script type="text/javascript" src="js/Campaign.js"></script>
+    <script type="text/javascript" src="js/Campaigns.js"></script>
     <script type="text/javascript" src="js/util/Spinner.js"></script>
 
     <script type="text/javascript">
 
-        invokeOnReady(function(){
+         invokeOnReady(function(){
 
-            (function(){
+            //If set, only display installed campaigns.
+            var installed = $.getUrlVar('display-installed-campaigns') == null || $.getUrlVar('display-installed-campaigns') == "true";
 
-                mwf.decorator.TopButton((auth.isUserAuthenticated()) ? "Logout" : "Login", null, function(){
+            var onSuccess = function(){
+                $('#campaigns').append(Campaigns.render(installed));
+            };
 
-                    if(auth.isUserAuthenticated()){
-                        auth.logout();
-                    }else{
-                        PageNavigation.openAuthenticationPage();
-                    }
+            var onError = function(){
+                showMessage("Unable to download campaigns. Please try again later.")
+            }
 
-                }, true);
+            Campaigns.download(false, onSuccess, onError);
 
-            })();
-
-            var queueSize = SurveyResponse.getUploadQueueSize();
-            var queueLabel = "Queue (" + queueSize + ")";
-
-            var dashboard = mwf.decorator.Menu();
-
-            dashboard.addMenuImageItem('Campaigns', 'campaigns.html',    'img/dash/dash_campaigns.png');
-            dashboard.addMenuImageItem('Surveys',   'surveys.html',      'img/dash/dash_surveys.png');
-            dashboard.addMenuImageItem( queueLabel, 'upload-queue.html', 'img/dash/dash_upqueue.png');
-            dashboard.addMenuImageItem('Profile',   'profile.html',      'img/dash/dash_profile.png');
-            dashboard.addMenuImageItem('Help',      'help.html',         'img/dash/dash_help.png');
-
-
-            $('#dashboard').append(dashboard);
-
-        });
-
+         });
 
     </script>
 
 
 </head>
+
 <body>
+
+    <a href="index.html" class="button-light not-basic" id="button-top">Dashboard</a>
 
     <h1 id="header">
         <a href="index.html">
@@ -87,7 +71,7 @@
 
     </h1>
 
-    <div id="dashboard" class="grid"></div>
+    <div id="campaigns"> </div>
 
     <div id="footer">
         <p>Copyright &copy; 2012 MobilizeLabs<br />

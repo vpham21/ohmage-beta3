@@ -2,16 +2,15 @@
 
 <html>
 <head>
-
     <script type="text/javascript"> var checkpoint = true; </script>
 
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <meta name="viewport" content="height=device-height,width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;" />
 
-    <title>ohmage | dashboard</title>
+    <title>ohmage | campaign</title>
 
     <style type="text/css">
         @import url("css/mwf.css");
-        @import url("css/grid.css");
         @import url("css/spinner.css");
     </style>
 
@@ -28,50 +27,45 @@
     <!-- IMPORT JQUERY AND EXTENSIONS -->
     <script type="text/javascript" src="js/jquery/jquery.js"></script>
     <script type="text/javascript" src="js/jquery/jquery.extensions.js"></script>
-    <script type="text/javascript" src="js/util/detect_timezone.js"></script>
 
     <!-- IMPORT OHMAGE API JS LIB -->
     <script type="text/javascript" src="js/LocalMap.js"></script>
     <script type="text/javascript" src="js/api.js"></script>
     <script type="text/javascript" src="js/PageNavigation.js"></script>
-    <script type="text/javascript" src="js/UserAuthentication.js"></script>
-    <script type="text/javascript" src="js/SurveyResponse.js"></script>
+    <script type="text/javascript" src="js/Campaigns.js"></script>
+    <script type="text/javascript" src="js/Campaign.js"></script>
     <script type="text/javascript" src="js/util/Spinner.js"></script>
 
     <script type="text/javascript">
 
-        invokeOnReady(function(){
 
-            (function(){
+         invokeOnReady(function(){
 
-                mwf.decorator.TopButton((auth.isUserAuthenticated()) ? "Logout" : "Login", null, function(){
+             var campaignURN = $.getUrlVar('campaign-urn');
 
-                    if(auth.isUserAuthenticated()){
-                        auth.logout();
-                    }else{
-                        PageNavigation.openAuthenticationPage();
-                    }
+             //If a specific campaign is not specified, take the user to the
+             //campaigns view where the user may be able to choose an appropriate
+             //campaign.
+             if(!campaignURN){
+                 PageNavigation.openCampaignsView();
+             }
 
-                }, true);
+             //Attach an event listener to the top right buttion to navigate the
+             //user to the campaigns view.
+             $('#button-top').click(function() {
+                 PageNavigation.openCampaignsView();
+             });
 
-            })();
+             var campaign = new Campaign(campaignURN);
 
-            var queueSize = SurveyResponse.getUploadQueueSize();
-            var queueLabel = "Queue (" + queueSize + ")";
+             document.getElementById('surveys').appendChild(campaign.render());
 
-            var dashboard = mwf.decorator.Menu();
+             document.getElementById('surveys').appendChild(mwf.decorator.SingleClickButton("Delete Campaign", function(){
+                 Campaigns.uninstallCampaign(campaignURN);
+                 PageNavigation.openCampaignsView();
+             }));
 
-            dashboard.addMenuImageItem('Campaigns', 'campaigns.html',    'img/dash/dash_campaigns.png');
-            dashboard.addMenuImageItem('Surveys',   'surveys.html',      'img/dash/dash_surveys.png');
-            dashboard.addMenuImageItem( queueLabel, 'upload-queue.html', 'img/dash/dash_upqueue.png');
-            dashboard.addMenuImageItem('Profile',   'profile.html',      'img/dash/dash_profile.png');
-            dashboard.addMenuImageItem('Help',      'help.html',         'img/dash/dash_help.png');
-
-
-            $('#dashboard').append(dashboard);
-
-        });
-
+         });
 
     </script>
 
@@ -79,15 +73,17 @@
 </head>
 <body>
 
+
+    <a class="button-full button-padded" id="button-top">All Campaigns</a>
+
     <h1 id="header">
         <a href="index.html">
             <img src="img/ohmage-icon-gray-noshadow-30px.png" alt="ohmage" width="30" height="30" style="padding-left:3px; padding-top:3px;"/>
-            <span>ohmage</span>
          </a>
-
+        <span>ohmage</span>
     </h1>
 
-    <div id="dashboard" class="grid"></div>
+    <div id="surveys"> </div>
 
     <div id="footer">
         <p>Copyright &copy; 2012 MobilizeLabs<br />
