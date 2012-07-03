@@ -137,6 +137,7 @@ function Prompt(prompt){
     /**
      * Returns a list of properties for this prompt. If the prompt does not
      * include any properties, then an empty array will be returned.
+     * 
      */
     this.getProperties = function(){
 
@@ -151,11 +152,15 @@ function Prompt(prompt){
         if(!prompt.properties.property){
             prompt.properties.property = [];
         }
-
+        
         //If there is only a single property, then convert the property variable
-        //to an array and add the element.
+        //to an array and add the element. We need the temporary variable to 
+        //store the current single property when converting the property field 
+        //to an array.
         if(!prompt.properties.property.length){
-            prompt.properties.property.push(prompt.properties.property);
+            var tempProperty = prompt.properties.property;
+            prompt.properties.property = [];
+            prompt.properties.property.push(tempProperty);
         }
 
         return prompt.properties.property;
