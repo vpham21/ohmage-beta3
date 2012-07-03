@@ -82,9 +82,9 @@ var SurveyResponseUploader = function(survey, surveyResponse){
 
     var getFinalizedUploadResponse = function(callback, requireLocation){
 
-        //By default, do not require location.
+        //By default, require location.
         requireLocation = typeof requireLocation == 'undefined' ?
-                                                                false
+                                                                true
                                                               : requireLocation;
 
         var returnResponseData = function(){
@@ -96,8 +96,7 @@ var SurveyResponseUploader = function(survey, surveyResponse){
         //get the GPS location for the survey.
         if(!surveyResponse.isLocationAvailable() && requireLocation){
 
-            var message = "Survey '" + survey.getTitle() + "' does not have \n\
-                           a valid GPS location. Would you like to try set it?";
+            var message = "Survey '" + survey.getTitle() + "' does not have a valid GPS location. Would you like to try set it?";
 
             var confirmCallback = function(yes){
 
