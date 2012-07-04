@@ -100,9 +100,17 @@ PromptHandler.Handlers = function(){
 
         //Add a new text box input field for specifying the new choice.
         form.addTextBox('new-choice', 'new-choice');
+        
+        var hideCustomChoiceMenu = function(){
+            //Hide the 'add option button'.
+            form.style.display = 'none';
 
-        form.addSubmitButton('Create New Choice', function(e){
+            //Clear the user input textbox.
+            document.getElementById('new-choice').value = "";
 
+        }
+        
+        var cancelPropegation = function(e){
             //e.cancelBubble is supported by IE - this will kill the bubbling process.
             e.cancelBubble = true;
             e.returnValue = false;
@@ -112,7 +120,12 @@ PromptHandler.Handlers = function(){
                 e.stopPropagation();
                 e.preventDefault();
             }
+        }
 
+        form.addSubmitButton('Create New Choice', function(e){
+
+            cancelPropegation(e);
+            
             //Get the value specified by the user.
             var newChoice = document.getElementById('new-choice').value;
 
@@ -142,15 +155,16 @@ PromptHandler.Handlers = function(){
                 choice_menu.addMenuCheckboxItem(prompt.getType(), prop.key, prop.label);
             }
 
-            //Hide the 'add option button'.
-            form.style.display = 'none';
-
-            //Clear the user input textbox.
-            document.getElementById('new-choice').value = "";
-
+            hideCustomChoiceMenu();
+            
             choice_menu.addMenuItem(addOptionItem, true);
 
             return false;
+        });
+        
+        form.addSubmitButton('Cancel', function(e){
+            cancelPropegation(e);
+            hideCustomChoiceMenu();
         });
 
         //This continer will hold both prexisting options and the new option
