@@ -150,9 +150,9 @@ PromptHandler.Handlers = function(){
             //Depending on if the choices are single-choice or multiple-choice,
             //add either a radio button menu item or a checkbox menu item.
             if(isSingleChoice){
-                choice_menu.addMenuRadioItem(prompt.getType(), prop.key, prop.label);
+                choice_menu.addMenuRadioItem(prompt.getID(), prop.key, prop.label);
             }else{
-                choice_menu.addMenuCheckboxItem(prompt.getType(), prop.key, prop.label);
+                choice_menu.addMenuCheckboxItem(prompt.getID(), prop.key, prop.label);
             }
 
             hideCustomChoiceMenu();
