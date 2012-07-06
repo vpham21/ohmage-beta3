@@ -13,8 +13,6 @@ var SurveyResponseUploader = function(survey, surveyResponse){
 
         var responseData = surveyResponse.getUploadData();
 
-        console.log(JSON.stringify([responseData.responses]));
-
         var data = {
                         campaign_urn:surveyResponse.getCampaignURN(),
                         campaign_creation_timestamp: survey.getCampaign().getCreationTimestamp(),
@@ -34,7 +32,8 @@ var SurveyResponseUploader = function(survey, surveyResponse){
      * location is successfuly acquired or the user chooses to quit trying.
      *
      * @param At base case, callback will be invoked with a single boolean
-     *        parameter indicating the success or failure of the call.
+     *        parameter indicating the success or failure of acquiring the GPS
+     *        location i.e. false == user quit or unable to get GPS location.
      */
     var setResponseLocation = function(callback){
 
@@ -57,8 +56,7 @@ var SurveyResponseUploader = function(survey, surveyResponse){
             //then ask the user if he/she would like to retry the process.
             }else{
 
-                var errorMessage = "Geolocation failed. Would you like \n\
-                                    to try again?"
+                var errorMessage = "Geolocation failed. Would you like to try again?"
 
                 showConfirm(errorMessage, function(yes){
 
@@ -122,15 +120,29 @@ var SurveyResponseUploader = function(survey, surveyResponse){
         }
     };
 
-    this.upload = function(callback, requireLocation){
+    /**
+     * Uploads a single survey response object. 
+     * @param onSuccess Success response callback from API call.
+     * @param onError Error response callback from API call.
+     * @param requireLocation If set to true, the user will be asked to try to 
+     *        set the GPS location if the survey is lacking one. 
+     */
+    this.upload = function(onSuccess, onError, requireLocation){
 
         getFinalizedUploadResponse(function(data){
 
-            //Callback from the API request.
-            var _callback = function(response){
+            var _onError = function(error){
                 Spinner.hide(function(){
-                    if(callback){
-                        callback(response);
+                    if(onError){
+                        onError(error);
+                    }
+                });
+            };
+            
+            var _onSuccess = function(response){
+                Spinner.hide(function(){
+                    if(onSuccess){
+                        onSuccess(response);
                     }
                 });
             };
@@ -142,20 +154,28 @@ var SurveyResponseUploader = function(survey, surveyResponse){
                  SURVEY_UPLOAD_URL,
                  data,
                  "JSON",
-                 _callback,
-                 _callback
+                 _onSuccess,
+                 _onError
             );
+                
         }, requireLocation);
 
     };
 
 };
 
-SurveyResponseUploader.uploadAll = function(pendingResponses, callback){
+/**
+ * Given an object of pending responses with key == uuid of the response, 
+ * recursively tries to upload the surveys and invokes the callback with the 
+ * final number of successfully uploaded surveys.
+ */
+SurveyResponseUploader.uploadAll = function(pendingResponses, callback, requireLocation){
 
+    //Counts the number of successful uploads.
     var count = 0;
 
-    //Construct an array of IDs. This allows much easier access with an index.
+    //Construct an array of IDs. This allows much easier access with an index
+    //inside the recursive call.
     var uuidList = [];
     for(var uuid in pendingResponses){
         uuidList.push(uuid);
@@ -171,19 +191,26 @@ SurveyResponseUploader.uploadAll = function(pendingResponses, callback){
             });
 
         }else{
-
-            var survey   = pendingResponses[uuidList[i]].survey;
+            
+            //Get the current survey and surveyResponse object to upload.
+            var survey = pendingResponses[uuidList[i]].survey;
             var surveyResponse = pendingResponses[uuidList[i]].response;
-
-            (new SurveyResponseUploader(survey, surveyResponse)).upload(function(response){
-
-                 if(response.result === "success"){
-                    count++;
-                    SurveyResponse.deleteSurveyResponse(surveyResponse);
-                }
-
+            
+            var next = function(){
                 upload(++i);
-            });
+            };
+            
+            var onSuccess = function(response){    
+                count++;
+                SurveyResponse.deleteSurveyResponse(surveyResponse);
+                next();
+            };
+            
+            var onError = function(error){
+                next();
+            };
+            
+            new SurveyResponseUploader(survey, surveyResponse).upload(onSuccess, onError, requireLocation);
 
         }
 
@@ -191,6 +218,4 @@ SurveyResponseUploader.uploadAll = function(pendingResponses, callback){
 
     Spinner.show();
     upload(0);
-
-
 }

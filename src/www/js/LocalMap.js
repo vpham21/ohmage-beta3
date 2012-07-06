@@ -26,7 +26,7 @@ var LocalMap = function(name){
         var map = this.getMap();
         return (map[name]) ? map[name] : null;
     };
-
+    
     this.length = function(){
         var map = this.getMap();
         var size = 0, key;

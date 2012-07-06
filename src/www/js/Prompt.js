@@ -30,10 +30,14 @@ function Prompt(prompt){
         switch(this.getType()){
 
             case 'photo':
-                summary = "<center><img src='" + SurveyResponse.getImage(responseValue) + "' width='100%' /></center>";
-
+                if(responseValue !== SurveyResponse.SKIPPED_PROMPT_VALUE){
+                    summary = "<center><img src='" + SurveyResponse.getImage(responseValue) + "' width='100%' /></center>";    
+                }else{
+                    summary = responseValue;
+                }
+                
                 break;
-
+                
             case 'single_choice':
             case 'multi_choice':
 

@@ -146,6 +146,26 @@ mwf.decorator.Form = function(title)
 
         return this.addItem(submitButton);
     }
+    
+    /**
+     * Appends an input button to the current form.
+     *
+     * @param text The visible text for the input button.
+     * @param callback The callback function for the input button's onclick
+     *        event listener.
+     *
+     * @return This form.
+     */
+    form.addInputButton = function(text, callback)
+    {
+        var submitButton = document.createElement('input');
+        submitButton.type = 'button';
+        submitButton.value = text;
+        submitButton.onclick = callback || null;
+
+        return this.addItem(submitButton);
+    }
+
 
     form.setTitle(title);
 

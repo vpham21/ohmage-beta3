@@ -217,10 +217,8 @@ function Navigation(survey, container)
      */
     this.abort = function(){
         if(surveyResponse != null && !surveyResponse.isSubmitted()){
-            console.log('aborting current navigation - 2');
             SurveyResponse.deleteSurveyResponse(surveyResponse);
         }
-
     };
 }
 

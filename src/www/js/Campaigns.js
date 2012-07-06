@@ -3,24 +3,30 @@ var Campaigns = new (function() {
     var allCampaigns       = new LocalMap("all-campaigns");
     var installedCampaigns = new LocalMap("installed-campaigns");
 
+    /**
+     * Returns true if the user hasn't installed any campaigns.
+     */
     var isEmpty = function(){
         return allCampaigns.length() == 0;
     };
 
+    /**
+     * Deletes the specified campaign from the local storage.
+     * @param urn Unique campaign identifier.
+     */
     this.uninstallCampaign = function(urn){
         installedCampaigns.release(urn);
     };
 
+    /**
+     * Returns a list of campaign objects that the user has currently installed.
+     */
     this.getInstalledCampaigns = function(){
-
         var campaigns = [];
-
         for(var urn in installedCampaigns.getMap()){
             campaigns.push(new Campaign(urn));
         }
-
         return campaigns;
-
     };
 
     this.render = function(installed){
@@ -38,14 +44,26 @@ var Campaigns = new (function() {
         var availableMenu = mwf.decorator.Menu("Available Campaigns");
         var installedMenu = mwf.decorator.Menu("My Campaigns");
 
+        //Callback for installing a new campaign.
         var install = function(urn){
             return function(){
-                Campaign.install(urn, function(){
+                //On success, update the current view which will show the newly
+                //installed campaign.
+                var onSuccess = function(){
                     PageNavigation.openCampaignsView();
-                });
+                };
+                
+                //On error, just display an alert to the user with the error
+                //message.
+                var onError = function(){
+                    showMessage("Unable to install campaign. Please try again later.");
+                };
+                
+                Campaign.install(urn, onSuccess, onError);
             }
         };
-
+        
+        //Callback for opening an already installed campaign.
         var open = function(urn){
             return function(){
                 PageNavigation.openCampaignView(urn);
@@ -61,7 +79,8 @@ var Campaigns = new (function() {
                 continue;
             }
 
-            //Campaign has been installed.
+            //If the campaign has been installed, place it in the installed 
+            //campaigns menu.
             if(installedCampaigns.isSet(urn)){
                 installedMenu.addMenuLinkItem(allCampaigns.get(urn).name, null).onclick = open(urn);
             }else{
@@ -71,7 +90,6 @@ var Campaigns = new (function() {
         }
 
         var container = document.createElement('div');
-
 
         if(installed){
 
@@ -130,7 +148,6 @@ var Campaigns = new (function() {
         }
 
         var _onError = function(response){
-
             Spinner.hide(function(){
                 if(onError){
                     onError(response);
@@ -139,7 +156,6 @@ var Campaigns = new (function() {
         };
 
         var _onSuccess = function(response) {
-
             Spinner.hide(function(){
 
                 if(response.result === "success"){

@@ -26,31 +26,25 @@ var UploadQueue = function()
             me.renderUploadQueue(container);
         }
 
-        //Button callback that will initial a survey response upload. If the
+        //Button callback that will initialize a survey response upload. If the
         //upload is successful, then a message is displayed to the user and then
         //the entire queue is displayed. If unsuccessful, an error message is
         //displayed and the user has the option to retry.
         var uploadSurveyResponse = function() {
 
-            //The upload assembles the data from the survey and the survey
-            //response and is responsible for making an API call.
-            var uploader = new SurveyResponseUploader(survey, surveyResponse);
-
+            var onSuccess = function(response){
+                showMessage("Successfully uploaded your survey response.", function(){
+                    SurveyResponse.deleteSurveyResponse(surveyResponse);
+                    displayUploadQueue();
+                });
+            };
+            
+            var onError = function(error){
+                showMessage("Unable to upload survey response at this time. Please try again later.");
+            };
+            
             //Start the upload process.
-            uploader.upload(function(response){
-
-                if(response.result === "success"){
-
-                    showMessage("Successfully uploaded your survey response.", function(){
-                        SurveyResponse.deleteSurveyResponse(surveyResponse);
-                        displayUploadQueue();
-                    });
-
-                }else{
-                    showMessage(response.errors[0].text);
-                }
-
-            });
+            (new SurveyResponseUploader(survey, surveyResponse)).upload(onSuccess, onError);
         };
 
         //Button handler for deleting an individual survey response. The user
@@ -112,8 +106,7 @@ var UploadQueue = function()
              PageNavigation.openCampaignsView();
         }, true);
 
-        var title = 'Pending Uploads';
-
+        var title = "Pending Uploads";
         var pendingResponses = SurveyResponse.getPendingResponses();
         var queueMenu = mwfd.Menu(title);
 
@@ -124,16 +117,13 @@ var UploadQueue = function()
         };
 
         for(var uuid in pendingResponses){
-
             var survey   = pendingResponses[uuid].survey;
             var response = pendingResponses[uuid].response;
 
             var details = "Submitted on " + response.getSubmitDate() + ".";
             var menuItem = queueMenu.addMenuLinkItem(survey.getTitle(), null, details);
 
-
             menuItem.onclick = callback(survey, response);
-
         }
 
         //Handle queus that have at least one element.
@@ -144,7 +134,6 @@ var UploadQueue = function()
 
                 var message = "Are you sure you would like to delete all your responses?";
                 var buttonLabels = 'Yes,No';
-
 
                 var callback = function(yes){
                     if(yes){
@@ -162,6 +151,7 @@ var UploadQueue = function()
             //Upload all button click handler.
             var uploadAll = function(){
                 SurveyResponseUploader.uploadAll(pendingResponses, function(count){
+                    
                     var message = (count == 0)? "Unable to upload any surveys at this time." :
                                                 "Successfully uploaded " + count + " survey(s).";
 

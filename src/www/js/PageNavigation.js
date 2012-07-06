@@ -16,7 +16,15 @@ PageNavigation.redirect = function(url){
 };
 
 /**
- * Eedirects the user to the page that displays a list of available or installed
+ * Eedirects the user to the page that displays a list of set reminders and 
+ * allows users 
+ */
+PageNavigation.openReminderesView = function(){
+    PageNavigation.redirect("reminders.html");
+};
+
+/**
+ * Redirects the user to the page that displays a list of available or installed
  * campaigns.
  */
 PageNavigation.openCampaignsView = function(installed){

@@ -9,7 +9,7 @@ var Survey = function(survey, campaign){
      * This variable utilizes JavaScript's closure paradigm to allow private
      * methods to invoke public methods.
      */
-    var me = this;
+    var self = this;
 
     /**
      * Renders the current survey within the provided container. This method can
@@ -38,7 +38,7 @@ var Survey = function(survey, campaign){
         if(startButton){
 
             var startSurvey = mwfd.SingleClickButton('Start Survey', function() {
-                me.start(container);
+                self.start(container);
             });
 
             container.appendChild(startSurvey);
@@ -57,11 +57,8 @@ var Survey = function(survey, campaign){
      * This method should be called before exiting the survey before submitting
      * it.
      */
-    this.abort = function(){
-        console.log('abort was called');
-        console.log(this.currentNavigation);
+    this.abort = function(){        
         if(this.currentNavigation != null){
-            console.log("aborting current navigation.")
             this.currentNavigation.abort();
         }
     };
@@ -75,38 +72,34 @@ var Survey = function(survey, campaign){
 
         //Callback for when the user completes the survey.
         var onSurveyComplete = function(surveyResponse){
-
+            
+            var afterSurveyComplete = function(){
+                PageNavigation.openCampaignView(self.getCampaign().getURN());
+            };
+            
             var title = 'ohmage';
             var buttonLabels = 'Yes,No';
             var message = "Would you like to upload your response?";
             var callback = function(yes){
 
-                //Positive confirmation.
+                //Yes upload my response now. 
                 if(yes){
-                    var uploader = new SurveyResponseUploader(me, surveyResponse);
-
-                    uploader.upload(function(response){
-
-                        //Invoked after displaying a message to the user i.e. alert.
-                        var callback = function(){
-                            PageNavigation.openCampaignView(me.getCampaign().getURN());
-                        };
-
-                        //On successful survey upload, notify the user and delete
-                        //the response.
-                        if(response.result === "success"){
-                            showMessage("Successfully uploaded your survey response.", callback);
-                            SurveyResponse.deleteSurveyResponse(surveyResponse);
-
-                        //On a failed survey response upload, notify the user with
-                        //an error message.
-                        }else{
-                            showMessage(response.errors[0].text, callback);
-                        }
-                    });
+                    
+                    var uploader = new SurveyResponseUploader(self, surveyResponse);
+                    
+                    var onSuccess = function(response){
+                        showMessage("Successfully uploaded your survey response.", afterSurveyComplete);
+                        SurveyResponse.deleteSurveyResponse(surveyResponse);
+                    };
+                    
+                    var onError = function(error){
+                        showMessage("Unable to upload your survey response at this time.", afterSurveyComplete);
+                    };
+                    
+                    uploader.upload(onSuccess, onError);
 
                 }else{
-                    PageNavigation.openCampaignView(me.getCampaign().getURN());
+                    afterSurveyComplete();
                 }
             }
 
