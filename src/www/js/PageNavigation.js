@@ -19,8 +19,12 @@ PageNavigation.redirect = function(url){
  * Eedirects the user to the page that displays a list of set reminders and 
  * allows users 
  */
-PageNavigation.openReminderesView = function(){
+PageNavigation.openRemindersView = function(){
     PageNavigation.redirect("reminders.html");
+};
+
+PageNavigation.openReminderView = function(uuid){
+    PageNavigation.redirect("reminder.html" + ((typeof(uuid) !== "undefined")? "?uuid=" + uuid : ""));
 };
 
 /**

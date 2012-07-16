@@ -3,11 +3,10 @@
 <html>
 <head>
     <script type="text/javascript"> var checkpoint = true; </script>
-
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <meta name="viewport" content="height=device-height,width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;" />
 
-    <title>ohmage |survey</title>
+    <title>ohmage | surveys</title>
 
     <style type="text/css">
         @import url("css/mwf.css");
@@ -18,6 +17,7 @@
 
     <!-- IMPORT PHONEGAP LIBRARY -->
     <script type="text/javascript" src="js/phonegap/cordova-1.7.0.js"> </script>
+    <script type="text/javascript" src="phonegap/js/plugins/android/LocalNotification.js"> </script>
 
     <!-- IMPORT MWF JAVASCRIPT LIBRARY -->
     <script type="text/javascript" src="js/mwf/mwf.js"></script>
@@ -33,13 +33,14 @@
     <script type="text/javascript" src="js/util/jstz.js"></script>
     <script type="text/javascript" src="js/util/Base64.js"></script>
     <script type="text/javascript" src="js/util/UUIDGen.js"></script>
+    <script type="text/javascript" src="js/util/DateTimePicker.js"></script>
     <script type="text/javascript" src="js/util/LocalMap.js"></script>
     <script type="text/javascript" src="js/util/Spinner.js"></script>
-    <script type="text/javascript" src="js/util/DateTimePicker.js"></script>
     <script type="text/javascript" src="mobiscroll/js/mobiscroll-1.5.3.js"></script>
 
     <!-- IMPORT OHMAGE API JS LIB -->
-    <script type="text/javascript" src="js/pegjs/ConditionalParser.js"></script> 
+    
+    <script type="text/javascript" src="js/pegjs/ConditionalParser.js"></script>
     <script type="text/javascript" src="js/api.js"></script>
     <script type="text/javascript" src="js/PageNavigation.js"></script>
     <script type="text/javascript" src="js/UserAuthentication.js"></script>
@@ -48,52 +49,29 @@
     <script type="text/javascript" src="js/Campaign.js"></script>
     <script type="text/javascript" src="js/SurveyResponse.js"></script>
     <script type="text/javascript" src="js/Survey.js"></script>
+    <script type="text/javascript" src="js/Reminders.js"></script>
     <script type="text/javascript" src="js/Prompt.js"></script>
     <script type="text/javascript" src="js/PromptHandler.js"></script>
     <script type="text/javascript" src="js/navigation.js"></script>
     
 
+    <script type="text/javascript" src="js/models/ReminderModel.js"></script>
+    <script type="text/javascript" src="js/controllers/ReminderController.js"></script>
+    <script type="text/javascript" src="js/views/ReminderView.js"></script>
+    
+
     <script type="text/javascript">
 
      invokeOnReady(function(){
-
-         //Required for retreiving specific campaign configuration file.
-         var campaignURN = $.getUrlVar('campaign-urn');
-
-         //Required for getting a specific survey from the campaign.
-         var surveyID    = $.getUrlVar('survey-id');
-
-         //If a specific campaign is not specified, take the user to the
-         //campaigns view where the user may be able to choose an appropriate
-         //campaign.
-         if(!campaignURN){
-            PageNavigation.openCampaignsView();
-         }
-
-         //If a specific survey is not specified, then take the user to the
-         //campaign's survey view where he/she may choose a survey.
-         else if(surveyID == undefined){
-            PageNavigation.openCampaignView(campaignURN);
-         }
-
-         var campaign = new Campaign(campaignURN);
-         var survey = campaign.getSurvey(surveyID);
-
-         survey.start(document.getElementById('survey'));
-
+         var uuid = $.getUrlVar('uuid');
+         var controller = new ReminderController(uuid);
+         $("#view-container").append(controller.render());
+         $("#view-container").append(mwf.decorator.SingleClickButton("Dashboard", function(){
+             PageNavigation.openDashboard();
+         }));
          mwf.decorator.TopButton("All Campaigns", null, function(){
-            var message = "Data from your current survey response will be lost. Are you sure you would like to continue?";
-
-            showConfirm(message, function(yes){
-                if(yes){
-                    survey.abort();
-                    PageNavigation.openCampaignsView(true);
-                }
-            }, "Yes,No");
-
+             PageNavigation.openCampaignsView(true);
          }, true);
-
-
      });
 
 </script>
@@ -101,20 +79,18 @@
 
 </head>
 <body>
-
     <h1 id="header">
         <a href="index.html">
             <img src="img/ohmage-icon-gray-noshadow-30px.png" alt="ohmage" width="30" height="30" style="padding-left:3px; padding-top:3px;"/>
             <span>ohmage</span>
          </a>
-
     </h1>
 
-    <div id="survey"></div>
+    <div id="view-container"></div>
 
     <div id="footer">
         <p>Copyright &copy; 2012 MobilizeLabs<br />
-        
+        <a href="privacy.html">View Our Privacy Policy</a></p>
     </div>
 
 </body>

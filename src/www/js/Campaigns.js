@@ -1,12 +1,13 @@
 var Campaigns = new (function() {
 
+    var self = this;
     var allCampaigns       = new LocalMap("all-campaigns");
     var installedCampaigns = new LocalMap("installed-campaigns");
 
     /**
      * Returns true if the user hasn't installed any campaigns.
      */
-    var isEmpty = function(){
+    this.isEmpty = function(){
         return allCampaigns.length() == 0;
     };
 
@@ -141,7 +142,7 @@ var Campaigns = new (function() {
         if(typeof(force) == undefined)
             force = false;
 
-        if(!force && !isEmpty()){
+        if(!force && !self.isEmpty()){
             if(onSuccess)
                 onSuccess();
             return;

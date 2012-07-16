@@ -61,7 +61,20 @@ var DateTimePicker = function(){
         timePicker.isValid = function(){
             return timePicker.value.match(TIME_REGEX);
         };
-
+        
+        timePicker.getInput = function(){
+            return timePicker.value;
+        };
+        
+        timePicker.getHours = function(){
+            return parseInt(timePicker.getInput().split(":")[0]);
+        };
+        
+        timePicker.getMinutes = function(){
+            return parseInt(timePicker.getInput().split(":")[1]);
+        };
+        
+        
         return timePicker;
     };
 
