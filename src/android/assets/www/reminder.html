@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <script type="text/javascript"> var checkpoint = true; </script>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="viewport" content="height=device-height,width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;" />
+
+    <title>ohmage | surveys</title>
+
+    <style type="text/css">
+        @import url("css/mwf.css");
+        @import url("mobiscroll/css/mobiscroll-1.5.3.css");
+        @import url("css/prompts.css");
+        @import url("css/spinner.css");
+    </style>
+
+    <!-- IMPORT PHONEGAP LIBRARY -->
+    <script type="text/javascript" src="js/phonegap/cordova-1.7.0.js"> </script>
+    <script type="text/javascript" src="phonegap/js/plugins/android/LocalNotification.js"> </script>
+
+    <!-- IMPORT MWF JAVASCRIPT LIBRARY -->
+    <script type="text/javascript" src="js/mwf/mwf.js"></script>
+    <script type="text/javascript" src="js/mwf/decorator.js"> </script>
+    <script type="text/javascript" src="js/mwf/content.js"> </script>
+    <script type="text/javascript" src="js/mwf/button.js"> </script>
+    <script type="text/javascript" src="js/mwf/menu.js"> </script>
+    <script type="text/javascript" src="js/mwf/form.js"> </script>
+
+    <!-- IMPORT JQUERY AND EXTENSIONS -->
+    <script type="text/javascript" src="js/jquery/jquery.js"></script>
+    <script type="text/javascript" src="js/jquery/jquery.extensions.js"></script>
+    <script type="text/javascript" src="js/util/jstz.js"></script>
+    <script type="text/javascript" src="js/util/Base64.js"></script>
+    <script type="text/javascript" src="js/util/UUIDGen.js"></script>
+    <script type="text/javascript" src="js/util/DateTimePicker.js"></script>
+    <script type="text/javascript" src="js/util/LocalMap.js"></script>
+    <script type="text/javascript" src="js/util/Spinner.js"></script>
+    <script type="text/javascript" src="mobiscroll/js/mobiscroll-1.5.3.js"></script>
+
+    <!-- IMPORT OHMAGE API JS LIB -->
+    
+    <script type="text/javascript" src="js/pegjs/ConditionalParser.js"></script>
+    <script type="text/javascript" src="js/api.js"></script>
+    <script type="text/javascript" src="js/PageNavigation.js"></script>
+    <script type="text/javascript" src="js/UserAuthentication.js"></script>
+    <script type="text/javascript" src="js/SurveyResponseUploader.js"></script>
+    <script type="text/javascript" src="js/Campaigns.js"></script>
+    <script type="text/javascript" src="js/Campaign.js"></script>
+    <script type="text/javascript" src="js/SurveyResponse.js"></script>
+    <script type="text/javascript" src="js/Survey.js"></script>
+    <script type="text/javascript" src="js/Reminders.js"></script>
+    <script type="text/javascript" src="js/Prompt.js"></script>
+    <script type="text/javascript" src="js/PromptHandler.js"></script>
+    <script type="text/javascript" src="js/navigation.js"></script>
+    
+
+    <script type="text/javascript" src="js/models/ReminderModel.js"></script>
+    <script type="text/javascript" src="js/controllers/ReminderController.js"></script>
+    <script type="text/javascript" src="js/views/ReminderView.js"></script>
+    
+
+    <script type="text/javascript">
+
+     invokeOnReady(function(){
+         var uuid = $.getUrlVar('uuid');
+         var controller = new ReminderController(uuid);
+         $("#view-container").append(controller.render());
+         $("#view-container").append(mwf.decorator.SingleClickButton("Dashboard", function(){
+             PageNavigation.openDashboard();
+         }));
+         mwf.decorator.TopButton("All Campaigns", null, function(){
+             PageNavigation.openCampaignsView(true);
+         }, true);
+     });
+
+</script>
+
+
+</head>
+<body>
+    <h1 id="header">
+        <a href="index.html">
+            <img src="img/ohmage-icon-gray-noshadow-30px.png" alt="ohmage" width="30" height="30" style="padding-left:3px; padding-top:3px;"/>
+            <span>ohmage</span>
+         </a>
+    </h1>
+
+    <div id="view-container"></div>
+
+    <div id="footer">
+        <p>Copyright &copy; 2012 MobilizeLabs<br />
+        <a href="privacy.html">View Our Privacy Policy</a></p>
+    </div>
+
+</body>
+</html>

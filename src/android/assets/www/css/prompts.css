@@ -1,0 +1,42 @@
+/*
+    Document   : prompts.css
+    Created on : Jan 10, 2012, 10:12:51 AM
+    Author     : Zorayr Khalapyan
+    Description:
+        Encapsulates prompt related stylesheets.
+*/
+
+.number-counter
+{
+    text-align: center;
+    padding: 0px !important;
+    font-size: 35px;
+    text-align: center;
+}
+
+.math-sign
+{
+    padding: 0px !important;
+    font-size: 40px;
+    text-align: center;
+    color: #2685BB !important;
+    cursor: pointer;
+}
+
+.math-sign-disabled
+{
+    padding: 0px !important;
+    font-size: 40px;
+    text-align: center;
+    color: #C0C0C0 !important;
+    cursor: pointer;
+}
+
+img.photo-response
+{
+    width: auto;
+    height: auto;
+}
+
+
+

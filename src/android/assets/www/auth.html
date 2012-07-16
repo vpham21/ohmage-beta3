@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <meta name="viewport" content="height=device-height,width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;" />
+
+    <title>ohmage | login</title>
+
+    <style type="text/css">
+        @import url("css/mwf.css");
+        @import url("css/spinner.css");
+    </style>
+
+    <!-- IMPORT PHONEGAP LIBRARY -->
+    <script type="text/javascript" src="js/phonegap/cordova-1.7.0.js"> </script>
+
+    <!-- IMPORT MWF JAVASCRIPT LIBRARY -->
+    <script type="text/javascript" src="js/mwf/mwf.js"></script>
+    <script type="text/javascript" src="js/mwf/decorator.js"> </script>
+    <script type="text/javascript" src="js/mwf/content.js"> </script>
+    <script type="text/javascript" src="js/mwf/button.js"> </script>
+    <script type="text/javascript" src="js/mwf/menu.js"> </script>
+
+    <!-- IMPORT JQUERY AND EXTENSIONS -->
+    <script type="text/javascript" src="js/jquery/jquery.js"></script>
+    <script type="text/javascript" src="js/jquery/jquery.extensions.js"></script>
+
+    <!-- IMPORT OHMAGE API JS LIB -->
+    <script type="text/javascript" src="js/api.js"></script>
+    <script type="text/javascript" src="js/PageNavigation.js"></script>
+    <script type="text/javascript" src="js/UserAuthentication.js"></script>
+    <script type="text/javascript" src="js/util/Spinner.js"></script>
+
+    <script type="text/javascript">
+
+        invokeOnReady(function(){
+
+            if(auth.isUserLocked()){
+
+                //If the user is in a locked state, force the username field to
+                //be read only.
+                $("#username").val(auth.getUsername())
+                              .attr('readonly', true);
+
+
+                mwf.decorator.TopButton("Switch User", null, function(){
+                    if(auth.logout()){
+
+                        $("#username").val("")
+                                      .attr('readonly', false);
+
+                        mwf.decorator.TopButton.remove();
+                    }
+                }, true);
+            }
+
+            var isInputValid = function(){
+
+                if($('#username').val().length == 0){
+                    showMessage('Please enter your username.', function(){
+                        $('#username').focus();
+                    });
+
+                    return false;
+                }
+
+                if($('#password').val().length == 0){
+                    showMessage('Please enter your password.', function(){
+                        $('#password').focus();
+                    });
+
+                    return false;
+                }
+
+                return true;
+
+            };
+
+            $("#login").click(function(){
+
+                if(!isInputValid()){
+                    return;
+                }
+
+                var username = $("#username").val();
+                var password = $("#password").val();
+
+                Spinner.show();
+
+                //On successful authentication, redirects the user to the dashboard.
+                auth.authenticateByHash(username, password, function(success, response){
+
+                   Spinner.hide(function(){
+                       if(success){
+                           PageNavigation.openDashboard();
+
+                       }else if(response){
+                           showMessage(response);
+                       }else{
+                           showMessage("Unable to login. Please try again.");
+                       }
+                   });
+
+
+                }, false);
+
+
+           });
+
+        });
+
+
+    </script>
+
+
+</head>
+<body>
+
+
+    <h1 id="header">
+        <a href="index.html">
+            <img src="img/ohmage-icon-gray-noshadow-30px.png" alt="ohmage" width="30" height="30" style="padding-left:3px; padding-top:3px;"/>
+            <span>ohmage</span>
+         </a>
+
+    </h1>
+
+    <form class="form-full form-padded">
+
+        <h1 class="light form-first">Please Login to Proceed</h1>
+
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" />
+
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password"/>
+
+        <input type="button" id="login" name="submit" value="Secure Login" class="form-last" />
+
+    </form>
+
+    <div id="footer">
+        <p>Copyright &copy; 2012 MobilizeLabs<br />
+        <a href="privacy.html">View Our Privacy Policy</a></p>
+    </div>
+
+</body>
+</html>

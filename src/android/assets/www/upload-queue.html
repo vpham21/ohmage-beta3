@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <script type="text/javascript"> var checkpoint = true; </script>
+    <meta name="viewport" content="height=device-height,width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;" />
+
+    <title>Survey Response Upload Queue</title>
+
+    <style type="text/css">
+        @import url("css/mwf.css");
+        @import url("css/spinner.css");
+    </style>
+
+    <!-- IMPORT PHONEGAP LIBRARY -->
+    <script type="text/javascript" src="js/phonegap/cordova-1.7.0.js"> </script>
+
+    <!-- IMPORT MWF JAVASCRIPT LIBRARY -->
+    <script type="text/javascript" src="js/mwf/mwf.js"></script>
+    <script type="text/javascript" src="js/mwf/decorator.js"> </script>
+    <script type="text/javascript" src="js/mwf/content.js"> </script>
+    <script type="text/javascript" src="js/mwf/button.js"> </script>
+    <script type="text/javascript" src="js/mwf/menu.js"> </script>
+
+    <!-- IMPORT JQUERY AND EXTENSIONS -->
+    <script type="text/javascript" src="js/jquery/jquery.js"></script>
+    <script type="text/javascript" src="js/jquery/jquery.extensions.js"></script>
+    <script type="text/javascript" src="js/util/detect_timezone.js"></script>
+
+    <!-- IMPORT OHMAGE API JS LIB -->
+    <script type="text/javascript" src="js/LocalMap.js"></script>
+    <script type="text/javascript" src="js/api.js"></script>
+    <script type="text/javascript" src="js/PageNavigation.js"></script>
+    <script type="text/javascript" src="js/UserAuthentication.js"></script>
+    <script type="text/javascript" src="js/Campaigns.js"></script>
+    <script type="text/javascript" src="js/Campaign.js"></script>
+    <script type="text/javascript" src="js/Prompt.js"></script>
+    <script type="text/javascript" src="js/PromptHandler.js"></script>
+    <script type="text/javascript" src="js/SurveyResponse.js"></script>
+    <script type="text/javascript" src="js/Survey.js"></script>
+    <script type="text/javascript" src="js/SurveyResponseUploader.js"></script>
+    <script type="text/javascript" src="js/UploadQueue.js"></script>
+    <script type="text/javascript" src="js/util/Spinner.js"></script>
+
+    <script type="text/javascript">
+
+         invokeOnReady(function(){
+
+             var queue = new UploadQueue();
+
+             queue.renderUploadQueue(document.getElementById('upload-queue-menu'));
+
+         });
+
+    </script>
+
+
+</head>
+
+<body>
+
+    <h1 id="header">
+        <a href="index.html">
+            <img src="img/ohmage-icon-gray-noshadow-30px.png" alt="ohmage" width="30" height="30" style="padding-left:3px; padding-top:3px;"/>
+            <span>ohmage</span>
+        </a>
+
+    </h1>
+
+    <div id="upload-queue-menu"> </div>
+
+    <div id="footer">
+        <p>Copyright &copy; 2012 MobilizeLabs<br />
+        <a href="privacy.html">View Our Privacy Policy</a></p>
+    </div>
+
+</body>
+</html>
