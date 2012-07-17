@@ -5,10 +5,18 @@ var Campaigns = new (function() {
     var installedCampaigns = new LocalMap("installed-campaigns");
 
     /**
-     * Returns true if the user hasn't installed any campaigns.
+     * Returns true campaign metadata has not been downloaded. This doesn't 
+     * have anything to do installed campaigns.
      */
     this.isEmpty = function(){
         return allCampaigns.length() == 0;
+    };
+    
+    /**
+     * Returns the number of currently installed campaigns.
+     */
+    this.getInstalledCampaignsCount = function(){
+        return self.getInstalledCampaigns().length;
     };
 
     /**
