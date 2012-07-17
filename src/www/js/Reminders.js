@@ -18,11 +18,12 @@ var Reminders = function(){
     
     self.render = function(){
         
+        var numInstalledCampaigns = Campaigns.getInstalledCampaignsCount();
         var menu = mwf.decorator.Menu("Available Reminders");
         
-        if(Campaigns.isEmpty()){
+        if(numInstalledCampaigns === 0){
             menu.addMenuLinkItem("No Available Surveys", null, "Please install a campaign, to create custom reminders.").onclick = function(){
-                PageNavigation.openDashboard(false);
+                PageNavigation.openCampaignsView();
             };   
         }else if(reminders.length > 0){
             for(var i = 0; i < reminders.length; i++){   
@@ -37,7 +38,9 @@ var Reminders = function(){
         
         var container = document.createElement('div');
         container.appendChild(menu);
-        container.appendChild(mwf.decorator.SingleClickButton("Add Reminder", newReminderCallback));
+        if(numInstalledCampaigns > 0){
+            container.appendChild(mwf.decorator.SingleClickButton("Add Reminder", newReminderCallback));
+        }
         return container;
         
     };
