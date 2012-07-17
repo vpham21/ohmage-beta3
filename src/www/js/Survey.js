@@ -12,6 +12,13 @@ var Survey = function(survey, campaign){
     var self = this;
 
     /**
+     * If set to true, the user will be asked to either upload after submitting
+     * or wait and upload manually. This functionality is mostly useful for 
+     * debugging upload queue.
+     */
+    var CONFIRM_TO_UPLOAD_ON_SUBMIT = true;
+    
+    /**
      * Renders the current survey within the provided container. This method can
      * be used to both display a summary of the survey, like in the upload queue
      * and display a starting page of the survey. In order to disable the start
@@ -103,7 +110,12 @@ var Survey = function(survey, campaign){
                 }
             }
 
-            showConfirm(message, callback, buttonLabels, title);
+            if(CONFIRM_TO_UPLOAD_ON_SUBMIT){
+                showConfirm(message, callback, buttonLabels, title);
+            }else{
+                callback(true);
+            }
+            
         };
 
         //Start the actual survey.
