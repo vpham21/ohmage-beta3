@@ -13,16 +13,10 @@ var ReminderModel = function(){
     var supressionWindow = 24;
     var reminders = [];
     
-    var isLocalNotificationAvailable = function(){
-        return typeof plugins !== "undefined" && typeof(plugins.localNotification) !== "undefined";
-    };
-    
     //This method does not alter the reminders array. 
     var cancelReminder = function(id){
-       if (isLocalNotificationAvailable()) {
-            plugins.localNotification.cancel(id);
-       }
-    }
+        LocalNotificationAdapter.cancel(id);
+    };
     
     var toJSON = function(){
         return {
@@ -56,15 +50,14 @@ var ReminderModel = function(){
     
     self.addReminder = function(date){
         var id = uuid + "-" + reminders.length;
-        if (isLocalNotificationAvailable()) {
-            plugins.localNotification.add({
-                date        : date,
-                message     : message,
-                ticker      : ticker,
-                repeatDaily : false,
-                id : id
-            });
-        }
+        var options = {
+            date        : date,
+            message     : message,
+            ticker      : ticker,
+            repeatDaily : false,
+            id : id
+        };
+        LocalNotificationAdapter.add(options);
         reminders.push({id : id, date : date});
     };
     
