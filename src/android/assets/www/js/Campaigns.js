@@ -25,6 +25,7 @@ var Campaigns = new (function() {
      */
     this.uninstallCampaign = function(urn){
         installedCampaigns.release(urn);
+        ReminderController.purge();
     };
 
     /**

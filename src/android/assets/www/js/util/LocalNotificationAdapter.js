@@ -10,6 +10,7 @@ var LocalNotificationAdapter = (function(){
     self.add = function(options){
         if (isLocalNotificationAvailable()) {
             if(navigator.userAgent.match(/(Android)/)){
+            	console.log(JSON.stringify(options));
                 plugins.localNotification.add({
                     date        : options.date,
                     message     : options.message,
