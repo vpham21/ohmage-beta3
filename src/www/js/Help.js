@@ -59,7 +59,6 @@ var Help = function(){
 
         var textBlock = document.createElement('p');
         textBlock.innerHTML = section.text || "";
-        textBlock.style.fontWeight ='bold';
         textBlock.style.padding = '7px';
 
         div.appendChild(image);
