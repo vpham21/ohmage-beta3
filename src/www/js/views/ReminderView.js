@@ -75,6 +75,10 @@ var ReminderView = function(reminder, controller){
 
     var createTimePickerInput = function(){
         var date = reminder.getDate();
+        if(date === null){
+            date = new Date();
+            date.setTime(date.getTime() + 10 * 60 * 1000);
+        }
         var dateTimePicker = new DateTimePicker();
         var timePicker = dateTimePicker.createTimePicker(date);
         return timePicker;

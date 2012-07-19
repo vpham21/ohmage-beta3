@@ -14,6 +14,7 @@ var ReminderController = function(uuid){
         model.setSupressionWindow(supressionWindow);
         model.setExcludeWeekends(excludeWeekends);
         model.setTitle(title);
+        model.setMessage("Reminder: " + title);
         model.cancelAllReminders();
         
         var nextDay = function(date){
@@ -42,7 +43,11 @@ var ReminderController = function(uuid){
     return self;
 };
 
-ReminderController.getAllReminders = function(){
+ReminderController.getAllReminders = function(purge){
+    if(purge || typeof(purge) === "undefined"){
+        ReminderController.purge();
+    }
+    
     var remindersMap = new LocalMap("reminders").getMap();    
     var allReminders = [];        
     for(var uuid in remindersMap){
@@ -64,10 +69,10 @@ ReminderController.purge = function(){
             installedCampaignsURNList.push(installedCampaigns[i].getURN());
         }
     }
-    
+        
     //Returns true if the speicified campaign is currently installed.
     var isCampaignInstalled = function(urn){
-        for(var i = 0; i < installedCampaignsURNList; i++){
+        for(var i = 0; i < installedCampaignsURNList.length; i++){
             if(installedCampaignsURNList[i] === urn){
                 return true;
             }
@@ -76,10 +81,11 @@ ReminderController.purge = function(){
     };
     
     //Iterate through the list of current reminders, and delete those that are
-    //associated with campaigns that have been deleted.
-    var reminders = ReminderController.getAllReminders();
+    //associated with campaigns that have been deleted or those reminders that
+    //are expired.
+    var reminders = ReminderController.getAllReminders(false);
     for(i = 0; i < reminders.length; i++){
-        if(!isCampaignInstalled(reminders[i].getCampaignURN())){
+        if(!isCampaignInstalled(reminders[i].getCampaignURN()) || reminders[i].isExpired()){
             reminders[i].deleteReminder();
         }
     }
