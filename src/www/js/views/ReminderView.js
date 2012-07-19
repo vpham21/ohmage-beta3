@@ -80,14 +80,37 @@ var ReminderView = function(reminder, controller){
         return timePicker;
     };
     
+    var createExcludeWeekendsChecbkoxInput = function(){
+        
+        
+        var checkbox = document.createElement('input');
+        var id = UUIDGen.generate();
+        checkbox.setAttribute('type', 'checkbox');
+        checkbox.setAttribute('id', id);
+        if(reminder.excludeWeekends()){
+            checkbox.checked = "checked";
+        }
+        
+        var label = document.createElement('label');
+        label.innerHTML = "Exclude Weekends: ";
+        label.setAttribute("for", id);
+        
+        var container = document.createElement('div');
+        container.style.textAlign = "center";
+        container.appendChild(label);
+        container.appendChild(checkbox);
+        container.excludeWeekends = function(){
+            return checkbox.checked;
+        };
+        return container;
+    };
+    
     var cancel = function(){
         PageNavigation.openRemindersView();
     };
     
-    var save = function(surveySelect, timePicker, suppressionSelect, recurrenceSelect){
-        
+    var save = function(surveySelect, timePicker, suppressionSelect, recurrenceSelect, weekendsCheckbox){
        return function(){
-           
             if(surveySelect.selectedIndex === 0){
                 alert("Please select a survey to add a reminder.");
                 return;
@@ -99,13 +122,15 @@ var ReminderView = function(reminder, controller){
             date.setMinutes(timePicker.getMinutes());
             var supression = suppressionSelect.getInput();
             var recurrences = recurrenceSelect.getInput();
+            var excludeWeekends = weekendsCheckbox.excludeWeekends();
             
             controller.save( survey.campaignURN, 
                              survey.surveyID, 
                              survey.title, 
                              date, 
                              supression, 
-                             recurrences 
+                             recurrences,
+                             excludeWeekends
                            );
             
             PageNavigation.openRemindersView();
@@ -113,7 +138,8 @@ var ReminderView = function(reminder, controller){
        };
 
     };
-
+    
+    
     var deleteReminderCallback = function(){        
         var confirmMessage = "Are you sure you would like to delete the reminder for " + reminder.getTitle() + "?";
         var callback = function(yes){
@@ -123,13 +149,14 @@ var ReminderView = function(reminder, controller){
             }
         };
         showConfirm(confirmMessage, callback, "Yes,No");
-
-    }
+    };
+    
     self.render = function(){
         var timePicker = createTimePickerInput();
         var surveySelect = createSurveySelectInput();    
         var suppressionSelect = createSuppressionWindowSelectInput();
         var recurrenceSelect = createReminderRecurrenceSelectInput();
+        var weekendsCheckbox = createExcludeWeekendsChecbkoxInput();
         
         var inputs = mwf.decorator.Form("Create New Reminder");
         inputs.addLabel("Reminder Survey");
@@ -140,15 +167,16 @@ var ReminderView = function(reminder, controller){
         inputs.addItem(suppressionSelect);
         inputs.addLabel("Recurrence (number of days)");
         inputs.addItem(recurrenceSelect);
+        inputs.addLabel("Preferences");
+        inputs.addItem(weekendsCheckbox);
         
-        var saveCallback = save(surveySelect, timePicker, suppressionSelect, recurrenceSelect);
+        var saveCallback = save(surveySelect, timePicker, suppressionSelect, recurrenceSelect, weekendsCheckbox);
         var actions = document.createElement('div');
         actions.appendChild(mwf.decorator.DoubleClickButton("Cancel", cancel, "Save", saveCallback));
         
         if(reminder.isSaved()){
             actions.appendChild(mwf.decorator.SingleClickButton("Delete Reminder", deleteReminderCallback));    
         }
-        
         
         var container = document.createElement('div');
         container.appendChild(inputs);

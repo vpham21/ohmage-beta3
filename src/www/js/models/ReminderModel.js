@@ -11,6 +11,7 @@ var ReminderModel = function(){
     var message = "";
     var ticker = "";
     var supressionWindow = 24;
+    var excludeWeekends = false;
     var reminders = [];
     
     //This method does not alter the reminders array. 
@@ -26,6 +27,7 @@ var ReminderModel = function(){
             messsage          : message,
             ticker            : ticker,
             supression_window : supressionWindow,
+            exclude_weekends  : excludeWeekends,
             reminders         : reminders
         };
     };
@@ -46,6 +48,10 @@ var ReminderModel = function(){
     
     self.setSupressionWindow = function(newSupressionWindow){
         supressionWindow = newSupressionWindow;
+    };
+    
+    self.setExcludeWeekends = function(newExcludeWeekends){
+        excludeWeekends = newExcludeWeekends;
     };
     
     self.addReminder = function(date){
@@ -95,6 +101,7 @@ var ReminderModel = function(){
         }
         reminders = active;
     };
+    
    
     self.restore = function(storedUUID){
         var object = remindersMap.get(storedUUID);
@@ -107,6 +114,7 @@ var ReminderModel = function(){
         ticker           = object.ticker;
         reminders        = object.reminders;
         supressionWindow = object.supression_window;
+        excludeWeekends  = object.exclude_weekends;
         
         return self;
     };
@@ -133,6 +141,10 @@ var ReminderModel = function(){
     
     self.getSupressionWindow = function(){
         return supressionWindow;
+    };
+    
+    self.excludeWeekends = function(){
+        return excludeWeekends;
     };
     
     self.getRecurrence = function(){
