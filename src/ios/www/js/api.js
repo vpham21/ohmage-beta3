@@ -37,16 +37,16 @@ var PASSWORD_CHANGE_URL = '/app/user/change_password';
  * @param onError   The callback on API call error.
  * @param redirectOnAuthError
  */
-function api(type, url, data, dataType, onSuccess, onError, redirectOnAuthError){
+function api(type, url, data, dataType, onSuccess, onError, redirectOnAuthError) {
 
+    //By default, redirect the user to the login page on authentication error.
     redirectOnAuthError = (typeof(redirectOnAuthError) == 'undefined')? true : redirectOnAuthError;
 
     var _onSuccess = function(response) {
 
         console.log("Received API call response for URL %s ", url, response);
 
-        switch(response.result)
-        {
+        switch(response.result) {
             case 'success':
                 invoke(onSuccess, response);
                 break;
@@ -55,9 +55,9 @@ function api(type, url, data, dataType, onSuccess, onError, redirectOnAuthError)
 
                 invoke(onError, response);
 
+                //If the API request failed because of authentication related
+                //error, then redirect the user to the authentication page.
                 if(redirectOnAuthError){
-                    //If the API request failed because of authentication related
-                    //error, then redirect the user to the authentication page.
                     for(var i = 0; i < response.errors.length; i++){
                         if(response.errors[i].code == '0200'){
                             auth.setAuthErrorState(true);
@@ -68,7 +68,6 @@ function api(type, url, data, dataType, onSuccess, onError, redirectOnAuthError)
                     }
                 }
 
-
                 break;
             }
 
@@ -77,7 +76,7 @@ function api(type, url, data, dataType, onSuccess, onError, redirectOnAuthError)
                 invoke(onSuccess, response);
                 break;
         }
-	};
+    };
 
     var _onError = function(){
         invoke(onError, false);
@@ -167,7 +166,6 @@ function showConfirm(message, callback, buttonLabels, title){
     var buttonList = buttonLabels.split(',');
 
     title = title || "ohmage";
-
 
     //Use Cordova version of the confirm box if possible.
     if(navigator.notification && navigator.notification.confirm){

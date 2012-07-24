@@ -38,7 +38,9 @@
 		844531C4156CF9B600CAF78A /* ohmage-icon-gray-noshadow-57px.png in Resources */ = {isa = PBXBuildFile; fileRef = 844531C3156CF9B600CAF78A /* ohmage-icon-gray-noshadow-57px.png */; };
 		844531EE156DDB1F00CAF78A /* www in Resources */ = {isa = PBXBuildFile; fileRef = 844531ED156DDB1F00CAF78A /* www */; };
 		84AF1DF015A2B285002A4427 /* ohmage-icon-gray-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 84AF1DEF15A2B285002A4427 /* ohmage-icon-gray-72.png */; };
+		84D9DAA415BE6B0E00E7D868 /* horn.caf in Resources */ = {isa = PBXBuildFile; fileRef = 84D9DAA315BE6B0E00E7D868 /* horn.caf */; };
 		84FAA25F159438D60092BD82 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84FAA25D159438D60092BD82 /* Default@2x.png */; };
+		84FDCAE215B697C400B8A2FC /* LocalNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FDCAE115B697C400B8A2FC /* LocalNotification.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,8 +80,11 @@
 		844531C3156CF9B600CAF78A /* ohmage-icon-gray-noshadow-57px.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ohmage-icon-gray-noshadow-57px.png"; sourceTree = "<group>"; };
 		844531ED156DDB1F00CAF78A /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = "<group>"; };
 		84AF1DEF15A2B285002A4427 /* ohmage-icon-gray-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ohmage-icon-gray-72.png"; sourceTree = "<group>"; };
+		84D9DAA315BE6B0E00E7D868 /* horn.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = horn.caf; path = Resources/horn.caf; sourceTree = "<group>"; };
 		84FAA25C159438D60092BD82 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		84FAA25D159438D60092BD82 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		84FDCAE015B697C400B8A2FC /* LocalNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalNotification.h; path = Plugins/LocalNotification.h; sourceTree = "<group>"; };
+		84FDCAE115B697C400B8A2FC /* LocalNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocalNotification.m; path = Plugins/LocalNotification.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,6 +191,7 @@
 		844530B6156CEB4300CAF78A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				84D9DAA315BE6B0E00E7D868 /* horn.caf */,
 				844530D3156CEB4400CAF78A /* Capture.bundle */,
 				844530B7156CEB4300CAF78A /* en.lproj */,
 				844530BB156CEB4300CAF78A /* es.lproj */,
@@ -241,6 +247,8 @@
 		844530E0156CEB4400CAF78A /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
+				84FDCAE015B697C400B8A2FC /* LocalNotification.h */,
+				84FDCAE115B697C400B8A2FC /* LocalNotification.m */,
 				844530E1156CEB4400CAF78A /* README */,
 			);
 			name = Plugins;
@@ -317,6 +325,7 @@
 				84FAA25F159438D60092BD82 /* Default@2x.png in Resources */,
 				8412BC8A15A2A46600779C63 /* Default.png in Resources */,
 				84AF1DF015A2B285002A4427 /* ohmage-icon-gray-72.png in Resources */,
+				84D9DAA415BE6B0E00E7D868 /* horn.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,6 +355,7 @@
 				844530B2156CEB4300CAF78A /* main.m in Sources */,
 				844530DA156CEB4400CAF78A /* AppDelegate.m in Sources */,
 				844530DD156CEB4400CAF78A /* MainViewController.m in Sources */,
+				84FDCAE215B697C400B8A2FC /* LocalNotification.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -454,7 +464,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = /Users/Shared/Cordova/Frameworks;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -487,7 +497,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = /Users/Shared/Cordova/Frameworks;

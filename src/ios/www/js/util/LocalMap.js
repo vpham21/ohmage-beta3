@@ -1,7 +1,9 @@
 var LocalMap = function(name){
-
-    //var buffer = null;
-
+    
+    if(typeof(localStorage) === "undefined"){
+        localStorage = {};
+    }
+    
     var initMap = function(){
         if(!localStorage[name]){
             localStorage[name] = JSON.stringify({});
@@ -26,7 +28,7 @@ var LocalMap = function(name){
         var map = this.getMap();
         return (map[name]) ? map[name] : null;
     };
-
+    
     this.length = function(){
         var map = this.getMap();
         var size = 0, key;

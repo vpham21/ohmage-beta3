@@ -37,6 +37,13 @@ var Campaign = function(urn){
 
         return surveyMenu;
     }
+    
+    /**
+     * Returns the name of the current campaign.
+     */
+    this.getName = function(){
+        return metadata.name;
+    }
 
     /**
      * Returns surveys associated with this campaign.

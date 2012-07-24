@@ -16,7 +16,19 @@ PageNavigation.redirect = function(url){
 };
 
 /**
- * Eedirects the user to the page that displays a list of available or installed
+ * Eedirects the user to the page that displays a list of set reminders and 
+ * allows users 
+ */
+PageNavigation.openRemindersView = function(){
+    PageNavigation.redirect("reminders.html");
+};
+
+PageNavigation.openReminderView = function(uuid){
+    PageNavigation.redirect("reminder.html" + ((typeof(uuid) !== "undefined")? "?uuid=" + uuid : ""));
+};
+
+/**
+ * Redirects the user to the page that displays a list of available or installed
  * campaigns.
  */
 PageNavigation.openCampaignsView = function(installed){

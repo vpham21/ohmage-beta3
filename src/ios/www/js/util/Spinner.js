@@ -174,7 +174,8 @@ var Spinner = new (function(){
     this.hide = function(callback){
 
         if(!isLoading){
-            return;
+            if(callback)
+                callback();
         }else{
             isLoading = false;
         }

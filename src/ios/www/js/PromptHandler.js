@@ -100,9 +100,17 @@ PromptHandler.Handlers = function(){
 
         //Add a new text box input field for specifying the new choice.
         form.addTextBox('new-choice', 'new-choice');
+        
+        var hideCustomChoiceMenu = function(){
+            //Hide the 'add option button'.
+            form.style.display = 'none';
 
-        form.addSubmitButton('Create New Choice', function(e){
+            //Clear the user input textbox.
+            document.getElementById('new-choice').value = "";
 
+        }
+        
+        var cancelPropegation = function(e){
             //e.cancelBubble is supported by IE - this will kill the bubbling process.
             e.cancelBubble = true;
             e.returnValue = false;
@@ -112,7 +120,12 @@ PromptHandler.Handlers = function(){
                 e.stopPropagation();
                 e.preventDefault();
             }
+        }
 
+        form.addSubmitButton('Create New Choice', function(e){
+
+            cancelPropegation(e);
+            
             //Get the value specified by the user.
             var newChoice = document.getElementById('new-choice').value;
 
@@ -137,20 +150,21 @@ PromptHandler.Handlers = function(){
             //Depending on if the choices are single-choice or multiple-choice,
             //add either a radio button menu item or a checkbox menu item.
             if(isSingleChoice){
-                choice_menu.addMenuRadioItem(prompt.getType(), prop.key, prop.label);
+                choice_menu.addMenuRadioItem(prompt.getID(), prop.key, prop.label);
             }else{
-                choice_menu.addMenuCheckboxItem(prompt.getType(), prop.key, prop.label);
+                choice_menu.addMenuCheckboxItem(prompt.getID(), prop.key, prop.label);
             }
 
-            //Hide the 'add option button'.
-            form.style.display = 'none';
-
-            //Clear the user input textbox.
-            document.getElementById('new-choice').value = "";
-
+            hideCustomChoiceMenu();
+            
             choice_menu.addMenuItem(addOptionItem, true);
 
             return false;
+        });
+        
+        form.addSubmitButton('Cancel', function(e){
+            cancelPropegation(e);
+            hideCustomChoiceMenu();
         });
 
         //This continer will hold both prexisting options and the new option
@@ -435,54 +449,18 @@ PromptHandler.Handlers = function(){
 
     this.timestamp = function(prompt){
 
-        //Regular expression for validating the time component of a timestamp prompt.
-        var DATE_REGEX = "[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])";
-
-        //Regular expression for validating the time component of a timestamp prompt.
-        var TIME_REGEX = "^(([0-9])|([0-1][0-9])|([2][0-3])):(([0-9])|([0-5][0-9]))$";
-
-        //Left pads 'd' to '0d', if necessary.
-        var leftPad = function(number){
-            return ((String(number)).length === 1) ? "0" + number : number;
-        };
-
-        //Returns YYYY-MM-DD
-        var getFullDate = function(date){
-            return date.getFullYear() + "-" +
-                   leftPad(date.getMonth() + 1) + "-" +
-                   leftPad(date.getDate());
-        };
-
-
         var date = new Date();
-
-        var datePicker = document.createElement('input');
-        datePicker.type = 'date';
-        datePicker.value = getFullDate(date);
-
-        //Handle browsers that don't support HTML5's input=date.
-        //This is kind of a hack since Android browser engine sets the input
-        //type to 'date' but doesn't really support it.
-        if(datePicker.type === 'text' || navigator.userAgent.match(/(Android)/)){
-            $(datePicker).scroller({dateFormat:'yyyy-mm-dd', dateOrder:'yymmdd'});
-        }
-
-        var timePicker = document.createElement('input');
-        timePicker.type = 'time';
-        timePicker.value = leftPad(date.getHours()) + ":" + leftPad(date.getMinutes());
-
-        //Handle browsers that don't support HTML5's input=time.
-        if(timePicker.type === 'text'){
-            $(timePicker).scroller({preset:'time', ampm: false, timeFormat:'HH:ii'});
-        }
-
-        prompt.isValid = function()
-        {
-            if(!datePicker.value.match(DATE_REGEX)){
+        var dateTimePicker = new DateTimePicker();
+        var datePicker = dateTimePicker.createDatePicker(date);
+        var timePicker = dateTimePicker.createTimePicker(date);
+        
+        prompt.isValid = function(){
+            
+            if(!datePicker.isValid()){
                 prompt.setErrorMessage("Please specify date in the format: YYYY-MM-DD.");
                 return false;
 
-            } else if(!timePicker.value.match(TIME_REGEX)){
+            } else if(!timePicker.isValid()){
                 prompt.setErrorMessage("Please specify time in the format: HH-MM.");
                 return false;
             }
@@ -490,21 +468,11 @@ PromptHandler.Handlers = function(){
             return true;
         };
 
-        prompt.getResponse = function()
-        {
+        prompt.getResponse = function(){
             return datePicker.value + 'T' + timePicker.value + ":00";
         };
 
-
-        var form = mwfd.Form(prompt.getText());
-
-        form.addLabel("Select Date");
-        form.addItem(datePicker);
-
-        form.addLabel("Select Time");
-        form.addItem(timePicker);
-
-        return form;
+        return DateTimePicker.createDateTimeForm(prompt.getText(), datePicker, timePicker);
 
     };
 

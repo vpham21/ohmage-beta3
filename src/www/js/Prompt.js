@@ -31,7 +31,7 @@ function Prompt(prompt){
 
             case 'photo':
                 if(responseValue !== SurveyResponse.SKIPPED_PROMPT_VALUE){
-                    summary = "<center><img src='" + SurveyResponse.getImage(responseValue) + "' width='100%' /></center>";    
+                    summary = "<center><img src='data:image/jpeg;base64," + SurveyResponse.getImage(responseValue) + "' width='100%' /></center>";    
                 }else{
                     summary = responseValue;
                 }

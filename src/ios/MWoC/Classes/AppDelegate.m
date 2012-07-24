@@ -137,4 +137,41 @@
 	[super dealloc];
 }
 
+
+// ADD OUR NOTIFICATION CODE
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification 
+{
+    
+    UIApplicationState state = [application applicationState];
+    if (state == UIApplicationStateActive) {
+        // WAS RUNNING
+        NSLog(@"I was currently active");
+        
+        NSString *notCB = [notification.userInfo objectForKey:@"foreground"];
+        NSString *notID = [notification.userInfo objectForKey:@"notificationId"];
+        
+        NSString * jsCallBack = [NSString 
+                                 stringWithFormat:@"%@(%@)", notCB,notID];  
+        
+        
+        [self.viewController.webView  stringByEvaluatingJavaScriptFromString:jsCallBack];
+        
+        application.applicationIconBadgeNumber = 0;
+    }
+    else {
+        // WAS IN BG
+        NSLog(@"I was in the background");
+        
+        NSString *notCB = [notification.userInfo objectForKey:@"background"];
+        NSString *notID = [notification.userInfo objectForKey:@"notificationId"];
+        
+        NSString * jsCallBack = [NSString 
+                                 stringWithFormat:@"%@(%@)", notCB,notID]; 
+        [self.viewController.webView stringByEvaluatingJavaScriptFromString:jsCallBack];         
+        
+        application.applicationIconBadgeNumber = 0;
+    }                 
+}
+
+
 @end
