@@ -121,6 +121,10 @@ function isDeviceiOS(){
     return navigator.userAgent.match(/(iPhone)/);
 }
 
+function isDeviceAndroid(){
+    return navigator.userAgent.match(/(Android)/);
+}
+
 /**
  * Method for invoking functions once the DOM and the device are ready. This is
  * a replacement function for the JQuery provided method i.e.
@@ -192,3 +196,10 @@ function showConfirm(message, callback, buttonLabels, title){
         invoke(callback, confirm(message));
     }
 }
+
+invokeOnReady(function(){
+   if(isDeviceAndroid()){
+       console.log("Disalbing back button on Android devices.");
+       document.addEventListener("backbutton", function(){}, true);
+   }
+});
