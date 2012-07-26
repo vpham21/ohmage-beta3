@@ -25,17 +25,18 @@
     <!-- IMPORT JQUERY AND EXTENSIONS -->
     <script type="text/javascript" src="js/jquery/jquery.js"></script>
     <script type="text/javascript" src="js/jquery/jquery.extensions.js"></script>
-
+    <script type="text/javascript" src="js/util/LocalMap.js"></script>
+    <script type="text/javascript" src="js/util/Spinner.js"></script>
+    
     <!-- IMPORT OHMAGE API JS LIB -->
     <script type="text/javascript" src="js/api.js"></script>
     <script type="text/javascript" src="js/PageNavigation.js"></script>
     <script type="text/javascript" src="js/UserAuthentication.js"></script>
-    <script type="text/javascript" src="js/util/Spinner.js"></script>
 
     <script type="text/javascript">
 
         invokeOnReady(function(){
-
+            console.log("Device Ready: auth.html");
             if(auth.isUserLocked()){
 
                 //If the user is in a locked state, force the username field to
@@ -54,7 +55,7 @@
                     }
                 }, true);
             }
-
+            
             var isInputValid = function(){
 
                 if($('#username').val().length == 0){
@@ -131,10 +132,10 @@
         <h1 class="light form-first">Please Login to Proceed</h1>
 
         <label for="username">Username</label>
-        <input type="text" name="username" id="username" />
+        <input type="text" name="username" id="username" value="zorayr.mwf" />
 
         <label for="password">Password</label>
-        <input type="password" name="password" id="password"/>
+        <input type="password" name="password" id="password" value="Zorayr1@"/>
 
         <input type="button" id="login" name="submit" value="Secure Login" class="form-last" />
 

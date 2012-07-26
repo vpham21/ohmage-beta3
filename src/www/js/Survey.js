@@ -80,6 +80,8 @@ var Survey = function(survey, campaign){
         //Callback for when the user completes the survey.
         var onSurveyComplete = function(surveyResponse){
             
+            ReminderController.supressSurveyReminders(self.getID());
+            
             var afterSurveyComplete = function(){
                 PageNavigation.openCampaignView(self.getCampaign().getURN());
             };

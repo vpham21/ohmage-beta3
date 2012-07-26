@@ -1,6 +1,5 @@
 var LocalNotificationAdapter = (function(){
   
-    
     var self = this;
     
     var isLocalNotificationAvailable = function(){
@@ -8,9 +7,7 @@ var LocalNotificationAdapter = (function(){
     };
     
     self.add = function(options){
-
         if (isLocalNotificationAvailable()) {
-
             if(navigator.userAgent.match(/(Android)/)){
                 plugins.localNotification.add({
                     date        : options.date,
@@ -19,8 +16,7 @@ var LocalNotificationAdapter = (function(){
                     repeatDaily : options.repeatDaily,
                     id          : options.id
                 });
-            }else if(navigator.userAgent.match(/(iPhone)/)){
-                console.log(JSON.stringify(options));
+            }else if(navigator.userAgent.match(/(iOS)/)){
                 plugins.localNotification.add({
                     date        : options.date,
                     message     : options.message,
@@ -36,6 +32,12 @@ var LocalNotificationAdapter = (function(){
     self.cancel = function(id){
         if (isLocalNotificationAvailable()) {
             plugins.localNotification.cancel(id);
+        }
+    };
+    
+    self.cancelAll = function(){
+        if (isLocalNotificationAvailable()) {
+            plugins.localNotification.cancelAll();
         }
     };
     

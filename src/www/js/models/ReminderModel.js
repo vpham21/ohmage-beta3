@@ -16,6 +16,7 @@ var ReminderModel = function(){
     
     //This method does not alter the reminders array. 
     var cancelReminder = function(id){
+        console.log("Canceling reminder with id [" + id + "] associated with survey [" + surveyID + "]");
         LocalNotificationAdapter.cancel(id);
     };
     
@@ -74,6 +75,7 @@ var ReminderModel = function(){
             repeatDaily : false,
             id : id
         };
+        console.log("Reminder was set with the following options - " + JSON.stringify(options));
         LocalNotificationAdapter.add(options);
         reminders.push({id : id, date : date});
     };
@@ -98,7 +100,7 @@ var ReminderModel = function(){
         reminders = [];
     };
     
-    self.surpress = function(date){
+    self.suppress = function(date){
         date = date || new Date();
         var active = [];
         for(var i = 0; i < reminders.length; i++){
@@ -166,7 +168,7 @@ var ReminderModel = function(){
     };
     
     self.getSupressionWindow = function(){
-        return supressionWindow;
+        return parseInt(supressionWindow);
     };
     
     self.excludeWeekends = function(){

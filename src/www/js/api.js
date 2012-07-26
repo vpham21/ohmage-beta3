@@ -44,7 +44,7 @@ function api(type, url, data, dataType, onSuccess, onError, redirectOnAuthError)
 
     var _onSuccess = function(response) {
 
-        console.log("Received API call response for URL %s ", url, response);
+        console.log("Received response for URL (" + url + ") with the following response data: " + JSON.stringify(response));
 
         switch(response.result) {
             case 'success':
@@ -82,10 +82,9 @@ function api(type, url, data, dataType, onSuccess, onError, redirectOnAuthError)
         invoke(onError, false);
     };
 
-    console.log("Initiating an API call for %s with the following data ", url, data);
+    console.log("Initiating an API call for URL (" + url + ") with the following input data: " + JSON.stringify(data));
 
     $.ajax({
-
         type: type,
         url : OG_SERVER + url,
         data: data,
