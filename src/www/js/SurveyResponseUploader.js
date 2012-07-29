@@ -140,6 +140,7 @@ var SurveyResponseUploader = function(survey, surveyResponse){
             };
             
             var _onSuccess = function(response){
+                console.log("SurveyResponseUploader: Successfully returned from survey upload script.");
                 Spinner.hide(function(){
                     if(onSuccess){
                         onSuccess(response);

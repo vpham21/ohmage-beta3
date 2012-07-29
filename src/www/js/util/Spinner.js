@@ -3,17 +3,14 @@
  *
  *  <div class = "spinner-background" id = "spinner-background"></div>
  *
- *	<div class = "spinner-container">
- *		<div class = "spinner">
- *
- *			<img src = "img/spinner_standard.gif" class = "spinner-img"/>
- *
- *			<a href = "cancel_redirect_url" class = "cancel-link">
- *				Cancel Loading...
- *			</a>
- *
- *		</div>
- *	</div>
+ *  <div class = "spinner-container">
+ *    <div class = "spinner">
+ *          <img src = "img/spinner_standard.gif" class = "spinner-img"/>
+ *          <a href = "cancel_redirect_url" class = "cancel-link">
+ *            Cancel Loading...
+ *          </a>
+ *    </div>
+ *  </div>
  *
  */
 var Spinner = new (function(){
@@ -56,14 +53,17 @@ var Spinner = new (function(){
     this.show = function(cancelCallback){
 
         if(isLoading){
+            console.log("Spinner: show() canceled because spinner is already active.");
             return;
         }else{
             isLoading = true;
         }
+        console.log("Spinner: Showing spinner.");
 
+        //Force to reload the GIF - otherwise, the user will notice glitches. 
         $("#spinner-img").attr('src','')
                          .attr('src', 'img/spinner.gif' + "?" + new Date().getTime());
-
+        $("#spinner-img").show();
         //Display the transparent background.
         showBackground();
 
@@ -92,7 +92,7 @@ var Spinner = new (function(){
         spinner.css("top" , spinnerTop);
         spinner.css("left", spinnerLeft);
 
-    }
+    };
 
     var timer = null;
     var currentOrientation = null;
@@ -134,7 +134,7 @@ var Spinner = new (function(){
             $("#spinner").css("top" , spinnerTop);
             $("#spinner").css("left", spinnerLeft);
         }
-    }
+    };
 
     //Create a div tag to represent the transparent spinner background.
     var background = $(document.createElement("div"));
@@ -164,7 +164,7 @@ var Spinner = new (function(){
             detectOrientation();
         }, 15);
 
-    }
+    };
 
 
     /**
@@ -174,25 +174,42 @@ var Spinner = new (function(){
     this.hide = function(callback){
 
         if(!isLoading){
-            if(callback)
+            console.log("Spinner: hide() canceled because spinner is already inactive.");
+            if(callback){
                 callback();
+            }
         }else{
             isLoading = false;
         }
 
-        cancelLink.hide();
-        $("#spinner-background").fadeOut(25);
-        $("#spinner-container").fadeOut(25, function(){
-            $("#spinner-background,#spinner-container").remove();
-            if(callback)
+        console.log("Spinner: Hiding spinner.");
+        
+        var fadeOutCallback = function(){
+          $("#spinner-background,#spinner-container").remove();
+            if(callback){
                 callback();
-        });
+            }  
+        };
+        
+        cancelLink.hide();
+        
+        if($("#spinner-container").is(":visible") === false){
+            $("#spinner-background").hide();
+            $("#spinner-container").hide();
+            $("#spinner-img").hide();
+            
+            fadeOutCallback();
+        }else{
+            $("#spinner-background").fadeOut(25);
+            $("#spinner-container").fadeOut(25, fadeOutCallback());
+        }
 
+        //Cancel orientation detection timer.
         if(timer){
             clearInterval(timer);
             delete timer;
         }
-    }
+    };
 
     function isLandscape(){
         return ( window.orientation == 90 || window.orientation == -90 );
