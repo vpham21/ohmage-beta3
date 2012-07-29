@@ -14,6 +14,7 @@
 
     <!-- IMPORT PHONEGAP LIBRARY -->
     <script type="text/javascript" src="cordova/js/bin/core/cordova.js"></script>
+    <script type="text/javascript" src="cordova/js/bin/plugins/LocalNotification.js"></script>
 
     <!-- IMPORT MWF JAVASCRIPT LIBRARY -->
     <script type="text/javascript" src="js/mwf/mwf.js"></script>
@@ -32,6 +33,11 @@
     <script type="text/javascript" src="js/api.js"></script>
     <script type="text/javascript" src="js/PageNavigation.js"></script>
     <script type="text/javascript" src="js/UserAuthentication.js"></script>
+    
+    <script type="text/javascript" src="js/util/LocalNotificationAdapter.js"></script>
+    <script type="text/javascript" src="js/models/ReminderModel.js"></script>
+    <script type="text/javascript" src="js/controllers/ReminderController.js"></script>
+    <script type="text/javascript" src="js/views/ReminderView.js"></script>
 
     <script type="text/javascript">
 
@@ -132,10 +138,10 @@
         <h1 class="light form-first">Please Login to Proceed</h1>
 
         <label for="username">Username</label>
-        <input type="text" name="username" id="username"/>
+        <input type="text" name="username" id="username" value="zorayr.mwf"/>
 
         <label for="password">Password</label>
-        <input type="password" name="password" id="password"/>
+        <input type="password" name="password" id="password" value="Zorayr1@"/>
 
         <input type="button" id="login" name="submit" value="Secure Login" class="form-last" />
 

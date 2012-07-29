@@ -108,3 +108,11 @@ ReminderController.supressSurveyReminders = function(surveyID){
         }
     }
 };
+
+ReminderController.cancelAll = function(){
+    var reminders = ReminderController.getAllReminders(false);
+    for(i = 0; i < reminders.length; i++){
+        reminders[i].deleteReminder();
+    }
+}
+

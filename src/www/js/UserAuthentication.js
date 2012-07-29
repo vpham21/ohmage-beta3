@@ -194,13 +194,14 @@ function UserAuthentication() {
         showConfirm(message, function(yes){
             if(yes){
 
+                console.log("UserAuthentication: User confirmed logout.");
                 //Erase any authentication related cookies.
                 session(TOKEN_AUTH_COOKIE_NAME, null);
                 session(HASH_AUTH_COOKIE_NAME, null);
                 session(USERNAME_COOKIE_NAME, null);
                 session(AUTH_ERROR_STATE_COOKIE_NAME, null);
-
-                LocalNotificationAdapter.cancelAll();
+                
+                ReminderController.cancelAll();
                 window.localStorage.clear();
 
                 if(typeof(redirectURL) == "undefined")
