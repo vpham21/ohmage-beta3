@@ -91,4 +91,12 @@ DateTimePicker.createDateTimeForm = function(title, datePicker, timePicker){
     form.addItem(timePicker);
 
     return form;
-}
+};
+
+/**
+ * Returns HH:MM
+ */
+DateTimePicker.getPaddedTime = function(date){
+    return date.getHours() + ":" + (date.getMinutes() < 10 ? "0" : "" ) + date.getMinutes();
+};
+
