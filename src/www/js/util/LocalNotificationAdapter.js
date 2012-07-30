@@ -31,12 +31,14 @@ var LocalNotificationAdapter = (function(){
     
     self.cancel = function(id){
         if (isLocalNotificationAvailable()) {
-            plugins.localNotification.cancel(id);
+            console.log("LocalNotificationAdapter: cancel(" + id + ")");
+            plugins.localNotification.cancel(id);   
         }
     };
     
     self.cancelAll = function(){
         if (isLocalNotificationAvailable()) {
+            console.log("LocalNotificationAdapter: cancelAll()");
             plugins.localNotification.cancelAll();
         }
     };

@@ -97,8 +97,11 @@ var Survey = function(survey, campaign){
                     var uploader = new SurveyResponseUploader(self, surveyResponse);
                     
                     var onSuccess = function(response){
-                        showMessage("Successfully uploaded your survey response.", afterSurveyComplete);
+                        showMessage("Successfully uploaded your survey response.", function(){
                         SurveyResponse.deleteSurveyResponse(surveyResponse);
+                            afterSurveyComplete();
+                        });
+                        
                     };
                     
                     var onError = function(error){
