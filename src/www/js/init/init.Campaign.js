@@ -1,11 +1,10 @@
  invokeOnReady(function(){
-
-     var campaignURN = $.getUrlVar('campaign-urn');
+     var campaignURN = PageNavigation.getPageParameter('campaign-urn');
 
      //If a specific campaign is not specified, take the user to the
      //campaigns view where the user may be able to choose an appropriate
      //campaign.
-     if(!campaignURN){
+     if(campaignURN === null){
          PageNavigation.openCampaignsView();
      }
 

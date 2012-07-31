@@ -1,5 +1,5 @@
 invokeOnReady(function(){
-    var uuid = $.getUrlVar('uuid');
+    var uuid = PageNavigation.getPageParameter('uuid');
     var controller = new ReminderController(uuid);
     $("#view-container").append(controller.render());
     $("#view-container").append(mwf.decorator.SingleClickButton("Dashboard", function(){

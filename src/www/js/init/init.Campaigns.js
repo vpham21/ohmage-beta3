@@ -1,10 +1,10 @@
  invokeOnReady(function(){
 
     //If set, only display installed campaigns.
-    var installed = $.getUrlVar('display-installed-campaigns') == null || $.getUrlVar('display-installed-campaigns') == "true";
-
+    var displayInstalledCampaigns = PageNavigation.getPageParameter('display-installed-campaigns') === true;
+   
     var onSuccess = function(){
-        $('#campaigns').append(Campaigns.render(installed));
+        $('#campaigns').append(Campaigns.render(displayInstalledCampaigns));
     };
 
     var onError = function(){

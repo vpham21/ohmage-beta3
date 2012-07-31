@@ -1,21 +1,21 @@
 invokeOnReady(function(){
 
     //Required for retreiving specific campaign configuration file.
-    var campaignURN = $.getUrlVar('campaign-urn');
-
+    var campaignURN = PageNavigation.getPageParameter('campaign-urn');
+    
     //Required for getting a specific survey from the campaign.
-    var surveyID    = $.getUrlVar('survey-id');
-
+    var surveyID    = PageNavigation.getPageParameter('survey-id');
+    
     //If a specific campaign is not specified, take the user to the
     //campaigns view where the user may be able to choose an appropriate
     //campaign.
-    if(!campaignURN){
+    if(campaignURN === null){
         PageNavigation.openCampaignsView();
     }
 
     //If a specific survey is not specified, then take the user to the
     //campaign's survey view where he/she may choose a survey.
-    else if(surveyID == undefined){
+    else if(surveyID === null){
         PageNavigation.openCampaignView(campaignURN);
     }
 
