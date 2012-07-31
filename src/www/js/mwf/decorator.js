@@ -28,9 +28,7 @@ mwf.decorator = function(){};
  * Returns true if the current device suppor touch events.
  */
 mwf.decorator.touchEnabled = function(){
-
-    //ToDo: use something mroe generic. Maybe MWF T-stack?
-    return navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/);
+    return navigator.userAgent.match(/(iPhone)/);
 };
 
 mwf.decorator.attachTouchHandler = function(obj, callback){
