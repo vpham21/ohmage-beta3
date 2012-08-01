@@ -260,15 +260,6 @@ a.button-full, div.button-full a{
     padding: .4em;
 }
 
-a.button-full:hover,
-a.button-full:focus,
-a.button-full:active,
-div.button-full a:hover,
-div.button-full a:focus,
-div.button-full a:active{
-	color: #494D69;
-}
-
 /********************************************************
  * FORMS
  *******************************************************/
@@ -739,21 +730,7 @@ div.button-full a {
 	border: none;
 }
 
-a.button-full:hover,
-a.button-full:focus,
-a.button-full:active,
-div.button-full a:hover,
-div.button-full a:focus,
-div.button-full a:active,
-a.button-full.button-light:hover,
-a.button-full.button-light:focus,
-a.button-full.button-light:active,
-div.button-full a.button-light:hover,
-div.button-full a.button-light:focus,
-div.button-full a.button-light:active {
-	background-color: #ffb300 !important;
-	color: #494D69;
-}
+
 
 a.button-full.button-light,
 div.button-full a.button-light,
@@ -1161,22 +1138,6 @@ div.button-full.button-light a {
     color: #555 !important;
 }
 
-a.button-full:hover,
-a.button-full:focus,
-a.button-full:active,
-div.button-full a:hover,
-div.button-full a:focus,
-div.button-full a:active,
-a.button-full.button-light:hover,
-a.button-full.button-light:focus,
-a.button-full.button-light:active,
-div.button-full a.button-light:hover,
-div.button-full a.button-light:focus,
-div.button-full a.button-light:active{
-    background: -webkit-gradient(linear, left top, left bottom, from(#ffc847), to(#ffb300), color-stop(1, #fff));
-    -webkit-background-origin: padding-box;
-    -webkit-background-clip: padding-box;
-}
 
 /********************************************************
  * CONTENT
@@ -1445,4 +1406,18 @@ form.form-full > input[type=reset]:hover {
     clear: both;
     width: 100%;
     height: 1px;
+}
+
+body{
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);     
+}
+
+
+
+.button-highlight {
+     background-color: #ffb300 !important;
+     color: #494D69 !important;
+     background: -webkit-gradient(linear, left top, left bottom, from(#ffc847), to(#ffb300), color-stop(1, #fff)) !important;
+    -webkit-background-origin: padding-box !important;
+    -webkit-background-clip: padding-box !important;
 }

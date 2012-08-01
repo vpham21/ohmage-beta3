@@ -124,6 +124,8 @@ var ReminderView = function(reminder, controller){
             var date = new Date();
             date.setHours(timePicker.getHours());
             date.setMinutes(timePicker.getMinutes());
+            console.log("time picker getMinutes() -- " + timePicker.getMinutes());
+            console.log("date getMinutes() -- " + date.getMinutes());
             var supression = suppressionSelect.getInput();
             var recurrences = recurrenceSelect.getInput();
             var excludeWeekends = weekendsCheckbox.excludeWeekends();

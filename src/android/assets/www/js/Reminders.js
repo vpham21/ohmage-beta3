@@ -29,7 +29,7 @@ var Reminders = function(){
             for(var i = 0; i < reminders.length; i++){   
                 var title = reminders[i].getTitle();
                 var date  = reminders[i].getDate();
-                var time   = "Reminder set for " + date.getHours() + ":" + date.getMinutes() + ".";
+                var time   = "Reminder set for " + DateTimePicker.getPaddedTime(date) + ".";
                 menu.addMenuLinkItem(title, null, time).onclick = editReminderCallback(reminders[i]);
             }
         }else{

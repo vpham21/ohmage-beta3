@@ -114,6 +114,7 @@ public class LocalNotification extends Plugin {
 	}
     }
 
+    
     /**
      * Cancel all notifications that were created by this plugin.
      */

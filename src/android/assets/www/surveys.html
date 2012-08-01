@@ -9,6 +9,7 @@
     <title>ohmage | surveys</title>
 
     <style type="text/css">
+        @import url("css/mwoc.css");
         @import url("css/mwf.css");
         @import url("mobiscroll/css/mobiscroll-1.5.3.css");
         @import url("css/prompts.css");
@@ -17,7 +18,8 @@
 
     <!-- IMPORT PHONEGAP LIBRARY -->
     <script type="text/javascript" src="cordova/js/bin/core/cordova.js"></script>
-
+    <script type="text/javascript" src="cordova/js/bin/plugins/LocalNotification.js"></script>
+    
     <!-- IMPORT MWF JAVASCRIPT LIBRARY -->
     <script type="text/javascript" src="js/mwf/mwf.js"></script>
     <script type="text/javascript" src="js/mwf/decorator.js"> </script>
@@ -34,6 +36,7 @@
     <script type="text/javascript" src="js/util/UUIDGen.js"></script>
     <script type="text/javascript" src="js/util/LocalMap.js"></script>
     <script type="text/javascript" src="js/util/Spinner.js"></script>
+    <script type="text/javascript" src="js/util/LocalNotificationAdapter.js"></script>
     <script type="text/javascript" src="mobiscroll/js/mobiscroll-1.5.3.js"></script>
 
     <!-- IMPORT OHMAGE API JS LIB -->
@@ -50,41 +53,8 @@
     <script type="text/javascript" src="js/PromptHandler.js"></script>
     <script type="text/javascript" src="js/navigation.js"></script>
     
-
-    <script type="text/javascript">
-
-     invokeOnReady(function(){
-
-         var surveyMenu = mwf.decorator.Menu("Available Surveys");
-
-         var campaigns = Campaigns.getInstalledCampaigns();
-
-         for(var i = 0; i < campaigns.length; i++){
-             if(campaigns[i].isRunning())
-                campaigns[i].renderSurveyList(surveyMenu);
-         }
-
-         if(surveyMenu.size() == 0){
-            surveyMenu.addMenuLinkItem("No Available Surveys", null, "Please install a campaign, to view available surveys.").onclick = function(){
-                PageNavigation.openCampaignsView(false);
-            };
-         };
-
-         $("#surveys").append(surveyMenu);
-         $("#surveys").append(mwf.decorator.SingleClickButton("Upload Queue", function(){
-                PageNavigation.openUploadQueueView();
-         }));
-
-         mwf.decorator.TopButton("All Campaigns", null, function(){
-            PageNavigation.openCampaignsView(true);
-         }, true);
-
-
-     });
-
-</script>
-
-
+    <script type="text/javascript" src="js/init/init.Surveys.js"></script>
+    
 </head>
 <body>
 

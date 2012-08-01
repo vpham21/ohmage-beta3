@@ -17,9 +17,17 @@ var ReminderController = function(uuid){
         model.setMessage("Reminder: " + title);
         model.cancelAllReminders();
         
+        //Returns a new date that is 24 hours ahead of the specified day.
         var nextDay = function(date){
             return new Date(date.getTime() + (24 * 60 * 60 * 1000));
         };
+        
+        //If the user has set an alarm with an initial date in the past, then
+        //skip the current day. Otherwise, a notification will be triggered 
+        //as soon as the reminder is set.
+        if(date.getTime() < new Date().getTime()){
+            date = nextDay(date);
+        }
         
         for(var i = 0; i < recurrences; i++){
             if(model.excludeWeekends()){
@@ -90,3 +98,21 @@ ReminderController.purge = function(){
         }
     }
 };
+
+ReminderController.supressSurveyReminders = function(surveyID){
+    console.log("Supressing all reminders for survey [" + surveyID + "].");
+    var reminders = ReminderController.getAllReminders(false);
+    for(i = 0; i < reminders.length; i++){
+        if(reminders[i].getSurveyID() === surveyID){
+            reminders[i].suppress();
+        }
+    }
+};
+
+ReminderController.cancelAll = function(){
+    var reminders = ReminderController.getAllReminders(false);
+    for(i = 0; i < reminders.length; i++){
+        reminders[i].deleteReminder();
+    }
+}
+

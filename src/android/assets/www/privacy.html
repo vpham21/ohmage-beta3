@@ -7,13 +7,15 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
         <style type="text/css">
+            @import url("css/mwoc.css");
             @import url("css/mwf.css");
             @import url("css/spinner.css");
         </style>
 
         <!-- IMPORT PHONEGAP LIBRARY -->
         <script type="text/javascript" src="cordova/js/bin/core/cordova.js"></script>
-
+        <script type="text/javascript" src="cordova/js/bin/plugins/LocalNotification.js"></script>  
+        
         <!-- IMPORT MWF JAVASCRIPT LIBRARY -->
         <script type="text/javascript" src="js/mwf/mwf.js"></script>
         <script type="text/javascript" src="js/mwf/decorator.js"> </script>
@@ -34,32 +36,7 @@
         <script type="text/javascript" src="js/SurveyResponse.js"></script>
         <script type="text/javascript" src="js/util/Spinner.js"></script>
 
-        <script type="text/javascript">
-
-            invokeOnReady(function(){
-
-                (function(){
-
-                    var label = (auth.isUserAuthenticated()) ? "Dashboard" : "Login";
-                    var goBack = function(){
-
-                        if(auth.isUserAuthenticated()){
-                            PageNavigation.openDashboard();
-                        }else{
-                            PageNavigation.openAuthenticationPage();
-                        }
-
-                    };
-
-                    mwf.decorator.TopButton(label, null, goBack, true);
-
-                    $("#go-back-button").append(mwf.decorator.SingleClickButton(label, goBack));
-
-                })();
-
-            });
-
-        </script>
+        <script type="text/javascript" src="js/init/init.Privacy.js"></script>
 
     </head>
     <body>

@@ -1,71 +1,88 @@
+/**
+ * The class is designed to facilitate flexible permanent storage of key value 
+ * pairs utilzing HTML5 localStorage.
+ *  
+ * @class LocalMap
+ * @author Zorayr Khalapyan
+ * @version 7/30/2012
+ */
 var LocalMap = function(name){
     
-    if(typeof(localStorage) === "undefined"){
+    var self = {};
+    
+    //Prevent compatability issues in different execution environments.
+    if( typeof(localStorage) === "undefined" ){
         localStorage = {};
     }
     
-    var initMap = function(){
-        if(!localStorage[name]){
-            localStorage[name] = JSON.stringify({});
-        }
+    if( typeof(localStorage[name]) === "undefined"){
+        localStorage[name] = JSON.stringify({});
     }
 
     var setMap = function(map){
         localStorage[name] = JSON.stringify(map);
     };
 
-    this.getMap = function(){
-        return (localStorage[name])? JSON.parse(localStorage[name]) : {};
-    }
+    self.getMap = function(){
+        return JSON.parse(localStorage[name]);
+    };
 
-    this.set = function(name, object){
-        var map = this.getMap();
+    self.set = function(name, object){
+        var map = self.getMap();
         map[name] = object;
         setMap(map);
     };
+    
+    self.importMap = function(object){
+        var map = self.getMap();
+        for( var key in object ){
+            if( object.hasOwnProperty(key) ){
+                map[key]= object[key];
+            }
+        }
+        setMap(map);
+    };
 
-    this.get = function(name){
-        var map = this.getMap();
+    self.get = function(name){
+        var map = self.getMap();
         return (map[name]) ? map[name] : null;
     };
     
-    this.length = function(){
-        var map = this.getMap();
+    self.length = function(){
+        var map = self.getMap();
         var size = 0, key;
-
         for (key in map) {
             if (map.hasOwnProperty(key)) size++;
         }
-
         return size;
-
     };
 
-    this.erase = function(){
+    self.erase = function(){
         localStorage[name] = JSON.stringify({});
     };
 
-    this.isSet = function(name){
-        return this.get(name) != null;
-    }
+    self.isSet = function(name){
+        return self.get(name) != null;
+    };
 
-    this.release = function(name){
-        var map = this.getMap();
+    self.release = function(name){
+        var map = self.getMap();
         if(map[name])
             delete map[name];
         setMap(map);
     };
+    
+    return self;
 
-
-    initMap();
-
-}
+};
 
 LocalMap.destroy = function(){
-    for(item in localStorage)
+    for(var item in localStorage)
         delete localStorage[item];
 };
 
 LocalMap.exists = function(name){
     return (localStorage[name]) ? true : false;
-}
+};
+
+console.log("LocalMap loaded");

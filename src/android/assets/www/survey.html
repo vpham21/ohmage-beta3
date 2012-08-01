@@ -10,6 +10,7 @@
     <title>ohmage |survey</title>
 
     <style type="text/css">
+        @import url("css/mwoc.css");
         @import url("css/mwf.css");
         @import url("mobiscroll/css/mobiscroll-1.5.3.css");
         @import url("css/prompts.css");
@@ -18,6 +19,7 @@
 
     <!-- IMPORT PHONEGAP LIBRARY -->
     <script type="text/javascript" src="cordova/js/bin/core/cordova.js"></script>
+    <script type="text/javascript" src="cordova/js/bin/plugins/LocalNotification.js"></script>
 
     <!-- IMPORT MWF JAVASCRIPT LIBRARY -->
     <script type="text/javascript" src="js/mwf/mwf.js"></script>
@@ -36,6 +38,7 @@
     <script type="text/javascript" src="js/util/LocalMap.js"></script>
     <script type="text/javascript" src="js/util/Spinner.js"></script>
     <script type="text/javascript" src="js/util/DateTimePicker.js"></script>
+    <script type="text/javascript" src="js/util/LocalNotificationAdapter.js"></script>
     <script type="text/javascript" src="mobiscroll/js/mobiscroll-1.5.3.js"></script>
 
     <!-- IMPORT OHMAGE API JS LIB -->
@@ -52,58 +55,17 @@
     <script type="text/javascript" src="js/PromptHandler.js"></script>
     <script type="text/javascript" src="js/navigation.js"></script>
     
+    <script type="text/javascript" src="js/models/ReminderModel.js"></script>
+    <script type="text/javascript" src="js/controllers/ReminderController.js"></script>
+    <script type="text/javascript" src="js/views/ReminderView.js"></script>
 
-    <script type="text/javascript">
-
-     invokeOnReady(function(){
-
-         //Required for retreiving specific campaign configuration file.
-         var campaignURN = $.getUrlVar('campaign-urn');
-
-         //Required for getting a specific survey from the campaign.
-         var surveyID    = $.getUrlVar('survey-id');
-
-         //If a specific campaign is not specified, take the user to the
-         //campaigns view where the user may be able to choose an appropriate
-         //campaign.
-         if(!campaignURN){
-            PageNavigation.openCampaignsView();
-         }
-
-         //If a specific survey is not specified, then take the user to the
-         //campaign's survey view where he/she may choose a survey.
-         else if(surveyID == undefined){
-            PageNavigation.openCampaignView(campaignURN);
-         }
-
-         var campaign = new Campaign(campaignURN);
-         var survey = campaign.getSurvey(surveyID);
-
-         survey.start(document.getElementById('survey'));
-
-         mwf.decorator.TopButton("All Campaigns", null, function(){
-            var message = "Data from your current survey response will be lost. Are you sure you would like to continue?";
-
-            showConfirm(message, function(yes){
-                if(yes){
-                    survey.abort();
-                    PageNavigation.openCampaignsView(true);
-                }
-            }, "Yes,No");
-
-         }, true);
-
-
-     });
-
-</script>
-
+    <script type="text/javascript" src="js/init/init.Survey.js"></script>
 
 </head>
 <body>
 
     <h1 id="header">
-        <a href="index.html">
+        <a href="index.html" id="header-link">
             <img src="img/ohmage-icon-gray-noshadow-30px.png" alt="ohmage" width="30" height="30" style="padding-left:3px; padding-top:3px;"/>
             <span>ohmage</span>
          </a>
@@ -114,7 +76,7 @@
 
     <div id="footer">
         <p>Copyright &copy; 2012 MobilizeLabs<br />
-        
+        <a href="privacy.html" id="footer-link">View Our Privacy Policy</a></p>
     </div>
 
 </body>

@@ -8,13 +8,15 @@
     <title>Survey Response Upload Queue</title>
 
     <style type="text/css">
+        @import url("css/mwoc.css");
         @import url("css/mwf.css");
         @import url("css/spinner.css");
     </style>
 
     <!-- IMPORT PHONEGAP LIBRARY -->
     <script type="text/javascript" src="cordova/js/bin/core/cordova.js"></script>
-
+    <script type="text/javascript" src="cordova/js/bin/plugins/LocalNotification.js"></script>
+    
     <!-- IMPORT MWF JAVASCRIPT LIBRARY -->
     <script type="text/javascript" src="js/mwf/mwf.js"></script>
     <script type="text/javascript" src="js/mwf/decorator.js"> </script>
@@ -28,6 +30,7 @@
     <script type="text/javascript" src="js/util/jstz.js"></script>
     <script type="text/javascript" src="js/util/LocalMap.js"></script>
     <script type="text/javascript" src="js/util/Spinner.js"></script>
+    <script type="text/javascript" src="js/util/Base64.js"></script>    
     
     <!-- IMPORT OHMAGE API JS LIB -->
     <script type="text/javascript" src="js/api.js"></script>
@@ -42,19 +45,7 @@
     <script type="text/javascript" src="js/SurveyResponseUploader.js"></script>
     <script type="text/javascript" src="js/UploadQueue.js"></script>
     
-
-    <script type="text/javascript">
-
-         invokeOnReady(function(){
-
-             var queue = new UploadQueue();
-
-             queue.renderUploadQueue(document.getElementById('upload-queue-menu'));
-
-         });
-
-    </script>
-
+    <script type="text/javascript" src="js/init/init.UploadQueue.js"></script>    
 
 </head>
 
