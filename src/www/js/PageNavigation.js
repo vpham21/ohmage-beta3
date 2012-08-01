@@ -148,5 +148,9 @@ var PageNavigation = (function(){
         self.redirect("index.html");
     };
     
+    self.openPrivacyPage = function(){
+        self.redirect("privacy.html");
+    }
+    
     return self;
 }());

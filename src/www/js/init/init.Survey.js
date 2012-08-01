@@ -38,9 +38,15 @@ invokeOnReady(function(){
         }); 
     }, true);
     
-    $("#header-link,#footer-link").click(function(e){
+    $("#header-link").click(function(e){
        confirmLeave(function(isResponseYes){
-          if( !isResponseYes ){ e.preventDefault(); }
+            if( isResponseYes ){ PageNavigation.openDashboard(); }
+       });
+    });
+    
+    $("#footer-link").click(function(e){
+       confirmLeave(function(isResponseYes){
+            if( isResponseYes ){ PageNavigation.openPrivacyPage(); }
        });
     });
 
