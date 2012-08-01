@@ -23,18 +23,26 @@ invokeOnReady(function(){
     var survey = campaign.getSurvey(surveyID);
 
     survey.start(document.getElementById('survey'));
+    
+    var confirmToLeaveMessage = "Data from your current survey response will be lost. Are you sure you would like to continue?";
+    var confirmLeave = function(resultCallback){
+        showConfirm(confirmToLeaveMessage, function(isResponseYes){
+            if( isResponseYes ){ survey.abort(); }
+            if( typeof(resultCallback) === "function" ){ resultCallback(isResponseYes); }
+        }, "Yes,No");
+    };
 
     mwf.decorator.TopButton("All Campaigns", null, function(){
-    var message = "Data from your current survey response will be lost. Are you sure you would like to continue?";
-
-    showConfirm(message, function(yes){
-        if(yes){
-            survey.abort();
-            PageNavigation.openCampaignsView(true);
-        }
-    }, "Yes,No");
-
+        confirmLeave(function(isResponseYes){
+            if( isResponseYes ){ PageNavigation.openCampaignsView(true); }
+        }); 
     }, true);
+    
+    $("#header-link,#footer-link").click(function(e){
+       confirmLeave(function(isResponseYes){
+          if( !isResponseYes ){ e.preventDefault(); }
+       });
+    });
 
 
 });
