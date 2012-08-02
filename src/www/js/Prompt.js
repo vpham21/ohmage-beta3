@@ -82,7 +82,7 @@ function Prompt(prompt){
      */
     this.getErrorMessage = function(){
         if(errorMsg === null){
-            isValid();
+            me.isValid();
         }
 
         return (errorMsg)? errorMsg : false;
