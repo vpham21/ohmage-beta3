@@ -177,6 +177,7 @@ var Spinner = new (function(){
             console.log("Spinner: hide() canceled because spinner is already inactive.");
             if(callback){
                 callback();
+                return; 
             }
         }else{
             isLoading = false;
@@ -196,7 +197,6 @@ var Spinner = new (function(){
         if($("#spinner-container").is(":visible") === false){
             $("#spinner-background").hide();
             $("#spinner-container").hide();
-            $("#spinner-img").hide();
             
             fadeOutCallback();
         }else{

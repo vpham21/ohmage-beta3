@@ -140,7 +140,7 @@ var SurveyResponseUploader = function(survey, surveyResponse){
             };
             
             var _onSuccess = function(response){
-                console.log("SurveyResponseUploader: Successfully returned from survey upload script.");
+                console.log("SurveyResponseUploader: Successfully returned from single survey response upload script.");
                 Spinner.hide(function(){
                     if(onSuccess){
                         onSuccess(response);
@@ -170,7 +170,7 @@ var SurveyResponseUploader = function(survey, surveyResponse){
  * recursively tries to upload the surveys and invokes the callback with the 
  * final number of successfully uploaded surveys.
  */
-SurveyResponseUploader.uploadAll = function(pendingResponses, callback, requireLocation){
+SurveyResponseUploader.uploadAll = function(pendingResponses, uploadCompletedCallback, requireLocation){
 
     //Counts the number of successful uploads.
     var count = 0;
@@ -186,8 +186,8 @@ SurveyResponseUploader.uploadAll = function(pendingResponses, callback, requireL
 
         if(i >= uuidList.length){
             Spinner.hide(function(){
-                if(callback){
-                    callback(count);
+                if(typeof(uploadCompletedCallback) === "function"){
+                    uploadCompletedCallback(count);
                 }
             });
 
@@ -197,18 +197,18 @@ SurveyResponseUploader.uploadAll = function(pendingResponses, callback, requireL
             var survey = pendingResponses[uuidList[i]].survey;
             var surveyResponse = pendingResponses[uuidList[i]].response;
             
-            var next = function(){
+            var uploadNextSurveyResponse = function(){
                 upload(++i);
             };
             
             var onSuccess = function(response){    
                 count++;
                 SurveyResponse.deleteSurveyResponse(surveyResponse);
-                next();
+                uploadNextSurveyResponse();
             };
             
             var onError = function(error){
-                next();
+                uploadNextSurveyResponse();
             };
             
             new SurveyResponseUploader(survey, surveyResponse).upload(onSuccess, onError, requireLocation);
