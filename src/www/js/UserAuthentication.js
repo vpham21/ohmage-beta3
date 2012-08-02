@@ -161,7 +161,7 @@ function UserAuthentication() {
     };
 
     this.isInAuthErrorState = function(){
-        return (session(AUTH_ERROR_STATE_COOKIE_NAME) == 'true')? true : false;
+        return session(AUTH_ERROR_STATE_COOKIE_NAME);
     }
 
     /**
@@ -215,7 +215,7 @@ function UserAuthentication() {
     
     
     this.checkpoint = function(){
-        if(!this.isUserAuthenticated()){
+        if(!this.isUserAuthenticated() || this.isInAuthErrorState() ){
             console.log("User failed checkpoint - redirecting to the authentication page.");
             PageNavigation.redirect('auth.html');
         }
@@ -378,6 +378,7 @@ function UserAuthentication() {
     };
 }
 
+console.log("UserAuthentication loaded.");
 
 var auth = new UserAuthentication ();
 
