@@ -177,7 +177,7 @@ var Spinner = new (function(){
             console.log("Spinner: hide() canceled because spinner is already inactive.");
             if(callback){
                 callback();
-                return; 
+                return;
             }
         }else{
             isLoading = false;

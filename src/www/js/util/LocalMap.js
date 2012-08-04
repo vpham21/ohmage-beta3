@@ -15,7 +15,7 @@ var LocalMap = function(name){
         localStorage = {};
     }
     
-    if( typeof(localStorage[name]) === "undefined"){
+    if( typeof(localStorage[name]) === "undefined" ){
         localStorage[name] = JSON.stringify({});
     }
 

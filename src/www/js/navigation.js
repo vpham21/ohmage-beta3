@@ -153,8 +153,8 @@ function Navigation(survey, container)
                 nextPrompt(false);
             }));
         }
-
-       return panel;
+        
+        return panel;
     }
 
     /**
@@ -167,6 +167,8 @@ function Navigation(survey, container)
         //Clear the current contents of the main container.
         container.innerHTML = "";
 
+        var controlButtons;
+        
         //Render prompt if not at the last prompt.
         if(currentPromptIndex < prompts.length) {
 
@@ -178,18 +180,22 @@ function Navigation(survey, container)
                 container.appendChild(promptBuffer[getCurrentPrompt().getID()]);
             }
 
-            container.appendChild(getControlButtons(false));
+            controlButtons = getControlButtons(false);
+            
 
         //Render submit page if at the last prompt.
         } else {
 
-              var menu = mwfd.Menu('Survey Completed');
-              menu.addMenuTextItem('Done with ' + survey.getTitle());
-              container.appendChild(menu);
-              container.appendChild(getControlButtons(true));
-        }
+            var menu = mwfd.Menu('Survey Completed');
+            menu.addMenuTextItem('Done with ' + survey.getTitle());
+            container.appendChild(menu);
 
-    }
+            controlButtons = getControlButtons(true);
+        }
+        
+        container.appendChild(controlButtons);
+        
+    };
 
     /**
      * Fetches the current location and renders the first prompt.

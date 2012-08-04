@@ -1,4 +1,4 @@
-var Survey = function(survey, campaign){
+var Survey = function(surveyData, campaign){
 
     /**
      * Namespace abbreviation for Mobile Web Framework JS Decorators library.
@@ -65,7 +65,7 @@ var Survey = function(survey, campaign){
      * it.
      */
     this.abort = function(){        
-        if(this.currentNavigation != null){
+        if(this.currentNavigation !== null){
             this.currentNavigation.abort();
         }
     };
@@ -86,6 +86,7 @@ var Survey = function(survey, campaign){
                 PageNavigation.openCampaignView(self.getCampaign().getURN());
             };
             
+            //Confirmation box related properties.
             var title = 'ohmage';
             var buttonLabels = 'Yes,No';
             var message = "Would you like to upload your response?";
@@ -133,7 +134,7 @@ var Survey = function(survey, campaign){
      * @return Current survey's title, or empty string if undefined.
      */
     this.getTitle = function(){
-        return survey.title || "";
+        return surveyData.title || "";
     }
 
     /**
@@ -141,7 +142,7 @@ var Survey = function(survey, campaign){
      * @return Current survey's description, or emptry string if undefined.
      */
     this.getDescription = function(){
-        return survey.description || "";
+        return surveyData.description || "";
     }
 
     /**
@@ -149,7 +150,7 @@ var Survey = function(survey, campaign){
      * @return Current survey's ID.
      */
     this.getID = function(){
-        return survey.id;
+        return surveyData.id;
     }
 
     /**
@@ -164,22 +165,16 @@ var Survey = function(survey, campaign){
      * Returns an array of prompt objects associated with this survey.
      */
     this.getPrompts = function(){
-
-        var promptList = survey.contentlist.prompt;
-
-        if(promptList.length){
-
-            var prompts = new Array();
-
+        var promptList = surveyData.contentlist.prompt;
+        var prompts = new Array();
+        if(promptList.length){    
             for(var i = 0; i < promptList.length; i++){
-                prompts[i] = new Prompt(promptList[i]);
+                prompts[i] = new Prompt(promptList[i], self, campaign);
             }
-
-            return prompts;
         } else {
-            return [new Prompt(promptList)];
+            prompts.push(new Prompt(promptList, self, campaign));
         }
-
+        return prompts;
     };
 
     /**

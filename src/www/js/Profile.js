@@ -6,7 +6,20 @@ var Profile = new function(){
 
         var menu = mwf.decorator.Menu(auth.getUsername());
 
-        menu.addMenuLinkItem('Change Password',   'password.html', 'Easily change your password.');
+        menu.addMenuLinkItem('Change Password', 'password.html', 'Easily change your password.');
+        
+        menu.addMenuLinkItem('Clear Customized Choices', null, "Erase any saved custom choices.").onclick = function(){
+            var confirmMessage = "Are you sure you would like to clear all your custom choices?";
+            var confirmButtonLabels = "Yes,No";
+            var confirmCallback = function(confirmed){
+                if(confirmed){
+                    CustomPropertiesVault.deleteAllCustomProperties();
+                    showMessage("All custom choices have been cleared.");
+                }
+            };
+            showConfirm(confirmMessage, confirmCallback, confirmButtonLabels);
+        };
+        
         menu.addMenuLinkItem('Logout and Clear Data', null, "When you logout, all the data stored on the phone will be completely erased.").onclick = function(){
             if(auth.logout()){
                 PageNavigation.openAuthenticationPage();
