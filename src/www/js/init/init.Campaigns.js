@@ -1,7 +1,8 @@
  invokeOnReady(function(){
 
     //If set, only display installed campaigns.
-    var displayInstalledCampaigns = PageNavigation.getPageParameter('display-installed-campaigns') === true;
+    var displayInstalledCampaigns = !PageNavigation.isPageParameterSet('display-installed-campaigns') || 
+                                     PageNavigation.getPageParameter('display-installed-campaigns') === true;
    
     var onSuccess = function(){
         $('#campaigns').append(Campaigns.render(displayInstalledCampaigns));

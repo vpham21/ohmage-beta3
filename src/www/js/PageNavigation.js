@@ -63,6 +63,13 @@ var PageNavigation = (function(){
     };
     
     /**
+     * Returns true if the specified parameter has been set.
+     */
+    self.isPageParameterSet = function(parameterName){
+        return self.getPageParameter(parameterName) !== null;
+    };
+    
+    /**
      * Returns an object containing all stored key=>value pairs.
      */
     self.getPageParameters = function(){
@@ -150,7 +157,7 @@ var PageNavigation = (function(){
     
     self.openPrivacyPage = function(){
         self.redirect("privacy.html");
-    }
+    };
     
     return self;
 }());
