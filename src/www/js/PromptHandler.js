@@ -248,32 +248,58 @@ PromptHandler.Handlers = function(){
         var minValue = prompt.getMinValue();
         var maxValue = prompt.getMaxValue();
         
+        var rangeMessage = "Please enter a number between " + minValue + " and " + maxValue + ", inclusive.";
+    
+        var isValueInRange = function(inputString){
+            if(inputString === ""){ return false; }
+            var input = parseInt(inputString, 10);
+            return (minValue <= input && input <= maxValue);
+        };
+        
+        var isInteger = function(s) {
+            return String(s).search (/^(\+|-)?\d+\s*$/) !== -1
+        };
+        
+        var isSign = function(s){
+            return String(s).search (/^(\+|-)?$/) !== -1
+        };
+
         var validateNumberInputKeyPress = function(evt) {
+            
             var theEvent = evt || window.event;
             var key = theEvent.keyCode || theEvent.which;
             key = String.fromCharCode( key );
-            var regex = /[0-9]/;
-            if( !regex.test(key) ) {
+            
+            var result = evt.srcElement.value + key;
+            var cancelKey = function(){
                 theEvent.returnValue = false;
                 if(theEvent.preventDefault) {theEvent.preventDefault();}
+            };
+            
+            if(!isSign(result)){
+                if(!isInteger(key)) {
+                    cancelKey();
+                }else if(!isValueInRange(result)){
+                    showMessage(rangeMessage);
+                    cancelKey();
+                }
             }
+            
         };
         
         var textBox = document.createElement('input');
         textBox.value = defaultValue || getNumberPromptDefaultValue(prompt);
         textBox.onkeypress = validateNumberInputKeyPress;
         
-        var form = mwfd.Form("Number Input");
+        var form = mwfd.Form(prompt.getText());
+        form.addLabel(rangeMessage);
         form.addItem(textBox);
         
-        var isInputInRange = function(){
-            var input = parseInt(textBox.value, 10);
-            return (minValue <= input && input <= maxValue);
-        };
+
         
         prompt.isValid = function(){
-            if( !isInputInRange() ){
-                prompt.setErrorMessage("Please enter a number between " + minValue + " and " + maxValue + ", inclusive.");
+            if( !isValueInRange(textBox.value) ){
+                prompt.setErrorMessage(rangeMessage);
                 return false;
             }
             return true;
@@ -286,9 +312,7 @@ PromptHandler.Handlers = function(){
         var container = document.createElement('div');
         container.appendChild(mwfd.SingleClickButton("Switch to Number Picker", function(){
            container.innerHTML = "";
-           container.appendChild(createNumberPicker(prompt, (isInputInRange())? prompt.getResponse():false));    
-           
-           
+           container.appendChild(createNumberPicker(prompt, (isValueInRange(textBox.value))? prompt.getResponse():false));               
         }));
         container.appendChild(form);
         return container;
