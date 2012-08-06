@@ -279,9 +279,6 @@ PromptHandler.Handlers = function(){
             if(!isSign(result)){
                 if(!isInteger(key)) {
                     cancelKey();
-                }else if(!isValueInRange(result)){
-                    showMessage(rangeMessage);
-                    cancelKey();
                 }
             }
             
@@ -360,16 +357,13 @@ PromptHandler.Handlers = function(){
 
         //Add the plus sign to the menu and configure the click event handler
         //for this item.
-        menu.addMenuItem(plus).onclick = function(e){
-
+        var menuPlusItem = menu.addMenuItem(plus);
+        var add = function(e){
             var currentValue = parseInt(count.innerHTML, 10);
-
             if(currentValue < maxValue){
                 count.innerHTML =  currentValue + 1;
             }
-
             updateSignStyle();
-
         };
 
         //Add the counter for the menu.
@@ -377,21 +371,67 @@ PromptHandler.Handlers = function(){
 
         //Add the minus sign to the menu and configure the click event handler
         //for this item.
-        menu.addMenuItem(minus).onclick = function(e){
-
+        var menuMinusItem = menu.addMenuItem(minus);
+        var subtract = function(e){
             var currentValue = parseInt(count.innerHTML, 10);
-
             if(currentValue > minValue){
                 count.innerHTML =  currentValue - 1;
             }
-
             updateSignStyle();
-
         };
 
         prompt.getResponse = function(){
             return "" + parseInt(count.innerHTML, 10);
         };
+        
+        $(menuPlusItem).bind("touchmove", function(e){
+            var item = e.srcElement;
+            var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+            var elm = $(item).offset();
+            var x = touch.pageX - elm.left;
+            var y = touch.pageY - elm.top;
+            if((x < $(item).width() && x > 0) && (y < $(item).height() && y > 0)){
+                $(plus).addClass('pressed');
+            }else{
+                $(plus).removeClass('pressed');
+            }
+        });
+        
+        $(menuMinusItem).bind("touchmove", function(e){
+            var item = e.srcElement;
+            var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+            var elm = $(item).offset();
+            var x = touch.pageX - elm.left;
+            var y = touch.pageY - elm.top;
+            if((x < $(item).width() && x > 0) && (y < $(item).height() && y > 0)){
+                $(minus).addClass('pressed');
+            }else{
+                $(minus).removeClass('pressed');
+            }
+        });
+       
+        $(menuPlusItem).bind("touchstart", function(){
+            $(plus).addClass('pressed');
+        });
+            
+        $(menuPlusItem).bind("touchend", function(){
+            if($(plus).is(".pressed")){
+                add();
+                $(plus).removeClass('pressed');
+            }
+        });
+        
+        $(menuMinusItem).bind("touchstart", function(){
+            $(minus).addClass('pressed');
+        });
+        
+        $(menuMinusItem).bind("touchend", function(){
+            if($(minus).is(".pressed")){
+                subtract();
+                $(minus).removeClass('pressed');
+            }
+        });
+        
         
         var container = document.createElement('div');
         container.appendChild(mwfd.SingleClickButton("Switch to Number Input", function(){
