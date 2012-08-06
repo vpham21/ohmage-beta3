@@ -197,9 +197,5 @@ function showConfirm(message, callback, buttonLabels, title){
     }
 }
 
-invokeOnReady(function(){
-   if(isDeviceAndroid()){
-       console.log("Disalbing back button on Android devices.");
-       document.addEventListener("backbutton", function(){}, true);
-   }
-});
+console.log("WINDOW LENGTH: " + window.history.length);
+

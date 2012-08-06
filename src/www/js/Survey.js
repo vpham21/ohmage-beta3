@@ -52,23 +52,13 @@ var Survey = function(surveyData, campaign){
         }
 
 
-    }
+    };
 
     /**
      * If the survey is currently rendered, this stores the navigation object
      * used to iterate through different prompts.
      */
     this.currentNavigation = null;
-
-    /**
-     * This method should be called before exiting the survey before submitting
-     * it.
-     */
-    this.abort = function(){        
-        if(this.currentNavigation !== null){
-            this.currentNavigation.abort();
-        }
-    };
 
     /**
      * Starts a new navigation object with the current survey. This method
@@ -83,7 +73,8 @@ var Survey = function(surveyData, campaign){
             ReminderController.supressSurveyReminders(self.getID());
             
             var afterSurveyComplete = function(){
-                PageNavigation.openCampaignView(self.getCampaign().getURN());
+                //PageNavigation.openCampaignView(self.getCampaign().getURN());
+                PageNavigation.goBack();
             };
             
             //Confirmation box related properties.
@@ -127,7 +118,9 @@ var Survey = function(surveyData, campaign){
         //Start the actual survey.
         this.currentNavigation = new Navigation(this, container);
         this.currentNavigation.start(onSurveyComplete);
-    }
+        
+        return this.currentNavigation;
+    };
 
     /**
      * Returns the title of the current survey.
@@ -183,15 +176,12 @@ var Survey = function(surveyData, campaign){
      * @return Prompt object or null.
      */
     this.getPrompt = function(id){
-
         var prompts = this.getPrompts();
-
         for(var i = 0; i < prompts.length; i++){
             if(prompts[i].getID() == id){
                 return prompts[i];
             }
         }
-
         return null;
     };
 }

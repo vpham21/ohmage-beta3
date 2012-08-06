@@ -9,46 +9,24 @@ invokeOnReady(function(){
     //If a specific campaign is not specified, take the user to the
     //campaigns view where the user may be able to choose an appropriate
     //campaign.
-    if(campaignURN === null){
-        PageNavigation.openCampaignsView();
+    if(campaignURN === null || surveyID === null){
+        PageNavigation.goBack();
+    }else{
+        var campaign = new Campaign(campaignURN);
+        var survey = campaign.getSurvey(surveyID);
+
+        var navigation = survey.start(document.getElementById('survey'));
+
+        mwf.decorator.TopButton("All Surveys", null, function(){
+            navigation.confirmSurveyExit(function(){
+                PageNavigation.openCampaignView(campaignURN, surveyID);
+            }); 
+        }, true);
+
+        $("#header-link").click(function(e){
+            navigation.confirmSurveyExit(function(){
+                PageNavigation.openDashboard();
+            }); 
+        });
     }
-
-    //If a specific survey is not specified, then take the user to the
-    //campaign's survey view where he/she may choose a survey.
-    else if(surveyID === null){
-        PageNavigation.openCampaignView(campaignURN);
-    }
-
-    var campaign = new Campaign(campaignURN);
-    var survey = campaign.getSurvey(surveyID);
-
-    survey.start(document.getElementById('survey'));
-    
-    var confirmToLeaveMessage = "Data from your current survey response will be lost. Are you sure you would like to continue?";
-    var confirmLeave = function(resultCallback){
-        showConfirm(confirmToLeaveMessage, function(isResponseYes){
-            if( isResponseYes ){ survey.abort(); }
-            if( typeof(resultCallback) === "function" ){ resultCallback(isResponseYes); }
-        }, "Yes,No");
-    };
-
-    mwf.decorator.TopButton("All Campaigns", null, function(){
-        confirmLeave(function(isResponseYes){
-            if( isResponseYes ){ PageNavigation.openCampaignsView(true); }
-        }); 
-    }, true);
-    
-    $("#header-link").click(function(e){
-       confirmLeave(function(isResponseYes){
-            if( isResponseYes ){ PageNavigation.openDashboard(); }
-       });
-    });
-    
-    $("#footer-link").click(function(e){
-       confirmLeave(function(isResponseYes){
-            if( isResponseYes ){ PageNavigation.openPrivacyPage(); }
-       });
-    });
-
-
 });

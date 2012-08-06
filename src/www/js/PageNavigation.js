@@ -159,5 +159,21 @@ var PageNavigation = (function(){
         self.redirect("privacy.html");
     };
     
+    self.goBack = function(){        
+        if (typeof (navigator.app) !== "undefined") {
+            navigator.app.backHistory();
+        } else {
+            window.history.back();
+        }
+    };
+    
+    self.goForward = function(){
+        if (typeof (navigator.app) !== "undefined") {
+            navigator.app.forwardHistory();
+        } else {
+            window.history.forward();
+        }
+    };
+    
     return self;
 }());

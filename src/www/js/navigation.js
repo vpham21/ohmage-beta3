@@ -1,7 +1,8 @@
 
-function Navigation(survey, container)
-{
+function Navigation(survey, container){
 
+    var self = this;
+    
     /**
      * Namespace abbreviation for Mobile Web Framework JS Decorators library.
      */
@@ -28,6 +29,40 @@ function Navigation(survey, container)
      * submitted but will be passed as a reference object to this callback.
      */
     var surveyDoneCallback = null;
+    
+    /**
+     * If running on an Android device, this method gets invoked when the user
+     * hits the back button.
+     */
+    var androidBackButtonCallback = null;
+    
+    /**
+     * Message displayed to the user when exiting the current survey without
+     * submitting.
+     */
+    var confirmToLeaveMessage = "Data from your current survey response will be lost. Are you sure you would like to continue?";
+    
+        
+    var androidBackButtonCallbackWrapper = function(){
+       if(androidBackButtonCallback !== null){
+           androidBackButtonCallback();
+       }
+    };
+    
+    var overrideBackButtonFunctionality = function(){
+        if(isDeviceAndroid()){
+            invokeOnReady(function(){
+               console.log("Overriding back button on Android devices for current survey navigation.");
+               document.addEventListener("backbutton", androidBackButtonCallbackWrapper, true);
+        });
+      }
+    };
+    
+    var resetBackButtonFunctionality = function(){
+        if(isDeviceAndroid()){
+            document.removeEventListener("backbutton", androidBackButtonCallbackWrapper, false);    
+        }
+    };
 
     /**
      * Returns currently displayed prompt. Returns null if current index is out
@@ -37,42 +72,50 @@ function Navigation(survey, container)
      */
     var getCurrentPrompt = function(){
         return prompts[currentPromptIndex] || null;
-    }
+    };
 
+    /**
+     * Returns current prompt's condition.
+     */
     var getCurrentCondition = function(){
         return getCurrentPrompt().getCondition();
-    }
-
+    };
+    
+    /**
+     * Boolean method that returns true if the current condition of the prompt
+     * fails.
+     */
     var failsCondition = function(){
-        return getCurrentCondition() && !ConditionalParser.parse(getCurrentCondition(), surveyResponse.getResponses());
-    }
+        var currentCondition = getCurrentCondition();
+        var currentResponse  = surveyResponse.getResponses();
+        return currentCondition && 
+               !ConditionalParser.parse(currentCondition, currentResponse);
+    };
+    
+    /**
+     * Buffer that stores currently displayed/rendered prompts. This approach
+     * is used for storing user entered data when the user goes to the previous
+     * prompt.
+     */
+    var promptBuffer = {};
 
     /**
      * Method invoked when the user completes the survey and clicks submit.
      */
     var done = function(){
-
+        resetBackButtonFunctionality();
         surveyResponse.submit();
-
         surveyDoneCallback(surveyResponse);
-    }
+    };
 
     var processResponse = function(skipped){
-
         var prompt = getCurrentPrompt();
-
-        //Handle skipped prompts.
         if(skipped){
-
-            //User cannot skip prompts that are not skippable.
             if(!prompt.isSkippable()){
                 return false;
             }
-
             surveyResponse.promptSkipped(prompt.getID());
-
             return true;
-
         }
 
         //Handle invalid responses.
@@ -85,29 +128,20 @@ function Navigation(survey, container)
         surveyResponse.respond(prompt.getID(), prompt.getResponse(), prompt.getType() == 'photo');
 
         return true;
-    }
-
+    };
 
     var nextPrompt = function(skipped){
-
         if(processResponse(skipped)){
-
             currentPromptIndex++;
-
-            //Skip all prompts that fail the condition.
             while(currentPromptIndex < prompts.length && failsCondition()){
                 surveyResponse.promptNotDisplayed(getCurrentPrompt().getID());
                 currentPromptIndex++;
             }
-
             render();
-
         }
-
-    }
+    };
 
     var previousPrompt = function(){
-
         if(currentPromptIndex > 0){
             currentPromptIndex--;
         }
@@ -119,14 +153,12 @@ function Navigation(survey, container)
 
         render();
 
-    }
-
+    };
+    
     /**
      * Enables or disables next, previous, submit, and skip buttons.
      */
-    var getControlButtons = function(submitPage)
-    {
-        //Control panel that acts as a container for control buttons.
+    var getControlButtons = function (submitPage) {
         var panel = document.createElement('div');
 
         //If the prompt is skippable, then enable the skip button.
@@ -136,17 +168,24 @@ function Navigation(survey, container)
             }));
         }
 
+        androidBackButtonCallback = previousPrompt;
+        
         //Handle first prompt.
         if(currentPromptIndex == 0){
             panel.appendChild(mwfd.SingleClickButton("Next Prompt", function(){
                 nextPrompt(false);
             }));
-        }
+            
+            androidBackButtonCallback = function(){
+                self.confirmSurveyExit(function(){
+                    PageNavigation.goBack();
+                });  
+            };
 
         //Handle submit page.
-        else if(submitPage){
+        } else if(submitPage){
            panel.appendChild(mwfd.DoubleClickButton("Previous", previousPrompt, "Submit", done));
-
+           
         //Handle prompts in the middle.
         } else{
             panel.appendChild(mwfd.DoubleClickButton("Previous", previousPrompt, "Next", function(){
@@ -155,13 +194,8 @@ function Navigation(survey, container)
         }
         
         return panel;
-    }
-
-    /**
-     * Buffer that stores currently displayed/rendered prompts.
-     */
-    var promptBuffer = {};
-
+    };
+   
     var render = function(){
 
         //Clear the current contents of the main container.
@@ -203,7 +237,7 @@ function Navigation(survey, container)
      * @param callback Function that will be invoked when the survey has been
      *                 completed.
      */
-    this.start = function(callback){
+    self.start = function(callback){
         //Update survey response geolocation information.
         surveyResponse.setLocation();
 
@@ -212,20 +246,44 @@ function Navigation(survey, container)
 
         //Save the callback to be invoked when the survey has been completed.
         surveyDoneCallback = callback;
+        
+        overrideBackButtonFunctionality();
 
     };
 
     /**
      * Aborts the current survey participation and deletes the users responses.
      * This method should be called to do the clean up before the user navigates
-     * to another page without completing the survey. If this method is not
-     * invoked,
+     * to another page without completing the survey. 
      */
-    this.abort = function(){
-        if(surveyResponse != null && !surveyResponse.isSubmitted()){
+    self.abort = function(){
+        resetBackButtonFunctionality();
+        if(surveyResponse !== null && !surveyResponse.isSubmitted()){
             SurveyResponse.deleteSurveyResponse(surveyResponse);
         }
     };
+
+    /**
+     * Method used for getting user's confirmation before exiting an incomplete 
+     * survey. In case of a positive confirmation, the current survey response 
+     * will be aborted (resonse get's deleted from localStorage) and the 
+     * specified callback is invoked. 
+     * 
+     * @param positiveConfirmationCallback A callback invoked when the user 
+     *        confirms the current action.
+     */
+    self.confirmSurveyExit = function(positiveConfirmationCallback){
+        showConfirm(confirmToLeaveMessage, function(isResponseYes){
+            if( isResponseYes ){ 
+                self.abort(); 
+                if( typeof(positiveConfirmationCallback) === "function" ){ 
+                    positiveConfirmationCallback(); 
+                }
+            }
+        }, "Yes,No");
+    };
+    
+    return self;
 }
 
 
