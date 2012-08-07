@@ -42,7 +42,11 @@ var Prompt = function(promptData, survey, campaign){
         }else{
             properties = promptData.properties.property;
         }
-        properties = properties.concat(customPropertiesVault.getCustomProperties());
+        
+        var customProperties = customPropertiesVault.getCustomProperties();
+        for(var i = 0; i < customProperties.length; i++){
+            properties.push(customProperties[i]);
+        }
     };
 
     /**
