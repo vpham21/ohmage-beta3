@@ -2,10 +2,10 @@ invokeOnReady(function(){
 
     var reminders = new Reminders();
 
-    $("#surveys").append(reminders.render());
+    $("#reminders").append(reminders.render());
 
     //Add a button to take the user back to the dashboard.
-    $("#surveys").append(mwf.decorator.SingleClickButton("Dashboard", function(){
+    $("#reminders").append(mwf.decorator.SingleClickButton("Dashboard", function(){
         PageNavigation.openDashboard();
     }));
 
