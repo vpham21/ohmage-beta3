@@ -6,30 +6,36 @@ var CustomPropertiesVault = function(prompt){
    var campaignURN = prompt.getCampaignURN();
    var surveyID    = prompt.getSurveyID();
    var promptID    = prompt.getID();
+      
+   var campaignProperties, surveyProperties, promptProperties;
    
-   //Prepare the structures for accessing prompt specific properties.
-   var campaignProperties = vault.get(campaignURN) || {};
-   var surveyProperties   = campaignProperties[surveyID] || {};
-   var promptProperties   = surveyProperties[promptID]   || [];
+   var read = function(){
+       campaignProperties = vault.get(campaignURN) || {};
+       surveyProperties   = campaignProperties[surveyID] || {};
+       promptProperties   = surveyProperties[promptID]   || [];    
+   };
    
-   var save = function(){
+   var write = function(){
        surveyProperties[promptID] = promptProperties;
        campaignProperties[surveyID] = surveyProperties;
        vault.set(campaignURN, campaignProperties);
    };
    
    self.addCustomProperty = function(customChoice){
+       read();
        promptProperties.push(customChoice);
-       save();
+       write();
    };
    
    self.getCustomProperties = function(){
+       read();
        return promptProperties;
    };
    
    self.deleteCustomProperties = function(){
+       read();
        promptProperties = [];
-       save();
+       write();
    };
    
    return self;
