@@ -23,6 +23,11 @@
     cursor: pointer;
 }
 
+.math-sign.pressed
+{
+    color: #00FFFF !important;
+}
+
 .math-sign-disabled
 {
     padding: 0px !important;
