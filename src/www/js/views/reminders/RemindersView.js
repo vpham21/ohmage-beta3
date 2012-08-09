@@ -1,7 +1,6 @@
+var RemindersView = function(){
 
-var Reminders = function(){
-    
-    var self = this;
+    var self = {};
     
     var reminders = ReminderController.getAllReminders();
     
@@ -46,6 +45,5 @@ var Reminders = function(){
     };
     
     return self;
-    
 };
 

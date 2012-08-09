@@ -1,6 +1,6 @@
 
 invokeOnReady(function(){
-    console.log("Device Ready: auth.html");
+    
     if(auth.isUserLocked()){
 
         //If the user is in a locked state, force the username field to
@@ -41,9 +41,8 @@ invokeOnReady(function(){
         return true;
 
     };
-
-    $("#login").click(function(){
-
+    
+        var login = function(){
         if(!isInputValid()){
             return;
         }
@@ -68,9 +67,17 @@ invokeOnReady(function(){
            });
 
 
-        }, false);
+        }, false);    
+    };
+    
+    
+    //Disable the form element from refreshing and instead try to login.
+    $("#auth-form").submit(function(e){
+        e.preventDefault();
+        login();
+        return false;
+    });
 
-
-   });
+    $("#login").click(function(){ login() });
 
 });
