@@ -6,49 +6,49 @@
  * @author Zorayr Khalapyan
  * @version 7/30/2012
  */
-var LocalMap = function(name){
-    
+var LocalMap = function (name) {
     var self = {};
-    
+
     //Prevent compatability issues in different execution environments.
-    if( typeof(localStorage) === "undefined" ){
+    if (typeof (localStorage) === "undefined") {
         localStorage = {};
     }
-    
-    if( typeof(localStorage[name]) === "undefined" ){
+
+    if (typeof (localStorage[name]) === "undefined") {
         localStorage[name] = JSON.stringify({});
     }
 
-    var setMap = function(map){
+    var setMap = function (map) {
         localStorage[name] = JSON.stringify(map);
     };
 
-    self.getMap = function(){
+    self.getMap = function () {
         return JSON.parse(localStorage[name]);
     };
 
-    self.set = function(name, object){
+    self.set = function (name, object) {
         var map = self.getMap();
         map[name] = object;
         setMap(map);
     };
-    
-    self.importMap = function(object){
+
+    self.importMap = function (object) {
         var map = self.getMap();
-        for( var key in object ){
-            if( object.hasOwnProperty(key) ){
-                map[key]= object[key];
+        var key;
+        for (key in object) {
+            if (object.hasOwnProperty(key)) {
+                map[key] = object[key];
             }
         }
         setMap(map);
     };
 
-    self.get = function(name){
+    self.get = function (name) {
         var map = self.getMap();
         return (map[name]) ? map[name] : null;
     };
     
-    self.length = function(){
+    self.length = function () {
         var map = self.getMap();
         var size = 0, key;
         for (key in map) {
@@ -57,32 +57,34 @@ var LocalMap = function(name){
         return size;
     };
 
-    self.erase = function(){
+    self.erase = function () {
         localStorage[name] = JSON.stringify({});
     };
 
-    self.isSet = function(name){
+    self.isSet = function (name) {
         return self.get(name) != null;
     };
 
-    self.release = function(name){
+    self.release = function (name) {
         var map = self.getMap();
-        if(map[name])
+        if (map[name]) {
             delete map[name];
+        }
         setMap(map);
     };
-    
+
     return self;
 
 };
 
-LocalMap.destroy = function(){
-    for(var item in localStorage)
-        delete localStorage[item];
+LocalMap.destroy = function () {
+    for (var item in localStorage) {
+        if (localStorage.hasOwnProperty(item)) {
+            delete localStorage[item];    
+        }
+    }    
 };
 
-LocalMap.exists = function(name){
+LocalMap.exists = function (name) {
     return (localStorage[name]) ? true : false;
 };
-
-console.log("LocalMap loaded");

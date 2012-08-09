@@ -40,9 +40,7 @@ var ReminderController = function(uuid){
         
         model.save();
     };
-    
-    
-    
+       
     self.getReminderCount = function(){
         return getAllReminders().length;
     };

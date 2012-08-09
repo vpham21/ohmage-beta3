@@ -64,7 +64,7 @@ mwf.decorator.Button = function(label, url, callback)
         if(url){
             this.href = url;
         }
-    }
+    };
 
     /**
      * Sets the on click listener for this button.
