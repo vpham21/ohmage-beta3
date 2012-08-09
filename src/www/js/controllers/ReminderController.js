@@ -3,10 +3,9 @@ var ReminderController = function(uuid){
     var self = {};
     
     var model = (uuid)? new ReminderModel().restore(uuid) : new ReminderModel();
-    var view =  new ReminderView(model, self);
     
     self.render = function(){
-        return view.render();
+        return (new ReminderView(model, self)).render();
     };
     
     self.save = function(campaignURN, surveyID, title, date, supressionWindow, recurrences, excludeWeekends){
@@ -114,5 +113,5 @@ ReminderController.cancelAll = function(){
     for(i = 0; i < reminders.length; i++){
         reminders[i].deleteReminder();
     }
-}
+};
 
