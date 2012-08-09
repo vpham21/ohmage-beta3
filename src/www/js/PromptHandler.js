@@ -445,7 +445,7 @@ PromptHandler.Handlers = function(){
     /**
      * This value determines the range that will default to number picker.
      */
-    var MAX_RANGE_FOR_NUMBER_PICKER = 10;
+    var MAX_RANGE_FOR_NUMBER_PICKER = 20;
     
     this.number = function(prompt){
         if(prompt.getMaxValue() - prompt.getMinValue() <= MAX_RANGE_FOR_NUMBER_PICKER){
