@@ -196,6 +196,3 @@ function showConfirm(message, callback, buttonLabels, title){
         invoke(callback, confirm(message));
     }
 }
-
-console.log("WINDOW LENGTH: " + window.history.length);
-

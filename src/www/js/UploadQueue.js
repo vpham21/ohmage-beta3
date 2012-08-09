@@ -102,9 +102,7 @@ var UploadQueue = function()
 
         container.innerHTML = "";
 
-        mwfd.TopButton("All Campaigns", null, function(){
-             PageNavigation.openCampaignsView();
-        }, true);
+        mwfd.TopButton("All Campaigns", null, PageNavigation.openInstalledCampaignsView, true);
 
         var title = "Pending Uploads";
         var pendingResponses = SurveyResponse.getPendingResponses();
@@ -174,13 +172,9 @@ var UploadQueue = function()
 
             var emptyQueue = mwfd.Content(title);
             emptyQueue.addTextBlock('Upload queue is empty.');
+            
             container.appendChild(emptyQueue);
-
-            //Display a back button.
-            container.appendChild(mwfd.SingleClickButton("Back to Campaigns", function(){
-                PageNavigation.openCampaignsView();
-
-            }));
+            container.appendChild(mwfd.SingleClickButton("Back to Campaigns", PageNavigation.openInstalledCampaignsView));
         }
 
     };

@@ -1,7 +1,9 @@
 var Campaigns = new (function() {
 
     var self = this;
+    
     var allCampaigns       = new LocalMap("all-campaigns");
+    
     var installedCampaigns = new LocalMap("installed-campaigns");
 
     /**
@@ -60,7 +62,7 @@ var Campaigns = new (function() {
                 //On success, update the current view which will show the newly
                 //installed campaign.
                 var onSuccess = function(){
-                    PageNavigation.openCampaignsView();
+                    PageNavigation.openInstalledCampaignsView();
                 };
                 
                 //On error, just display an alert to the user with the error
@@ -102,48 +104,32 @@ var Campaigns = new (function() {
         var container = document.createElement('div');
 
         if(installed){
-
-            mwf.decorator.TopButton("Add Campaign", null, function(){
-                PageNavigation.openCampaignsView(false);
-            }, true);
-
+            mwf.decorator.TopButton("Add Campaign", null, PageNavigation.openAvailableCampaignsView, true)
             container.appendChild(installedMenu);
-            container.appendChild(mwf.decorator.SingleClickButton("Upload Queue", function(){
-                PageNavigation.openUploadQueueView();
-            }));
+            container.appendChild(mwf.decorator.SingleClickButton("Upload Queue", PageNavigation.openUploadQueueView));
         }
 
         if(!installed && availableMenu.size() > 0){
 
             if(installedCampaigns.length() > 0){
-                mwf.decorator.TopButton("My Campaigns", null, function(){
-                    PageNavigation.openCampaignsView(true);
-                }, true);
+                mwf.decorator.TopButton("My Campaigns", null, PageNavigation.openInstalledCampaignsView, true);
             }
 
             $(availableMenu).find("a").css('background', "url('img/plus.png') no-repeat 95% center");
 
             container.appendChild(availableMenu);
             container.appendChild(mwf.decorator.SingleClickButton("Refresh Campaigns", function(){
-
                 var onSuccess = function(){
-                    showMessage("All campaigns have been updated.", function(){
-                        PageNavigation.openCampaignsView(false);
-                    });
+                    showMessage("All campaigns have been updated.", PageNavigation.openAvailableCampaignsView);
                 };
-
                 var onError = function(){
                     showMessage("Unable to download all campaigns. Please try again.");
                 };
-
                 Campaigns.download(true, onSuccess, onError);
             }));
         }
-
-
         return container;
-
-    }
+    };
 
 
     this.download = function(force, onSuccess, onError){

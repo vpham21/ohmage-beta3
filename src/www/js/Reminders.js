@@ -23,7 +23,7 @@ var Reminders = function(){
         
         if(numInstalledCampaigns === 0){
             menu.addMenuLinkItem("No Available Surveys", null, "Please install a campaign, to create custom reminders.").onclick = function(){
-                PageNavigation.openCampaignsView();
+                PageNavigation.openAvailableCampaignsView();
             };   
         }else if(reminders.length > 0){
             for(var i = 0; i < reminders.length; i++){   
@@ -33,7 +33,7 @@ var Reminders = function(){
                 menu.addMenuLinkItem(title, null, time).onclick = editReminderCallback(reminders[i]);
             }
         }else{
-            menu.addMenuLinkItem("No Reminder Founds", null, "Click to add a new reminder.").onclick = newReminderCallback;
+            menu.addMenuLinkItem("No Reminder Found", null, "Click to add a new reminder.").onclick = newReminderCallback;
         }
         
         var container = document.createElement('div');

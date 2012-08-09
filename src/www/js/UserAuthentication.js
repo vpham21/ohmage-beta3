@@ -378,8 +378,6 @@ function UserAuthentication() {
     };
 }
 
-console.log("UserAuthentication loaded.");
-
 var auth = new UserAuthentication ();
 
 if(typeof(checkpoint) != 'undefined'){

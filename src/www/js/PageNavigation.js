@@ -102,14 +102,19 @@ var PageNavigation = (function(){
     };
 
     /**
-     * Redirects the user to the page that displays a list of available or 
-     * installed campaigns.
-     * @param installed If set to true, only installed campaigns will be 
-     *        displayed. By default, this value is set to true.
+     * Redirects the user to the page that displays a list of installed
+     * campaigns.
      */
-    self.openCampaignsView = function(installed){
-        setPageParameter("display-installed-campaigns", installed, true);
-        self.redirect("campaigns.html");
+    self.openInstalledCampaignsView = function(){
+        self.redirect("installed-campaigns.html");
+    };
+    
+    /**
+     * Redirects the user to the page that displays a list of available 
+     * campaigns.
+     */
+    self.openAvailableCampaignsView = function(){
+        self.redirect("available-campaigns.html");
     };
 
     /**
@@ -132,7 +137,11 @@ var PageNavigation = (function(){
         setPageParameter("survey-id", surveyID);
         self.redirect("survey.html");
     };
-
+    
+    self.openPendingSurveysView = function(){
+        self.redirect("pending-surveys.html");
+    };
+    
     /**
      * Redirects the user to the page that displays a list of submitted but 
      * not yet uploaded surveys.
