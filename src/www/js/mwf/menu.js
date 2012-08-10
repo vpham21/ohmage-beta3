@@ -339,18 +339,11 @@ mwf.decorator.Menu = function(title)
         linkItem.insertBefore(inputItem, linkItem.firstChild);
 
         var toggleSelectionCallback = function(inputItem){
-            return function(event){
-                
-                
-                    inputItem.checked =  (isRadio)? true : !inputItem.checked;
-                
+            return function(event){                
+                inputItem.checked =  (isRadio)? true : !inputItem.checked;  
             };
         };
 
-        //Add an event handler that would toggle the option button's
-        //checked attribute on link click.
-        //inputItem.onclick = toggle;
-        //linkItem.onclick = toggle;
         TouchEnabledItemModel.bindTouchEvent(linkItem, linkItem, toggleSelectionCallback(inputItem));
 
         return linkItem;

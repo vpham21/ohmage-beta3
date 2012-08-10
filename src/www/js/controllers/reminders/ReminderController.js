@@ -63,6 +63,9 @@ ReminderController.getAllReminders = function(purge){
     return allReminders;
 };
 
+/**
+ * Deletes all reminders that were associated with deleted or stopped campaings.
+ */
 ReminderController.purge = function(){
     
     //Extract a list of all installed and running campaign URNs.
@@ -75,7 +78,6 @@ ReminderController.purge = function(){
         }
     }
         
-    //Returns true if the speicified campaign is currently installed.
     var isCampaignInstalled = function(urn){
         for(var i = 0; i < installedCampaignsURNList.length; i++){
             if(installedCampaignsURNList[i] === urn){
@@ -85,9 +87,6 @@ ReminderController.purge = function(){
         return false;
     };
     
-    //Iterate through the list of current reminders, and delete those that are
-    //associated with campaigns that have been deleted or those reminders that
-    //are expired.
     var reminders = ReminderController.getAllReminders(false);
     for(i = 0; i < reminders.length; i++){
         if(!isCampaignInstalled(reminders[i].getCampaignURN()) || reminders[i].isExpired()){
