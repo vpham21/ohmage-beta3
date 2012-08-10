@@ -16,7 +16,9 @@ var TouchEnabledItemModel = (function(){
         
         highlightItem = highlightItem || item;
         onTouchHighlightClass = onTouchHighlightClass || "pressed";
-    
+        
+        self.bindClickEvent(item, function(){return false;});
+        
         $(item).bind("touchmove", function(e){
             var item = e.srcElement;
             var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
@@ -34,10 +36,10 @@ var TouchEnabledItemModel = (function(){
             $(highlightItem).addClass(onTouchHighlightClass);
         });
             
-        $(item).bind("touchend", function(){
+        $(item).bind("touchend", function(e){
             if($(highlightItem).is("." + onTouchHighlightClass)){
                 $(highlightItem).removeClass(onTouchHighlightClass);
-                if(typeof(onTouchCallback) === "function"){ onTouchCallback(); }
+                if(typeof(onTouchCallback) === "function"){ onTouchCallback(e); }
             }
         });
     };

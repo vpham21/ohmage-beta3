@@ -1,5 +1,0 @@
-var ConfigurationManager = (function(){
-    
-    
-    
-}());
