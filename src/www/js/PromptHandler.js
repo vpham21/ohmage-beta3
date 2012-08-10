@@ -292,8 +292,6 @@ PromptHandler.Handlers = function(){
         form.addLabel(rangeMessage);
         form.addItem(textBox);
         
-
-        
         prompt.isValid = function(){
             if( !isValueInRange(textBox.value) ){
                 prompt.setErrorMessage(rangeMessage);
@@ -382,6 +380,10 @@ PromptHandler.Handlers = function(){
 
         prompt.getResponse = function(){
             return "" + parseInt(count.innerHTML, 10);
+        };
+        
+        prompt.isValid = function(){
+            return true;
         };
         
         $(menuPlusItem).bind("touchmove", function(e){
