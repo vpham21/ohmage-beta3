@@ -22,6 +22,14 @@ invokeOnReady(function(){
 
     var isInputValid = function(){
 
+        if($('#username').val().length == 0 && $('#password').val().length == 0){
+            showMessage('Please enter your username and password.', function(){
+                $('#username').focus();
+            });
+
+            return false;
+        }
+        
         if($('#username').val().length == 0){
             showMessage('Please enter your username.', function(){
                 $('#username').focus();
