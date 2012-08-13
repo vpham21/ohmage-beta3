@@ -21,18 +21,20 @@ var RemindersView = function(){
         var menu = mwf.decorator.Menu("Available Reminders");
         
         if(numInstalledCampaigns === 0){
-            menu.addMenuLinkItem("No Available Surveys", null, "Please install a campaign, to create custom reminders.").onclick = function(){
-                PageNavigation.openAvailableCampaignsView();
-            };   
+            var noAvailableSurveysMenuItem = menu.addMenuLinkItem("No Available Surveys", null, "Please install a campaign, to create custom reminders.");
+            TouchEnabledItemModel.bindTouchEvent(noAvailableSurveysMenuItem, noAvailableSurveysMenuItem, PageNavigation.openAvailableCampaignsView, "menu-highlight"); 
         }else if(reminders.length > 0){
+            var title, date, time, reminderMenuItem;
             for(var i = 0; i < reminders.length; i++){   
-                var title = reminders[i].getTitle();
-                var date  = reminders[i].getDate();
-                var time   = "Reminder set for " + DateTimePicker.getPaddedTime(date) + ".";
-                menu.addMenuLinkItem(title, null, time).onclick = editReminderCallback(reminders[i]);
+                title = reminders[i].getTitle();
+                date  = reminders[i].getDate();
+                time   = "Reminder set for " + DateTimePicker.getPaddedTime(date) + ".";
+                reminderMenuItem = menu.addMenuLinkItem(title, null, time);
+                TouchEnabledItemModel.bindTouchEvent(reminderMenuItem, reminderMenuItem, editReminderCallback(reminders[i]), "menu-highlight");
             }
         }else{
-            menu.addMenuLinkItem("No Reminder Found", null, "Click to add a new reminder.").onclick = newReminderCallback;
+            var noReminderFoundMenuItem = menu.addMenuLinkItem("No Reminder Found", null, "Click to add a new reminder.");
+            TouchEnabledItemModel.bindTouchEvent(noReminderFoundMenuItem, noReminderFoundMenuItem, newReminderCallback, "menu-highlight");
         }
         
         var container = document.createElement('div');

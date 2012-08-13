@@ -1,6 +1,6 @@
 invokeOnReady(function(){
     $("#reminders").append((new RemindersView()).render());
     $("#reminders").append(mwf.decorator.DoubleClickButton("Dashboard", PageNavigation.openDashboard,
-                                                           "Pending Surveys", PageNavigation.openPendingSurveysView));
+                                                           "Pending", PageNavigation.openPendingSurveysView));
     mwf.decorator.TopButton("All Campaigns", null, PageNavigation.openInstalledCampaignsView, true);
 });

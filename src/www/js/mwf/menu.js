@@ -344,7 +344,7 @@ mwf.decorator.Menu = function(title)
             };
         };
 
-        TouchEnabledItemModel.bindTouchEvent(linkItem, linkItem, toggleSelectionCallback(inputItem));
+        TouchEnabledItemModel.bindTouchEvent(linkItem, linkItem, toggleSelectionCallback(inputItem), "menu-highlight");
 
         return linkItem;
     };
@@ -472,10 +472,8 @@ mwf.decorator.Menu = function(title)
      *
      * @return True if the item was successfully removed, false otherwise.
      */
-    menu.removeMenuItem = function(item)
-    {
-        if(this._items && item)
-        {
+    menu.removeMenuItem = function(item){
+        if(this._items && item){
             //The return value of the removeChild method is either the removed
             //node, or null on failure.
             return this._items.removeChild(item) != null;
@@ -485,8 +483,7 @@ mwf.decorator.Menu = function(title)
     };
 
     //If a default title has been set, then set the menu's title.
-    if(title)
-    {
+    if(title){
         menu.setTitle(title);
     }
 

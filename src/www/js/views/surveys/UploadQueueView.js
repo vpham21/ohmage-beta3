@@ -24,7 +24,7 @@ var UploadQueueView = function(uploadQueueController){
             response = pendingResponses[uuid].response;
             details  = "Submitted on " + response.getSubmitDate() + ".";
             menuItem = queueMenu.addMenuLinkItem(survey.getTitle(), null, details);
-            TouchEnabledItemModel.bindTouchEvent(menuItem, menuItem, onSurveyClickCallback(response));   
+            TouchEnabledItemModel.bindTouchEvent(menuItem, menuItem, onSurveyClickCallback(response), "menu-highlight");   
         }
 
         var container = document.createElement('div');

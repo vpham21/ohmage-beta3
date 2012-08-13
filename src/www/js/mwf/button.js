@@ -74,34 +74,7 @@ mwf.decorator.Button = function(label, url, callback)
      * Sets the on click listener for this button.
      */
     button.click = function(callback){
-        
-        //Unhighlight the button when the finger moves outside of the button.
-        $(button).bind("touchmove", function(e){
-            var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
-            var elm = $(button).offset();
-            var x = touch.pageX - elm.left;
-            var y = touch.pageY - elm.top;
-            if((x < $(button).width() && x > 0) && (y < $(button).height() && y > 0)){
-                $(button).addClass('button-highlight');
-            }else{
-                $(button).removeClass('button-highlight');
-            }
-        });
-        
-        //Highlight the button when the finger touches the button.
-        $(button).bind("touchstart", function(){
-            $(button).addClass('button-highlight');
-        });
-        
-        //Unhighlight the button when the user is no longer touching the button.
-        $(button).bind("touchend", function(){
-           $(button).removeClass('button-highlight');
-        });
-        
-        //If button's callback is set, then set the <a>'s onclick/ontouchend property.
-        if(callback){
-            mwf.decorator.attachTouchHandler(button, callback);
-        }
+        TouchEnabledItemModel.bindTouchEvent(button, button, callback, "button-highlight");
     };
 
     button.setLabel(label);

@@ -81,7 +81,8 @@ var Campaigns = new (function() {
                 PageNavigation.openCampaignView(urn);
             }
         }
-
+        
+        var campaign, campaignMenuItem;
         for(var urn in allCampaigns.getMap()){
 
             var campaign = new Campaign(urn);
@@ -94,9 +95,11 @@ var Campaigns = new (function() {
             //If the campaign has been installed, place it in the installed 
             //campaigns menu.
             if(installedCampaigns.isSet(urn)){
-                installedMenu.addMenuLinkItem(allCampaigns.get(urn).name, null).onclick = open(urn);
+                campaignMenuItem = installedMenu.addMenuLinkItem(allCampaigns.get(urn).name);
+                TouchEnabledItemModel.bindTouchEvent(campaignMenuItem, campaignMenuItem, open(urn), "menu-highlight");
             }else{
-                availableMenu.addMenuLinkItem(allCampaigns.get(urn).name, null).onclick = install(urn);
+                campaignMenuItem = availableMenu.addMenuLinkItem(allCampaigns.get(urn).name);
+                TouchEnabledItemModel.bindTouchEvent(campaignMenuItem, campaignMenuItem, install(urn), "menu-highlight");
             }
 
         }

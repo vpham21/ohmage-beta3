@@ -7,8 +7,8 @@ var Campaign = function(urn){
 
     self.render = function(){
 
-        if(this.isRunning()){
-            return this.renderSurveyList(mwf.decorator.Menu("Available Surveys"));
+        if(self.isRunning()){
+            return self.renderSurveyList(mwf.decorator.Menu("Available Surveys"));
 
         }else{
 
@@ -23,22 +23,19 @@ var Campaign = function(urn){
     };
 
     self.renderSurveyList = function(surveyMenu){
-
-        var callback = function(surveyID){
+        var openSurveyViewCallback = function(surveyID){
             return function(){
                 PageNavigation.openSurveyView(urn, surveyID);
             };
         };
-
-        var surveys = this.getSurveys();
-
+        var surveys = self.getSurveys();
+        var surveyMenuItem;
         for(var i = 0; i < surveys.length; i++){
-            surveyMenu.addMenuLinkItem(surveys[i].title, null, surveys[i].description).onclick = callback(surveys[i].id);
+            surveyMenuItem = surveyMenu.addMenuLinkItem(surveys[i].title, null, surveys[i].description);
+            TouchEnabledItemModel.bindTouchEvent(surveyMenuItem, surveyMenuItem, openSurveyViewCallback(surveys[i].id), "menu-highlight");
         }
-
         return surveyMenu;
     };
-    
 
     /**
      * Returns surveys associated with this campaign.

@@ -159,11 +159,6 @@ h1, h2, h3, h4, h5, h6 {
     color: #2685bb;
 }
 
-.menu-full a:hover h4,
-.menu-full a:focus h4,
-.menu-full a:active h4 {
-    color: #494D69;
-}
 
 .menu-full > h1,
 .menu-full > h4 {
@@ -173,11 +168,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .menu-full a h4 {
     color: #1e6a95;
-}
-.menu-full a:hover h4,
-.menu-full a:focus h4,
-.menu-full a:active h4 {
-    color: #494D69;
 }
 
 .menu-full p {
@@ -568,11 +558,6 @@ body.front-page h1#header span {
   Lists
   ------------------------------------------------*/
 
-.menu-full li a:hover,
-.menu-full li a:focus,
-.menu-full li a:active {
-        background-color: #eaf2fa;
-}
 
 /*-------------------------------------------------
   General
@@ -880,122 +865,8 @@ form.form-full > input[type=reset] {
     padding: 1.2em;
 }
 
-
 #header {
     border-bottom: 3px solid #ffb300;
-}
-
-.front-page #news {
-	background: #fff url(../img/mwf/icon/news.png) 16px 14px no-repeat;
-}
-
-.front-page #happenings {
-	background: #fff url(../img/mwf/icon/events.png) 17px 12px no-repeat;
-}
-
-.front-page #directory {
-	background: #fff url(../img/mwf/icon/directory.png) 17px 16px no-repeat;
-}
-
-.front-page #campus-map {
-	background: #fff url(../img/mwf/icon/campus-map.png) 17px 14px no-repeat;
-}
-
-.front-page #campus-tour {
-	background: #fff url(../img/mwf/icon/campus-tour.png) 16px 12px no-repeat;
-}
-
-.front-page #campus-life {
-	background: #fff url(../img/mwf/icon/campus-life.png) 16px 12px no-repeat;
-}
-
-.front-page #bus {
-	background: #fff url(../img/mwf/icon/bus.png) 16px 12px no-repeat;
-}
-
-.front-page #youtube {
-	background: #fff url(../img/mwf/icon/youtube.png) 8px 18px no-repeat;
-}
-
-.front-page #itunes {
-	background: #fff url(../img/mwf/icon/itunes.png) 15px 14px no-repeat;
-}
-
-.front-page #library {
-	background: #fff url(../img/mwf/icon/library.png) 15px 14px no-repeat;
-}
-
-.front-page #bear {
-	background: #fff url(../img/mwf/icon/bear.png) 16px 14px no-repeat;
-}
-
-.front-page #social-media {
-	background: #fff url(../img/mwf/icon/social-media.png) 16px 14px no-repeat;
-}
-
-.front-page #news a:hover,
-.front-page #news a:focus {
-	background: #eaf2fa url(../img/mwf/icon/news.png) 16px 14px no-repeat;
-}
-
-.front-page #happenings a:hover,
-.front-page #happenings a:focus {
-	background: #eaf2fa url(../img/mwf/icon/events.png) 17px 12px no-repeat;
-}
-
-.front-page #directory a:hover,
-.front-page #directory a:focus {
-	background: #eaf2fa url(../img/mwf/icon/directory.png) 17px 16px no-repeat;
-}
-
-.front-page #bear a:hover,
-.front-page #bear a:focus {
-	background: #eaf2fa url(../img/mwf/icon/bear.png) 17px 14px no-repeat;
-}
-
-.front-page #campus-map a:hover,
-.front-page #campus-map a:focus {
-	background: #eaf2fa url(../img/mwf/icon/campus-map.png) 17px 14px no-repeat;
-}
-
-.front-page #campus-tour a:hover,
-.front-page #campus-tour a:focus {
-	background: #eaf2fa url(../img/mwf/icon/campus-tour.png) 16px 12px no-repeat;
-}
-
-.front-page #campus-life a:hover,
-.front-page #campus-life a:focus {
-	background: #eaf2fa url(../img/mwf/icon/campus-life.png) 16px 12px no-repeat;
-}
-
-.front-page #bus a:hover,
-.front-page #bus a:focus {
-	background: #eaf2fa url(../img/mwf/icon/bus.png) 16px 12px no-repeat;
-}
-
-.front-page #youtube a:hover,
-.front-page #youtube a:focus {
-	background: #eaf2fa url(../img/mwf/icon/youtube.png) 8px 18px no-repeat;
-}
-
-.front-page #itunes a:hover,
-.front-page #itunes a:focus {
-	background: #eaf2fa url(../img/mwf/icon/itunes.png) 15px 14px no-repeat;
-}
-
-.front-page #library a:hover,
-.front-page #library a:focus {
-	background: #eaf2fa url(../img/mwf/icon/library.png) 15px 14px no-repeat;
-}
-
-.front-page #bear a:hover,
-.front-page #bear a:focus {
-	background: #eaf2fa url(../img/mwf/icon/bear.png) 16px 14px no-repeat;
-}
-
-.front-page #social-media a:hover,
-.front-page #social-media a:focus {
-	background: #eaf2fa url(../img/mwf/icon/social-media.png) 16px 14px no-repeat;
 }
 
 .front-page .menu-padded li a {
@@ -1063,34 +934,7 @@ form.form-full > input[type=reset] {
     margin-bottom: 6px;
 }
 
-.menu-padded > :first-child:last-child li:first-child a:hover,
-.menu-padded > :first-child:last-child li:first-child a:focus,
-.menu-padded > :first-child:last-child li:first-child a:active,
-.menu-padded > :first-child a:hover,
-.menu-padded > :first-child a:focus,
-.menu-padded > :first-child a:active,
-.menu-padded .menu-first a:hover,
-.menu-padded .menu-first a:focus,
-.menu-padded .menu-first a:active {
-    -moz-border-radius-topleft: .5em;
-    -moz-border-radius-topright: .5em;
-    -webkit-border-top-left-radius: .5em;
-    -webkit-border-top-right-radius: .5em;
-}
 
-.menu-padded li:last-child a:hover,
-.menu-padded li:last-child a:focus,
-.menu-padded li:last-child a:active,
-.menu-padded .menu-last a:hover,
-.menu-padded .menu-last a:focus,
-.menu-padded .menu-last a:active {
-    -webkit-border-bottom-left-radius: .5em;
-    -webkit-border-bottom-right-radius: .5em;
-    -moz-border-radius-bottomleft: .5em;
-    -moz-border-radius-bottomright: .5em;
-    z-index: -100;
-    margin-bottom: 6px;
-}
 
 /********************************************************
  * BUTTONS
@@ -1410,14 +1254,4 @@ form.form-full > input[type=reset]:hover {
 
 body{
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0);     
-}
-
-
-
-.button-highlight {
-     background-color: #ffb300 !important;
-     color: #494D69 !important;
-     background: -webkit-gradient(linear, left top, left bottom, from(#ffc847), to(#ffb300), color-stop(1, #fff)) !important;
-    -webkit-background-origin: padding-box !important;
-    -webkit-background-clip: padding-box !important;
 }

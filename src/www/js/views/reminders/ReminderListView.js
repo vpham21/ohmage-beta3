@@ -18,7 +18,7 @@ var ReminderListView = function(reminders, listTitle, onReminderClickCallback){
             date  = reminders[i].getDate();
             time   = "Reminder set for " + DateTimePicker.getPaddedTime(date) + ".";
             menuItem = menu.addMenuLinkItem(title, null, time);
-            TouchEnabledItemModel.bindTouchEvent(menuItem, onReminderClickCallbackClosure(reminders[i]));
+            TouchEnabledItemModel.bindTouchEvent(menuItem, onReminderClickCallbackClosure(reminders[i]), "menu-highlight");
         }
         
         return menu;

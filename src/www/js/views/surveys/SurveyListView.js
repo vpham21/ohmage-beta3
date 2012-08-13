@@ -25,11 +25,11 @@ var SurveyListView = function(surveys, title, onSurveyClickCallback){
 
             for(var i = 0; i < surveys.length; i++){
                 menuItem = menu.addMenuLinkItem(surveys[i].getTitle(), null, surveys[i].getDescription());
-                TouchEnabledItemModel.bindTouchEvent(menuItem, menuItem, onSurveyClickCallbackClosure(surveys[i]));   
+                TouchEnabledItemModel.bindTouchEvent(menuItem, menuItem, onSurveyClickCallbackClosure(surveys[i]), "menu-highlight");   
             }
         }else if (emptyListText !== null) {
             menuItem = menu.addMenuLinkItem(emptyListText, null, emptyListDetails);
-            TouchEnabledItemModel.bindTouchEvent(menuItem, menuItem, emptyListClickCallback);   
+            TouchEnabledItemModel.bindTouchEvent(menuItem, menuItem, emptyListClickCallback, "menu-highlight");
         }
         
         return menu;

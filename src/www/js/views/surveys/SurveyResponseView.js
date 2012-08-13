@@ -9,11 +9,11 @@ var SurveyResponseView = function(surveyResponseController){
         var location = surveyResponseModel.getLocation();
         var locationString = location.latitude + ", " + location.longitude;
         var surveyResponseDetailsView = mwf.decorator.Menu(survey.getTitle());
-        surveyResponseDetailsView.addMenuLinkItem("Campaign: <u>" + campaign.getName() + "</u>");
-        surveyResponseDetailsView.addMenuLinkItem("Survey: <u>" + survey.getTitle() + "</u>");
-        surveyResponseDetailsView.addMenuLinkItem("Time Submitted: <u>" + surveyResponseModel.getSubmitDate() + "</u>");
-        surveyResponseDetailsView.addMenuLinkItem("GPS Status: <u>" + surveyResponseModel.getLocationStatus() + "</u>");
-        surveyResponseDetailsView.addMenuLinkItem("GPS Location: <u>" + locationString + "</u>");
+        surveyResponseDetailsView.addMenuLinkItem("Campaign", null, campaign.getName());
+        surveyResponseDetailsView.addMenuLinkItem("Survey", null, survey.getTitle());
+        surveyResponseDetailsView.addMenuLinkItem("Time Submitted", null, surveyResponseModel.getSubmitDate());
+        surveyResponseDetailsView.addMenuLinkItem("GPS Status", null, surveyResponseModel.getLocationStatus());
+        surveyResponseDetailsView.addMenuLinkItem("GPS Location", null, locationString);
         $(surveyResponseDetailsView).find("a").css('background', "transparent");
         return surveyResponseDetailsView;
     };

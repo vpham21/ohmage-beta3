@@ -173,6 +173,10 @@ var PageNavigation = (function(){
         self.redirect("index.html");
     };
     
+    self.openChangePasswordPage = function(){
+        self.redirect("change-password.html");
+    };
+    
     self.openPrivacyPage = function(){
         self.redirect("privacy.html");
     };
@@ -202,6 +206,7 @@ var PageNavigation = (function(){
             window.history.forward();
         }
     };
+    
     
     return self;
 }());

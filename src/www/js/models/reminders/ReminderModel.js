@@ -4,10 +4,23 @@ var ReminderModel = function(){
     
     var remindersMap = new LocalMap("reminders");
     
+    /**
+     * This value will be used to uniquely identify a reminder. When used in 
+     * Java this value is going to be parsed to an Integer value so we cannot
+     * use either UUID or values greater than 2^31 - 1. If the value cannot be
+     * successfully parsed into an Integer, than only a single notification will 
+     * be displayed on Android devices since notificationID will be default to 
+     * 0. For more information about how Android handles notifications please 
+     * search for NotificatoinMangager.
+     * 
+     * The mod number is greater than 2^31 - 1 because the actual ID values are 
+     * going to be calculated as uuid + reminder count.
+     */
+    var uuid = parseInt(Math.random() * 2000000000, 10);
+    
     var title = "";
     var campaignURN = "";
     var surveyID = ""
-    var uuid = UUIDGen.generate();
     var message = "";
     var ticker = "";
     var supressionWindow = 24;
@@ -43,7 +56,7 @@ var ReminderModel = function(){
     };
    
     self.addReminder = function(date){
-        var id = uuid + "-" + reminders.length;
+        var id = uuid + reminders.length;
         var options = {
             date        : date,
             message     : message,
