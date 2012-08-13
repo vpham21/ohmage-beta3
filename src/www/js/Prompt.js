@@ -69,8 +69,8 @@ var Prompt = function(promptData, survey, campaign){
         switch(self.getType()){
 
             case 'photo':
-                if(responseValue !== SurveyResponse.SKIPPED_PROMPT_VALUE){
-                    var base64 = Base64.formatImageSrcString(SurveyResponse.getImage(responseValue));
+                if(responseValue !== SurveyResponseModel.SKIPPED_PROMPT_VALUE){
+                    var base64 = Base64.formatImageSrcString(SurveyResponseModel.getImage(responseValue));
                     summary = "<center><img src='" + base64 + "' width='100%' /></center>";    
                 }else{
                     summary = responseValue;

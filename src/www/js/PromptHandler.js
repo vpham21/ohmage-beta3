@@ -479,7 +479,7 @@ PromptHandler.Handlers = function(){
 
             //Save the image and store the returned UUID within the image's
             //alt attribute.
-            image.alt = SurveyResponse.saveImage(imageData);
+            image.alt = SurveyResponseModel.saveImage(imageData);
 
         };
 
@@ -530,7 +530,7 @@ PromptHandler.Handlers = function(){
 
 
         prompt.isValid = function(){
-
+            console.log(image.alt);
             if(!image.alt){
                 prompt.setErrorMessage("Please take an image to submit.");
                 return false;
@@ -584,9 +584,8 @@ PromptHandler.Handlers = function(){
 
         menu.addMenuTextItem("Unfortunatly current prompt type is not supported.");
 
-        prompt.getResponse = function()
-        {
-            return SurveyResponse.NOT_DISPLAYED_PROMPT_VALUE;
+        prompt.getResponse = function(){
+            return SurveyResponseModel.NOT_DISPLAYED_PROMPT_VALUE;
         };
 
         return menu;

@@ -16,7 +16,7 @@ var ReminderModel = function(){
      * The mod number is greater than 2^31 - 1 because the actual ID values are 
      * going to be calculated as uuid + reminder count.
      */
-    var uuid = parseInt(Math.random() * 2000000000, 10);
+    var uuid = Math.floor((Math.random()*10000000)+1);
     
     var title = "";
     var campaignURN = "";
