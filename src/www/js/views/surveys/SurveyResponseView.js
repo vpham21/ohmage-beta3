@@ -7,13 +7,16 @@ var SurveyResponseView = function(surveyResponseController){
     
     var renderSurveyResponseDetailsView = function(){
         var location = surveyResponseModel.getLocation();
-        var locationString = location.latitude + ", " + location.longitude;
+        
         var surveyResponseDetailsView = mwf.decorator.Menu(survey.getTitle());
         surveyResponseDetailsView.addMenuLinkItem("Campaign", null, campaign.getName());
         surveyResponseDetailsView.addMenuLinkItem("Survey", null, survey.getTitle());
         surveyResponseDetailsView.addMenuLinkItem("Time Submitted", null, surveyResponseModel.getSubmitDate());
         surveyResponseDetailsView.addMenuLinkItem("GPS Status", null, surveyResponseModel.getLocationStatus());
-        surveyResponseDetailsView.addMenuLinkItem("GPS Location", null, locationString);
+        if(location !== null){
+            surveyResponseDetailsView.addMenuLinkItem("GPS Location", null, location.latitude + ", " + location.longitude);    
+        }
+        
         $(surveyResponseDetailsView).find("a").css('background', "transparent");
         return surveyResponseDetailsView;
     };
