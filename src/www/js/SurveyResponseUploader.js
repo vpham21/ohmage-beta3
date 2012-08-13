@@ -203,7 +203,7 @@ SurveyResponseUploader.uploadAll = function(pendingResponses, uploadCompletedCal
             
             var onSuccess = function(response){    
                 count++;
-                SurveyResponse.deleteSurveyResponse(surveyResponse);
+                SurveyResponseModel.deleteSurveyResponse(surveyResponse);
                 uploadNextSurveyResponse();
             };
             

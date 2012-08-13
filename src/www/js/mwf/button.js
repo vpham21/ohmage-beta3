@@ -52,9 +52,13 @@ mwf.decorator.Button = function(label, url, callback)
      */
     button.setLabel = function(label){
         if(label){
-            this.innerHTML = label;
+            button.innerHTML = label;
         }
-    }
+    };
+    
+    button.getLabel = function(){
+        return button.innerHTML;
+    };
 
     /**
      * Sets the URL for this button. The URL will be actually be the value of
@@ -62,7 +66,7 @@ mwf.decorator.Button = function(label, url, callback)
      */
     button.setURL = function(url){
         if(url){
-            this.href = url;
+            button.href = url;
         }
     };
 
@@ -98,7 +102,7 @@ mwf.decorator.Button = function(label, url, callback)
         if(callback){
             mwf.decorator.attachTouchHandler(button, callback);
         }
-    }
+    };
 
     button.setLabel(label);
     button.setURL(url);
@@ -108,7 +112,7 @@ mwf.decorator.Button = function(label, url, callback)
 
     return button;
 
-}
+};
 
 
 /**
@@ -125,14 +129,14 @@ mwf.decorator.Button = function(label, url, callback)
  */
 mwf.decorator.SingleClickButton = function(label, callback){
     return mwf.decorator.SingleButton(label, null, callback);
-}
+};
 
 mwf.decorator.DoubleClickButton = function(firstLabel, firstCallback,
                                            secondLabel, secondCallback){
 
     return mwf.decorator.DoubleButton(firstLabel, null, firstCallback,
                                       secondLabel, null, secondCallback);
-}
+};
 
 /**
  * Creats a single button wrapped inside a <div> tag. Specifying a URL or a
@@ -177,6 +181,7 @@ mwf.decorator.SingleButton = function(label, url, callback){
        return button;
    }
 
+   container.getLabel = button.getLabel;
    container.click    = button.click;
    container.setLabel = button.setLabel;
    container.setURL   = button.setURL;

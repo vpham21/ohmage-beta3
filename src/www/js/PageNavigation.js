@@ -149,6 +149,15 @@ var PageNavigation = (function(){
     self.openUploadQueueView = function(){
         self.redirect("upload-queue.html");
     };
+    
+    /**
+     * Opens survey response view that displays all the details about the 
+     * specified response.
+     */
+    self.openSurveyResponseView = function(surveyKey){
+        setPageParameter("survey-key", surveyKey);
+        self.redirect("survey-response-view.html");
+    };
 
     /**
      * Redirects the user to tha authentication page.

@@ -3,91 +3,72 @@
  * survey.
  *
  * @author Zorayr Khalapyan
- *
  * @param id
  * @param uuid The unique identifier for this survey response.
  * @param urn The URN of the campaign associated with this survey.
  */
-function SurveyResponse(id, uuid, urn)
-{
+function SurveyResponseModel(id, uuid, urn){
 
     /**
      * This variable utilizes JavaScript's closure paradigm to allow private
      * methods to invoke public methods.
      */
-    var me = this;
+    var self = {};
 
     /**
      * Working data of the survey response. Saving and restoring surveys from
      * local storage will only save and restore this data object.
      */
-    this.data = {};
+    self.data = {};
 
     /**
      * An optional variable that associates this survey response with the
      * surveys' comapaign. This value should be used to create a Survey object
-     * from a SurveyResponse object.
+     * from a SurveyResponseModel object.
      */
-    this.data.campaign_urn = urn;
-
-    /**
-     * Enumaration object that describes location status.
-     * ToDo: Move this to static scope.
-     */
-    var LocationStatus =
-    {
-        //If the status is unavailable,
-        //it is an error to send a location object.
-        UNAVAILABLE : "unavailable",
-
-        VALID       : "valid",
-        INACCURATE  : 'inaccurate',
-        STALE       : 'stale'
-
-    };
+    self.data.campaign_urn = urn;
 
     /**
      * Initially, location status is set to unavailable. This should change
      * after invoking setLocation(..), or manuallySetLocation(..).
      */
-    this.data.location_status = LocationStatus.UNAVAILABLE;
+    self.data.location_status = SurveyResponseModel.LocationStatus.UNAVAILABLE;
 
     /**
      * A UUID unique to this survey response.
      */
-    this.data.survey_key = uuid;
+    self.data.survey_key = uuid;
 
     /**
      * A string defining a survey in the campaign's associated configuration
      * file at the XPath /surveys/survey/id.
      */
-    this.data.survey_id = id;
+    self.data.survey_id = id;
 
     /**
      * A string representing a standard time zone.
      */
-    this.data.timezone = jstz.determine_timezone().name();
+    self.data.timezone = jstz.determine_timezone().name();
 
     /**
      * An int specifying the number of milliseconds since the epoch.
      * This value will be set on survey response submission.
      */
-    this.data.time = null;
+    self.data.time = null;
 
     /**
      * An array composed of prompt responses and/or repeatable sets. By default
      * user has no responses. This object is not to be confused with the
      * responses object that will be submited to the server.
      */
-    this.data._responses = {};
+    self.data._responses = {};
 
     /**
      * An object with variable properties that describes the survey's launch
      * context. See the trigger framework page for a description of the object's
      * contents. The object must contain the property launch_time.
      */
-    this.data.survey_launch_context =
-    {
+    self.data.survey_launch_context = {
         launch_time     : new Date().getTime(),
         launch_timezone : jstz.determine_timezone().name(),
         active_triggers : []
@@ -96,20 +77,20 @@ function SurveyResponse(id, uuid, urn)
     /**
      * An object for housing location data.
      */
-    this.data.location = null;
+    self.data.location = null;
 
     /**
      * Returns true if the location has been set.
      *
      * @return true if the location for this survey response has been set.
      */
-    this.isLocationAvailable = function(){
-        return this.data.location != null;
+    self.isLocationAvailable = function(){
+        return self.data.location != null;
     };
 
-    this.manuallySetLocation = function(location){
-        this.data.location_status = LocationStatus.VALID;
-        this.data.location = location;
+    self.manuallySetLocation = function(location){
+        self.data.location_status = SurveyResponseModel.LocationStatus.VALID;
+        self.data.location = location;
     }
 
     /**
@@ -117,41 +98,41 @@ function SurveyResponse(id, uuid, urn)
      * this survey response. Callback will be invoked on either error or success
      * with a single boolean parameter success/true, error/false.
      */
-    this.setLocation = function(callback){
+    self.setLocation = function(callback){
 
-        this.data.location_status = LocationStatus.UNAVAILABLE;
-        this.data.location = null;
-
+        self.data.location_status = SurveyResponseModel.LocationStatus.UNAVAILABLE;
+        self.data.location = null;
+        
         mwf.touch.geolocation.getPosition(
 
             function(pos){
 
                 //Create a new location object to house
                 //the location data.
-                me.data.location = {};
+                self.data.location = {};
 
                 //Currently, there is no way of determining the geolocation
                 //provider but it's almost always going to be from the GPS
                 //device.
-                me.data.location.provider = 'GPS';
+                self.data.location.provider = 'GPS';
 
-                me.data.location.latitude  = pos.latitude;
-                me.data.location.longitude = pos.longitude;
-                me.data.location.accuracy  = pos.accuracy;
+                self.data.location.latitude  = pos.latitude;
+                self.data.location.longitude = pos.longitude;
+                self.data.location.accuracy  = pos.accuracy;
 
                 //A string describing location status. Must be one of:
                 //unavailable, valid, inaccurate, stale.
-                me.data.location_status = LocationStatus.VALID;
+                self.data.location_status = SurveyResponseModel.LocationStatus.VALID;
 
                 //A long value representing the milliseconds since the epoch at
                 //hich time this location value was collected.
-                me.data.location.time = new Date().getTime();
+                self.data.location.time = new Date().getTime();
 
                 //The timezone ID for the timezone of the device when this
                 //location value was collected.
-                me.data.location.timezone = jstz.determine_timezone().name();
+                self.data.location.timezone = jstz.determine_timezone().name();
 
-                me.save();
+                self.save();
 
                 if(callback){
                     callback(true);
@@ -162,10 +143,10 @@ function SurveyResponse(id, uuid, urn)
             //appropriate location status.
             function(message){
 
-                me.data.location = null;
-                me.data.location_status = LocationStatus.UNAVAILABLE;
+                self.data.location = null;
+                self.data.location_status = SurveyResponseModel.LocationStatus.UNAVAILABLE;
 
-                me.save();
+                self.save();
 
                 if(callback){
                     callback(false);
@@ -178,81 +159,56 @@ function SurveyResponse(id, uuid, urn)
     /**
      * Adds a response to the current response list.
      */
-    this.respond = function(promptID, value, isImage){
-        this.data._responses[promptID] = {"value": value, "isImage": isImage};
-        this.save();
+    self.respond = function(promptID, value, isImage){
+        self.data._responses[promptID] = {"value": value, "isImage": isImage};
+        self.save();
     };
 
     /**
      * Marks the specified prompt as skipped.
      */
-    this.promptSkipped = function(promptID){
-        this.respond(promptID, SurveyResponse.SKIPPED_PROMPT_VALUE, false);
+    self.promptSkipped = function(promptID){
+        self.respond(promptID, SurveyResponseModel.SKIPPED_PROMPT_VALUE, false);
     };
-
+    
     /**
      * Marks the specified prompt as not displayed.
      */
-    this.promptNotDisplayed = function(promptID){
-        this.respond(promptID, SurveyResponse.NOT_DISPLAYED_PROMPT_VALUE, false);
+    self.promptNotDisplayed = function(promptID){
+        self.respond(promptID, SurveyResponseModel.NOT_DISPLAYED_PROMPT_VALUE, false);
     };
 
-    this.submit = function(callback){
+    self.submit = function(callback){
         //Save the submit time.
-        me.data.time = new Date().getTime();
+        self.data.time = new Date().getTime();
 
         //Save the survey in the pool.
-        this.save();
+        self.save();
 
-        if(callback){
+        if(typeof(callback) !== "undefined"){
             callback();
         }
-
-    };
-
-    this.render = function(){
-
-        var survey = (new Campaign(this.getCampaignURN())).getSurvey(this.getSurveyID());
-
-        var menu = mwf.decorator.Menu(survey.getTitle() + " - Responses");
-
-        for (var promptID in this.data._responses) {
-            var prompt = survey.getPrompt(promptID);
-            var value  = this.data._responses[promptID].value;
-
-            menu.addMenuLinkItem(prompt.getText(), null, prompt.summarizeResponse(value));
-        }
-
-        $(menu).find("a").css('background', "transparent");
-
-        return menu;
     };
 
     /**
      * Returns UUIDs of all images associated with this response.
      * @return Array of UUIDs.
      */
-    this.getImageIds = function(){
-
+    self.getImageIds = function(){
         var images = [];
-
-        for (var promptID in this.data._responses) {
-
-            var response = this.data._responses[promptID];
-
+        for (var promptID in self.data._responses) {
+            var response = self.data._responses[promptID];
             if(response.isImage){
                 images.push(response.value);
             }
         }
-
         return images;
-
     };
 
     /**
      * Returns data that can be uploaded to the surver as response data.
      */
-    this.getUploadData = function(){
+    self.getUploadData = function(){
 
         //The idea here is that during response collection, responses is treated
         //as an object out of the idea that JavaScript does not support
@@ -264,28 +220,25 @@ function SurveyResponse(id, uuid, urn)
 
         var images = {};
 
-        for (var promptID in this.data._responses) {
-
-            var response = this.data._responses[promptID];
-
+        for (var promptID in self.data._responses) {
+            var response = self.data._responses[promptID];
             responses.push({
                 prompt_id: promptID,
                 value: response.value
             });
-
             if(response.isImage){
-                var base64Image = SurveyResponse.getImage(response.value);
+                var base64Image = SurveyResponseModel.getImage(response.value);
                 images[response.value] = base64Image.substring(base64Image.indexOf(',') + 1);
             }
         }
 
         var surveyResponse = {
-            survey_key           : this.data.survey_key,
-            time                 : this.data.time,
-            timezone             : this.data.timezone,
-            location_status      : this.data.location_status,
-            survey_id            : this.data.survey_id,
-            survey_launch_context: this.data.survey_launch_context,
+            survey_key           : self.data.survey_key,
+            time                 : self.data.time,
+            timezone             : self.data.timezone,
+            location_status      : self.data.location_status,
+            survey_id            : self.data.survey_id,
+            survey_launch_context: self.data.survey_launch_context,
 
             //UPDATE: Seems like they removed this from the Wiki docs.
             //Single Prompt Response is a JSON object and not an array. Not sure
@@ -296,8 +249,8 @@ function SurveyResponse(id, uuid, urn)
         }
 
         //Only set location, if available.
-        if(this.data.location != null){
-            surveyResponse.location = this.data.location;
+        if(self.data.location !== null){
+            surveyResponse.location = self.data.location;
         }
 
         return {"responses" : surveyResponse, "images": images};
@@ -307,8 +260,8 @@ function SurveyResponse(id, uuid, urn)
      * Replaces the current working data. This is used for restoring a survey
      * response from an external storage.
      */
-    this.setData = function(data){
-        this.data = data;
+    self.setData = function(data){
+        self.data = data;
     };
 
     /**
@@ -316,21 +269,19 @@ function SurveyResponse(id, uuid, urn)
      * i.e. {prompt_id : prompt_value}. This method is used as the data source
      * for conditional prompt evaluation.
      */
-    this.getResponses = function(){
+    self.getResponses = function(){
         var data = {};
-
-        for(var promptID in this.data._responses){
-            data[promptID] = this.data._responses[promptID].value;
+        for(var promptID in self.data._responses){
+            data[promptID] = self.data._responses[promptID].value;
         }
-
         return data;
     };
 
     /**
      * Saves the current response in the response pool.
      */
-    this.save = function(){
-        SurveyResponse.saveSurveyResponse(this);
+    self.save = function(){
+        SurveyResponseModel.saveSurveyResponse(self);
     };
 
 
@@ -338,11 +289,8 @@ function SurveyResponse(id, uuid, urn)
      * Returns the recorded response value for the given prompt,
      * or null if not specified.
      */
-    this.getResponse = function(promptID){
-
-        return (this.data._responses[promptID])?
-                    this.data._responses[promptID].value :
-                    null;
+    self.getResponse = function(promptID){
+        return (self.data._responses[promptID])? self.data._responses[promptID].value : null;
     };
 
     /**
@@ -351,74 +299,88 @@ function SurveyResponse(id, uuid, urn)
      * location status, responses, survey_id, survey_key, survey launch context,
      * time, and timezone.
      */
-    this.getData = function(){
-        return this.data;
+    self.getData = function(){
+        return self.data;
+    };
+    
+    self.getLocationStatus = function(){
+        return self.data.location_status;
+    };
+    
+    self.getLocation = function(){
+        return self.data.location;
+    };
+    
+    self.getSurveyID = function(){
+      return self.data.survey_id;
     };
 
-    this.getSurveyID = function(){
-      return this.data.survey_id;
+    self.getSurveyKey = function(){
+        return self.data.survey_key;
     };
 
-    this.getSurveyKey = function(){
-        return this.data.survey_key;
+    self.isSubmitted = function(){
+        return (self.data.time === null)? false : true;
     };
 
-    this.isSubmitted = function(){
-        return (this.data.time == null)? false : true;
+    self.getSubmitDate = function(){
+        return (new Date(self.data.time)).toString().substr(0, 24);
     };
 
-    this.getSubmitDate = function(){
-        return (new Date(this.data.time)).toString().substr(0, 24);
+    self.getCampaignURN = function(){
+        return self.data.campaign_urn;
     };
-
-    this.getCampaignURN = function(){
-        return this.data.campaign_urn;
-    };
+    
+    return self;
 }
 
 
-SurveyResponse.responses = new LocalMap("suvey-responses");
+SurveyResponseModel.responses = new LocalMap("suvey-responses");
 
-SurveyResponse.init = function(id, urn){
-    return new SurveyResponse(id, UUIDGen.generate(), urn);
+SurveyResponseModel.init = function(id, urn){
+    return new SurveyResponseModel(id, UUIDGen.generate(), urn);
 };
 
-SurveyResponse.saveSurveyResponse = function(surveyResponse){
-    SurveyResponse.responses.set(surveyResponse.getSurveyKey(), surveyResponse.getData());
+SurveyResponseModel.saveSurveyResponse = function(surveyResponseModel){
+    SurveyResponseModel.responses.set(surveyResponseModel.getSurveyKey(), surveyResponseModel.getData());
 };
 
 /**
- * The function restores a stored SurveyResponse object.
+ * Enumaration object that describes location status.
  */
-SurveyResponse.restoreSurveyResponse = function(survey_key){
+SurveyResponseModel.LocationStatus = {
+    UNAVAILABLE : "unavailable",
+    VALID       : "valid",
+    INACCURATE  : 'inaccurate',
+    STALE       : 'stale'
+};
 
-    var data = SurveyResponse.responses.get(survey_key);
-
+/**
+ * The function restores a stored SurveyResponseModel object.
+ */
+SurveyResponseModel.restoreSurveyResponse = function(survey_key){
+    var data = SurveyResponseModel.responses.get(survey_key);
     if(data === null){
         return false;
     }
-    var surveyResponse = new SurveyResponse(data.id,
-                                            data.survey_key,
-                                            data.campaign_urn);
-    surveyResponse.setData(data);
-
-    return surveyResponse;
-
+    var surveyResponseModel = new SurveyResponseModel(data.id, data.survey_key, data.campaign_urn);
+    surveyResponseModel.setData(data);
+    return surveyResponseModel;
 };
 
 /**
  * Deletes the survey response with it associated images if any.
  */
-SurveyResponse.deleteSurveyResponse = function(surveyResponse){
+SurveyResponseModel.deleteSurveyResponse = function(surveyResponseModel){
 
     //Delete response images.
-    var images = surveyResponse.getImageIds();
+    var images = surveyResponseModel.getImageIds();
     for(var i = 0; i < images.length; i++){
-        SurveyResponse.deleteImage(images[i]);
+        SurveyResponseModel.deleteImage(images[i]);
     }
 
     //Delete the response from the local storage map.
-    SurveyResponse.responses.release(surveyResponse.getSurveyKey());
+    SurveyResponseModel.responses.release(surveyResponseModel.getSurveyKey());
 };
 
 
@@ -426,90 +388,75 @@ SurveyResponse.deleteSurveyResponse = function(surveyResponse){
  * Saves the provided image URI and returns a UUID that mapps to that image's
  * URI.
  */
-SurveyResponse.saveImage = function(imageURI)
+SurveyResponseModel.saveImage = function(imageURI)
 {
-    var images = SurveyResponse.getImages();
+    var images = SurveyResponseModel.getImages();
     var uuid = UUIDGen.generate();
 
     images[uuid] = imageURI;
 
-    SurveyResponse.setImages(images);
+    SurveyResponseModel.setImages(images);
 
     return uuid;
 };
 
-SurveyResponse.getImage = function(uuid){
-    return SurveyResponse.getImages()[uuid];
+SurveyResponseModel.getImage = function(uuid){
+    return SurveyResponseModel.getImages()[uuid];
 };
 
-SurveyResponse.deleteImage = function(uuid){
-    var images = SurveyResponse.getImages();
-
+SurveyResponseModel.deleteImage = function(uuid){
+    var images = SurveyResponseModel.getImages();
     if(images[uuid])
         delete images[uuid];
-
-    SurveyResponse.setImages(images);
+    SurveyResponseModel.setImages(images);
 };
 
-SurveyResponse.setImages = function(images){
+SurveyResponseModel.setImages = function(images){
     localStorage.images = JSON.stringify(images);
 };
 
-SurveyResponse.getImages = function(){
+SurveyResponseModel.getImages = function(){
     return (localStorage.images)? JSON.parse(localStorage.images) : {};
 };
 
-SurveyResponse.getPendingResponses = function(){
-
+/**
+ * Returns all pending survey responses.
+ */
+SurveyResponseModel.getPendingResponses = function(){
     var pendingResponses = {};
-
-    for(var uuid in SurveyResponse.responses.getMap()){
-
-        //Restore the survey response object.
-        var response = SurveyResponse.restoreSurveyResponse(uuid);
-
+    for(var uuid in SurveyResponseModel.responses.getMap()){
+        var response = SurveyResponseModel.restoreSurveyResponse(uuid);
         //Skip survey responses that were not completed.
         if(!response.isSubmitted()){
             continue;
         }
-
         var campaign = new Campaign(response.getCampaignURN());
         var survey = campaign.getSurvey(response.getSurveyID());
         pendingResponses[uuid] = {'survey': survey, 'response': response};
-
     }
-
     return pendingResponses;
 }
 
-SurveyResponse.getUploadQueueSize = function(){
-
+/**
+ * Returns the number of survey responses that have not been submitted.
+ */
+SurveyResponseModel.getUploadQueueSize = function(){
     var size = 0;
-
-    for(var uuid in SurveyResponse.responses.getMap()){
-
-        //Restore the survey response object.
-        var response = SurveyResponse.restoreSurveyResponse(uuid);
-
-        //Skip survey responses that were not completed.
-        if(!response.isSubmitted()){
-            continue;
+    for(var uuid in SurveyResponseModel.responses.getMap()){
+        var response = SurveyResponseModel.restoreSurveyResponse(uuid);
+        if(response.isSubmitted()){
+            size++;
         }
-
-        size++;
     }
     return size;
-
-
 };
-
 
 /**
  * Value tag that indicates skipped prompt response value.
  */
-SurveyResponse.SKIPPED_PROMPT_VALUE = "SKIPPED";
+SurveyResponseModel.SKIPPED_PROMPT_VALUE = "SKIPPED";
 
 /**
 * Value tag that indicates not displayed prompt response value.
 */
-SurveyResponse.NOT_DISPLAYED_PROMPT_VALUE = "NOT_DISPLAYED";
+SurveyResponseModel.NOT_DISPLAYED_PROMPT_VALUE = "NOT_DISPLAYED";

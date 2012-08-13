@@ -90,7 +90,7 @@ var Survey = function(surveyData, campaign){
                     
                     var onSuccess = function(response){
                         showMessage("Successfully uploaded your survey response.", function(){
-                        SurveyResponse.deleteSurveyResponse(surveyResponse);
+                        SurveyResponseModel.deleteSurveyResponse(surveyResponse);
                             afterSurveyComplete();
                         });
                         

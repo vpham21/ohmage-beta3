@@ -31,6 +31,8 @@
     <script type="text/javascript" src="js/util/LocalMap.js"></script>
     <script type="text/javascript" src="js/util/Spinner.js"></script>
     <script type="text/javascript" src="js/util/Base64.js"></script>    
+    <script type="text/javascript" src="js/util/DeviceDetection.js"></script>
+    <script type="text/javascript" src="js/util/TouchEnabledItemModel.js"></script>
     
     <!-- IMPORT OHMAGE API JS LIB -->
     <script type="text/javascript" src="js/api.js"></script>
@@ -40,11 +42,13 @@
     <script type="text/javascript" src="js/Campaign.js"></script>
     <script type="text/javascript" src="js/Prompt.js"></script>
     <script type="text/javascript" src="js/PromptHandler.js"></script>
-    <script type="text/javascript" src="js/SurveyResponse.js"></script>
     <script type="text/javascript" src="js/Survey.js"></script>
     <script type="text/javascript" src="js/SurveyResponseUploader.js"></script>
-    <script type="text/javascript" src="js/UploadQueue.js"></script>
+    
+    <script type="text/javascript" src="js/controllers/surveys/UploadQueueController.js"></script>
+    <script type="text/javascript" src="js/models/surveys/SurveyResponseModel.js"></script>
     <script type="text/javascript" src="js/models/CustomPropertiesVault.js"></script>
+    <script type="text/javascript" src="js/views/surveys/UploadQueueView.js"></script>
     
     <script type="text/javascript" src="js/init/init.UploadQueue.js"></script>    
 
@@ -57,7 +61,6 @@
             <img src="img/ohmage-icon-gray-noshadow-30px.png" alt="ohmage" width="30" height="30" style="padding-left:3px; padding-top:3px;"/>
             <span>ohmage</span>
         </a>
-
     </h1>
 
     <div id="upload-queue-menu"> </div>

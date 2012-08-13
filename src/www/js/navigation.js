@@ -16,7 +16,7 @@ function Navigation(survey, container){
     /**
      * The response object for the current survey.
      */
-    var surveyResponse = SurveyResponse.init(survey.getID(), survey.getCampaign().getURN());
+    var surveyResponse = SurveyResponseModel.init(survey.getID(), survey.getCampaign().getURN());
 
     /**
     * Stores the index of the currently displayed prompt. Initialized to the
@@ -259,7 +259,7 @@ function Navigation(survey, container){
     self.abort = function(){
         resetBackButtonFunctionality();
         if(surveyResponse !== null && !surveyResponse.isSubmitted()){
-            SurveyResponse.deleteSurveyResponse(surveyResponse);
+            SurveyResponseModel.deleteSurveyResponse(surveyResponse);
         }
     };
 
