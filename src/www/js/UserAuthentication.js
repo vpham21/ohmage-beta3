@@ -185,10 +185,9 @@ function UserAuthentication() {
      * method agnostic and works with both hashed and token authentication
      * methods.
      *
-     * @param redirectURL If specified, the logged out user will be redirected
-     *        to this URL. This variable is optional.
      */
-    this.logout = function(redirectURL){
+    this.logout = function(){
+        
         var message = "All data will be lost. Are you sure you would like to proceed?";
 
         showConfirm(message, function(yes){
@@ -204,10 +203,7 @@ function UserAuthentication() {
                 ReminderController.cancelAll();
                 window.localStorage.clear();
 
-                if(typeof(redirectURL) == "undefined")
-                    PageNavigation.openAuthenticationPage();
-                else
-                    PageNavigation.redirect(redirectURL);
+                PageNavigation.openAuthenticationPage();
 
             }
         }, "Yes,No");
