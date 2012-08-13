@@ -21,7 +21,7 @@ var Help = function(){
         },
 
         {
-         title:'TakingSurveys',
+         title:'Taking Surveys',
          text: 'Click on one of the surveys to answer survey related prompts.',
          img: 'img/screenshots/taking-surveys.png'
         },
