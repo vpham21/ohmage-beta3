@@ -323,8 +323,7 @@ mwf.decorator.Menu = function(title)
      *
      * @return The created option item.
      */
-    var createOptionItem = function(name, value, label, details, isRadio)
-    {
+    var createOptionItem = function(name, value, label, details, isRadio){
 
         //Create the input element.
         var inputItem = document.createElement('input');
@@ -333,26 +332,19 @@ mwf.decorator.Menu = function(title)
         inputItem.type  = (isRadio)? "radio" : "checkbox";
         inputItem.name  = name;
         inputItem.value = value;
-
-        //ToDo: This should be moved into a convinient CSS class instead.
         inputItem.style.verticalAlign = 'bottom';
 
         //Create a standard menu link item and prepend the option button.
         var linkItem = createLinkItem(label, null, details);
         linkItem.insertBefore(inputItem, linkItem.firstChild);
 
-        var toggle = function(event){
-           if(event.srcElement != inputItem)
-                inputItem.checked =  (isRadio)? true : !inputItem.checked;
-
+        var toggleSelectionCallback = function(inputItem){
+            return function(event){                
+                inputItem.checked =  (isRadio)? true : !inputItem.checked;  
+            };
         };
 
-        //Add an event handler that would toggle the option button's
-        //checked attribute on link click.
-        //inputItem.onclick = toggle;
-        linkItem.onclick = toggle;
-
-
+        TouchEnabledItemModel.bindTouchEvent(linkItem, linkItem, toggleSelectionCallback(inputItem), "menu-highlight");
 
         return linkItem;
     };
@@ -480,10 +472,8 @@ mwf.decorator.Menu = function(title)
      *
      * @return True if the item was successfully removed, false otherwise.
      */
-    menu.removeMenuItem = function(item)
-    {
-        if(this._items && item)
-        {
+    menu.removeMenuItem = function(item){
+        if(this._items && item){
             //The return value of the removeChild method is either the removed
             //node, or null on failure.
             return this._items.removeChild(item) != null;
@@ -493,8 +483,7 @@ mwf.decorator.Menu = function(title)
     };
 
     //If a default title has been set, then set the menu's title.
-    if(title)
-    {
+    if(title){
         menu.setTitle(title);
     }
 

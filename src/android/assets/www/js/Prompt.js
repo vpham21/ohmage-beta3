@@ -1,37 +1,76 @@
-
-
 /**
  *
  * Represents an individual prompt. The class provides functionality for getting
  * the prompt's
  */
-function Prompt(prompt){
+var Prompt = function(promptData, survey, campaign){
 
    /**
     * This variable utilizes JavaScript's closure paradigm to allow private
     * methods to invoke public methods.
     */
-    var me = this;
+    var self = this;
 
     /**
      * Stores error message in case validation fails.
      */
     var errorMsg = null;
-
+       
     /**
      * Default handler for the current prompt. The handler knows how to display
      * the prompt and analyze the response.
      */
-    var handler = new PromptHandler(this);
+    var handler = new PromptHandler(self);
+    
+    var customPropertiesVault = null;
+   
+    /**
+     * Stores a list of current specified and custom properties which are just
+     * (key, value) pairs.
+     */
+    var properties = null;
+    
+    /**
+     * The method initlization the list of both specified and custom properties. 
+     * This method should be invoked when this prompt is initialized.
+     */
+    var setProperties = function(){        
+        if(!promptData.properties || !promptData.properties.property){
+            properties = [];
+        } else if(!promptData.properties.property.length){
+            properties = [promptData.properties.property];
+        }else{
+            properties = promptData.properties.property;
+        }
+        
+        var customProperties = customPropertiesVault.getCustomProperties();
+        for(var i = 0; i < customProperties.length; i++){
+            properties.push(customProperties[i]);
+        }
+    };
 
-    this.summarizeResponse = function(responseValue){
+    /**
+     * Detects if the specified property is already in the property list of this
+     * prompt. The method returns true if the property is a duplicate, false
+     * otherwise.
+     */
+    var isDuplicatePropertyLabel = function(property){
+        for(var i = 0; i < properties.length; i++){
+            if(properties[i].label == property.label){
+                return true;
+            }
+        }
+        return false;
+    };
+    
+    self.summarizeResponse = function(responseValue){
         var summary = "";
 
-        switch(this.getType()){
+        switch(self.getType()){
 
             case 'photo':
-                if(responseValue !== SurveyResponse.SKIPPED_PROMPT_VALUE){
-                    var base64 = Base64.formatImageSrcString(SurveyResponse.getImage(responseValue));
+                if(responseValue !== SurveyResponseModel.SKIPPED_PROMPT_VALUE){
+                    var base64 = Base64.formatImageSrcString(SurveyResponseModel.getImage(responseValue));
                     summary = "<center><img src='" + base64 + "' width='100%' /></center>";    
                 }else{
                     summary = responseValue;
@@ -44,9 +83,8 @@ function Prompt(prompt){
 
                 var keys = new String(responseValue).split(',');
                 var labels = [];
-
                 for(var key in keys){
-                    labels.push(this.getProperty(key).label);
+                    labels.push(self.getProperty(key).label);
                 }
 
                 summary = labels.join(", ");
@@ -60,9 +98,9 @@ function Prompt(prompt){
         return summary;
     };
 
-    this.render = function(){
+    self.render = function(){
         return handler.render();
-    }
+    };
 
     /**
     * Default validator for this prompt. Each individual prompt type should
@@ -71,7 +109,7 @@ function Prompt(prompt){
     * @return True.
     *
     */
-    this.isValid = function(){
+    self.isValid = function(){
         return true;
     };
 
@@ -80,9 +118,9 @@ function Prompt(prompt){
      * called without calling isValid on the current prompt, then isValid will
      * be automatically called before retreiving the error message.
      */
-    this.getErrorMessage = function(){
+    self.getErrorMessage = function(){
         if(errorMsg === null){
-            isValid();
+            self.isValid();
         }
 
         return (errorMsg)? errorMsg : false;
@@ -92,7 +130,7 @@ function Prompt(prompt){
      * Set an error message for the current prompt.
      * @param message The new error message.
      */
-    this.setErrorMessage = function(message){
+    self.setErrorMessage = function(message){
         errorMsg = message;
     };
 
@@ -100,202 +138,134 @@ function Prompt(prompt){
      * Returns the default response for this prompt. Each individual prompt type
      * should override this method in order to return the correct response.
      */
-    this.getResponse = function() {
-        return this.getDefaultValue();
+    self.getResponse = function() {
+        return self.getDefaultValue();
+    };
+       
+   /**
+    * Returns a list of properties for this prompt.
+    */
+    self.getProperties = function(){
+        return properties;
+    };
+    
+    self.getProperty = function(key){
+        var properties = self.getProperties();
+        for(var i = 0; i < properties.length; i++){
+            if(properties[i].key == key){
+                return properties[i];
+            }
+        }
+        return null;
     };
 
+    /**
+     * Returns minimum value allowed for the current prompt's response, or null
+     * if the minimum value is undefined.     
+     * @return minimum value allowed for the current prompt's response, or null
+     *         if undefined.
+     */
+    self.getMinValue = function(){
+        var minProperty = self.getProperty("min");
+        return minProperty !== null ? minProperty.label : null;
+    };
+
+    /**
+     * Returns maximum value allowed for the current prompt's response, or null
+     * if the maximum value is undefined.
+     * @return maximum value allowed for the current prompt's response, or null
+     *        if undefined.
+     */
+    self.getMaxValue = function(){
+        var maxProperty = self.getProperty("max");
+        return maxProperty !== null ? maxProperty.label : null;
+    };
+
+   /**
+    * Adds a new property to this prompt. If the property label already exists,
+    * then the method will have no side effects and will return false.
+    */
+   self.addProperty = function(label, key){
+        //By default, property key is the index of the array.
+        var property = { key:key || properties.length, label:label };
+        if(!isDuplicatePropertyLabel(property)){            
+            properties.push(property);
+            customPropertiesVault.addCustomProperty(property);
+            return property;
+        }else{
+            return false
+        }
+    };
+    
+    self.getCampaignURN = function(){
+        return campaign.getURN();
+    };
+    
+    self.getSurveyID = function(){
+        return survey.getID();
+    };
+    
     /**
      * Returns the ID of the current prompt.
      * @return The ID of the current prompt.
      */
-    this.getID = function(){
-        return prompt.id;
+    self.getID = function(){
+        return promptData.id;
     };
 
     /**
      * Returns the conditional statement associated with the current prompt.
      */
-    this.getCondition = function(){
-        return prompt.condition || null;
+    self.getCondition = function(){
+        return promptData.condition || null;
     }
 
     /**
      * Returns the type of the current prompt.
      * @return the type of the current prompt.
      */
-    this.getType = function(){
-        return prompt.prompttype;
+    self.getType = function(){
+        return promptData.prompttype;
     };
-
-    this.getProperty = function(key){
-        var properties = this.getProperties();
-
-        for(var i = 0; i < properties.length; i++){
-            if(properties[i].key == key){
-                return properties[i];
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Returns a list of properties for this prompt. If the prompt does not
-     * include any properties, then an empty array will be returned.
-     * 
-     */
-    this.getProperties = function(){
-
-        //This handles GIT issue: 62.
-        //Handle the case where there is no properties defined at all.
-        if(!prompt.properties){
-            prompt.properties = {};
-            prompt.properties.property = [];
-            return prompt.properties.property;
-        }
-
-        if(!prompt.properties.property){
-            prompt.properties.property = [];
-        }
-        
-        //If there is only a single property, then convert the property variable
-        //to an array and add the element. We need the temporary variable to 
-        //store the current single property when converting the property field 
-        //to an array.
-        if(!prompt.properties.property.length){
-            var tempProperty = prompt.properties.property;
-            prompt.properties.property = [];
-            prompt.properties.property.push(tempProperty);
-        }
-
-        return prompt.properties.property;
-    };
-
+    
     /**
      * Returns text related to this prompt. If prompt text is undefined, then an
      * empty string will be returned.
      */
-    this.getText = function(){
-        return prompt.prompttext || "";
+    self.getText = function(){
+        return promptData.prompttext || "";
     };
 
     /**
      * Returns true if the prompt may be skipped.
      * @return true if the prompt may be skipped.
      */
-    this.isSkippable = function(){
-        return prompt.skippable === "true";
+    self.isSkippable = function(){
+        return promptData.skippable === "true";
     };
 
     /**
      * Returns the label that should be displayed inside the skip button.
      */
-    this.getSkipLabel = function(){
-        return prompt.skiplabel;
+    self.getSkipLabel = function(){
+        return promptData.skiplabel;
     };
-
-    /**
-     * Returns minimum value allowed for the current prompt's response, or null
-     * if the minimum value is undefined.
-     *
-     * @return minimum value allowed for the current prompt's response, or null
-     *         if undefined.
-     */
-    this.getMinValue = function()
-    {
-        var properties = this.getProperties();
-
-        for(var i = 0; i < properties.length; i++){
-            if(properties[i].key === 'min'){
-                return properties[i].label;
-            }
-
-        }
-        return null;
-    };
-
-    /**
-     * Returns maximum value allowed for the current prompt's response, or null
-     * if the maximum value is undefined.
-     *
-     * @return maximum value allowed for the current prompt's response, or null
-     *         if undefined.
-     */
-    this.getMaxValue = function()
-    {
-        var properties = this.getProperties();
-
-        for(var i = 0; i < properties.length; i++){
-            if(properties[i].key === 'max'){
-                return properties[i].label;
-            }
-        }
-
-        return null;
-    };
-
+    
     /**
      * Returns the default value for this prompt.
      * @return Default value for this prompt.
      */
-    this.getDefaultValue = function()
-    {
+    self.getDefaultValue = function(){
         //Access the default value of the prompt with array accessing schema
         //in order to bypass JS keyword use 'default'.
-        return (typeof(prompt.defaultvalue) != 'undefined')? prompt.defaultvalue : null;
+        return (typeof(promptData.defaultvalue) !== 'undefined')? promptData.defaultvalue : null;
     };
-
-    /**
-     * Detects if the specified property is already in the property list of this
-     * prompt. The method returns true if the property is a duplicate, false
-     * otherwise.
-     */
-    var isDuplicatePropertyLabel = function(property){
-
-        var properties = me.getProperties();
-
-        for(var i = 0; i < properties.length; i++)
-        {
-            if(properties[i].label == property.label){
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-   /**
-    * Adds a new property to this prompt. If the property label already exists,
-    * then the method will have no side effects and will return false.
-    */
-   this.addProperty = function(label, key)
-    {
-        //By default, property key is the index of the array.
-        var property = {key:key || me.getProperties().length, label:label};
-
-        if(!isDuplicatePropertyLabel(property)){
-            me.getProperties().push(property);
-            return property;
-        }else{
-            return false
-        }
-
-    };
-
-
-
-
-
-
-
-
-}
-
-
-
-
-
-
-
-
-
+    
+    //Initialization. 
+    (function(){
+       customPropertiesVault = new CustomPropertiesVault(self);
+       setProperties();
+    }());
+      
+    return self;
+};

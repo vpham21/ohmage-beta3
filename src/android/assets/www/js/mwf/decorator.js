@@ -28,7 +28,7 @@ mwf.decorator = function(){};
  * Returns true if the current device suppor touch events.
  */
 mwf.decorator.touchEnabled = function(){
-    return navigator.userAgent.match(/(iPhone)/);
+    return navigator.userAgent.match(/(iPhone)/) !== null;
 };
 
 mwf.decorator.attachTouchHandler = function(obj, callback){
@@ -40,7 +40,6 @@ mwf.decorator.attachTouchHandler = function(obj, callback){
         event.preventDefault();
         event.stopPropagation();
     };
-
     if(mwf.decorator.touchEnabled()){
         obj.ontouchend = _callback;
     }else{

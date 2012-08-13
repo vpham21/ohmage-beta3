@@ -12,17 +12,13 @@ invokeOnReady(function(){
 
     if(surveyMenu.size() == 0){
         surveyMenu.addMenuLinkItem("No Available Surveys", null, "Please install a campaign, to view available surveys.").onclick = function(){
-            PageNavigation.openCampaignsView(false);
+            PageNavigation.openAvailableCampaignsView();
         };
     }
 
     $("#surveys").append(surveyMenu);
-    $("#surveys").append(mwf.decorator.SingleClickButton("Upload Queue", function(){
-        PageNavigation.openUploadQueueView();
-    }));
+    $("#surveys").append(mwf.decorator.SingleClickButton("Upload Queue", PageNavigation.openUploadQueueView));
 
-    mwf.decorator.TopButton("All Campaigns", null, function(){
-    PageNavigation.openCampaignsView(true);
-    }, true);
+    mwf.decorator.TopButton("All Campaigns", null, PageNavigation.openInstalledCampaignsView , true);
 
 });

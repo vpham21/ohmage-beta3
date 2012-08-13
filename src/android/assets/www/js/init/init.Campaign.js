@@ -5,14 +5,12 @@
      //campaigns view where the user may be able to choose an appropriate
      //campaign.
      if(campaignURN === null){
-         PageNavigation.openCampaignsView();
+         PageNavigation.openInstalledCampaignsView();
      }
 
      //Attach an event listener to the top right buttion to navigate the
      //user to the campaigns view.
-     $('#button-top').click(function() {
-         PageNavigation.openCampaignsView();
-     });
+     $('#button-top').click(PageNavigation.openInstalledCampaignsView);
 
      var campaign = new Campaign(campaignURN);
 
@@ -20,7 +18,7 @@
 
      document.getElementById('surveys').appendChild(mwf.decorator.SingleClickButton("Delete Campaign", function(){
          Campaigns.uninstallCampaign(campaignURN);
-         PageNavigation.openCampaignsView();
+         PageNavigation.openInstalledCampaignsView();
      }));
 
  });

@@ -6,16 +6,14 @@
         Encapsulates prompt related stylesheets.
 */
 
-.number-counter
-{
+.number-counter {
     text-align: center;
     padding: 0px !important;
     font-size: 35px;
     text-align: center;
 }
 
-.math-sign
-{
+.math-sign {
     padding: 0px !important;
     font-size: 40px;
     text-align: center;
@@ -23,8 +21,11 @@
     cursor: pointer;
 }
 
-.math-sign-disabled
-{
+.math-sign.pressed {
+    color: #00FFFF !important;
+}
+
+.math-sign-disabled {
     padding: 0px !important;
     font-size: 40px;
     text-align: center;
@@ -32,11 +33,7 @@
     cursor: pointer;
 }
 
-img.photo-response
-{
+img.photo-response {
     width: auto;
     height: auto;
 }
-
-
-

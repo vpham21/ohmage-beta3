@@ -1,11 +1,5 @@
 invokeOnReady(function(){
-    var uuid = PageNavigation.getPageParameter('uuid');
-    var controller = new ReminderController(uuid);
+    var controller = new ReminderController(PageNavigation.getPageParameter('uuid'));
     $("#view-container").append(controller.render());
-    $("#view-container").append(mwf.decorator.SingleClickButton("Dashboard", function(){
-        PageNavigation.openDashboard();
-    }));
-    mwf.decorator.TopButton("All Campaigns", null, function(){
-        PageNavigation.openCampaignsView(true);
-    }, true);
+    mwf.decorator.TopButton("All Campaigns", null, PageNavigation.openInstalledCampaignsView, true);
 });

@@ -52,9 +52,13 @@ mwf.decorator.Button = function(label, url, callback)
      */
     button.setLabel = function(label){
         if(label){
-            this.innerHTML = label;
+            button.innerHTML = label;
         }
-    }
+    };
+    
+    button.getLabel = function(){
+        return button.innerHTML;
+    };
 
     /**
      * Sets the URL for this button. The URL will be actually be the value of
@@ -62,43 +66,16 @@ mwf.decorator.Button = function(label, url, callback)
      */
     button.setURL = function(url){
         if(url){
-            this.href = url;
+            button.href = url;
         }
-    }
+    };
 
     /**
      * Sets the on click listener for this button.
      */
     button.click = function(callback){
-        
-        //Unhighlight the button when the finger moves outside of the button.
-        $(button).bind("touchmove", function(e){
-            var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
-            var elm = $(button).offset();
-            var x = touch.pageX - elm.left;
-            var y = touch.pageY - elm.top;
-            if((x < $(button).width() && x > 0) && (y < $(button).height() && y > 0)){
-                $(button).addClass('button-highlight');
-            }else{
-                $(button).removeClass('button-highlight');
-            }
-        });
-        
-        //Highlight the button when the finger touches the button.
-        $(button).bind("touchstart", function(){
-            $(button).addClass('button-highlight');
-        });
-        
-        //Unhighlight the button when the user is no longer touching the button.
-        $(button).bind("touchend", function(){
-           $(button).removeClass('button-highlight');
-        });
-        
-        //If button's callback is set, then set the <a>'s onclick/ontouchend property.
-        if(callback){
-            mwf.decorator.attachTouchHandler(button, callback);
-        }
-    }
+        TouchEnabledItemModel.bindTouchEvent(button, button, callback, "button-highlight");
+    };
 
     button.setLabel(label);
     button.setURL(url);
@@ -108,7 +85,7 @@ mwf.decorator.Button = function(label, url, callback)
 
     return button;
 
-}
+};
 
 
 /**
@@ -125,14 +102,14 @@ mwf.decorator.Button = function(label, url, callback)
  */
 mwf.decorator.SingleClickButton = function(label, callback){
     return mwf.decorator.SingleButton(label, null, callback);
-}
+};
 
 mwf.decorator.DoubleClickButton = function(firstLabel, firstCallback,
                                            secondLabel, secondCallback){
 
     return mwf.decorator.DoubleButton(firstLabel, null, firstCallback,
                                       secondLabel, null, secondCallback);
-}
+};
 
 /**
  * Creats a single button wrapped inside a <div> tag. Specifying a URL or a
@@ -177,6 +154,7 @@ mwf.decorator.SingleButton = function(label, url, callback){
        return button;
    }
 
+   container.getLabel = button.getLabel;
    container.click    = button.click;
    container.setLabel = button.setLabel;
    container.setURL   = button.setURL;

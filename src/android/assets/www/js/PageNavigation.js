@@ -42,9 +42,9 @@ var PageNavigation = (function(){
      */
     var setPageParameter = function(name, value, defaultValue){
         if( typeof(value) !== "undefined" ){
-            currentParameters[name] = value;
+            currentParameters[name] = new String(value);
         }else if( typeof(defaultValue) !== "undefined" ){
-            currentParameters[name] = defaultValue;
+            currentParameters[name] = new String(defaultValue);
         }
     };
 
@@ -60,6 +60,13 @@ var PageNavigation = (function(){
             pageParameters.importMap(currentParameters);    
             document.location = url;
         }
+    };
+    
+    /**
+     * Returns true if the specified parameter has been set.
+     */
+    self.isPageParameterSet = function(parameterName){
+        return self.getPageParameter(parameterName) !== null;
     };
     
     /**
@@ -95,14 +102,19 @@ var PageNavigation = (function(){
     };
 
     /**
-     * Redirects the user to the page that displays a list of available or 
-     * installed campaigns.
-     * @param installed If set to true, only installed campaigns will be 
-     *        displayed. By default, this value is set to true.
+     * Redirects the user to the page that displays a list of installed
+     * campaigns.
      */
-    self.openCampaignsView = function(installed){
-        setPageParameter("display-installed-campaigns", installed, true);
-        self.redirect("campaigns.html");
+    self.openInstalledCampaignsView = function(){
+        self.redirect("installed-campaigns.html");
+    };
+    
+    /**
+     * Redirects the user to the page that displays a list of available 
+     * campaigns.
+     */
+    self.openAvailableCampaignsView = function(){
+        self.redirect("available-campaigns.html");
     };
 
     /**
@@ -125,13 +137,26 @@ var PageNavigation = (function(){
         setPageParameter("survey-id", surveyID);
         self.redirect("survey.html");
     };
-
+    
+    self.openPendingSurveysView = function(){
+        self.redirect("pending-surveys.html");
+    };
+    
     /**
      * Redirects the user to the page that displays a list of submitted but 
      * not yet uploaded surveys.
      */
     self.openUploadQueueView = function(){
         self.redirect("upload-queue.html");
+    };
+    
+    /**
+     * Opens survey response view that displays all the details about the 
+     * specified response.
+     */
+    self.openSurveyResponseView = function(surveyKey){
+        setPageParameter("survey-key", surveyKey);
+        self.redirect("survey-response-view.html");
     };
 
     /**
@@ -147,6 +172,41 @@ var PageNavigation = (function(){
     self.openDashboard = function(){
         self.redirect("index.html");
     };
+    
+    self.openChangePasswordPage = function(){
+        self.redirect("change-password.html");
+    };
+    
+    self.openPrivacyPage = function(){
+        self.redirect("privacy.html");
+    };
+    
+    self.openHelpMenuView = function(){
+        self.redirect("help-menu.html");
+    };
+    
+    self.openHelpSectionView = function(index){
+        console.log(index);
+        setPageParameter("help-section-index", index);
+        self.redirect("help-section.html");
+    };
+    
+    self.goBack = function(){        
+        if (typeof (navigator.app) !== "undefined") {
+            navigator.app.backHistory();
+        } else {
+            window.history.back();
+        }
+    };
+    
+    self.goForward = function(){
+        if (typeof (navigator.app) !== "undefined") {
+            navigator.app.forwardHistory();
+        } else {
+            window.history.forward();
+        }
+    };
+    
     
     return self;
 }());

@@ -10,6 +10,7 @@
     <style type="text/css">
         @import url("css/mwoc.css");
         @import url("css/mwf.css");
+        @import url("css/highlight-styles.css");
         @import url("css/spinner.css");
     </style>
 
@@ -29,22 +30,22 @@
     <script type="text/javascript" src="js/jquery/jquery.extensions.js"></script>
     <script type="text/javascript" src="js/util/LocalMap.js"></script>
     <script type="text/javascript" src="js/util/Spinner.js"></script>
+    <script type="text/javascript" src="js/util/DeviceDetection.js"></script>
+    <script type="text/javascript" src="js/util/TouchEnabledItemModel.js"></script>
+    <script type="text/javascript" src="js/util/LocalNotificationAdapter.js"></script>
     
     <!-- IMPORT OHMAGE API JS LIB -->
     <script type="text/javascript" src="js/api.js"></script>
     <script type="text/javascript" src="js/PageNavigation.js"></script>
     <script type="text/javascript" src="js/UserAuthentication.js"></script>
-    
-    <script type="text/javascript" src="js/util/LocalNotificationAdapter.js"></script>
     <script type="text/javascript" src="js/models/ReminderModel.js"></script>
     <script type="text/javascript" src="js/controllers/ReminderController.js"></script>
-    <script type="text/javascript" src="js/views/ReminderView.js"></script>
+    
 
     <script type="text/javascript" src="js/init/init.Auth.js"></script>
 
 </head>
 <body>
-
 
     <h1 id="header">
         <a href="index.html">
@@ -54,15 +55,15 @@
 
     </h1>
 
-    <form class="form-full form-padded" autocomplete="off">
+    <form id="auth-form" class="form-full form-padded" autocomplete="off">
 
         <h1 class="light form-first">Please Login to Proceed</h1>
 
         <label for="username">Username</label>
-        <input type="text" name="username" id="username" value="zorayr.mwf"/>
+        <input type="text" name="username" id="username"/>
 
         <label for="password">Password</label>
-        <input type="password" name="password" id="password" value="Zorayr1@"/>
+        <input type="password" name="password" id="password"/>
 
         <input type="button" id="login" name="submit" value="Secure Login" class="form-last" />
 
