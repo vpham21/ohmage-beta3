@@ -42,9 +42,9 @@ var PageNavigation = (function(){
      */
     var setPageParameter = function(name, value, defaultValue){
         if( typeof(value) !== "undefined" ){
-            currentParameters[name] = value;
+            currentParameters[name] = new String(value);
         }else if( typeof(defaultValue) !== "undefined" ){
-            currentParameters[name] = defaultValue;
+            currentParameters[name] = new String(defaultValue);
         }
     };
 
@@ -166,6 +166,16 @@ var PageNavigation = (function(){
     
     self.openPrivacyPage = function(){
         self.redirect("privacy.html");
+    };
+    
+    self.openHelpMenuView = function(){
+        self.redirect("help-menu.html");
+    };
+    
+    self.openHelpSectionView = function(index){
+        console.log(index);
+        setPageParameter("help-section-index", index);
+        self.redirect("help-section.html");
     };
     
     self.goBack = function(){        
