@@ -10,7 +10,7 @@ var HelpMenuView = function(sections){
         };
         for(var i = 0; i < sections.length; i++){
             menuItem = menu.addMenuLinkItem(sections[i].title, null, null);
-            TouchEnabledItemModel.bindTouchEvent(menuItem, menuItem, openHelpSectionCallback(i));   
+            TouchEnabledItemModel.bindTouchEvent(menuItem, menuItem, openHelpSectionCallback(i), "menu-highlight");   
         }
         return menu;
     };
