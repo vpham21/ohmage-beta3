@@ -18,7 +18,7 @@ var DeviceDetection = (function(){
     };
 
     self.isDeviceiOS = function(){
-        return matchUserAgent(/(iPhone)/);
+        return matchUserAgent(/(iPhone|iPod|iPad)/);
     };
 
     self.isDeviceAndroid = function(){

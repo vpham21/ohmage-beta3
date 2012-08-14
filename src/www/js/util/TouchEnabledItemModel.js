@@ -1,5 +1,5 @@
 /**
- * 
+ * @class TouchEnabledModel
  * @author Zorayr Khalapyan
  * @version 8/9/2012
  */
