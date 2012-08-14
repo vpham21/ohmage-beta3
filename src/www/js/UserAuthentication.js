@@ -194,7 +194,7 @@ function UserAuthentication() {
             if(yes){
 
                 console.log("UserAuthentication: User confirmed logout.");
-                //Erase any authentication related cookies.
+                //Erase any authentication related data.
                 session(TOKEN_AUTH_COOKIE_NAME, null);
                 session(HASH_AUTH_COOKIE_NAME, null);
                 session(USERNAME_COOKIE_NAME, null);

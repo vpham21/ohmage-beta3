@@ -2,7 +2,7 @@ var ReminderController = function(uuid){
   
     var self = {};
     
-    var model = (uuid)? new ReminderModel().restore(uuid) : new ReminderModel();
+    var model = (uuid)? new ReminderModel(uuid) : new ReminderModel();
     
     self.render = function(){
         return (new ReminderView(model, self)).render();
@@ -14,7 +14,7 @@ var ReminderController = function(uuid){
         model.setExcludeWeekends(excludeWeekends);
         model.setTitle(title);
         model.setMessage("Reminder: " + title);
-        model.cancelAllReminders();
+        model.cancelAllNotifications();
         
         //Returns a new date that is 24 hours ahead of the specified day.
         var nextDay = function(date){
@@ -34,7 +34,7 @@ var ReminderController = function(uuid){
                     date = nextDay(date);
                 }
             } 
-            model.addReminder(date);
+            model.addNotification(date);
             date = nextDay(date);
         }
         
@@ -47,68 +47,3 @@ var ReminderController = function(uuid){
     
     return self;
 };
-
-ReminderController.getAllReminders = function(purge){
-    if(purge || typeof(purge) === "undefined"){
-        ReminderController.purge();
-    }
-    
-    var remindersMap = new LocalMap("reminders").getMap();    
-    var allReminders = [];        
-    for(var uuid in remindersMap){
-        var reminder = new ReminderModel();
-        reminder.restore(uuid)
-        allReminders.push(reminder);
-    }
-    return allReminders;
-};
-
-/**
- * Deletes all reminders that were associated with deleted or stopped campaings.
- */
-ReminderController.purge = function(){
-    
-    //Extract a list of all installed and running campaign URNs.
-    var installedCampaigns = Campaigns.getInstalledCampaigns();
-    var installedCampaignsURNList = [];
-    var i;
-    for(i = 0; i < installedCampaigns.length; i++){
-        if(installedCampaigns[i].isRunning()){
-            installedCampaignsURNList.push(installedCampaigns[i].getURN());
-        }
-    }
-        
-    var isCampaignInstalled = function(urn){
-        for(var i = 0; i < installedCampaignsURNList.length; i++){
-            if(installedCampaignsURNList[i] === urn){
-                return true;
-            }
-        }
-        return false;
-    };
-    
-    var reminders = ReminderController.getAllReminders(false);
-    for(i = 0; i < reminders.length; i++){
-        if(!isCampaignInstalled(reminders[i].getCampaignURN()) || reminders[i].isExpired()){
-            reminders[i].deleteReminder();
-        }
-    }
-};
-
-ReminderController.supressSurveyReminders = function(surveyID){
-    console.log("Supressing all reminders for survey [" + surveyID + "].");
-    var reminders = ReminderController.getAllReminders(false);
-    for(i = 0; i < reminders.length; i++){
-        if(reminders[i].getSurveyID() === surveyID){
-            reminders[i].suppress();
-        }
-    }
-};
-
-ReminderController.cancelAll = function(){
-    var reminders = ReminderController.getAllReminders(false);
-    for(i = 0; i < reminders.length; i++){
-        reminders[i].deleteReminder();
-    }
-};
-
