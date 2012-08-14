@@ -142,7 +142,7 @@ mwf.decorator.Form = function(title)
 
         submitButton.type = 'submit';
         submitButton.value = text;
-        submitButton.onclick = callback || null;
+        TouchEnabledItemModel.bindTouchEvent(submitButton, submitButton, callback);
 
         return this.addItem(submitButton);
     }
@@ -161,7 +161,7 @@ mwf.decorator.Form = function(title)
         var submitButton = document.createElement('input');
         submitButton.type = 'button';
         submitButton.value = text;
-        submitButton.onclick = callback || null;
+        TouchEnabledItemModel.bindTouchEvent(submitButton, submitButton, callback);
 
         return this.addItem(submitButton);
     }
