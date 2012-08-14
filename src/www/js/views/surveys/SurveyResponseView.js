@@ -7,11 +7,10 @@ var SurveyResponseView = function(surveyResponseController){
     
     var renderSurveyResponseDetailsView = function(){
         var location = surveyResponseModel.getLocation();
-        
         var surveyResponseDetailsView = mwf.decorator.Menu(survey.getTitle());
         surveyResponseDetailsView.addMenuLinkItem("Campaign", null, campaign.getName());
         surveyResponseDetailsView.addMenuLinkItem("Survey", null, survey.getTitle());
-        surveyResponseDetailsView.addMenuLinkItem("Time Submitted", null, surveyResponseModel.getSubmitDate());
+        surveyResponseDetailsView.addMenuLinkItem("Time Submitted", null, surveyResponseModel.getSubmitDateString());
         surveyResponseDetailsView.addMenuLinkItem("GPS Status", null, surveyResponseModel.getLocationStatus());
         if(location !== null){
             surveyResponseDetailsView.addMenuLinkItem("GPS Location", null, location.latitude + ", " + location.longitude);    

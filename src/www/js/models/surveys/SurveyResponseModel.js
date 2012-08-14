@@ -322,9 +322,13 @@ function SurveyResponseModel(id, uuid, urn){
     self.isSubmitted = function(){
         return (self.data.time === null)? false : true;
     };
-
+    
+    self.getSubmitDateString = function(){
+        return self.getSubmitDate().toString().substr(0, 24);
+    };
+    
     self.getSubmitDate = function(){
-        return (new Date(self.data.time)).toString().substr(0, 24);
+        return new Date(self.data.time);
     };
 
     self.getCampaignURN = function(){
