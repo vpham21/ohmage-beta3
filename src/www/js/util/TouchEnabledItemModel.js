@@ -21,6 +21,7 @@ var TouchEnabledItemModel = (function(){
         self.bindClickEvents(item, function(){return false;});
         
         $(item).bind("touchmove", function(e){
+            e.preventDefault();
             var item = e.srcElement;
             var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
             var elm = $(item).offset();
@@ -33,11 +34,13 @@ var TouchEnabledItemModel = (function(){
             }
         });
         
-        $(item).bind("touchstart", function(){
+        $(item).bind("touchstart", function(e){
+            e.preventDefault();
             $(highlightItem).addClass(onTouchHighlightClass);
         });
             
         $(item).bind("touchend", function(e){
+            e.preventDefault();
             if($(highlightItem).is("." + onTouchHighlightClass)){
                 $(highlightItem).removeClass(onTouchHighlightClass);
                 if(typeof(onTouchCallback) === "function"){ onTouchCallback(e); }
