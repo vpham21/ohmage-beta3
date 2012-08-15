@@ -47,7 +47,10 @@ var PageNavigation = (function(){
             currentParameters[name] = new String(defaultValue);
         }
     };
-
+    
+    self.unsetPageParameter = function(name){
+        pageParameters.release(name);
+    };
 
     /**
      * Method redirects the user to a specified URL.
