@@ -11,7 +11,7 @@
      var campaign = new Campaign(campaignURN);
 
      document.getElementById('surveys').appendChild(campaign.render());
-
+     
      document.getElementById('surveys').appendChild(mwf.decorator.SingleClickButton("Delete Campaign", function(){
          
          var deleteCampaignConfirmationCallback = function(yes){

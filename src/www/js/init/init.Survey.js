@@ -12,6 +12,10 @@ invokeOnReady(function(){
     if(campaignURN === null || surveyID === null){
         PageNavigation.goBack();
     }else{
+        
+        PageNavigation.setPageParameter("campaign-urn", null);
+        PageNavigation.setPageParameter("survey-id", null);
+        
         var campaign = new Campaign(campaignURN);
         var survey = campaign.getSurvey(surveyID);
 
