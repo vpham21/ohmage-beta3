@@ -20,7 +20,7 @@ var LocalNotificationAdapter = (function(){
                 plugins.localNotification.add({
                     date        : options.date,
                     message     : options.message,
-                    background  : "document.location='pending-surveys.html'",
+                    background  : "goToPendingSurveys",
                     badge       : 1,
                     id          : options.id,
                     sound       :'horn.caf'
@@ -45,3 +45,7 @@ var LocalNotificationAdapter = (function(){
     
     return self;
 })();
+
+function goToPendingSurveys(){
+    window.location = "pending-surveys.html";
+}
