@@ -282,10 +282,10 @@ ReminderModel.deleteCampaignReminders = function(campaignURN){
         }
     }
 };
-  
+ 
 ReminderModel.getPendingSurveys = function(){
     var currentDate = new Date().getTime();
-    var reminders = ReminderModel.getAllReminders()
+    var reminders = ReminderModel.getAllReminders();
     var campaign, surveys = [], i = 0;
     for(i; i < reminders.length; i++){
         if(reminders[i].getDate().getTime() < currentDate){
@@ -294,4 +294,18 @@ ReminderModel.getPendingSurveys = function(){
         }
     }
     return surveys;
+};
+
+/**
+ * Returns all reminders that have at least single notification in the future.
+ */
+ReminderModel.getCurrentReminders = function(){
+    var reminders = ReminderModel.getAllReminders();
+    var currentReminders = [], i = 0;
+    for(i; i < reminders.length; i++){
+        if(!reminders[i].isExpired()){
+            currentReminders.push(reminders[i]);
+        }
+    }
+    return currentReminders;
 };

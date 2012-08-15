@@ -193,14 +193,16 @@ function UserAuthentication() {
         showConfirm(message, function(yes){
             if(yes){
 
-                console.log("UserAuthentication: User confirmed logout.");
+                console.log("UserAuthentication: User confirmed logout. Deleting data...");
                 //Erase any authentication related data.
                 session(TOKEN_AUTH_COOKIE_NAME, null);
                 session(HASH_AUTH_COOKIE_NAME, null);
                 session(USERNAME_COOKIE_NAME, null);
                 session(AUTH_ERROR_STATE_COOKIE_NAME, null);
                 
-                ReminderController.cancelAll();
+                //ToDo: Decouple these two lines from user authentication. Maybe
+                //in the form of event subscribers. 
+                ReminderModel.cancelAll();
                 window.localStorage.clear();
 
                 PageNavigation.openAuthenticationPage();
