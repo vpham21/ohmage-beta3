@@ -5,20 +5,27 @@
      //campaigns view where the user may be able to choose an appropriate
      //campaign.
      if(campaignURN === null){
-         PageNavigation.openInstalledCampaignsView();
+         PageNavigation.goBack();
      }
-
-     //Attach an event listener to the top right buttion to navigate the
-     //user to the campaigns view.
-     $('#button-top').click(PageNavigation.openInstalledCampaignsView);
 
      var campaign = new Campaign(campaignURN);
 
      document.getElementById('surveys').appendChild(campaign.render());
 
      document.getElementById('surveys').appendChild(mwf.decorator.SingleClickButton("Delete Campaign", function(){
-         Campaigns.uninstallCampaign(campaignURN);
-         PageNavigation.openInstalledCampaignsView();
+         
+         var deleteCampaignConfirmationCallback = function(yes){
+             if(yes){
+                 Campaigns.uninstallCampaign(campaignURN);
+                 PageNavigation.goBack();
+             }
+         };
+         
+         var message = "All data will be lost. Are you sure you would like to proceed?";
+         showConfirm(message, deleteCampaignConfirmationCallback, "Yes,No");
+         
      }));
+     
+     mwf.decorator.TopButton("My Campaigns", null, PageNavigation.openInstalledCampaignsView, true);
 
  });
