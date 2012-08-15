@@ -15,7 +15,6 @@ invokeOnReady(function(){
         PageNavigation.goBack();
     }else{
         
-        PageNavigation.unsetPageParameter("campaign-urn");
         PageNavigation.unsetPageParameter("survey-id");
         
         var campaign = new Campaign(campaignURN);
