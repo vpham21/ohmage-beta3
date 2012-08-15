@@ -204,7 +204,7 @@ function UserAuthentication() {
                 //in the form of event subscribers. 
                 ReminderModel.cancelAll();
                 window.localStorage.clear();
-
+                window.localStorage['page-parameters'] = "{}";
                 PageNavigation.openAuthenticationPage();
 
             }
