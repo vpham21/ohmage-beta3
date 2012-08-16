@@ -102,9 +102,11 @@ var ReminderModel = function(uuid){
         date = date || new Date();
         var activeNotifications = [], i = 0;
         var suppressionWindowTime = supressionWindow * 60 * 60 * 1000;
+        var surveySuppressed = false;
         for(i; i < notifications.length; i++){
             if(notifications[i].date.getTime() - date.getTime() < suppressionWindowTime){
                 cancelNotification(notifications[i].id);
+                surveySuppressed = true;
             }else{
                 activeNotifications.push(notifications[i]);
             }
@@ -114,7 +116,8 @@ var ReminderModel = function(uuid){
             self.deleteReminder();
         }else{
             self.save();
-        }
+        }        
+        return surveySuppressed;
     };
     
     /**
@@ -264,8 +267,8 @@ ReminderModel.supressSurveyReminders = function(surveyID){
     console.log("ReminderModel: Supressing all reminders for survey [" + surveyID + "].");
     var reminders = ReminderModel.getAllReminders(), i = 0;
     for(i; i < reminders.length; i++){
-        if(reminders[i].getSurveyID() === surveyID){
-            reminders[i].suppress();
+        if(reminders[i].getSurveyID() === surveyID && reminders[i].suppress()){
+            break;
         }
     }
 };

@@ -3,7 +3,7 @@ var RemindersView = function(reminders){
     var self = {};
     
     var newReminderCallback = function(){
-        PageNavigation.openReminderView();
+        PageNavigation.openNewReminderView();
     };
     
     var editReminderCallback = function(reminder){

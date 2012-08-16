@@ -103,6 +103,15 @@ var PageNavigation = (function(){
         self.setPageParameter("uuid", uuid);
         self.redirect("reminder.html");
     };
+    
+    /**
+     * Redirects the user to a new reminder view.
+     */
+    self.openNewReminderView = function(){
+        self.unsetPageParameter("uuid");
+        self.redirect("reminder.html");
+    };
+
 
     /**
      * Redirects the user to the page that displays a list of installed
