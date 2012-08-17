@@ -233,7 +233,7 @@ var ReminderModel = function(uuid){
  * search for NotificatoinMangager.
  */
 ReminderModel.generateReminderUUID = function(){
-    return Math.floor((Math.random() * 10000000) + 1);
+    return Math.floor((Math.random() * 10000) + 1);
 };
 
 ReminderModel.reminders = new LocalMap("reminders");
