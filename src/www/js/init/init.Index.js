@@ -13,8 +13,18 @@ invokeOnReady(function(){
     dashboard.addMenuImageItem('Profile',   'profile.html',                'img/dash/dash_profile.png');
     dashboard.addMenuImageItem('Help',      'help-menu.html',              'img/dash/dash_help.png');
     dashboard.addMenuImageItem('Reminders', 'reminders.html',              'img/dash/dash_reminders.png');
-
-
+    
+    if(DeviceDetection.isDeviceAndroid()){
+        var androidBackButtonCallback = function(){
+            navigator.app.exitApp();
+        };
+        document.addEventListener("backbutton", androidBackButtonCallback, true);
+        $(window).bind('beforeunload', function() {
+           document.removeEventListener("backbutton", androidBackButtonCallback, false);     
+        });
+    }
+    
+    
     $('#dashboard').append(dashboard);
 
 });
