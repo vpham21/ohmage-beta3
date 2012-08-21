@@ -3,7 +3,7 @@
  * data.
  */
 var SurveyResponseUploader = function(survey, surveyResponse){
-
+    
     /**
      * Compiles and returns an upload package with the current values set in the
      * survey response. In this case, no extra check of validity or availaility
@@ -80,11 +80,6 @@ var SurveyResponseUploader = function(survey, surveyResponse){
 
     var getFinalizedUploadResponse = function(callback, requireLocation){
 
-        //By default, require location.
-        requireLocation = typeof requireLocation == 'undefined' ?
-                                                                true
-                                                              : requireLocation;
-
         var returnResponseData = function(){
             callback(getResponseData());
         };
@@ -129,6 +124,10 @@ var SurveyResponseUploader = function(survey, surveyResponse){
      */
     this.upload = function(onSuccess, onError, requireLocation){
 
+        if(typeof(requireLocation) === "undefined"){
+            requireLocation = new Date().getTime() - surveyResponse.getSubmitDate().getTime() < 120000;
+        }
+        
         getFinalizedUploadResponse(function(data){
 
             var _onError = function(error){

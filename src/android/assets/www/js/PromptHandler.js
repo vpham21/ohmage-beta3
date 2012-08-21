@@ -94,7 +94,7 @@ PromptHandler.Handlers = function(){
 
         //Create the form for allowing the user to add a new option.
         var form = mwfd.Form('Custom Choice');
-
+        
         //By default the custom choice form is hidden.
         form.style.display = 'none';
 
@@ -108,23 +108,9 @@ PromptHandler.Handlers = function(){
             //Clear the user input textbox.
             document.getElementById('new-choice').value = "";
 
-        }
+        };
         
-        var cancelPropegation = function(e){
-            //e.cancelBubble is supported by IE - this will kill the bubbling process.
-            e.cancelBubble = true;
-            e.returnValue = false;
-
-            //e.stopPropagation works only in Firefox.
-            if (e.stopPropagation){
-                e.stopPropagation();
-                e.preventDefault();
-            }
-        }
-
-        form.addSubmitButton('Create New Choice', function(e){
-
-            cancelPropegation(e);
+        var addProperty = function(){
             
             //Get the value specified by the user.
             var newChoice = document.getElementById('new-choice').value;
@@ -158,14 +144,17 @@ PromptHandler.Handlers = function(){
             hideCustomChoiceMenu();
             
             choice_menu.addMenuItem(addOptionItem, true);
-
-            return false;
+            
+            return true;
+        };
+        
+        $(form).submit(function(e){
+            e.preventDefault();
+            addProperty();
         });
         
-        form.addSubmitButton('Cancel', function(e){
-            cancelPropegation(e);
-            hideCustomChoiceMenu();
-        });
+        form.addSubmitButton('Create New Choice');
+        form.addInputButton('Cancel', hideCustomChoiceMenu);
 
         //This continer will hold both prexisting options and the new option
         //form.

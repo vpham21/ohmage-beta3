@@ -1,18 +1,15 @@
-var RemindersView = function(){
+var RemindersView = function(reminders){
 
     var self = {};
     
-    var reminders = ReminderController.getAllReminders();
-    
     var newReminderCallback = function(){
-        PageNavigation.openReminderView();
+        PageNavigation.openNewReminderView();
     };
     
     var editReminderCallback = function(reminder){
         return function(){
             PageNavigation.openReminderView(reminder.getUUID());
         };
-        
     };
     
     self.render = function(){

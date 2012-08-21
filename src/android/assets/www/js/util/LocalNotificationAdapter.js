@@ -8,7 +8,7 @@ var LocalNotificationAdapter = (function(){
     
     self.add = function(options){
         if (isLocalNotificationAvailable()) {
-            if(isDeviceAndroid()){
+            if(DeviceDetection.isDeviceAndroid()){
                 plugins.localNotification.add({
                     date        : options.date,
                     message     : options.message,
@@ -16,11 +16,11 @@ var LocalNotificationAdapter = (function(){
                     repeatDaily : options.repeatDaily,
                     id          : options.id
                 });
-            }else if(isDeviceiOS()){
+            }else if(DeviceDetection.isDeviceiOS()){
                 plugins.localNotification.add({
                     date        : options.date,
                     message     : options.message,
-                    hasAction   : false,
+                    background  : "goToPendingSurveys",
                     badge       : 1,
                     id          : options.id,
                     sound       :'horn.caf'
@@ -37,7 +37,6 @@ var LocalNotificationAdapter = (function(){
     };
     
     self.cancelAll = function(){
-    	console.log("Cancel called -- " + isLocalNotificationAvailable());
         if (isLocalNotificationAvailable()) {
             console.log("LocalNotificationAdapter: cancelAll()");
             plugins.localNotification.cancelAll();
@@ -46,3 +45,7 @@ var LocalNotificationAdapter = (function(){
     
     return self;
 })();
+
+function goToPendingSurveys(){
+    window.location = "pending-surveys.html";
+}

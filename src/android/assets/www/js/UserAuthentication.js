@@ -185,29 +185,27 @@ function UserAuthentication() {
      * method agnostic and works with both hashed and token authentication
      * methods.
      *
-     * @param redirectURL If specified, the logged out user will be redirected
-     *        to this URL. This variable is optional.
      */
-    this.logout = function(redirectURL){
+    this.logout = function(){
+        
         var message = "All data will be lost. Are you sure you would like to proceed?";
 
         showConfirm(message, function(yes){
             if(yes){
 
-                console.log("UserAuthentication: User confirmed logout.");
-                //Erase any authentication related cookies.
+                console.log("UserAuthentication: User confirmed logout. Deleting data...");
+                //Erase any authentication related data.
                 session(TOKEN_AUTH_COOKIE_NAME, null);
                 session(HASH_AUTH_COOKIE_NAME, null);
                 session(USERNAME_COOKIE_NAME, null);
                 session(AUTH_ERROR_STATE_COOKIE_NAME, null);
                 
-                ReminderController.cancelAll();
+                //ToDo: Decouple these two lines from user authentication. Maybe
+                //in the form of event subscribers. 
+                ReminderModel.cancelAll();
                 window.localStorage.clear();
-
-                if(typeof(redirectURL) == "undefined")
-                    PageNavigation.openAuthenticationPage();
-                else
-                    PageNavigation.redirect(redirectURL);
+                window.localStorage['page-parameters'] = "{}";
+                PageNavigation.openAuthenticationPage();
 
             }
         }, "Yes,No");

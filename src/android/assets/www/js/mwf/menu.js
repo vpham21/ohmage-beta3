@@ -333,14 +333,36 @@ mwf.decorator.Menu = function(title)
         inputItem.name  = name;
         inputItem.value = value;
         inputItem.style.verticalAlign = 'bottom';
-
+        
+        var toggle = function(){
+            inputItem.checked =  (isRadio)? true : !inputItem.checked;      
+        };
+        
+        $(inputItem).bind("touchmove", function(e){
+           e.preventDefault(); 
+           return false;
+        });
+        
+        $(inputItem).bind("touchstart", function(e){
+           e.preventDefault(); 
+           return false;
+        });
+        
+        $(inputItem).bind("touchend", function(e){
+           e.preventDefault(); 
+           toggle();
+           return false;
+        });
+        
         //Create a standard menu link item and prepend the option button.
         var linkItem = createLinkItem(label, null, details);
         linkItem.insertBefore(inputItem, linkItem.firstChild);
 
         var toggleSelectionCallback = function(inputItem){
-            return function(event){                
-                inputItem.checked =  (isRadio)? true : !inputItem.checked;  
+            return function(event){              
+                if(event.srcElement !== inputItem){
+                    toggle();     
+                }
             };
         };
 

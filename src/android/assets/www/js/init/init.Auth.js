@@ -50,7 +50,7 @@ invokeOnReady(function(){
 
     };
     
-        var login = function(){
+    var login = function(){
         if(!isInputValid()){
             return;
         }
@@ -85,7 +85,5 @@ invokeOnReady(function(){
         login();
         return false;
     });
-
-    $("#login").click(function(){ login() });
-
+    
 });

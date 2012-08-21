@@ -11,9 +11,8 @@ invokeOnReady(function(){
     }
 
     if(surveyMenu.size() == 0){
-        surveyMenu.addMenuLinkItem("No Available Surveys", null, "Please install a campaign, to view available surveys.").onclick = function(){
-            PageNavigation.openAvailableCampaignsView();
-        };
+        var noAvailableSurveysMenuItem = surveyMenu.addMenuLinkItem("No Available Surveys", null, "Please install a campaign, to view available surveys.");
+        TouchEnabledItemModel.bindTouchEvent(noAvailableSurveysMenuItem, noAvailableSurveysMenuItem, PageNavigation.openAvailableCampaignsView, "menu-highlight");
     }
 
     $("#surveys").append(surveyMenu);

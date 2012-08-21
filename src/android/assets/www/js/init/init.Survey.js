@@ -6,12 +6,17 @@ invokeOnReady(function(){
     //Required for getting a specific survey from the campaign.
     var surveyID    = PageNavigation.getPageParameter('survey-id');
     
+    console.log((surveyID === null) + " " + (campaignURN === null));
+    
     //If a specific campaign is not specified, take the user to the
     //campaigns view where the user may be able to choose an appropriate
     //campaign.
     if(campaignURN === null || surveyID === null){
         PageNavigation.goBack();
     }else{
+        
+        PageNavigation.unsetPageParameter("survey-id");
+        
         var campaign = new Campaign(campaignURN);
         var survey = campaign.getSurvey(surveyID);
 

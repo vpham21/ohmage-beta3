@@ -1,10 +1,12 @@
 /**
- * 
+ * @class TouchEnabledModel
  * @author Zorayr Khalapyan
  * @version 8/9/2012
  */
 var TouchEnabledItemModel = (function(){
     var self = {};
+    
+    var TOUCH_MOVE_SENSITIVITY = 15;
     
     self.bindClickEvents = function(item, highlightItem, onClickCallback, onMouseoverHighlightClass){
         if(typeof(onClickCallback) === "function"){
@@ -20,25 +22,30 @@ var TouchEnabledItemModel = (function(){
         
         self.bindClickEvents(item, function(){return false;});
         
-        $(item).bind("touchmove", function(e){
-            var item = e.srcElement;
-            var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
-            var elm = $(item).offset();
-            var x = touch.pageX - elm.left;
-            var y = touch.pageY - elm.top;
-            if((x < $(item).width() && x > 0) && (y < $(item).height() && y > 0)){
-                $(highlightItem).addClass(onTouchHighlightClass);
-            }else{
-                $(highlightItem).removeClass(onTouchHighlightClass);
-            }
-        });
+        var moveCounter;
         
-        $(item).bind("touchstart", function(){
+        $(item).bind("touchstart", function(e){
+            moveCounter = 0;
             $(highlightItem).addClass(onTouchHighlightClass);
         });
-            
-        $(item).bind("touchend", function(e){
+        
+        $(item).bind("touchmove", function(e){
             if($(highlightItem).is("." + onTouchHighlightClass)){
+                moveCounter++;
+                var item = e.srcElement;
+                var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+                var elm = $(item).offset();
+                var x = touch.pageX - elm.left;
+                var y = touch.pageY - elm.top;
+                if(moveCounter > TOUCH_MOVE_SENSITIVITY || !((x < $(item).width() && x > 0) && (y < $(item).height() && y > 0))){
+                    $(highlightItem).removeClass(onTouchHighlightClass);
+                }
+            }
+        });
+           
+        $(item).bind("touchend", function(e){
+            e.preventDefault();
+            if(moveCounter <= TOUCH_MOVE_SENSITIVITY && $(highlightItem).is("." + onTouchHighlightClass)){
                 $(highlightItem).removeClass(onTouchHighlightClass);
                 if(typeof(onTouchCallback) === "function"){ onTouchCallback(e); }
             }

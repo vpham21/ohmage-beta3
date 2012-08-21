@@ -40,14 +40,17 @@ var PageNavigation = (function(){
      * @param defaultValue Value that will be saved in case value parameter is 
      *        not defined.
      */
-    var setPageParameter = function(name, value, defaultValue){
+    self.setPageParameter = function(name, value, defaultValue){
         if( typeof(value) !== "undefined" ){
             currentParameters[name] = new String(value);
         }else if( typeof(defaultValue) !== "undefined" ){
             currentParameters[name] = new String(defaultValue);
         }
     };
-
+    
+    self.unsetPageParameter = function(name){
+        pageParameters.release(name);
+    };
 
     /**
      * Method redirects the user to a specified URL.
@@ -56,7 +59,7 @@ var PageNavigation = (function(){
      */
     self.redirect = function(url){
         if( typeof(url) !== "undefined" ){
-            resetSavedPageParameters();
+            //resetSavedPageParameters();
             pageParameters.importMap(currentParameters);    
             document.location = url;
         }
@@ -97,9 +100,18 @@ var PageNavigation = (function(){
      * @param uuid The UUID of the reminder to display.
      */
     self.openReminderView = function(uuid){
-        setPageParameter("uuid", uuid);
+        self.setPageParameter("uuid", uuid);
         self.redirect("reminder.html");
     };
+    
+    /**
+     * Redirects the user to a new reminder view.
+     */
+    self.openNewReminderView = function(){
+        self.unsetPageParameter("uuid");
+        self.redirect("reminder.html");
+    };
+
 
     /**
      * Redirects the user to the page that displays a list of installed
@@ -123,7 +135,7 @@ var PageNavigation = (function(){
      * @param campaignURN The unique identifier of the campaign to display.
      */
     self.openCampaignView = function(campaignURN){
-        setPageParameter("campaign-urn", campaignURN);
+        self.setPageParameter("campaign-urn", campaignURN);
         self.redirect("campaign.html");
     };
     
@@ -133,8 +145,8 @@ var PageNavigation = (function(){
      * @param surveyID The unique identifier of the survey to display.
      */
     self.openSurveyView = function(campaignURN, surveyID){
-        setPageParameter("campaign-urn", campaignURN);
-        setPageParameter("survey-id", surveyID);
+        self.setPageParameter("campaign-urn", campaignURN);
+        self.setPageParameter("survey-id", surveyID);
         self.redirect("survey.html");
     };
     
@@ -155,7 +167,7 @@ var PageNavigation = (function(){
      * specified response.
      */
     self.openSurveyResponseView = function(surveyKey){
-        setPageParameter("survey-key", surveyKey);
+        self.setPageParameter("survey-key", surveyKey);
         self.redirect("survey-response-view.html");
     };
 
@@ -186,8 +198,7 @@ var PageNavigation = (function(){
     };
     
     self.openHelpSectionView = function(index){
-        console.log(index);
-        setPageParameter("help-section-index", index);
+        self.setPageParameter("help-section-index", index);
         self.redirect("help-section.html");
     };
     
