@@ -338,6 +338,10 @@ mwf.decorator.Menu = function(title)
             inputItem.checked =  (isRadio)? true : !inputItem.checked;      
         };
         
+        $(inputItem).bind("click", function(e){
+            e.preventDefault();
+        });
+        
         $(inputItem).bind("touchmove", function(e){
            e.preventDefault(); 
            return false;
