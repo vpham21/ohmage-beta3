@@ -18,10 +18,10 @@ invokeOnReady(function(){
         var androidBackButtonCallback = function(){
             navigator.app.exitApp();
         };
-        document.addEventListener("backbutton", androidBackButtonCallback, true);
         $(window).bind('beforeunload', function() {
            document.removeEventListener("backbutton", androidBackButtonCallback, false);     
         });
+        document.addEventListener("backbutton", androidBackButtonCallback, true);
     }
     
     

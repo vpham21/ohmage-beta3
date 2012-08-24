@@ -18,9 +18,12 @@ var ReminderModel = function(uuid){
     /**
      * Cancels a set notification with the provided ID.
      */
-    var cancelNotification = function(id){
-        console.log("ReminderModel: Canceling notification with id [" + id + "] associated with survey [" + surveyID + "]");
-        LocalNotificationAdapter.cancel(id);
+    var cancelNotification = function(notification){
+        //Don't cancel notifications  that are in the past. '
+        if(notification.date.getTime() < new Date().getTime()) {
+            console.log("ReminderModel: Canceling notification with id [" + notification.id + "] associated with survey [" + surveyID + "]");
+            LocalNotificationAdapter.cancel(notification.id);
+        }
     };
     
     /**
@@ -83,7 +86,7 @@ var ReminderModel = function(uuid){
      */
     self.cancelAllNotifications = function(){
         for(var i = 0; i < notifications.length; i++){
-            cancelNotification(notifications[i].id);
+            cancelNotification(notifications[i]);
         }
         notifications = [];
         self.save();
@@ -105,7 +108,7 @@ var ReminderModel = function(uuid){
         var surveySuppressed = false;
         for(i; i < notifications.length; i++){
             if(notifications[i].date.getTime() - date.getTime() < suppressionWindowTime){
-                cancelNotification(notifications[i].id);
+                cancelNotification(notifications[i]);
                 surveySuppressed = true;
             }else{
                 activeNotifications.push(notifications[i]);
