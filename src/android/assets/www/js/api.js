@@ -2,7 +2,7 @@
 /**
  * ohmage server URL.
  */
-var OG_SERVER = "https://dev.mobilizingcs.org";
+var OG_SERVER = "https://test.ohmage.org";
 
 /**
  * URL for reading campaigns.

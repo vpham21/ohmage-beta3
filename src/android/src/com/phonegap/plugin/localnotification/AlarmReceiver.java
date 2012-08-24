@@ -31,7 +31,9 @@ public class AlarmReceiver extends BroadcastReceiver {
 	/* Contains time in 24hour format 'HH:mm' e.g. '04:30' or '18:23' */
 	public static final String HOUR_OF_DAY = "HOUR_OF_DAY";
 	public static final String MINUTE = "MINUTES";
-
+	
+	public static int count, i;
+	
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		Log.d("AlarmReceiver", "AlarmReceiver invoked!");
@@ -72,6 +74,14 @@ public class AlarmReceiver extends BroadcastReceiver {
 		// Construct the notification and notificationManager objects
 		final NotificationManager notificationMgr = (NotificationManager) systemService;
 		final Notification notification = new Notification(R.drawable.ic_launcher, tickerText, System.currentTimeMillis());
+		
+		if(count==1) {
+		    count ++;
+		} else {
+			i++;
+	    }
+		notification.number += i;
+		
 		final Intent reminderIntent = new Intent(context, org.ohmage.mwoc.MWoCActivity.class);
 		reminderIntent.putExtra("SHOW_PENDING_SURVEYS_LIST", true);
 		final PendingIntent contentIntent = PendingIntent.getActivity(context, 0, reminderIntent, 0);
@@ -86,6 +96,6 @@ public class AlarmReceiver extends BroadcastReceiver {
 		 * notification, make sure the ID below matches the ID that you store in
 		 * the alarm intent.
 		 */
-		notificationMgr.notify(notificationId, notification);
+		notificationMgr.notify(0, notification);
 	}
 }

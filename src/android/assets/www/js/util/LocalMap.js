@@ -45,7 +45,7 @@ var LocalMap = function (name) {
 
     self.get = function (name) {
         var map = self.getMap();
-        return (map[name]) ? map[name] : null;
+        return typeof(map[name]) !== "undefined" ? map[name] : null;
     };
     
     self.length = function () {

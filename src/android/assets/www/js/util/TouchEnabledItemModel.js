@@ -20,7 +20,10 @@ var TouchEnabledItemModel = (function(){
     
     self.bindTouchEvents = function(item, highlightItem, onTouchCallback, onTouchHighlightClass){
         
-        self.bindClickEvents(item, function(){return false;});
+        self.bindClickEvents(item, function(e){
+            e.preventDefault();
+            return false;
+        });
         
         var moveCounter;
         

@@ -18,9 +18,12 @@ var ReminderModel = function(uuid){
     /**
      * Cancels a set notification with the provided ID.
      */
-    var cancelNotification = function(id){
-        console.log("ReminderModel: Canceling notification with id [" + id + "] associated with survey [" + surveyID + "]");
-        LocalNotificationAdapter.cancel(id);
+    var cancelNotification = function(notification){
+        //Don't cancel notifications  that are in the past. '
+        if(notification.date.getTime() < new Date().getTime()) {
+            console.log("ReminderModel: Canceling notification with id [" + notification.id + "] associated with survey [" + surveyID + "]");
+            LocalNotificationAdapter.cancel(notification.id);
+        }
     };
     
     /**
@@ -48,7 +51,7 @@ var ReminderModel = function(uuid){
     };
    
     self.addNotification = function(date){
-        var id = uuid + notifications.length;
+        var id = ReminderModel.getNextAvailableNotificationID();
         var options = {
             date        : date,
             message     : message,
@@ -83,7 +86,7 @@ var ReminderModel = function(uuid){
      */
     self.cancelAllNotifications = function(){
         for(var i = 0; i < notifications.length; i++){
-            cancelNotification(notifications[i].id);
+            cancelNotification(notifications[i]);
         }
         notifications = [];
         self.save();
@@ -105,7 +108,7 @@ var ReminderModel = function(uuid){
         var surveySuppressed = false;
         for(i; i < notifications.length; i++){
             if(notifications[i].date.getTime() - date.getTime() < suppressionWindowTime){
-                cancelNotification(notifications[i].id);
+                cancelNotification(notifications[i]);
                 surveySuppressed = true;
             }else{
                 activeNotifications.push(notifications[i]);
@@ -133,6 +136,7 @@ var ReminderModel = function(uuid){
         ticker           = object.ticker;
         supressionWindow = object.supression_window;
         excludeWeekends  = object.exclude_weekends;
+        
         notifications = [];
         for(var i = 0; i < object.notifications.length; i++){	
             notifications.push({
@@ -215,7 +219,7 @@ var ReminderModel = function(uuid){
         if(typeof(uuid) !== "undefined"){
             self.restore(uuid);
         }else{
-            uuid = ReminderModel.generateReminderUUID();
+            uuid = UUIDGen.generate();
         }
     }());
     
@@ -223,19 +227,18 @@ var ReminderModel = function(uuid){
 };
 
     
-/**
- * This value will be used to uniquely identify a reminder. When used in 
- * Java this value is going to be parsed to an Integer value so we cannot
- * use either UUID or values greater than 2^31 - 1. If the value cannot be
- * successfully parsed into an Integer, than only a single notification will 
- * be displayed on Android devices since notification ID will be default to 
- * 0. For more information about how Android handles notifications please 
- * search for NotificatoinMangager.
- */
-ReminderModel.generateReminderUUID = function(){
-    return Math.floor((Math.random() * 10000) + 1);
+ReminderModel.getNextAvailableNotificationID = function(){
+    
+    if(!ReminderModel.remindersMetadata.isSet('last-id')){
+        ReminderModel.remindersMetadata.set('last-id', 0);
+    }
+    
+    var id = ReminderModel.remindersMetadata.get('last-id');
+    ReminderModel.remindersMetadata.set('last-id', id + 1);
+    return id;
 };
 
+ReminderModel.remindersMetadata = new LocalMap("reminders-metadata");
 ReminderModel.reminders = new LocalMap("reminders");
 
 ReminderModel.getAllReminders = function(){
