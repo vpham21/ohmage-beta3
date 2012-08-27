@@ -11,8 +11,8 @@ var LocalNotificationAdapter = (function(){
             if(DeviceDetection.isDeviceAndroid()){
                 plugins.localNotification.add({
                     date        : options.date,
-                    message     : options.message,
-                    ticker      : options.ticker,
+                    message     : "You have a pending survey.",//options.message,
+                    ticker      : "You have a pending survey.",
                     repeatDaily : options.repeatDaily,
                     id          : options.id
                 });
