@@ -1,0 +1,14 @@
+C:\git\ohmage\src\windows\OhmageMWF\OhmageMWF\Bin\Debug\ApplicationIcon.png
+C:\git\ohmage\src\windows\OhmageMWF\OhmageMWF\Bin\Debug\Background.png
+C:\git\ohmage\src\windows\OhmageMWF\OhmageMWF\Bin\Debug\OhmageMWF.dll
+C:\git\ohmage\src\windows\OhmageMWF\OhmageMWF\Bin\Debug\OhmageMWF.pdb
+C:\git\ohmage\src\windows\OhmageMWF\OhmageMWF\Bin\Debug\AppManifest.xaml
+C:\git\ohmage\src\windows\OhmageMWF\OhmageMWF\Bin\Debug\OhmageMWF.xap
+C:\git\ohmage\src\windows\OhmageMWF\OhmageMWF\Bin\Debug\WP7CordovaClassLib.dll
+C:\git\ohmage\src\windows\OhmageMWF\OhmageMWF\obj\Debug\ResolveAssemblyReference.cache
+C:\git\ohmage\src\windows\OhmageMWF\OhmageMWF\obj\Debug\App.g.i.cs
+C:\git\ohmage\src\windows\OhmageMWF\OhmageMWF\obj\Debug\MainPage.g.i.cs
+C:\git\ohmage\src\windows\OhmageMWF\OhmageMWF\obj\Debug\OhmageMWF.g.resources
+C:\git\ohmage\src\windows\OhmageMWF\OhmageMWF\obj\Debug\OhmageMWF.dll
+C:\git\ohmage\src\windows\OhmageMWF\OhmageMWF\obj\Debug\OhmageMWF.pdb
+C:\git\ohmage\src\windows\OhmageMWF\OhmageMWF\obj\Debug\XapCacheFile.xml
