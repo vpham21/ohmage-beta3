@@ -1,4 +1,4 @@
-var Survey = function(survey, campaign){
+var Survey = function(surveyData, campaign){
 
     /**
      * Namespace abbreviation for Mobile Web Framework JS Decorators library.
@@ -52,23 +52,13 @@ var Survey = function(survey, campaign){
         }
 
 
-    }
+    };
 
     /**
      * If the survey is currently rendered, this stores the navigation object
      * used to iterate through different prompts.
      */
     this.currentNavigation = null;
-
-    /**
-     * This method should be called before exiting the survey before submitting
-     * it.
-     */
-    this.abort = function(){        
-        if(this.currentNavigation != null){
-            this.currentNavigation.abort();
-        }
-    };
 
     /**
      * Starts a new navigation object with the current survey. This method
@@ -80,10 +70,14 @@ var Survey = function(survey, campaign){
         //Callback for when the user completes the survey.
         var onSurveyComplete = function(surveyResponse){
             
+            ReminderModel.supressSurveyReminders(self.getID());
+            
             var afterSurveyComplete = function(){
-                PageNavigation.openCampaignView(self.getCampaign().getURN());
+                //PageNavigation.openCampaignView(self.getCampaign().getURN());
+                PageNavigation.goBack();
             };
             
+            //Confirmation box related properties.
             var title = 'ohmage';
             var buttonLabels = 'Yes,No';
             var message = "Would you like to upload your response?";
@@ -95,8 +89,11 @@ var Survey = function(survey, campaign){
                     var uploader = new SurveyResponseUploader(self, surveyResponse);
                     
                     var onSuccess = function(response){
-                        showMessage("Successfully uploaded your survey response.", afterSurveyComplete);
-                        SurveyResponse.deleteSurveyResponse(surveyResponse);
+                        showMessage("Successfully uploaded your survey response.", function(){
+                        SurveyResponseModel.deleteSurveyResponse(surveyResponse);
+                            afterSurveyComplete();
+                        });
+                        
                     };
                     
                     var onError = function(error){
@@ -121,14 +118,16 @@ var Survey = function(survey, campaign){
         //Start the actual survey.
         this.currentNavigation = new Navigation(this, container);
         this.currentNavigation.start(onSurveyComplete);
-    }
+        
+        return this.currentNavigation;
+    };
 
     /**
      * Returns the title of the current survey.
      * @return Current survey's title, or empty string if undefined.
      */
     this.getTitle = function(){
-        return survey.title || "";
+        return surveyData.title || "";
     }
 
     /**
@@ -136,7 +135,7 @@ var Survey = function(survey, campaign){
      * @return Current survey's description, or emptry string if undefined.
      */
     this.getDescription = function(){
-        return survey.description || "";
+        return surveyData.description || "";
     }
 
     /**
@@ -144,7 +143,7 @@ var Survey = function(survey, campaign){
      * @return Current survey's ID.
      */
     this.getID = function(){
-        return survey.id;
+        return surveyData.id;
     }
 
     /**
@@ -159,22 +158,16 @@ var Survey = function(survey, campaign){
      * Returns an array of prompt objects associated with this survey.
      */
     this.getPrompts = function(){
-
-        var promptList = survey.contentlist.prompt;
-
-        if(promptList.length){
-
-            var prompts = new Array();
-
+        var promptList = surveyData.contentlist.prompt;
+        var prompts = new Array();
+        if(promptList.length){    
             for(var i = 0; i < promptList.length; i++){
-                prompts[i] = new Prompt(promptList[i]);
+                prompts[i] = new Prompt(promptList[i], self, campaign);
             }
-
-            return prompts;
         } else {
-            return [new Prompt(promptList)];
+            prompts.push(new Prompt(promptList, self, campaign));
         }
-
+        return prompts;
     };
 
     /**
@@ -183,15 +176,12 @@ var Survey = function(survey, campaign){
      * @return Prompt object or null.
      */
     this.getPrompt = function(id){
-
         var prompts = this.getPrompts();
-
         for(var i = 0; i < prompts.length; i++){
             if(prompts[i].getID() == id){
                 return prompts[i];
             }
         }
-
         return null;
     };
 }

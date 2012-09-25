@@ -8,12 +8,15 @@
     <title>ohmage | login</title>
 
     <style type="text/css">
+        @import url("css/mwoc.css");
         @import url("css/mwf.css");
+        @import url("css/highlight-styles.css");
         @import url("css/spinner.css");
     </style>
 
     <!-- IMPORT PHONEGAP LIBRARY -->
     <script type="text/javascript" src="cordova/js/bin/core/cordova.js"></script>
+    <script type="text/javascript" src="cordova/js/bin/plugins/LocalNotification.js"></script>
 
     <!-- IMPORT MWF JAVASCRIPT LIBRARY -->
     <script type="text/javascript" src="js/mwf/mwf.js"></script>
@@ -25,118 +28,44 @@
     <!-- IMPORT JQUERY AND EXTENSIONS -->
     <script type="text/javascript" src="js/jquery/jquery.js"></script>
     <script type="text/javascript" src="js/jquery/jquery.extensions.js"></script>
-
+    <script type="text/javascript" src="js/util/LocalMap.js"></script>
+    <script type="text/javascript" src="js/util/Spinner.js"></script>
+    <script type="text/javascript" src="js/util/DeviceDetection.js"></script>
+    <script type="text/javascript" src="js/util/TouchEnabledItemModel.js"></script>
+    <script type="text/javascript" src="js/util/LocalNotificationAdapter.js"></script>
+    
     <!-- IMPORT OHMAGE API JS LIB -->
     <script type="text/javascript" src="js/api.js"></script>
     <script type="text/javascript" src="js/PageNavigation.js"></script>
     <script type="text/javascript" src="js/UserAuthentication.js"></script>
-    <script type="text/javascript" src="js/util/Spinner.js"></script>
+    <script type="text/javascript" src="js/models/reminders/ReminderModel.js"></script>
+    <script type="text/javascript" src="js/controllers/reminders/ReminderController.js"></script>
+    
 
-    <script type="text/javascript">
-
-        invokeOnReady(function(){
-
-            if(auth.isUserLocked()){
-
-                //If the user is in a locked state, force the username field to
-                //be read only.
-                $("#username").val(auth.getUsername())
-                              .attr('readonly', true);
-
-
-                mwf.decorator.TopButton("Switch User", null, function(){
-                    if(auth.logout()){
-
-                        $("#username").val("")
-                                      .attr('readonly', false);
-
-                        mwf.decorator.TopButton.remove();
-                    }
-                }, true);
-            }
-
-            var isInputValid = function(){
-
-                if($('#username').val().length == 0){
-                    showMessage('Please enter your username.', function(){
-                        $('#username').focus();
-                    });
-
-                    return false;
-                }
-
-                if($('#password').val().length == 0){
-                    showMessage('Please enter your password.', function(){
-                        $('#password').focus();
-                    });
-
-                    return false;
-                }
-
-                return true;
-
-            };
-
-            $("#login").click(function(){
-
-                if(!isInputValid()){
-                    return;
-                }
-
-                var username = $("#username").val();
-                var password = $("#password").val();
-
-                Spinner.show();
-
-                //On successful authentication, redirects the user to the dashboard.
-                auth.authenticateByHash(username, password, function(success, response){
-
-                   Spinner.hide(function(){
-                       if(success){
-                           PageNavigation.openDashboard();
-
-                       }else if(response){
-                           showMessage(response);
-                       }else{
-                           showMessage("Unable to login. Please try again.");
-                       }
-                   });
-
-
-                }, false);
-
-
-           });
-
-        });
-
-
-    </script>
-
+    <script type="text/javascript" src="js/init/init.Auth.js"></script>
 
 </head>
 <body>
 
-
     <h1 id="header">
         <a href="index.html">
-            <img src="img/ohmage-icon-gray-noshadow-30px.png" alt="ohmage" width="30" height="30" style="padding-left:3px; padding-top:3px;"/>
+            <img src="img/home-icon.png" alt="ohmage" width="30" height="30" style="padding-left:3px; padding-top:3px;"/>
             <span>ohmage</span>
          </a>
 
     </h1>
 
-    <form class="form-full form-padded">
+    <form id="auth-form" class="form-full form-padded" autocomplete="off">
 
         <h1 class="light form-first">Please Login to Proceed</h1>
 
         <label for="username">Username</label>
-        <input type="text" name="username" id="username" />
+        <input type="text" name="username" id="username"/>
 
         <label for="password">Password</label>
         <input type="password" name="password" id="password"/>
 
-        <input type="button" id="login" name="submit" value="Secure Login" class="form-last" />
+        <input type="submit" id="login" name="submit" value="Secure Login" class="form-last" />
 
     </form>
 

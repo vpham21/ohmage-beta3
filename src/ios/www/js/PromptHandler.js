@@ -94,7 +94,7 @@ PromptHandler.Handlers = function(){
 
         //Create the form for allowing the user to add a new option.
         var form = mwfd.Form('Custom Choice');
-
+        
         //By default the custom choice form is hidden.
         form.style.display = 'none';
 
@@ -108,23 +108,9 @@ PromptHandler.Handlers = function(){
             //Clear the user input textbox.
             document.getElementById('new-choice').value = "";
 
-        }
+        };
         
-        var cancelPropegation = function(e){
-            //e.cancelBubble is supported by IE - this will kill the bubbling process.
-            e.cancelBubble = true;
-            e.returnValue = false;
-
-            //e.stopPropagation works only in Firefox.
-            if (e.stopPropagation){
-                e.stopPropagation();
-                e.preventDefault();
-            }
-        }
-
-        form.addSubmitButton('Create New Choice', function(e){
-
-            cancelPropegation(e);
+        var addProperty = function(){
             
             //Get the value specified by the user.
             var newChoice = document.getElementById('new-choice').value;
@@ -158,14 +144,17 @@ PromptHandler.Handlers = function(){
             hideCustomChoiceMenu();
             
             choice_menu.addMenuItem(addOptionItem, true);
-
-            return false;
+            
+            return true;
+        };
+        
+        $(form).submit(function(e){
+            e.preventDefault();
+            addProperty();
         });
         
-        form.addSubmitButton('Cancel', function(e){
-            cancelPropegation(e);
-            hideCustomChoiceMenu();
-        });
+        form.addSubmitButton('Create New Choice');
+        form.addInputButton('Cancel', hideCustomChoiceMenu);
 
         //This continer will hold both prexisting options and the new option
         //form.
@@ -224,23 +213,103 @@ PromptHandler.Handlers = function(){
     this.hours_before_now = function(prompt){
         return this.number(prompt);
     };
+    
+    
+    /**
+     * Returns the default value for number prompts. If the default value for 
+     * the current prompt is not specified, then the method will use the minimum
+     * value. If this is also null then zero will be returned.
+     * @return Default value that should be used for number prompts.
+     */
+    var getNumberPromptDefaultValue = function(prompt){
+        if(prompt.getDefaultValue() !== null){
+            return prompt.getDefaultValue();
+        } else if(prompt.getMinValue() !== null){
+            return prompt.getMinValue();
+        } else{
+            return 0;
+        }
+    };
 
-    this.number = function(prompt){
+
+    var createNumberInput = function(prompt, defaultValue){
+        
+        var minValue = prompt.getMinValue();
+        var maxValue = prompt.getMaxValue();
+        
+        var rangeMessage = "Please enter a number between " + minValue + " and " + maxValue + ", inclusive.";
+    
+        var isValueInRange = function(inputString){
+            if(inputString === ""){return false;}
+            var input = parseInt(inputString, 10);
+            return (minValue <= input && input <= maxValue);
+        };
+        
+        var isInteger = function(s) {
+            return String(s).search (/^(\+|-)?\d+\s*$/) !== -1
+        };
+        
+        var isSign = function(s){
+            return String(s).search (/^(\+|-)?$/) !== -1
+        };
+
+        var validateNumberInputKeyPress = function(evt) {
+            
+            var theEvent = evt || window.event;
+            var key = theEvent.keyCode || theEvent.which;
+            key = String.fromCharCode( key );
+            
+            var result = evt.srcElement.value + key;
+            var cancelKey = function(){
+                theEvent.returnValue = false;
+                if(theEvent.preventDefault) {theEvent.preventDefault();}
+            };
+            
+            if(!isSign(result)){
+                if(!isInteger(key)) {
+                    cancelKey();
+                }
+            }
+            
+        };
+        
+        var textBox = document.createElement('input');
+        textBox.value = defaultValue || getNumberPromptDefaultValue(prompt);
+        textBox.onkeypress = validateNumberInputKeyPress;
+        
+        var form = mwfd.Form(prompt.getText());
+        form.addLabel(rangeMessage);
+        form.addItem(textBox);
+        
+        prompt.isValid = function(){
+            if( !isValueInRange(textBox.value) ){
+                prompt.setErrorMessage(rangeMessage);
+                return false;
+            }
+            return true;
+        };
+        
+        prompt.getResponse = function(){
+            return parseInt(textBox.value, 10);
+        };
+        
+        var container = document.createElement('div');
+        container.appendChild(mwfd.SingleClickButton("Switch to Number Picker", function(){
+           container.innerHTML = "";
+           container.appendChild(createNumberPicker(prompt, (isValueInRange(textBox.value))? prompt.getResponse():false));               
+        }));
+        container.appendChild(form);
+        return container;
+        
+    };
+    
+    var createNumberPicker = function(prompt, defaultValue){
 
         //Create the actual number counter field.
         var count = document.createElement('p');
         count.className = 'number-counter';
 
-        //Set the default value. If the default value for the current prompt is
-        //not specified, then try to use the minimum value. If this is also
-        //then set it to 0.
-        if(prompt.getDefaultValue() != null){
-            count.innerHTML = prompt.getDefaultValue();
-        } else if(prompt.getMinValue() != null){
-            count.innerHTML = prompt.getMinValue();
-        } else{
-            count.innerHTML = "0";
-        }
+        count.innerHTML = defaultValue || getNumberPromptDefaultValue(prompt);
 
         //Get the minimum and maximum allowed values for this number prompt. It
         //is assumed that these values might be nulls.
@@ -275,16 +344,13 @@ PromptHandler.Handlers = function(){
 
         //Add the plus sign to the menu and configure the click event handler
         //for this item.
-        menu.addMenuItem(plus).onclick = function(e){
-
+        var menuPlusItem = menu.addMenuItem(plus);
+        var addCallback = function(e){
             var currentValue = parseInt(count.innerHTML, 10);
-
             if(currentValue < maxValue){
                 count.innerHTML =  currentValue + 1;
             }
-
             updateSignStyle();
-
         };
 
         //Add the counter for the menu.
@@ -292,25 +358,49 @@ PromptHandler.Handlers = function(){
 
         //Add the minus sign to the menu and configure the click event handler
         //for this item.
-        menu.addMenuItem(minus).onclick = function(e){
-
+        var menuMinusItem = menu.addMenuItem(minus);
+        var subtractCallback = function(e){
             var currentValue = parseInt(count.innerHTML, 10);
-
             if(currentValue > minValue){
                 count.innerHTML =  currentValue - 1;
             }
-
             updateSignStyle();
-
         };
 
         prompt.getResponse = function(){
-            return "" + parseInt(count.innerHTML, 10);
+            return parseInt(count.innerHTML, 10);
         };
-
-        return menu;
+        
+        prompt.isValid = function(){
+            return true;
+        };
+        
+        TouchEnabledItemModel.bindTouchEvent(menuPlusItem, plus, addCallback);
+        TouchEnabledItemModel.bindTouchEvent(menuMinusItem, minus, subtractCallback);
+      
+        var container = document.createElement('div');
+        container.appendChild(mwfd.SingleClickButton("Switch to Number Input", function(){
+            container.innerHTML = "";
+            container.appendChild(createNumberInput(prompt, prompt.getResponse()));    
+        }));
+        container.appendChild(menu);
+        return container;
     };
 
+    /**
+     * This value determines the range that will default to number picker.
+     */
+    var MAX_RANGE_FOR_NUMBER_PICKER = 20;
+    
+    this.number = function(prompt){
+        if(prompt.getMaxValue() - prompt.getMinValue() <= MAX_RANGE_FOR_NUMBER_PICKER){
+            return createNumberPicker(prompt);
+        }else{
+            return createNumberInput(prompt);
+        }
+    };
+    
+    
     this.text = function(prompt){
 
         //Get the minimum and maximum text length allowed values for this
@@ -378,7 +468,7 @@ PromptHandler.Handlers = function(){
 
             //Save the image and store the returned UUID within the image's
             //alt attribute.
-            image.alt = SurveyResponse.saveImage(imageData);
+            image.alt = SurveyResponseModel.saveImage(imageData);
 
         };
 
@@ -429,14 +519,11 @@ PromptHandler.Handlers = function(){
 
 
         prompt.isValid = function(){
-
             if(!image.alt){
                 prompt.setErrorMessage("Please take an image to submit.");
                 return false;
             }
-
             return true;
-
         };
 
         prompt.getResponse = function(){
@@ -483,9 +570,8 @@ PromptHandler.Handlers = function(){
 
         menu.addMenuTextItem("Unfortunatly current prompt type is not supported.");
 
-        prompt.getResponse = function()
-        {
-            return SurveyResponse.NOT_DISPLAYED_PROMPT_VALUE;
+        prompt.getResponse = function(){
+            return SurveyResponseModel.NOT_DISPLAYED_PROMPT_VALUE;
         };
 
         return menu;

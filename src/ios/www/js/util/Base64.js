@@ -13,6 +13,10 @@ var Base64 = {
         };
 
         imageReader.readAsDataURL(input);
-
+    },
+    
+    formatImageSrcString : function(base64){
+        return (base64.match(/(base64)/))? base64 : "data:image/jpeg;base64," + base64;
     }
+       
 }

@@ -164,9 +164,10 @@
         
         NSString *notCB = [notification.userInfo objectForKey:@"background"];
         NSString *notID = [notification.userInfo objectForKey:@"notificationId"];
-        
+
         NSString * jsCallBack = [NSString 
                                  stringWithFormat:@"%@(%@)", notCB,notID]; 
+        
         [self.viewController.webView stringByEvaluatingJavaScriptFromString:jsCallBack];         
         
         application.applicationIconBadgeNumber = 0;
