@@ -1,3 +1,8 @@
+if (typeof window.console == "undefined") {
+window.console = { log: function (str) { window.external.Notify(str); } };
+}
+
+console.log("api.js");
 
 /**
  * ohmage server URL.
@@ -37,7 +42,6 @@ var PASSWORD_CHANGE_URL = '/app/user/change_password';
  * @param onError   The callback on API call error.
  * @param redirectOnAuthError
  */
-alert("aaaaaa");
 function api(type, url, data, dataType, onSuccess, onError, redirectOnAuthError) {
 
     //By default, redirect the user to the login page on authentication error.

@@ -290,7 +290,7 @@ PromptHandler.Handlers = function(){
         };
         
         prompt.getResponse = function(){
-            return "" + parseInt(textBox.value, 10);
+            return parseInt(textBox.value, 10);
         };
         
         var container = document.createElement('div');
@@ -368,7 +368,7 @@ PromptHandler.Handlers = function(){
         };
 
         prompt.getResponse = function(){
-            return "" + parseInt(count.innerHTML, 10);
+            return parseInt(count.innerHTML, 10);
         };
         
         prompt.isValid = function(){
@@ -519,14 +519,11 @@ PromptHandler.Handlers = function(){
 
 
         prompt.isValid = function(){
-            console.log(image.alt);
             if(!image.alt){
                 prompt.setErrorMessage("Please take an image to submit.");
                 return false;
             }
-
             return true;
-
         };
 
         prompt.getResponse = function(){

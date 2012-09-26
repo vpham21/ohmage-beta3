@@ -217,8 +217,14 @@ var Prompt = function(promptData, survey, campaign){
      * Returns the conditional statement associated with the current prompt.
      */
     self.getCondition = function(){
-        return promptData.condition || null;
-    }
+        if( typeof(promptData.condition) !== "undefined" ) {
+            var condition = promptData.condition;
+            condition = condition.replace(/&gt;/g, ">");
+            condition = condition.replace(/&lt;/g, "<");
+            return condition;
+        }
+        return null;
+    };
 
     /**
      * Returns the type of the current prompt.

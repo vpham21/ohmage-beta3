@@ -23,7 +23,9 @@
     <FilePath Value="www\help-menu.html"/>
     <FilePath Value="www\help-section.html"/>
     <FilePath Value="www\index.html"/>
+    <FilePath Value="www\index2.html"/>
     <FilePath Value="www\installed-campaigns.html"/>
+    <FilePath Value="www\js\api.js"/>
     <FilePath Value="www\js\Campaign.js"/>
     <FilePath Value="www\js\Campaigns.js"/>
     <FilePath Value="www\js\controllers\help\HelpController.js"/>
@@ -52,6 +54,7 @@
     <FilePath Value="www\js\jquery\jquery.extensions.js"/>
     <FilePath Value="www\js\jquery\jquery.js"/>
     <FilePath Value="www\js\jquery\jquery.xml2json.js"/>
+    <FilePath Value="www\js\json\json.js"/>
     <FilePath Value="www\js\models\config\ConfigManager.js"/>
     <FilePath Value="www\js\models\CustomPropertiesVault.js"/>
     <FilePath Value="www\js\models\help\HelpModel.js"/>

@@ -119,8 +119,9 @@
     <Content Include="www\help-menu.html" />
     <Content Include="www\help-section.html" />
     <Content Include="www\index.html" />
+    <Content Include="www\index2.html" />
     <Content Include="www\installed-campaigns.html" />
-    <EmbeddedResource Include="www\js\api.js" />
+    <Content Include="www\js\api.js" />
     <Content Include="www\js\Campaign.js" />
     <Content Include="www\js\Campaigns.js" />
     <Content Include="www\js\controllers\help\HelpController.js" />
@@ -149,6 +150,7 @@
     <Content Include="www\js\jquery\jquery.extensions.js" />
     <Content Include="www\js\jquery\jquery.js" />
     <Content Include="www\js\jquery\jquery.xml2json.js" />
+    <Content Include="www\js\json\json.js" />
     <Content Include="www\js\models\config\ConfigManager.js" />
     <Content Include="www\js\models\CustomPropertiesVault.js" />
     <Content Include="www\js\models\help\HelpModel.js" />

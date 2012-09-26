@@ -78,11 +78,12 @@ function api(type, url, data, dataType, onSuccess, onError, redirectOnAuthError)
         }
     };
 
-    var _onError = function(){
+    var _onError = function(e){
+        console.log("AJAX exception for url " + (OG_SERVER + url));
         invoke(onError, false);
     };
 
-    console.log("Initiating an API call for URL (" + url + ") with the following input data: " + JSON.stringify(data));
+    console.log("Initiating an API call for URL (" + OG_SERVER + url + ") with the following input data: " + JSON.stringify(data));
 
     $.ajax({
         type: type,
