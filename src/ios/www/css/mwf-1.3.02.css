@@ -1,0 +1,1858 @@
+/**
+ * basic.src.css
+ */
+/****************************************************************************
+ * Global Definitions
+ */
+
+/**
+ * Visibility Controls
+ */
+
+.not-basic,
+.only-webkit,
+.only-full {
+    display: none;
+}
+
+/**
+ * General Styles
+ */
+
+body, html {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+body { 
+    background-color: #ddd;
+    font: 100%/1.25 Arial, Helvetica, sans-serif;
+    font-size: .93em; 
+    line-height: 1.5;
+}
+
+html, 
+body, 
+address, 
+blockquote, 
+body, 
+dd, 
+div, 
+dl, 
+dt, 
+fieldset, 
+form, 
+frame, 
+frameset, 
+h1, 
+h2, 
+h3, 
+h4, 
+h5, 
+h6, 
+ol, 
+p, 
+ul, 
+center, 
+dir, 
+hr, 
+menu, 
+pre { 
+    display: block; 
+    padding: 0;
+    margin: 0;
+}
+
+h1, 
+h2, 
+h3, 
+h4, 
+h5, 
+h6 { 
+    line-height: 1.2em; 
+}
+
+h1, 
+h2 { 
+    font-size: 1.2em; 
+    font-weight: bold; 
+}
+
+h3, 
+h4 { 
+    font-size: 1.1em; 
+    font-weight: bold; }
+
+h5 { 
+    font-size: 1.1em; 
+    font-weight: normal; 
+}
+
+h6 { 
+    font-size: 1em; 
+    font-weight: bold; 
+}
+
+a { 
+    text-decoration: none; 
+}
+
+.center { 
+    text-align: center !important; 
+    margin-left: auto; 
+    margin-right: auto; 
+}
+
+.align-left { 
+    text-align: left !important; 
+}
+
+.align-right { 
+    text-align: right !important; 
+}
+
+.clear { 
+    width: 100%; 
+    clear: both; 
+    float: none !important; 
+    height: 1px; 
+}
+
+.smallprint {
+    font-weight: normal;
+    font-size: 90%;
+}
+
+a, 
+a:visited {
+    color: #2685bb;
+}
+
+p a {
+    border-bottom: none;
+}
+
+input {
+    border: 1px solid #cccccc;
+    padding: 4px;
+}
+
+select {
+    background: url(../img/mwf/select-options-bg.png) center right no-repeat;
+}
+
+.hide {
+    display: none !important;
+}
+
+/********************************************************
+ * HEADER
+ *******************************************************/
+
+/**
+ * Header
+ */
+
+#header {
+    background: #536895 url(../img/mwf/header-bg.png) repeat-x;
+    height: 35px;
+    border-bottom: 3px solid #869ac5;
+}
+
+#header img {
+    border: none;
+    float: left;
+}
+
+#header span {
+    float: left;
+    padding: 8px 0 0 5px;
+    font-weight: normal;
+    font-size: 16px;
+}
+
+#header span, #header span a {
+    color: #fff;
+}
+
+/**
+ * Footer
+ */
+
+#footer {
+	font-size: 80%;
+	padding: 1em;
+	text-align: center;
+}
+
+#footer,
+#footer a,
+#footer a:visited,
+.mwf_notmobile #footer a:hover {
+	color: #666666;
+}
+
+#footer a,
+#footer a:visited {
+	text-decoration: none;
+	border-bottom: 1px solid #666666;
+}
+
+.mwf_notmobile #footer a:hover {
+	border-bottom: none;
+}
+
+/****************************************************************************
+ * Page Elements
+ */
+ 
+/**
+ * Shared [TODO: Merge styles where possible]
+ */
+
+ .content img, .menu img, .button img {
+    max-width: 100%;
+    height: auto;
+ }
+
+/**
+ * Content
+ */
+
+.content {
+    width: 100%;
+    margin: 0;
+}
+
+.content > p {
+    margin: 0;
+}
+
+.content > h1,
+.content > h2 {
+    background-color: #e9e9e9;
+    color: #000;
+}
+
+.content > h1,
+.content > h2,
+.content > h3,
+.content > h4 {
+    padding: .5em 0 .4em;
+    text-align: center;
+}
+
+.content > h1.light,
+.content > h2.light {
+    background-color: #f9f9f9;
+    color: #555;
+}
+
+.content > h1.blue,
+.content > h2.blue {
+    background-color: #809FE2;
+    color: #fff;
+}
+
+.content > * {
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    padding: .8em;
+}
+
+.content > * ol, .content > * ul {
+    margin: 0 1.5em;
+    position: relative;
+}
+
+.content > * p {
+    margin-bottom: .5em;
+}
+
+.content > .button a {
+    color: #2685BB;
+    font-weight: bold;
+}
+
+.content > .button a .label {
+    color: #777;
+    font-weight: bold;
+}
+
+/**
+ * Menu
+ */
+
+.menu {
+    width: 100%;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+ 
+.menu > h1,
+.menu > h2 {
+    background: #efefef;
+    color: #000;
+    padding: .5em 0 .4em 0;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.menu > ul > li p, 
+.menu > ol > li p {
+    font-weight: normal;
+}
+
+.menu > h1.light,
+.menu > h2.light {
+    background-color: #f6f6f6;
+    color: #555;
+}
+
+.menu > h1.blue,
+.menu > h2.blue {
+    background-color: #809FE2;
+    color: #fff;
+}
+
+.menu p {
+    color: #000;
+}
+
+.menu > ul, 
+.menu > ol {
+    list-style-type: none;
+}
+
+.menu > ul > li,
+.menu > ol > li  {
+    background-color: #fff;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.mwf_notmobile .menu > ul > li:hover, 
+.mwf_notmobile .menu > ol > li:hover {
+    background-color: #eaf2fa;
+}
+
+.menu > ul > li > a, 
+.menu > ol > li > a {
+    display: block;
+    background:url(../img/mwf/list-arrow.png) no-repeat 95% center;
+}
+
+.menu > ul > li > a,
+.menu > ol > li > a{
+    padding: .9em 3em .8em 2em;
+}
+
+.menu > ul > li > p:first-child:last-child
+.menu > ol > li > p:first-child:last-child {
+    padding: .9em; /* singular paragraph text within li */
+}
+
+.menu.detailed > ul > li > a > p,
+.menu.detailed > ol > li > a > p{
+    color: #555;
+}
+
+.menu.left > ul > li,
+.menu.detailed > ol > li {
+    text-align: left;
+}
+
+.menu.left > ul > li > a,
+.menu.left > ol > li > a {
+    padding-left: .9em;
+}
+
+.menu.center > ul > li,
+.menu.center > ol > li{
+    text-align: center;
+}
+
+.menu.detailed > ul > li,
+.menu.detailed > ol > li {
+    font-size: 1em;
+}
+
+/**
+ * Button
+ */
+
+a.button, div.button {
+    width: auto;
+    margin: 0;
+}
+
+a.button, div.button > a {
+    border-bottom: 1px solid #aaa;
+    padding: .5em 0 .4em 0;
+    background-color: #536895;
+    color: #fff;
+    display: block;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.mwf_notmobile a.button:hover,
+a.button:focus,
+a.button:active,
+.mwf_notmobile div.button > a:hover,
+div.button > a:focus,
+div.button > a:active{
+    background-color: #ffb300;
+    color: #494D69;
+}
+
+/**
+ * Forms
+ */
+form {
+    background-color: #fff;
+    padding-bottom: 1em;
+    padding-right: 20px;
+}
+
+/*
+ * Forms Heading
+ */
+form > h1,
+form > h2,
+form > h3,
+form > h4 {
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+form > h1,
+form > h2 {
+    background: #efefef;
+    color: #000;
+    padding: 0.5em 10px;
+}
+
+form > h1.light,
+form > h2.light {
+    background-color: #f6f6f6;
+    color: #555;
+}
+
+form > h1.blue,
+form > h2.blue {
+    background-color: #809FE2;
+    color: #fff;
+}
+
+form > h3,
+form > h4 {
+    padding: 10px;
+    width: 100%;
+}
+
+form > fieldset {
+    border: 0;
+}
+
+form > a.button,
+form > button,
+form > input,
+form > label:not(.option),
+form > select,
+form > textarea {
+    margin-left: 10px;
+}
+
+/*
+ * Forms Basic Elements
+ */
+form > label {
+    margin-top: 1em;
+}
+
+
+
+form input,
+form select,
+form textarea {
+    border: 1px solid #CCC;
+    font-size: .9em;
+}
+
+form input,
+form textarea {
+    padding: 4px 0;
+}
+
+form textarea {
+    font: 100%/1.25 Arial, Helvetica, sans-serif;
+    height: 4em;
+}
+
+form p {
+    margin-bottom: .5em;
+}
+
+/*
+ * Forms Buttons
+ */
+form a.button {
+    text-align: center;
+}
+
+form input[type="submit"],
+form input[type="reset"],
+form button,
+form a.button {
+    background-color: #e4e7ee;
+    border: 0;
+    color: #000;
+    cursor: pointer;
+    font: 100%/1.25 Arial, Helvetica, sans-serif;
+    margin-top: 10px;
+    padding: .5em 0;
+    height: auto;
+}
+
+form input[type="submit"],
+form input[type="reset"],
+form button {
+    padding: .5em 1em;
+}
+
+form input[type="submit"][disabled="disabled"],
+form input[type="reset"][disabled="disabled"],
+form button[disabled="disabled"],
+form a.button.disabled {
+    color: #888;
+    cursor: default;
+}
+
+.mwf_notmobile form input[type="submit"][disabled="disabled"]:hover,
+.mwf_notmobile form input[type="reset"][disabled="disabled"]:hover,
+.mwf_notmobile form button[disabled="disabled"]:hover,
+.mwf_notmobile form a.button:hover.disabled,
+form input[type="submit"][disabled="disabled"]:focus,
+form input[type="reset"][disabled="disabled"]:focus,
+form button[disabled="disabled"]:focus,
+form a.button:focus.disabled {
+    background-color: #e4e7ee;
+}
+
+.mwf_notmobile form input[type="submit"]:hover,
+.mwf_notmobile form input[type="reset"]:hover,
+.mwf_notmobile form button:hover,
+.mwf_notmobile form a.button:hover,
+form input[type="submit"]:focus,
+form input[type="reset"]:focus,
+form button:focus,
+form a.button:focus {
+    background-color: #cfd5e1;
+}
+
+form input[type="submit"].primary,
+form input[type="reset"].primary,
+form button.primary,
+form a.button.primary,
+.mwf_notmobile form input[type="submit"][disabled="disabled"].primary:hover,
+.mwf_notmobile form input[type="reset"][disabled="disabled"].primary:hover,
+.mwf_notmobile form button.primary[disabled="disabled"]:hover,
+.mwf_notmobile form a.button.primary:hover.disabled,
+form input[type="submit"][disabled="disabled"].primary:focus,
+form input[type="reset"][disabled="disabled"].primary:focus,
+form button[disabled="disabled"].primary:focus,
+form a.button.primary:focus.disabled {
+    background-color: #fbaf3f;
+}
+
+.mwf_notmobile form input[type="submit"].primary:hover,
+.mwf_notmobile form input[type="reset"].primary:hover,
+.mwf_notmobile form button.primary:hover,
+.mwf_notmobile form a.button.primary:hover,
+form input[type="submit"].primary:focus,
+form input[type="reset"].primary:focus,
+form button.primary:focus,
+form a.button.primary:focus {
+    background-color: #ffb300;
+}
+
+form input[type="submit"].secondary,
+form input[type="reset"].secondary,
+form button.secondary,
+form a.button.secondary,
+.mwf_notmobile form input[type="submit"][disabled="disabled"].secondary:hover,
+.mwf_notmobile form input[type="reset"][disabled="disabled"].secondary:hover,
+.mwf_notmobile form button[disabled="disabled"].secondary:hover,
+.mwf_notmobile form a.button.secondary:hover.disabled,
+form input[type="submit"][disabled="disabled"].secondary:focus,
+form input[type="reset"][disabled="disabled"].secondary:focus,
+form button[disabled="disabled"].secondary:focus,
+form a.button.secondary:focus.disabled {
+    background-color: #9caccf;
+}
+
+.mwf_notmobile form input[type="submit"].secondary:hover,
+.mwf_notmobile form input[type="reset"].secondary:hover,
+.mwf_notmobile form button.secondary:hover,
+.mwf_notmobile form a.button.secondary:hover,
+form input[type="submit"].secondary:focus,
+form input[type="reset"].secondary:focus,
+form button.secondary:focus,
+form a.button.secondary:focus {
+    background-color: #869ac5;
+}
+
+/* full width form - default */
+form div,
+form h1,
+form h2,
+form p,
+form a.button,
+form fieldset,
+form input,
+form label,
+form select,
+form textarea {
+    display: block;
+    width: 100%;
+}
+
+.option input {
+    display:inline;
+        width:auto;
+}
+
+/* short width form */
+form.short input,
+form.short > label {
+    display: inline;
+    width: auto;
+}
+
+form .last {
+    border-bottom: none;
+}
+
+form > div,
+form > fieldset,
+form > p {
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+}
+
+/* form option alignment */
+form .option {
+    padding: 0 0 0 10px;
+    margin-bottom: 0;
+    border-bottom: none;
+}
+
+/* required label */
+span.required:after {
+    content: "*";
+    color: #536895;
+    padding-left:.2em;
+}
+
+/* invalid */
+form .invalid {
+    color: #a00;
+}
+
+form span.invalid {
+    display: block;
+}
+
+form span.invalid:before {
+    content: url(../img/mwf/invalid.png);
+    font-size: 1.5em;
+}
+
+form input.invalid,
+form select.invalid,
+form textarea.invalid {
+    border: 1px solid #a00;
+}
+
+/* form date selection */
+form .date-field,
+form .month-field,
+form .week-field,
+form .datetime-field,
+form .datetime-local-field,
+form .time-field {
+    border-bottom: none;
+    padding: 0 0 0 10px;
+    margin-bottom: 0;
+}
+
+form .date-field select,
+form .month-field select,
+form .week-field select,
+form .datetime-field select,
+form .datetime-local-field select,
+form .time-field select {
+    display: inline;
+    width: auto;
+}
+
+
+/* ------------------------------------------------------
+ * multi level form
+*/
+.content form {
+    padding-left: 0;
+}
+
+.content form {
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-right: 20px;
+}
+
+.content > div > form > div,
+.content > div > form > fieldset,
+.content > div > form > p {
+    border-bottom: none;
+    padding: 0;
+}
+
+.content > div > form > fieldset{
+    padding-bottom: .5em;
+}
+
+.content > div > form{
+    padding-right: 0;
+}
+
+.content > div > form > a.button,
+.content > div > form > button,
+.content > div > form > input,
+.content > div > form > label,
+.content > div > form > select,
+.content > div > form > textarea{
+    margin-left: 0;
+}
+
+
+/**
+ * Messages
+ */
+
+div.message {
+    display: block;
+    padding: .5em 0 .5em 1em;
+    text-align: left;
+}
+
+div.message.alert {
+    border: 1px solid #fa3;
+    background-color: #ffe;
+}
+
+div.message.confirm {
+    border: 1px solid #6a3;
+    background-color: #efe;
+}
+
+div.message.error {
+    border: 1px solid #a30;
+    background-color: #fee;
+}
+
+div.message.info {
+    border: 1px solid #6ac;
+    background-color: #eff;
+}
+
+.message.alert {
+    color: #630;
+}
+
+.message.confirm {
+    color: #360;
+}
+
+.message.error {
+    color: #a00;
+}
+
+.message.info {
+    color: #039;
+}
+
+/****************************************************************************
+ * Special Styles
+ */
+
+/**
+ * Preview Mode
+ */
+
+#desktop-preview-menu {
+    padding: 3px 10px;
+    background-color: #fff;
+    border-bottom: 1px solid #000;
+}
+
+#desktop-preview-menu h1 {
+    color: #000000;
+    font-size: 12px;
+    padding: 0;
+    margin: 0;
+    padding-top: 1px;
+    float: left;
+}
+
+#desktop-preview-menu div.options {
+    font-size: 12px;
+    float: right;
+}
+
+/**
+ * Front Page
+ */
+
+body.front h1#header {
+    background: #536895 url(../img/mwf/header-front-page-bg.png) repeat-x;
+    height: 50px;
+}
+body.front h1#header img {
+    float: none;
+}
+body.front h1#header span {
+    display: none;
+}
+
+/**
+ * Breadcrumbs
+ */
+
+#breadcrumbs {
+    padding: 5px 0;
+    margin-left: 15px;
+    font-size: .9em;
+    font-weight: bold;
+}
+
+#breadcrumbs a {
+    text-decoration: none;
+    color: #2685bb;
+}
+
+
+/**
+ * standard.src.css
+ */
+ /****************************************************************************
+ * Global Definitions
+ */
+
+/**
+ * Visibility Controls
+ */
+
+.not-basic,
+.not-webkit,
+.not-full {
+	display: block;
+}
+
+.basic-only,
+.only-basic,
+.only-webkit
+.only-full {
+    display: none;
+}
+
+
+/****************************************************************************
+ * Page Elements
+ */
+ 
+/**
+ * Shared [TODO: Merge styles where possible]
+ */
+ 
+/**
+ * Content
+ */
+
+.content {
+    width: auto;
+    margin: 10px 10px 0 10px;
+    border: 1px solid #d0d0d0;
+}
+
+.content > *:last-child {
+    border-bottom: none !important;
+}
+
+.content.not-padded {
+    margin: 0;
+}
+
+.content > h1.light,
+.content > h2.light {
+     border: 1px #dddddd;
+     border-style: solid none none none;
+}
+
+/**
+ * Menu
+ */
+
+.menu {
+    margin: 10px 10px 0 10px;
+    border: 1px solid #d0d0d0;
+    width: auto;
+}
+
+.menu > ul > li:last-child,
+.menu > ol > li:last-child,
+.menu > *:last-child {
+    border-bottom: none;
+}
+
+.menu.not-padded {
+    margin: 0;
+}
+
+/* The rel=external stuff is not solely for menus, but primarily. 
+   Use span.external:after around a link with class no-ext-ind to keep indicator
+      from being styled like the link.  This is useful if links are underlined,
+      for example, and also in .menu.detailed (see comment for no-ext-ind).
+*/
+a[rel~=external]:after, span.external:after {	
+    content: "\a0 " url(../img/mwf/external-link.png);
+}
+
+/* Allow suppression of external link indicator via class "no-ext-ind". 
+   This is useful for .menu.detailed where a span.external inside an 
+   a[rel=external] can show where the indicator should end up.  This keeps the
+   indicator from floating off to the right away from the relevant text. This is
+   desirable, rather than just not using rel=external, because rel=external 
+   will determine how the link is handled in the native client and possibly in
+   screen readers.
+*/
+a[rel=external].no-ext-ind:after {	
+    content: "";
+}
+
+/**
+ * Button
+ */
+
+.button {
+    display: block;
+    position: relative !important;
+    width: auto;
+    overflow: hidden;
+}
+
+div.button {
+    padding-top: 10px;
+    height: 3em;
+}
+
+a.button {
+    border: 1px solid #d0d0d0;
+    margin: 10px 10px 0 10px;
+}
+
+.button > a,
+.button > a.light {
+    position: absolute;
+    width: auto;
+    overflow: hidden;
+    white-space:  nowrap;
+    padding: .5em 0 .4em 0;
+}
+
+.button > a:first-child {
+    right: 50%;
+    left: 10px;
+    width: auto;
+    border: 1px solid #d0d0d0;
+}
+
+.button > a:last-child {
+    left: 50%;
+    right: 10px;
+    width: auto;
+    border: 1px solid #d0d0d0;
+    border-left: 0px;
+}
+
+.button > a:first-child:last-child
+{
+    width: auto;
+    left: 10px;
+    right: 10px;
+}
+
+a.button,
+.button > a {
+	border: none;
+}
+
+.mwf_notmobile a.button:hover,
+a.button:focus,
+a.button:active,
+.mwf_notmobile .button > a:hover,
+.button > a:focus,
+.button > a:active,
+.mwf_notmobile a.button.light:hover,
+a.button.light:focus,
+a.button.light:active,
+.mwf_notmobile .button > a.light:hover,
+.button > a.light:focus,
+.button > a.light:active {
+	background-color: #ffb300 !important;
+	color: #494D69;
+}
+
+a.button.light,
+.button > a.light,
+.button.light > a {
+	background-color: #f6f6f6;
+	color: #555;
+}
+
+.button.next,
+.button > .next {
+	padding: 10px 0px 10px 65px;
+	background:url(../img/mwf/button-next.png) no-repeat center;
+}
+
+.button.previous,
+.button > .previous {
+	padding: 10px 0px 10px 65px;
+	background:url(../img/mwf/button-previous.png) no-repeat center;
+}
+
+.button.next span,
+.button.previous span,
+.button > .next span,
+.button > .previous span {
+    display: none;
+}
+
+/**
+ * Button (Top)
+ */
+
+#button-top {
+    overflow: hidden;
+    white-space: nowrap;
+    position: absolute !important;
+    z-index: 100;
+    top: 0;
+    right: 0;
+    /* box model attributes -- should be a total together of 35 px height */
+    height: 16px !important;
+    line-height: 16px;
+    margin: 4px 10px 7px 0;
+	padding: 4px 8px 4px 8px;
+    /* decoration */
+    border: 1px solid #bbb;
+    font-size: 12px !important;
+    -webkit-box-shadow: none;
+    background-color: #788ebe;
+    color: #fff;
+    font-weight: bold;
+}
+
+.mwf_notmobile #button-top:hover,
+#button-top:active,
+#button-top:focus{
+    background-color: #576c9c !important;
+    color: #fff;
+}
+
+/**
+ * Forms
+ */
+
+form {
+    margin: 10px 10px 0 10px;
+}
+
+form.not-padded {
+    margin: 0;
+}
+
+.content form {
+    margin: 0;
+}
+
+/**
+ * Messages
+ */
+
+div.message {
+    background-position: 99% 50%;
+    background-repeat: no-repeat;
+    padding-right: 32px;
+    margin-top: .6em;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+div.message.not-padded {
+    margin: 0;
+}
+
+div.message.alert {
+    background-image: url("img/message-alert.png");
+}
+
+div.message.confirm {
+    background-image: url("img/message-confirm.png");
+}
+
+div.message.error {
+    background-image: url("img/message-error.png");
+}
+
+div.message.info {
+    background-image: url("img/message-info.png");
+}
+
+.content div.message,
+.menu div.message,
+.form div.message {
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 10px;
+}
+
+.content div.message:last-child,
+.menu div.message:last-child,
+.form div.message:last-child {
+    margin-bottom: 0;
+}
+
+
+/****************************************************************************
+ * Page Descriptors
+ */
+
+/**
+ * Button (Special)
+ */
+
+#search-button {
+        background: url(../img/mwf/button-search.png) no-repeat;
+        width: 60px;
+        height: 25px;
+        border: 0;
+        padding: 0;
+        margin: 0;
+        text-indent:-9999px;
+}
+
+#go-button {
+        background: url(../img/mwf/button-go.png) no-repeat;
+        width: 30px;
+        height: 25px;
+		border: 0;
+        padding: 0;
+        margin: 0;
+        text-indent:-9999px;
+}
+
+/****************************************************************************
+ * Special Styles
+ */
+
+/**
+ * Front Page
+ */
+
+body.front .menu.front li a{
+    padding: 1.2em;
+}
+
+
+
+/**
+ * full.srs.css
+ */
+/****************************************************************************
+ * Global Definitions
+ */
+
+/**
+ * Visibility Controls
+ */
+
+.only-webkit, 
+.only-full { 
+    display: block; 
+}
+
+.not-webkit, 
+.not-full { 
+    display: none; 
+}
+
+/**
+ * General Styles
+ */
+
+.clear {
+    clear: both;
+    width: 100%;
+    height: 1px;
+}
+
+/****************************************************************************
+ * Page Elements
+ */
+ 
+/**
+ * Shared [TODO: Merge styles where possible]
+ */
+
+ select {
+     -webkit-appearance: none;
+ }
+ 
+/**
+ * Content
+ */
+
+.content {
+    border-radius: .5em;
+    -webkit-border-radius: .5em;
+    -moz-border-radius: .5em;
+}
+
+.content.not-padded {
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+}
+
+.content > h1,
+.content > h2 {
+    background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#e5e5e5));
+    background: -moz-linear-gradient(#fff, #e5e5e5);
+    background: -o-linear-gradient(top, #fff, #e5e5e5);
+    background: linear-gradient(#fff, #e5e5e5);
+}
+
+.content > h1.light,
+.content > h2.light {
+    background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#e5e5e5));
+    background: -moz-linear-gradient(#fff, #e5e5e5);
+    background: -o-linear-gradient(top, #fff, #e5e5e5);
+    background: linear-gradient(#fff, #e5e5e5);
+}
+.content > h1.blue,
+.content > h2.blue {
+    background: -webkit-gradient(linear, left top, left bottom, from(#809FE2), to(#637CB0));
+    background: -moz-linear-gradient(#809FE2, #637CB0);
+    background: -o-linear-gradient(top, #809FE2, #637CB0);
+    background: linear-gradient(#809FE2, #637CB0);
+
+}
+
+.content > *:first-child {
+    -webkit-border-top-left-radius: .5em;
+    -webkit-border-top-right-radius: .5em;
+    -moz-border-radius-topleft: .5em;
+    -moz-border-radius-topright: .5em;
+}
+
+.content > *:last-child {
+    -webkit-border-bottom-left-radius: .5em;
+    -webkit-border-bottom-right-radius: .5em;
+    -moz-border-radius-bottomleft: .5em;
+    -moz-border-radius-bottomright: .5em;
+}
+
+.content.not-padded > * {
+    -webkit-border-top-left-radius: 0;
+    -webkit-border-top-right-radius: 0;
+    -webkit-border-bottom-left-radius: 0;
+    -webkit-border-bottom-right-radius: 0;
+    -moz-border-radius-topleft: 0;
+    -moz-border-radius-topright: 0;
+    -moz-border-radius-bottomleft: 0;
+    -moz-border-radius-bottomright: 0;
+}
+
+/**
+ * Menu
+ */
+
+.menu > h1,
+.menu > h2 {
+    background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#e5e5e5));
+    background: -moz-linear-gradient(#fff, #e5e5e5);
+    background: -o-linear-gradient(top, #fff, #e5e5e5);
+    background: linear-gradient(#fff, #e5e5e5);
+}
+
+.menu > h1.light,
+.menu > h2.light {
+    background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#e5e5e5));
+    background: -moz-linear-gradient(#fff, #e5e5e5);
+    background: -o-linear-gradient(top, #fff, #e5e5e5);
+    background: linear-gradient(#fff, #e5e5e5);
+}
+
+.menu > h1.blue,
+.menu > h2.blue {
+    background: -webkit-gradient(linear, left top, left bottom, from(#809FE2), to(#637CB0));
+    background: -moz-linear-gradient(#809FE2, #637CB0);
+    background: -o-linear-gradient(top, #809FE2, #637CB0);
+    background: linear-gradient(#809FE2, #637CB0);
+}
+
+.menu {
+    border-radius: .5em;
+    -webkit-border-radius: .5em;
+    -moz-border-radius: .5em;
+}
+
+.menu > ol:first-child > li:first-child,
+.menu > ul:first-child > li:first-child,
+.menu > :first-child {
+    -moz-border-radius-topleft: .5em;
+    -moz-border-radius-topright: .5em;
+    -webkit-border-top-left-radius: .5em;
+    -webkit-border-top-right-radius: .5em;
+}
+
+.menu > :first-child:last-child,
+.menu > ol > li:last-child,
+.menu > ul > li:last-child {
+    -webkit-border-bottom-left-radius: .5em;
+    -webkit-border-bottom-right-radius: .5em;
+    -moz-border-radius-bottomleft: .5em;
+    -moz-border-radius-bottomright: .5em;
+}
+
+.mwf_notmobile .menu > :first-child:last-child > li:first-child a:hover,
+.menu > :first-child:last-child > li:first-child a:focus,
+.menu > :first-child:last-child > li:first-child a:active,
+.mwf_notmobile .menu > :first-child > li:first-child a:hover,
+.menu > :first-child > li:first-child a:focus,
+.menu > :first-child > li:first-child a:active {
+    -moz-border-radius-topleft: .5em;
+    -moz-border-radius-topright: .5em;
+    -webkit-border-top-left-radius: .5em;
+    -webkit-border-top-right-radius: .5em;
+}
+
+.mwf_notmobile .menu > ol > li:last-child > a:hover,
+.menu > ol > li:last-child > a:focus,
+.menu > ol > li:last-child > a:active,
+.mwf_notmobile .menu > ul > li:last-child > a:hover,
+.menu > ul > li:last-child > a:focus,
+.menu > ul > li:last-child > a:active {
+    -webkit-border-bottom-left-radius: .5em;
+    -webkit-border-bottom-right-radius: .5em;
+    -moz-border-radius-bottomleft: .5em;
+    -moz-border-radius-bottomright: .5em;
+}
+
+.menu.not-padded {
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+}
+
+.menu.not-padded > ol:first-child > li:first-child,
+.menu.not-padded > ul:first-child > li:first-child,
+.menu.not-padded > :first-child {
+    -moz-border-radius-topleft: 0;
+    -moz-border-radius-topright: 0;
+    -webkit-border-top-left-radius: 0;
+    -webkit-border-top-right-radius: 0;
+}
+
+.menu.not-padded > :first-child:last-child,
+.menu.not-padded > ol > li:last-child,
+.menu.not-padded > ul > li:last-child {
+    -webkit-border-bottom-left-radius: 0;
+    -webkit-border-bottom-right-radius: 0;
+    -moz-border-radius-bottomleft: 0;
+    -moz-border-radius-bottomright: 0;
+}
+
+.mwf_notmobile .menu.not-padded > :first-child:last-child > li:first-child > a:hover,
+.menu.not-padded > :first-child:last-child > li:first-child > a:focus,
+.menu.not-padded > :first-child:last-child > li:first-child > a:active,
+.mwf_notmobile .menu.not-padded > :first-child > li:first-child > a:hover,
+.menu.not-padded > :first-child > li:first-child > a:focus,
+.menu.not-padded > :first-child > li:first-child > a:active {
+    -moz-border-radius-topleft: 0;
+    -moz-border-radius-topright: 0;
+    -webkit-border-top-left-radius: 0;
+    -webkit-border-top-right-radius: 0;
+}
+
+.mwf_notmobile .menu.not-padded > ol > li:last-child > a:hover,
+.menu.not-padded > ol > li:last-child > a:focus,
+.menu.not-padded > ol > li:last-child > a:active,
+.mwf_notmobile .menu.not-padded > ul > li:last-child > a:hover,
+.menu.not-padded > ul > li:last-child > a:focus,
+.menu.not-padded > ul > li:last-child > a:active {
+    -webkit-border-bottom-left-radius: 0;
+    -webkit-border-bottom-right-radius: 0;
+    -moz-border-radius-bottomleft: 0;
+    -moz-border-radius-bottomright: 0;
+}
+
+/**
+ * Button
+ */
+
+a.button,
+div.button > a {
+    background: -webkit-gradient(linear, left top, left bottom, from(#6883bc), to(#536895));
+    background: -moz-linear-gradient(#6883bc, #536895);
+    background: -o-linear-gradient(top, #6883bc, #536895);
+    background: linear-gradient(#6883bc, #536895);
+}
+
+a.button,
+div.button > a:first-child {
+    -webkit-border-top-left-radius: .5em;
+    -webkit-border-bottom-left-radius: .5em;
+    -moz-border-radius-topleft: .5em;
+    -moz-border-radius-bottomleft: .5em;
+}
+
+a.button,
+div.button > a:last-child {
+    -webkit-border-top-right-radius: .5em;
+    -webkit-border-bottom-right-radius: .5em;
+    -moz-border-radius-topright: .5em;
+    -moz-border-radius-bottomright: .5em;
+}
+
+a.button.light,
+div.button > a.light,
+div.button.light > a {
+    background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#e5e5e5));
+    background: -moz-linear-gradient(#fff, #e5e5e5);
+    background: -o-linear-gradient(top, #fff, #e5e5e5);
+    background: linear-gradient(#fff, #e5e5e5);
+    color: #555 !important;
+}
+
+.mwf_notmobile a.button:hover,
+a.button:focus,
+a.button:active,
+.mwf_notmobile div.button > a:hover,
+div.button > a:focus,
+div.button > a:active,
+.mwf_notmobile a.button.light:hover,
+a.button.light:focus,
+a.button.light:active,
+.mwf_notmobile div.button > a.light:hover,
+div.button > a.light:focus,
+div.button > a.light:active{
+    background: -webkit-gradient(linear, left top, left bottom, from(#ffc847), to(#ffb300));
+    background: -moz-linear-gradient(#ffc847, #ffb300);
+    background: -o-linear-gradient(top, #ffc847, #ffb300);
+    background: linear-gradient(#ffc847, #ffb300);
+}
+
+/**
+ * Button (Top)
+ */
+
+#button-top {
+    background: -webkit-gradient(linear, left top, left bottom, from(#95aee8), to(#788ebe));
+    background: -moz-linear-gradient(#95aee8, #788ebe);
+    background: -o-linear-gradient(top, #95aee8, #788ebe);
+    background: linear-gradient(#95aee8, #788ebe);
+    -moz-border-radius: .5em;
+    -webkit-border-radius: .5em;
+}
+
+.mwf_notmobile #button-top:hover,
+#button-top:active,
+#button-top:focus{
+    background: -webkit-gradient(linear, left top, left bottom, from(#8296c0), to(#576c9c));
+    background: -moz-linear-gradient(#8296c0, #576c9c);
+    background: -o-linear-gradient(top, #8296c0, #576c9c);
+    background: linear-gradient(#8296c0, #576c9c);
+}
+
+/**
+ * Forms
+ */
+ 
+form {
+    border-radius: .5em;
+}
+ 
+form.not-padded {
+    border-radius: 0;
+}
+
+form,
+form .first,
+form > *:first-child {
+    border-top-left-radius: .5em;
+    border-top-right-radius: .5em;
+}
+
+form,
+form .last {
+    border-bottom-left-radius: .5em;
+    border-bottom-right-radius: .5em;
+}
+
+.content form {
+    border-radius: 0;
+}
+
+form input,
+form textarea,
+form select {
+    box-shadow: inset 0 0 3px #bbb;
+    padding: 4px;
+}
+
+/* making control equal width */
+form input,
+form textarea,
+form select {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+/* button */
+form input[type="submit"],
+form input[type="reset"],
+form button,
+form a.button,
+.mwf_notmobile form input[type="submit"]:hover:disabled,
+.mwf_notmobile form input[type="reset"]:hover:disabled,
+.mwf_notmobile form button:hover:disabled,
+.mwf_notmobile form a.button:hover.disabled,
+form input[type="submit"]:focus:disabled,
+form input[type="reset"]:focus:disabled,
+form button:focus:disabled,
+form a.button:focus.disabled {
+    background: -moz-linear-gradient(#e4e7ee, #cfd5e1);
+    background: -o-linear-gradient(top, #e4e7ee, #cfd5e1);
+    background: -webkit-gradient(linear, left top, left bottom, from(#e4e7ee), to(#cfd5e1), color-stop(0.8, #cfd5e1));
+    background: linear-gradient(#e4e7ee, #cfd5e1);
+    border-radius: .5em;
+    box-shadow: 0 2px 2px #999;
+    text-shadow: 0 1px 1px #fff;
+}
+
+.mwf_notmobile form input[type="submit"]:hover,
+.mwf_notmobile form input[type="reset"]:hover,
+.mwf_notmobile form button:hover,
+.mwf_notmobile form a.button:hover,
+form input[type="submit"]:focus,
+form input[type="reset"]:focus,
+form button:focus,
+form a.button:focus {
+    background: -moz-linear-gradient(#cfd5e1, #bcc5d5);
+    background: -o-linear-gradient(top, #cfd5e1, #bcc5d5);
+    background: -webkit-gradient(linear, left top, left bottom, from(#cfd5e1), to(#bcc5d5), color-stop(0.8, #bcc5d5));
+    background: linear-gradient(#cfd5e1, #bcc5d5);
+}
+
+form input[type="submit"].primary,
+form input[type="reset"].primary,
+form button.primary,
+form a.button.primary,
+.mwf_notmobile form input[type="submit"].primary:hover:disabled,
+.mwf_notmobile form input[type="reset"].primary:hover:disabled,
+.mwf_notmobile form button.primary:hover:disabled,
+.mwf_notmobile form a.button.primary:hover.disabled,
+form input[type="submit"].primary:focus:disabled,
+form input[type="reset"].primary:focus:disabled,
+form button.primary:focus:disabled,
+form a.button.primary:focus.disabled {
+    background: -moz-linear-gradient(#fcbe60, #faa422);
+    background: -o-linear-gradient(top, #fcbe60, #faa422);
+    background: -webkit-gradient(linear, left top, left bottom, from(#fcbe60), to(#faa422), color-stop(0.8, #faa422));
+    background: linear-gradient(#fcbe60, #faa422);
+}
+
+.mwf_notmobile form input[type="submit"].primary:hover,
+.mwf_notmobile form input[type="reset"].primary:hover,
+.mwf_notmobile form button.primary:hover,
+.mwf_notmobile form a.button.primary:hover,
+form input[type="submit"].primary:focus,
+form input[type="reset"].primary:focus,
+form button.primary:focus,
+form a.button.primary:focus {
+    background: -moz-linear-gradient(#faa422, #db8504);
+    background: -o-linear-gradient(top, #faa422, #db8504);
+    background: -webkit-gradient(linear, left top, left bottom, from(#faa422), to(#db8504), color-stop(0.8, #db8504));
+    background: linear-gradient(#faa422, #db8504);
+}
+
+form input[type="submit"].secondary,
+form input[type="reset"].secondary,
+form button.secondary,
+form a.button.secondary,
+.mwf_notmobile form input[type="submit"].secondary:hover:disabled,
+.mwf_notmobile form input[type="reset"].secondary:hover:disabled,
+.mwf_notmobile form button.secondary:hover:disabled,
+.mwf_notmobile form a.button.secondary:hover.disabled,
+form input[type="submit"].secondary:focus:disabled,
+form input[type="reset"].secondary:focus:disabled,
+form button.secondary:focus:disabled,
+form a.button.secondary:focus.disabled {
+    background: -moz-linear-gradient(#9caccf, #869ac5);
+    background: -o-linear-gradient(top, #9caccf, #869ac5);
+    background: -webkit-gradient(linear, left top, left bottom, from(#9caccf), to(#869ac5), color-stop(0.8, #869ac5));
+    background: linear-gradient(#9caccf, #869ac5);
+}
+
+.mwf_notmobile form input[type="submit"].secondary:hover,
+.mwf_notmobile form input[type="reset"].secondary:hover,
+.mwf_notmobile form button.secondary:hover,
+.mwf_notmobile form a.button.secondary:hover,
+form input[type="submit"].secondary:focus,
+form input[type="reset"].secondary:focus,
+form button.secondary:focus,
+form a.button.secondary:focus {
+    background: -moz-linear-gradient(#869ac5, #7188bb);
+    background: -o-linear-gradient(top, #869ac5, #7188bb);
+    background: -webkit-gradient(linear, left top, left bottom, from(#869ac5), to(#7188bb), color-stop(0.8, #7188bb));
+    background: linear-gradient(#869ac5, #7188bb);
+}
+
+/* Without styling, range does not display by default on Android 4.0 and below. */
+input[type='range']{
+    background: grey;
+    height:10px;
+}
+
+input[type='range']::-webkit-slider-thumb{
+    background:black;
+    height:15px;
+    width:15px;
+    border-radius:15px;
+}
+
+
+/**
+ * Messages
+ */
+ 
+.message-wrapper {
+    position: absolute;
+    top: 25%;
+    left: 10px;
+    right: 10px;
+    z-index: 1002;
+    background-color: #fff;
+    border: 1px solid #666;
+    border-radius: .5em;
+}
+
+.message-modal.message.not-padded {
+    margin: 0;
+}
+
+.message-modal.message {
+    margin-top: .6em;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+div.message-button {
+    margin: 0;
+}
+
+div.message-button {
+    margin: 10px;
+}
+
+.message-mask {
+    position:fixed;
+    top:0;
+    left:0;
+    height:100%;
+    width:100%;
+    background:#666;
+    opacity:.75;
+    filter:alpha(opacity=75);
+    z-index:1001
+}
+
+/****************************************************************************
+ * Special Styles
+ */
+
+/**
+ * Webkit Transitions [DEPRECATED]
+ */
+
+.webkit-transition-fade .webkit-transition-element,
+.webkit-transition-flipY .webkit-transition-element,
+.webkit-transition-slideX .webkit-transition-element,
+.webkit-transition-slideY .webkit-transition-element,
+.webkit-transition-slideXZ .webkit-transition-element {
+    -webkit-transition-duration: 1000ms;
+    overflow: hidden;
+}
+
+.webkit-transition-fade .webkit-transition-element,
+.webkit-transition-slideX .webkit-transition-element,
+.webkit-transition-slideY .webkit-transition-element,
+.webkit-transition-slideXZ .webkit-transition-element {
+    float: left;
+}
+
+.webkit-transition-fade .webkit-transition-element,
+.webkit-transition-slideX .webkit-transition-element,
+.webkit-transition-slideY .webkit-transition-element,
+.webkit-transition-slideXZ .webkit-transition-element {
+    opacity: 0;
+}
+
+/** TRANSITION PROPERTIES **/
+
+.webkit-transition-flipY .webkit-transition-element,
+.webkit-transition-slideX .webkit-transition-element,
+.webkit-transition-slideY .webkit-transition-element,
+.webkit-transition-slideXZ .webkit-transition-element {
+    -webkit-transition-property: webkit-transform;
+}
+
+.webkit-transition-slideXZ .webkit-transition-element {
+    -webkit-animation-duration: 1s;
+    -webkit-animation-iteration-count: 1;
+    -webkit-transform-style: preserve-3d;
+}
+
+.webkit-transition-fade .webkit-transition-element {
+    -webkit-transform-property: opacity;
+}
+
+/** TRANSITION ACTIVE **/
+
+.webkit-transition-fade .active,
+.webkit-transition-flipY .active,
+.webkit-transition-slideX .active,
+.webkit-transition-slideY .active,
+.webkit-transition-slideXZ .active{
+    position: relative;
+    opacity: 1;
+}
+
+.webkit-transition-slideX .active,
+.webkit-transition-slideY .active{
+    -webkit-transform: translate(0,0);
+}
+
+.webkit-transition-flipY .active,
+.webkit-transition-slideXZ .active{
+    -webkit-transform: rotateX(0deg);
+}
+
+/** TRANSITION INACTIVE **/
+
+.webkit-transition-fade .inactive-prev,
+.webkit-transition-fade .inactive-next,
+.webkit-transition-flipY .inactive-prev,
+.webkit-transition-flipY .inactive-next,
+.webkit-transition-slideX .inactive-prev,
+.webkit-transition-slideX .inactive-next,
+.webkit-transition-slideY .inactive-prev,
+.webkit-transition-slideY .inactive-next,
+.webkit-transition-slideXZ .inactive-prev,
+.webkit-transition-slideXZ .inactive-next{
+    position: absolute;
+    opacity: 0 !important;
+}
+
+.webkit-transition-fade .inactive-prev,
+.webkit-transition-fade .inactive-next,
+.webkit-transition-slideX .inactive-prev,
+.webkit-transition-slideX .inactive-next,
+.webkit-transition-slideY .inactive-prev,
+.webkit-transition-slideY .inactive-next,
+.webkit-transition-slideXZ .inactive-prev,
+.webkit-transition-slideXZ .inactive-next{
+    opacity: 0 !important;
+}
+
+.webkit-transition-slideXZ .inactive-prev,
+.webkit-transition-slideXZ .inactive-next{
+    position: absolute !important;
+}
+
+.webkit-transition-fade .inactive-prev {
+    z-index: -400;
+}
+
+.webkit-transition-fade .inactive-next {
+    z-index: -400;
+}
+
+.webkit-transition-flipY .inactive-prev{
+    -webkit-transform: rotateX(-180deg);
+    z-index: -400;
+}
+
+.webkit-transition-flipY .inactive-next{
+    -webkit-transform: rotateX(180deg);
+    z-index: -400;
+}
+
+.webkit-transition-slideX .inactive-prev {
+    -webkit-transform: translateX(-100%);
+}
+
+.webkit-transition-slideX .inactive-next {
+    -webkit-transform: translateX(100%);
+}
+
+.webkit-transition-slideY .inactive-prev {
+    -webkit-transform: translateY(-100%);
+}
+
+.webkit-transition-slideY .inactive-next {
+    -webkit-transform: translateY(100%);
+}
+
+.webkit-transition-slideXZ .inactive-prev{
+    -webkit-transform: rotateX(-90deg) scale3d(.835,.835,.835) translateX(-30%);
+}
+
+.webkit-transition-slideXZ .inactive-next{
+    -webkit-transform: rotateX(90deg) scale3d(.835,.835,.835) translateX(30%);
+}
+
+/**
+ * Sortable Options (used for Customize Home Screen)
+ */
+ div#app_order.option.ui-sortable {
+     line-height:57px;
+ } 
+
+ div#app_order.option.ui-sortable > label {
+     background-color: #869AC5;
+     margin: 1px;
+ }
+
+.draggable-handle {
+    padding: 9px;
+    float: right;
+    content: url("img/draggable-handle.png");
+}

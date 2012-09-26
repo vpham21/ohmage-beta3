@@ -22,7 +22,7 @@
 	<false/>
 	<key>ExternalHosts</key>
 	<array>
-		<string>*.mobilizingcs.org</string>
+		<string>*.ohmage.org</string>
 	</array>
 	<key>Plugins</key>
 	<dict>

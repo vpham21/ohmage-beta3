@@ -67,11 +67,11 @@ var DateTimePicker = function(){
         };
         
         timePicker.getHours = function(){
-            return parseInt(timePicker.getInput().split(":")[0]);
+            return parseInt(timePicker.getInput().split(":")[0], 10);
         };
         
         timePicker.getMinutes = function(){
-            return parseInt(timePicker.getInput().split(":")[1]);
+            return parseInt(timePicker.getInput().split(":")[1], 10);
         };
         
         
@@ -91,4 +91,12 @@ DateTimePicker.createDateTimeForm = function(title, datePicker, timePicker){
     form.addItem(timePicker);
 
     return form;
-}
+};
+
+/**
+ * Returns HH:MM
+ */
+DateTimePicker.getPaddedTime = function(date){
+    return date.getHours() + ":" + (date.getMinutes() < 10 ? "0" : "" ) + date.getMinutes();
+};
+

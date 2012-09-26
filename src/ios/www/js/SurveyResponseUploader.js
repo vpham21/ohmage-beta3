@@ -3,7 +3,7 @@
  * data.
  */
 var SurveyResponseUploader = function(survey, surveyResponse){
-
+    
     /**
      * Compiles and returns an upload package with the current values set in the
      * survey response. In this case, no extra check of validity or availaility
@@ -80,11 +80,6 @@ var SurveyResponseUploader = function(survey, surveyResponse){
 
     var getFinalizedUploadResponse = function(callback, requireLocation){
 
-        //By default, require location.
-        requireLocation = typeof requireLocation == 'undefined' ?
-                                                                true
-                                                              : requireLocation;
-
         var returnResponseData = function(){
             callback(getResponseData());
         };
@@ -129,6 +124,10 @@ var SurveyResponseUploader = function(survey, surveyResponse){
      */
     this.upload = function(onSuccess, onError, requireLocation){
 
+        if(typeof(requireLocation) === "undefined"){
+            requireLocation = new Date().getTime() - surveyResponse.getSubmitDate().getTime() < 120000;
+        }
+        
         getFinalizedUploadResponse(function(data){
 
             var _onError = function(error){
@@ -140,6 +139,7 @@ var SurveyResponseUploader = function(survey, surveyResponse){
             };
             
             var _onSuccess = function(response){
+                console.log("SurveyResponseUploader: Successfully returned from single survey response upload script.");
                 Spinner.hide(function(){
                     if(onSuccess){
                         onSuccess(response);
@@ -169,7 +169,7 @@ var SurveyResponseUploader = function(survey, surveyResponse){
  * recursively tries to upload the surveys and invokes the callback with the 
  * final number of successfully uploaded surveys.
  */
-SurveyResponseUploader.uploadAll = function(pendingResponses, callback, requireLocation){
+SurveyResponseUploader.uploadAll = function(pendingResponses, uploadCompletedCallback, requireLocation){
 
     //Counts the number of successful uploads.
     var count = 0;
@@ -185,8 +185,8 @@ SurveyResponseUploader.uploadAll = function(pendingResponses, callback, requireL
 
         if(i >= uuidList.length){
             Spinner.hide(function(){
-                if(callback){
-                    callback(count);
+                if(typeof(uploadCompletedCallback) === "function"){
+                    uploadCompletedCallback(count);
                 }
             });
 
@@ -196,18 +196,18 @@ SurveyResponseUploader.uploadAll = function(pendingResponses, callback, requireL
             var survey = pendingResponses[uuidList[i]].survey;
             var surveyResponse = pendingResponses[uuidList[i]].response;
             
-            var next = function(){
+            var uploadNextSurveyResponse = function(){
                 upload(++i);
             };
             
             var onSuccess = function(response){    
                 count++;
-                SurveyResponse.deleteSurveyResponse(surveyResponse);
-                next();
+                SurveyResponseModel.deleteSurveyResponse(surveyResponse);
+                uploadNextSurveyResponse();
             };
             
             var onError = function(error){
-                next();
+                uploadNextSurveyResponse();
             };
             
             new SurveyResponseUploader(survey, surveyResponse).upload(onSuccess, onError, requireLocation);

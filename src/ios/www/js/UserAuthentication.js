@@ -12,7 +12,7 @@
  */
 function UserAuthentication() {
 
-    var me = this;
+    var self = this;
 
     /**
      * Endpoint for user authentication via authentication token.
@@ -41,39 +41,39 @@ function UserAuthentication() {
 
     var AUTH_ERROR_STATE_COOKIE_NAME = 'auth-error';
 
-	/* This is the regular expression for the password string. The password
-	 * must contain at least one lower case character, one upper case
-	 * character, one digit, and one of a set of special characters. It must be
-	 * between 8 and 16 characters, inclusive.
-     */
-	var PLAINTEXT_PASSWORD_PATTERN_STRING =
-		"^" + // Beginning of the line.
-		"(" + // Beginning of group 1.
-			"(" + // Beginning of subgroup 1-1.
-				"?=.*" + // This group must consist of at least one of the
-				         // following characters.
-				"[a-z]" + // A lower case character.
-			")" + // End of subgroup 1-1.
-			"(" + // Beginning of subgroup 1-2.
-				"?=.*" + // This group must consist of at least one of the
-		                 // following characters.
-				"[A-Z]" +// An upper case character.
-			")" + // End of subgroup 1-2.
-			"(" + // Beginning of subgroup 1-3.
-				"?=.*" + // This group must consist of at least one of the
-		                 // following characters.
-				"\\d" + // A digit.
-			")" + // End of subgroup 1-3.
-			"(" + // Beginning of subgroup 1-4.
-				"?=.*" + // This group must consist of at least one of the
-		                 // following characters.
-				"[,\\.<>:\\[\\]!@#$%^&*+-/=?_{|}]" +
-			")" + // End of subgroup 1-4.
-			"." + // All of the previous subgroups must be true.
-			"{8,16}" + // There must be at least 8 and no more than 16
-			           // characters.
-		")" + // End of group 1.
-		"$";  // End of the line.
+    /* This is the regular expression for the password string. The password
+     * must contain at least one lower case character, one upper case
+     * character, one digit, and one of a set of special characters. It must be
+     * between 8 and 16 characters, inclusive.
+    */
+    var PLAINTEXT_PASSWORD_PATTERN_STRING =
+        "^" + // Beginning of the line.
+        "(" + // Beginning of group 1.
+                "(" + // Beginning of subgroup 1-1.
+                        "?=.*" + // This group must consist of at least one of the
+                                 // following characters.
+                        "[a-z]" + // A lower case character.
+                ")" + // End of subgroup 1-1.
+                "(" + // Beginning of subgroup 1-2.
+                        "?=.*" + // This group must consist of at least one of the
+                         // following characters.
+                        "[A-Z]" +// An upper case character.
+                ")" + // End of subgroup 1-2.
+                "(" + // Beginning of subgroup 1-3.
+                        "?=.*" + // This group must consist of at least one of the
+                         // following characters.
+                        "\\d" + // A digit.
+                ")" + // End of subgroup 1-3.
+                "(" + // Beginning of subgroup 1-4.
+                        "?=.*" + // This group must consist of at least one of the
+                         // following characters.
+                        "[,\\.<>:\\[\\]!@#$%^&*+-/=?_{|}]" +
+                ")" + // End of subgroup 1-4.
+                "." + // All of the previous subgroups must be true.
+                "{8,16}" + // There must be at least 8 and no more than 16
+                           // characters.
+        ")" + // End of group 1.
+        "$";  // End of the line.
 
     var PASSWORD_REQUIREMENTS =
 		"The password must " +
@@ -106,7 +106,15 @@ function UserAuthentication() {
 			"'}', " +
 			"'|', " +
 			"':'.";
-
+                    
+    var sessionMap = new LocalMap('credentials');
+    var session = function(name, value){
+        if(typeof(value) !== "undefined"){
+            sessionMap.set(name, value);
+        }
+        return sessionMap.get(name);
+    };
+    
     /**
      * Return true if cookie with the specified name exists. Optionally,
      * redirects the user to the provided redirect URL in case the user is
@@ -121,11 +129,11 @@ function UserAuthentication() {
      */
     var authenticationCheck = function(authCookieName, redirectURL){
 
-        if(me.isInAuthErrorState()){
+        if(self.isInAuthErrorState()){
             return false;
         }
 
-        if($.cookie(authCookieName) !== null){
+        if(session(authCookieName) !== null){
 
             PageNavigation.redirect(redirectURL);
 
@@ -149,11 +157,11 @@ function UserAuthentication() {
     }
 
     this.setAuthErrorState = function(state){
-        $.cookie(AUTH_ERROR_STATE_COOKIE_NAME, state);
+        session(AUTH_ERROR_STATE_COOKIE_NAME, state);
     };
 
     this.isInAuthErrorState = function(){
-        return ($.cookie(AUTH_ERROR_STATE_COOKIE_NAME) == 'true')? true : false;
+        return session(AUTH_ERROR_STATE_COOKIE_NAME);
     }
 
     /**
@@ -161,7 +169,7 @@ function UserAuthentication() {
      * @return The authentication token if it exists, or null otherwise.
      */
     this.getAuthToken = function(){
-        return $.cookie(TOKEN_AUTH_COOKIE_NAME);
+        return session(TOKEN_AUTH_COOKIE_NAME);
     }
 
     /**
@@ -169,7 +177,7 @@ function UserAuthentication() {
      * @return The hashed password if it exists, or null otherwise.
      */
     this.getHashedPassword = function(){
-        return $.cookie(HASH_AUTH_COOKIE_NAME);
+        return session(HASH_AUTH_COOKIE_NAME);
     }
 
     /**
@@ -177,34 +185,36 @@ function UserAuthentication() {
      * method agnostic and works with both hashed and token authentication
      * methods.
      *
-     * @param redirectURL If specified, the logged out user will be redirected
-     *        to this URL. This variable is optional.
      */
-    this.logout = function(redirectURL){
+    this.logout = function(){
+        
         var message = "All data will be lost. Are you sure you would like to proceed?";
 
         showConfirm(message, function(yes){
             if(yes){
 
-                //Erase any authentication related cookies.
-                $.cookie(TOKEN_AUTH_COOKIE_NAME, null);
-                $.cookie(HASH_AUTH_COOKIE_NAME, null);
-                $.cookie(USERNAME_COOKIE_NAME, null);
-                $.cookie(AUTH_ERROR_STATE_COOKIE_NAME, null);
-
+                console.log("UserAuthentication: User confirmed logout. Deleting data...");
+                //Erase any authentication related data.
+                session(TOKEN_AUTH_COOKIE_NAME, null);
+                session(HASH_AUTH_COOKIE_NAME, null);
+                session(USERNAME_COOKIE_NAME, null);
+                session(AUTH_ERROR_STATE_COOKIE_NAME, null);
+                
+                //ToDo: Decouple these two lines from user authentication. Maybe
+                //in the form of event subscribers. 
+                ReminderModel.cancelAll();
                 window.localStorage.clear();
-
-                if(typeof(redirectURL) == "undefined")
-                    PageNavigation.openAuthenticationPage();
-                else
-                    PageNavigation.redirect(redirectURL);
+                window.localStorage['page-parameters'] = "{}";
+                PageNavigation.openAuthenticationPage();
 
             }
         }, "Yes,No");
     };
-
+    
+    
     this.checkpoint = function(){
-        if(!this.isUserAuthenticated()){
+        if(!this.isUserAuthenticated() || this.isInAuthErrorState() ){
+            console.log("User failed checkpoint - redirecting to the authentication page.");
             PageNavigation.redirect('auth.html');
         }
     };
@@ -264,7 +274,7 @@ function UserAuthentication() {
      * @return Currently logged in user's username, or null if non exists.
      */
     this.getUsername = function(){
-        return $.cookie(USERNAME_COOKIE_NAME);
+        return session(USERNAME_COOKIE_NAME);
     }
 
     /**
@@ -288,10 +298,10 @@ function UserAuthentication() {
         var onSuccess = function(response){
 
             //Save the hashed password in a cookie.
-            $.cookie(HASH_AUTH_COOKIE_NAME, response.hashed_password);
-            $.cookie(USERNAME_COOKIE_NAME, username);
+            session(HASH_AUTH_COOKIE_NAME, response.hashed_password);
+            session(USERNAME_COOKIE_NAME, username);
 
-            me.setAuthErrorState(false);
+            self.setAuthErrorState(false);
 
             callback(true);
         };
@@ -337,10 +347,10 @@ function UserAuthentication() {
         //invoke the callback.
         var onSuccess = function(response){
             //Save the authentication token in a cookie and invoke the callback.
-            $.cookie(TOKEN_AUTH_COOKIE_NAME, response.token);
-            $.cookie(USERNAME_COOKIE_NAME, username);
+            session(TOKEN_AUTH_COOKIE_NAME, response.token);
+            session(USERNAME_COOKIE_NAME, username);
 
-            me.setAuthErrorState(false);
+            self.setAuthErrorState(false);
 
             callback(true);
         };
@@ -365,7 +375,6 @@ function UserAuthentication() {
 
     };
 }
-
 
 var auth = new UserAuthentication ();
 

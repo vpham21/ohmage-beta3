@@ -1,6 +1,5 @@
 var LocalNotificationAdapter = (function(){
   
-    
     var self = this;
     
     var isLocalNotificationAvailable = function(){
@@ -8,23 +7,20 @@ var LocalNotificationAdapter = (function(){
     };
     
     self.add = function(options){
-
         if (isLocalNotificationAvailable()) {
-
-            if(navigator.userAgent.match(/(Android)/)){
+            if(DeviceDetection.isDeviceAndroid()){
                 plugins.localNotification.add({
                     date        : options.date,
-                    message     : options.message,
-                    ticker      : options.ticker,
+                    message     : "You have a pending survey.",//options.message,
+                    ticker      : "You have a pending survey.",
                     repeatDaily : options.repeatDaily,
                     id          : options.id
                 });
-            }else if(navigator.userAgent.match(/(iPhone)/)){
-                console.log(JSON.stringify(options));
+            }else if(DeviceDetection.isDeviceiOS()){
                 plugins.localNotification.add({
                     date        : options.date,
                     message     : options.message,
-                    hasAction   : false,
+                    background  : "goToPendingSurveys",
                     badge       : 1,
                     id          : options.id,
                     sound       :'horn.caf'
@@ -35,9 +31,21 @@ var LocalNotificationAdapter = (function(){
     
     self.cancel = function(id){
         if (isLocalNotificationAvailable()) {
-            plugins.localNotification.cancel(id);
+            console.log("LocalNotificationAdapter: cancel(" + id + ")");
+            plugins.localNotification.cancel(id);   
+        }
+    };
+    
+    self.cancelAll = function(){
+        if (isLocalNotificationAvailable()) {
+            console.log("LocalNotificationAdapter: cancelAll()");
+            plugins.localNotification.cancelAll();
         }
     };
     
     return self;
 })();
+
+function goToPendingSurveys(){
+    window.location = "pending-surveys.html";
+}
