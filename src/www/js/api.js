@@ -112,28 +112,15 @@ function invoke(fun, args){
 }
 
 /**
- * Returns true if the application is running on an actual mobile device.
- */
-function isOnDevice(){
-    return navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/);
-}
-
-function isDeviceiOS(){
-    return navigator.userAgent.match(/(iPhone)/);
-}
-
-function isDeviceAndroid(){
-    return navigator.userAgent.match(/(Android)/);
-}
-
-/**
  * Method for invoking functions once the DOM and the device are ready. This is
  * a replacement function for the JQuery provided method i.e.
  * $(document).ready(...).
  */
 function invokeOnReady(callback){
-    $(document).ready(function(){
-        if (isOnDevice()) {
+    $(document).ready(function() {
+        //Wait for the device ready event only if the the application is running
+        //on a mobile browser embedded in a Cordova deployment.
+        if ( DeviceDetection.isOnDevice() && DeviceDetection.isNativeApplication() ) {
             document.addEventListener("deviceready", callback, false);
         } else {
             invoke(callback);
@@ -187,7 +174,7 @@ function showConfirm(message, callback, buttonLabels, title){
 
             navigator.notification.confirm(
                 message,      // message
-                _callback,     // callback
+                _callback,    // callback
                 title,        // title
                 buttonLabels  // buttonName
             );
