@@ -1,4 +1,6 @@
-var fixture = {};
+if(!fixture){
+    var fixture = {};
+}
 
 module( "pegjs.ConditionalParser", {
   setup: function() {
@@ -117,15 +119,15 @@ test( "Test 2 > 1 : true", function() {
     ok(result, "2 is greater than 1." );
 });
 
-test( "Test 2 >= 1 : true", function() {
+test( "Test 1 <= 2 : true", function() {
 
-    var condition = "number2 >= 1";
+    var condition = "number1 <= 2";
 
     ///
     var result = ConditionalParser.parse(condition, fixture.data);
     ///
 
-    ok(result, "2 is greater than or equal to 1." );
+    ok(result, "1 is less than or equal to 2." );
 });
 
 test( "Test a == a and b == b : true", function() {
@@ -150,7 +152,18 @@ test( "Test a == b and b == b : false", function() {
     ok(!result, "AND of at least one false expression should be false." );
 });
 
-test( "Test a == b and b == c : false", function() {
+test( "Test a == a and a != b : false", function() {
+
+    var condition = "prompt1 == response1 and prompt1 != response2";
+
+    ///
+    var result = ConditionalParser.parse(condition, fixture.data);
+    ///
+
+    ok(result, "AND of true expressions should be true." );
+});
+
+test( "Test a == b and b == c : true", function() {
 
     var condition = "prompt1 == response2 and prompt2 == response3";
 
@@ -186,6 +199,39 @@ test( "Test a == a or b == b : true", function() {
 test( "Test a == b or b == b : true", function() {
 
     var condition = "prompt1 == response2 or prompt2 == response2";
+
+    ///
+    var result = ConditionalParser.parse(condition, fixture.data);
+    ///
+
+    ok(result, "OR of at least one true expression should be true." );
+});
+
+test( "Test a != b or b == b : true", function() {
+
+    var condition = "prompt1 != response2 or prompt2 == response2";
+
+    ///
+    var result = ConditionalParser.parse(condition, fixture.data);
+    ///
+
+    ok(result, "OR of at least one true expression should be true." );
+});
+
+test( "Test a == b or b != b : false", function() {
+
+    var condition = "prompt1 == response2 or prompt2 != response2";
+
+    ///
+    var result = ConditionalParser.parse(condition, fixture.data);
+    ///
+
+    ok(!result, "OR of two false expressions should be false." );
+});
+
+test( "Test a != a or b == b : true", function() {
+
+    var condition = "prompt1 != response1 or prompt2 == response2";
 
     ///
     var result = ConditionalParser.parse(condition, fixture.data);
