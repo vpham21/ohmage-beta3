@@ -66,7 +66,6 @@ invokeOnReady(function(){
            Spinner.hide(function(){
                if(success){
                    PageNavigation.openDashboard();
-
                }else if(response){
                    showMessage(response);
                }else{
