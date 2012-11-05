@@ -88,7 +88,7 @@ input {
  *******************************************************/
 
 #header {
-	background: #536895 url(../img/mwf/header-bg.png) repeat-x;
+	background: #536895 url(../img/header-bg.png) repeat-x;
 	height: 35px;
 
 }
@@ -491,7 +491,7 @@ form.form-full > input[type=reset]:hover {
  * FRONT PAGE
  *******************************************************/
 body.front-page h1#header {
-	background: #536895 url(../img/mwf/header-front-page-bg.png) repeat-x;
+	background: #536895 url(../img/header-front-page-bg.png) repeat-x;
 	height: 50px;
 }
 body.front-page h1#header img {
@@ -589,7 +589,7 @@ body.front-page h1#header span {
  *******************************************************/
 
 .menu-full li a {
-	 background:url(../img/mwf/list-arrow.png) no-repeat 95% center; /* Controls menu items */
+	 background:url(../img/list-arrow.png) no-repeat 95% center; /* Controls menu items */
 }
 
 /********************************************************
@@ -726,12 +726,12 @@ div.button-full.button-light a {
 
 .button-next {
 	padding: 10px 0px 10px 65px;
-	background:url(../img/mwf/button-next.png) no-repeat center;
+	background:url(../img/button-next.png) no-repeat center;
 }
 
 .button-previous {
 	padding: 10px 0px 10px 65px;
-	background:url(../img/mwf/button-previous.png) no-repeat center;
+	background:url(../img/button-previous.png) no-repeat center;
 }
 
 .button-next span,
@@ -744,7 +744,7 @@ div.button-full.button-light a {
 }
 
 #search-button {
-        background: url(../img/mwf/button-search.png) no-repeat;
+        background: url(../img/button-search.png) no-repeat;
         width: 60px;
         height: 25px;
         border: 0;
@@ -753,7 +753,7 @@ div.button-full.button-light a {
         text-indent:-9999px;
 }
 #go-button {
-        background: url(../img/mwf/button-go.png) no-repeat;
+        background: url(../img/button-go.png) no-repeat;
         width: 30px;
         height: 25px;
 		border: 0;
@@ -1057,7 +1057,7 @@ form.form-full > textarea {
 }
 
 form.form-full > select {
-    background: #fff url(../img/mwf/select-options-bg.png) right no-repeat;
+    background: #fff url(../img/select-options-bg.png) right no-repeat;
 }
 
 form.form-padded,
@@ -1253,5 +1253,5 @@ form.form-full > input[type=reset]:hover {
 }
 
 body{
-    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);     
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
