@@ -10,7 +10,7 @@
  * @author zkhalapyan
  * @copyright Copyright (c) 2010-11 UC Regents
  * @license http://mwf.ucla.edu/license
- * @version 20111115
+ * @version 11/05/2012
  *
  */
 
@@ -42,8 +42,7 @@ mwf.decorator.Form = function(title)
      *
      * @param title The title to set.
      */
-    form.setTitle = function(title)
-    {
+    form.setTitle = function( title ) {
         //If current element has a title, then unset it.
         if(this._title)
         {
@@ -63,7 +62,7 @@ mwf.decorator.Form = function(title)
 
 
         }
-    }
+    };
 
     /**
      * Returns the current elements title if it's set; null otherwise.
@@ -72,7 +71,7 @@ mwf.decorator.Form = function(title)
     form.getTitle = function()
     {
         return (this._title)? this._title : null;
-    }
+    };
 
 
     /**
@@ -83,7 +82,7 @@ mwf.decorator.Form = function(title)
     form.addItem = function(item){
         mwf.decorator.append(this, item, FIRST_MARKER, LAST_MARKER);
         return this;
-    }
+    };
 
 
     /**
@@ -96,7 +95,7 @@ mwf.decorator.Form = function(title)
         textBlock.innerHTML = text || "";
         return this.addItem(textBlock);
 
-    }
+    };
 
     /**
      * Appends a text box with a specified name and ID attributes to the
@@ -115,7 +114,7 @@ mwf.decorator.Form = function(title)
         textBox.id   = id || null;
 
         return this.addItem(textBox);
-    }
+    };
 
     form.addLabel = function(text, forID)
     {
@@ -125,7 +124,7 @@ mwf.decorator.Form = function(title)
         label.innerHTML = text || null;
 
         return this.addItem(label);
-    }
+    };
 
     /**
      * Appends a submit button to the current form.
@@ -142,11 +141,14 @@ mwf.decorator.Form = function(title)
 
         submitButton.type = 'submit';
         submitButton.value = text;
-        TouchEnabledItemModel.bindTouchEvent(submitButton, submitButton, callback);
+
+        if( callback ){
+            TouchEnabledItemModel.bindTouchEvent(submitButton, submitButton, callback);
+        }
 
         return this.addItem(submitButton);
-    }
-    
+    };
+
     /**
      * Appends an input button to the current form.
      *
@@ -161,10 +163,13 @@ mwf.decorator.Form = function(title)
         var submitButton = document.createElement('input');
         submitButton.type = 'button';
         submitButton.value = text;
-        TouchEnabledItemModel.bindTouchEvent(submitButton, submitButton, callback);
+
+        if( callback ) {
+            TouchEnabledItemModel.bindTouchEvent(submitButton, submitButton, callback);
+        }
 
         return this.addItem(submitButton);
-    }
+    };
 
 
     form.setTitle(title);
