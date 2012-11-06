@@ -15,26 +15,26 @@ var Prompt = function(promptData, survey, campaign){
      * Stores error message in case validation fails.
      */
     var errorMsg = null;
-       
+
     /**
      * Default handler for the current prompt. The handler knows how to display
      * the prompt and analyze the response.
      */
     var handler = new PromptHandler(self);
-    
+
     var customPropertiesVault = null;
-   
+
     /**
      * Stores a list of current specified and custom properties which are just
      * (key, value) pairs.
      */
     var properties = null;
-    
+
     /**
-     * The method initlization the list of both specified and custom properties. 
+     * The method initlization the list of both specified and custom properties.
      * This method should be invoked when this prompt is initialized.
      */
-    var setProperties = function(){        
+    var setProperties = function(){
         if(!promptData.properties || !promptData.properties.property){
             properties = [];
         } else if(!promptData.properties.property.length){
@@ -42,7 +42,7 @@ var Prompt = function(promptData, survey, campaign){
         }else{
             properties = promptData.properties.property;
         }
-        
+
         var customProperties = customPropertiesVault.getCustomProperties();
         for(var i = 0; i < customProperties.length; i++){
             properties.push(customProperties[i]);
@@ -62,31 +62,38 @@ var Prompt = function(promptData, survey, campaign){
         }
         return false;
     };
-    
+
     self.summarizeResponse = function(responseValue){
         var summary = "";
+
+        if(responseValue === SurveyResponseModel.NOT_DISPLAYED_PROMPT_VALUE ||
+           responseValue === SurveyResponseModel.SKIPPED_PROMPT_VALUE ) {
+            return responseValue;
+        }
 
         switch(self.getType()){
 
             case 'photo':
                 if(responseValue !== SurveyResponseModel.SKIPPED_PROMPT_VALUE){
                     var base64 = Base64.formatImageSrcString(SurveyResponseModel.getImage(responseValue));
-                    summary = "<center><img src='" + base64 + "' width='100%' /></center>";    
+                    summary = "<center><img src='" + base64 + "' width='100%' /></center>";
                 }else{
                     summary = responseValue;
                 }
-                
-                break;
-                
-            case 'single_choice':
-            case 'multi_choice':
 
+                break;
+
+            case 'single_choice':
+                summary = self.getProperty(responseValue[0]).label;
+
+                break;
+
+            case 'multi_choice':
                 var keys = new String(responseValue).split(',');
                 var labels = [];
                 for(var key in keys){
                     labels.push(self.getProperty(key).label);
                 }
-
                 summary = labels.join(", ");
 
                 break;
@@ -141,14 +148,14 @@ var Prompt = function(promptData, survey, campaign){
     self.getResponse = function() {
         return self.getDefaultValue();
     };
-       
+
    /**
     * Returns a list of properties for this prompt.
     */
     self.getProperties = function(){
         return properties;
     };
-    
+
     self.getProperty = function(key){
         var properties = self.getProperties();
         for(var i = 0; i < properties.length; i++){
@@ -161,7 +168,7 @@ var Prompt = function(promptData, survey, campaign){
 
     /**
      * Returns minimum value allowed for the current prompt's response, or null
-     * if the minimum value is undefined.     
+     * if the minimum value is undefined.
      * @return minimum value allowed for the current prompt's response, or null
      *         if undefined.
      */
@@ -188,7 +195,7 @@ var Prompt = function(promptData, survey, campaign){
    self.addProperty = function(label, key){
         //By default, property key is the index of the array.
         var property = { key:key || properties.length, label:label };
-        if(!isDuplicatePropertyLabel(property)){            
+        if(!isDuplicatePropertyLabel(property)){
             properties.push(property);
             customPropertiesVault.addCustomProperty(property);
             return property;
@@ -196,15 +203,15 @@ var Prompt = function(promptData, survey, campaign){
             return false
         }
     };
-    
+
     self.getCampaignURN = function(){
         return campaign.getURN();
     };
-    
+
     self.getSurveyID = function(){
         return survey.getID();
     };
-    
+
     /**
      * Returns the ID of the current prompt.
      * @return The ID of the current prompt.
@@ -233,7 +240,7 @@ var Prompt = function(promptData, survey, campaign){
     self.getType = function(){
         return promptData.prompttype;
     };
-    
+
     /**
      * Returns text related to this prompt. If prompt text is undefined, then an
      * empty string will be returned.
@@ -256,7 +263,7 @@ var Prompt = function(promptData, survey, campaign){
     self.getSkipLabel = function(){
         return promptData.skiplabel;
     };
-    
+
     /**
      * Returns the default value for this prompt.
      * @return Default value for this prompt.
@@ -266,12 +273,12 @@ var Prompt = function(promptData, survey, campaign){
         //in order to bypass JS keyword use 'default'.
         return (typeof(promptData.defaultvalue) !== 'undefined')? promptData.defaultvalue : null;
     };
-    
-    //Initialization. 
+
+    //Initialization.
     (function(){
        customPropertiesVault = new CustomPropertiesVault(self);
        setProperties();
     }());
-      
+
     return self;
 };
