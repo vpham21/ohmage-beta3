@@ -50,7 +50,7 @@ function Navigation(survey, container){
     };
 
     var overrideBackButtonFunctionality = function(){
-        if(isDeviceAndroid()){
+        if(DeviceDetection.isDeviceAndroid()){
             invokeOnReady(function(){
                console.log("Overriding back button on Android devices for current survey navigation.");
                document.addEventListener("backbutton", androidBackButtonCallbackWrapper, true);
@@ -59,7 +59,7 @@ function Navigation(survey, container){
     };
 
     var resetBackButtonFunctionality = function(){
-        if(isDeviceAndroid()){
+        if(DeviceDetection.isDeviceAndroid()){
             document.removeEventListener("backbutton", androidBackButtonCallbackWrapper, false);
         }
     };

@@ -4,7 +4,7 @@
  *
  * @class DeviceDetection
  * @author Zorayr Khalapyan
- * @version 11/5/2012
+ * @version 11/05/2012
  */
 var DeviceDetection = (function() {
     var self = {};

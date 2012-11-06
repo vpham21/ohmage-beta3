@@ -1,6 +1,6 @@
 
 invokeOnReady(function(){
-    
+
     if(auth.isUserLocked()){
 
         //If the user is in a locked state, force the username field to
@@ -29,7 +29,7 @@ invokeOnReady(function(){
 
             return false;
         }
-        
+
         if($('#username').val().length == 0){
             showMessage('Please enter your username.', function(){
                 $('#username').focus();
@@ -49,7 +49,7 @@ invokeOnReady(function(){
         return true;
 
     };
-    
+
     var login = function(){
         if(!isInputValid()){
             return;
@@ -74,15 +74,14 @@ invokeOnReady(function(){
            });
 
 
-        }, false);    
+        }, false);
     };
-    
-    
+
     //Disable the form element from refreshing and instead try to login.
     $("#auth-form").submit(function(e){
         e.preventDefault();
         login();
         return false;
     });
-    
+
 });

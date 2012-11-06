@@ -164,8 +164,7 @@ function showConfirm(message, callback, buttonLabels, title){
             var _callback = function(index){
                 if(callback){
 
-
-                    if(isDeviceiOS())
+                    if(DeviceDetection.isDeviceiOS())
                         index = buttonList.length - index;
 
                     callback(index == 1);
