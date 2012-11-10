@@ -39,6 +39,7 @@
 		844531EE156DDB1F00CAF78A /* www in Resources */ = {isa = PBXBuildFile; fileRef = 844531ED156DDB1F00CAF78A /* www */; };
 		84AF1DF015A2B285002A4427 /* ohmage-icon-gray-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 84AF1DEF15A2B285002A4427 /* ohmage-icon-gray-72.png */; };
 		84D9DAA415BE6B0E00E7D868 /* horn.caf in Resources */ = {isa = PBXBuildFile; fileRef = 84D9DAA315BE6B0E00E7D868 /* horn.caf */; };
+		84DA2FD5164601C700F6F01B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84DA2FD4164601C700F6F01B /* Default-568h@2x.png */; };
 		84FAA25F159438D60092BD82 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84FAA25D159438D60092BD82 /* Default@2x.png */; };
 		84FDCAE215B697C400B8A2FC /* LocalNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FDCAE115B697C400B8A2FC /* LocalNotification.m */; };
 /* End PBXBuildFile section */
@@ -81,6 +82,7 @@
 		844531ED156DDB1F00CAF78A /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = "<group>"; };
 		84AF1DEF15A2B285002A4427 /* ohmage-icon-gray-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ohmage-icon-gray-72.png"; sourceTree = "<group>"; };
 		84D9DAA315BE6B0E00E7D868 /* horn.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = horn.caf; path = Resources/horn.caf; sourceTree = "<group>"; };
+		84DA2FD4164601C700F6F01B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		84FAA25C159438D60092BD82 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		84FAA25D159438D60092BD82 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		84FDCAE015B697C400B8A2FC /* LocalNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalNotification.h; path = Plugins/LocalNotification.h; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 		8445307F156CEB4300CAF78A = {
 			isa = PBXGroup;
 			children = (
+				84DA2FD4164601C700F6F01B /* Default-568h@2x.png */,
 				84AF1DEF15A2B285002A4427 /* ohmage-icon-gray-72.png */,
 				84FAA25C159438D60092BD82 /* Default.png */,
 				84FAA25D159438D60092BD82 /* Default@2x.png */,
@@ -283,7 +286,7 @@
 		84453081156CEB4300CAF78A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0450;
 			};
 			buildConfigurationList = 84453084156CEB4300CAF78A /* Build configuration list for PBXProject "MWoC" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -326,6 +329,7 @@
 				8412BC8A15A2A46600779C63 /* Default.png in Resources */,
 				84AF1DF015A2B285002A4427 /* ohmage-icon-gray-72.png in Resources */,
 				84D9DAA415BE6B0E00E7D868 /* horn.caf in Resources */,
+				84DA2FD5164601C700F6F01B /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,6 +434,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -450,6 +455,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -465,6 +471,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = /Users/Shared/Cordova/Frameworks;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -474,6 +481,7 @@
 					"DEBUG=1,",
 					"CORDOVA_FRAMEWORK=1",
 				);
+				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "MWoC/MWoC-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = (
@@ -508,6 +516,7 @@
 					"NDEBUG=1,",
 					"CORDOVA_FRAMEWORK=1",
 				);
+				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "MWoC/MWoC-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = (
