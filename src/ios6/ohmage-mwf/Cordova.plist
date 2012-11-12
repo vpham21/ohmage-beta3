@@ -33,6 +33,8 @@
 	</array>
 	<key>Plugins</key>
 	<dict>
+		<key>LocalNotification</key>
+		<string>LocalNotification</string>
 		<key>Device</key>
 		<string>CDVDevice</string>
 		<key>Logger</key>
