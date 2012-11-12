@@ -1,0 +1,15 @@
+body{
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);     
+}
+
+img.help-section-image {
+    width: 90%;
+}
+
+p.help-section-text {
+    padding: 7px;
+}
+
+div.help-section-container {
+    text-align: center;
+}
