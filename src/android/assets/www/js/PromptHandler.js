@@ -151,6 +151,13 @@ PromptHandler.Handlers = function(){
         form.addInputButton('Create New Choice', addProperty);
         form.addInputButton('Cancel', hideCustomChoiceMenu);
 
+        //Cancel's form's default action to prevent the page from refreshing.
+        $(form).submit(function(e){
+           addProperty();
+           e.preventDefault();
+           return false;
+        });
+
         //This continer will hold both prexisting options and the new option
         //form.
         var container = document.createElement('div');

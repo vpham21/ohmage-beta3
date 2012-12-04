@@ -25,6 +25,12 @@ var SurveyResponseView = function(surveyResponseController){
         for (var promptID in surveyResponseModel.data._responses) {
             var prompt = survey.getPrompt(promptID);
             var value  = surveyResponseModel.data._responses[promptID].value;
+
+            // Don't display prompts that were conditionally not displayed.
+            if( value === SurveyResponseModel.NOT_DISPLAYED_PROMPT_VALUE ) {
+                continue;
+            }
+
             userResponsesView .addMenuLinkItem(prompt.getText(), null, prompt.summarizeResponse(value));
         }
         $(userResponsesView).find("a").css('background', "transparent");

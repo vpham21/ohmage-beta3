@@ -1,11 +1,11 @@
 var LocalNotificationAdapter = (function(){
-  
-    var self = this;
-    
+
+    var self = {};
+
     var isLocalNotificationAvailable = function(){
         return typeof plugins !== "undefined" && typeof(plugins.localNotification) !== "undefined";
     };
-    
+
     self.add = function(options){
         if (isLocalNotificationAvailable()) {
             if(DeviceDetection.isDeviceAndroid()){
@@ -28,21 +28,21 @@ var LocalNotificationAdapter = (function(){
             }
         }
     };
-    
+
     self.cancel = function(id){
         if (isLocalNotificationAvailable()) {
             console.log("LocalNotificationAdapter: cancel(" + id + ")");
-            plugins.localNotification.cancel(id);   
+            plugins.localNotification.cancel(id);
         }
     };
-    
+
     self.cancelAll = function(){
         if (isLocalNotificationAvailable()) {
             console.log("LocalNotificationAdapter: cancelAll()");
             plugins.localNotification.cancelAll();
         }
     };
-    
+
     return self;
 })();
 

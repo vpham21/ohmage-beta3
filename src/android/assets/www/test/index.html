@@ -10,15 +10,31 @@
   <link rel="stylesheet" href="/og/lib/qunit/css/qunit.css">
   <script src="/og/lib/qunit/js/qunit.js"></script>
 
+  <!-- Include JsHamcrest and JsMockito Library -->
+  <script src="/og/lib/jsmockito/jsmockito-1.0.4.js"></script>
+  <script src="/og/lib/jshamcrest/jshamcrest-0.5.2.js"></script>
+  <script type="text/javascript">
+      JsHamcrest.Integration.QUnit();
+      JsMockito.Integration.QUnit();
+  </script>
+
   <script src="/og/js/util/DeviceDetection.js"></script>
   <script src="/og/test/util/DeviceDetectionTest.js"></script>
 
   <script src="/og/js/util/LocalMap.js"></script>
   <script src="/og/test/util/LocalMapTest.js"></script>
 
+  <script src="/og/js/util/UUIDGen.js"></script>
+  <script src="/og/test/util/UUIDGenTest.js"></script>
+
   <script src="/og/js/pegjs/ConditionalParser.js"></script>
   <script src="/og/js/pegjs/peg-0.7.0.js"></script>
   <script src="/og/test/pegjs/ConditionalParserTest.js"></script>
+
+  <script type="text/javascript" src="/og/js/util/LocalNotificationAdapter.js"></script>
+
+  <script src="/og/js/models/reminders/ReminderModel.js"></script>
+  <script src="/og/test/models/reminders/ReminderModelTest.js"></script>
 
 </head>
 <body>
