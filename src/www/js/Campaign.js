@@ -1,7 +1,7 @@
 var Campaign = function(urn){
 
     var self = this;
-    
+
     var metadata = (new LocalMap("all-campaigns").get(urn));
     var campaign = (new LocalMap("campaign-configurations")).get(urn);
 
@@ -83,7 +83,7 @@ var Campaign = function(urn){
     self.getName = function(){
         return metadata.name;
     };
-    
+
     /**
      * Returns the URN for this campaign.
      */
@@ -104,7 +104,7 @@ var Campaign = function(urn){
     self.getDescription = function(){
         return metadata.description;
     };
-    
+
     return self;
 };
 
@@ -181,7 +181,8 @@ Campaign.parse = function(campaignXML){
      * PhoneGap the bug comes up.
      */
     var cleanXML = campaignXML.replace(/<default>/g, "<defaultValue>")
-                              .replace(/<\/default>/g, "</defaultValue>");
+                              .replace(/<\/default>/g, "</defaultValue>")
+                              .replace(/<default\/>/g, "<defaultValue/>");
 
     //Convert the XML configuration to a JSON representation.
     var json = $.xml2json.parser(cleanXML);
@@ -189,3 +190,4 @@ Campaign.parse = function(campaignXML){
     return json.campaign;
 
 }
+
