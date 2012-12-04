@@ -1,12 +1,12 @@
 var LocalNotificationAdapter = (function(){
-  
-    var self = this;
-    
+
+    var that = {};
+
     var isLocalNotificationAvailable = function(){
         return typeof plugins !== "undefined" && typeof(plugins.localNotification) !== "undefined";
     };
-    
-    self.add = function(options){
+
+    that.add = function(options){
         if (isLocalNotificationAvailable()) {
             if(DeviceDetection.isDeviceAndroid()){
                 plugins.localNotification.add({
@@ -28,22 +28,22 @@ var LocalNotificationAdapter = (function(){
             }
         }
     };
-    
-    self.cancel = function(id){
+
+    that.cancel = function(id){
         if (isLocalNotificationAvailable()) {
             console.log("LocalNotificationAdapter: cancel(" + id + ")");
-            plugins.localNotification.cancel(id);   
+            plugins.localNotification.cancel(id);
         }
     };
-    
-    self.cancelAll = function(){
+
+    that.cancelAll = function(){
         if (isLocalNotificationAvailable()) {
             console.log("LocalNotificationAdapter: cancelAll()");
             plugins.localNotification.cancelAll();
         }
     };
-    
-    return self;
+
+    return that;
 })();
 
 function goToPendingSurveys(){
