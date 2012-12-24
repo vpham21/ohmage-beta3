@@ -11,7 +11,15 @@
 <tr><td><a href="login.html">login</a></td></tr>
 <tr><td><a href="check-dashboard.html">check-dashboard</a></td></tr>
 <tr><td><a href="download-campaigns.html">download-campaigns</a></td></tr>
+<tr><td><a href="number-survey.html">number-survey</a></td></tr>
+<tr><td><a href="text-survey.html">text-survey</a></td></tr>
+<tr><td><a href="single-choice-survey.html">single-choice-survey</a></td></tr>
+<tr><td><a href="single-choice-custom-survey.html">single-choice-custom-survey</a></td></tr>
+<tr><td><a href="multi-choice-survey.html">multi-choice-survey</a></td></tr>
+<tr><td><a href="multi-choice-custom-survey.html">multi-choice-custom-survey</a></td></tr>
+<tr><td><a href="add-reminder.html">add-reminder</a></td></tr>
 <tr><td><a href="pending-surveys.html">pending-surveys</a></td></tr>
+<tr><td><a href="delete-campaigns.html">delete-campaigns</a></td></tr>
 <tr><td><a href="logout.html">logout</a></td></tr>
 </tbody></table>
 </body>

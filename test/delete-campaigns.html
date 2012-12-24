@@ -3,13 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="selenium.base" href="http://rocking-apps.com/og/" />
-<title>download-campaigns</title>
+<link rel="selenium.base" href="http://rocking-apps.com/og/auth.html" />
+<title>delete-campaigns</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">download-campaigns</td></tr>
+<tr><td rowspan="1" colspan="3">delete-campaigns</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -27,16 +27,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Josh's 2.8 Prompt Types Test</td>
-	<td></td>
-</tr>
-<tr>
-	<td>verifyTextPresent</td>
-	<td>My Campaigns</td>
-	<td></td>
-</tr>
-<tr>
 	<td>verifyTextPresent</td>
 	<td>Available Surveys</td>
 	<td></td>
@@ -48,27 +38,22 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=My Campaigns</td>
+	<td>link=Delete Campaign</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>All data will be lost. Are you sure you would like to proceed?</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyTextPresent</td>
-	<td>Add Campaign</td>
+	<td>Available Campaigns</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyTextPresent</td>
-	<td>My Campaigns</td>
-	<td></td>
-</tr>
-<tr>
-	<td>verifyTextPresent</td>
-	<td>Josh's 2.8 Prompt Types Test</td>
-	<td></td>
-</tr>
-<tr>
-	<td>verifyTextPresent</td>
-	<td>Upload Queue</td>
+	<td>Refresh Campaigns</td>
 	<td></td>
 </tr>
 <tr>
