@@ -101,7 +101,7 @@ var Prompt = function(promptData, survey, campaign){
             default:
                 summary = responseValue;
         }
-
+        
         return summary;
     };
 

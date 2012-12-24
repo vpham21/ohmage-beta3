@@ -1,15 +1,16 @@
 var ReminderView = function(reminder, controller){
-   
+
     var self = this;
-    
+
     var createSuppressionWindowSelectInput = function(){
         var select = document.createElement('select');
+        select.className = "supression-window-select";
         for(var i = 1; i <= 24; i++){
             var option = document.createElement('option');
             option.value = i;
             option.innerHTML = i + " hour" + ((i != 1) ? "s" : "");
             select.appendChild(option);
-            
+
             if(i === reminder.getSupressionWindow()){
                 option.selected = "selected";
             }
@@ -22,12 +23,13 @@ var ReminderView = function(reminder, controller){
 
     var createReminderRecurrenceSelectInput = function(){
         var select = document.createElement('select');
+        select.className = "recurrence-select";
         for(var i = 1; i < 31; i++){
             var option = document.createElement('option');
             option.value = i;
             option.innerHTML = i;
-            select.appendChild(option);     
-            
+            select.appendChild(option);
+
             if(i === reminder.getRecurrence()){
                 option.selected = "selected";
             }
@@ -37,18 +39,19 @@ var ReminderView = function(reminder, controller){
         };
         return select;
     };
-    
-   
+
+
     var createSurveySelectInput = function(){
-        
+
        var createOption = function(title, surveyID, campaignURN){
             var option = document.createElement('option');
             option.survey = {title: title, surveyID: surveyID, campaignURN: campaignURN};
             option.innerHTML = title;
             return option;
         };
-        
+
         var select = document.createElement('select');
+        select.className = "reminder-survey-select";
         var campaigns = Campaigns.getInstalledCampaigns();
         select.appendChild(createOption("Select a Survey to Continue"));
 
@@ -66,7 +69,7 @@ var ReminderView = function(reminder, controller){
                 }
             }
         }
-        
+
         select.getInput = function(){
             return select.options[select.selectedIndex].survey;
         };
@@ -81,12 +84,13 @@ var ReminderView = function(reminder, controller){
         }
         var dateTimePicker = new DateTimePicker();
         var timePicker = dateTimePicker.createTimePicker(date);
+        timePicker.className = timePicker.className + " time-picker-input";
         return timePicker;
     };
-    
+
     var createExcludeWeekendsChecbkoxInput = function(){
-        
-        
+
+
         var checkbox = document.createElement('input');
         var id = UUIDGen.generate();
         checkbox.setAttribute('type', 'checkbox');
@@ -94,11 +98,11 @@ var ReminderView = function(reminder, controller){
         if(reminder.excludeWeekends()){
             checkbox.checked = "checked";
         }
-        
+
         var label = document.createElement('label');
         label.innerHTML = "Exclude Weekends: ";
         label.setAttribute("for", id);
-        
+
         var container = document.createElement('div');
         container.style.textAlign = "center";
         container.appendChild(label);
@@ -108,19 +112,19 @@ var ReminderView = function(reminder, controller){
         };
         return container;
     };
-    
+
     var cancel = function(){
         PageNavigation.openRemindersView();
     };
-    
+
     var save = function(surveySelect, timePicker, suppressionSelect, recurrenceSelect, weekendsCheckbox){
        return function(){
             if(surveySelect.selectedIndex === 0){
                 alert("Please select a survey to add a reminder.");
                 return;
             }
-            
-            var survey = surveySelect.getInput();            
+
+            var survey = surveySelect.getInput();
             var date = new Date();
             date.setHours(timePicker.getHours());
             date.setMinutes(timePicker.getMinutes());
@@ -129,24 +133,24 @@ var ReminderView = function(reminder, controller){
             var supression = suppressionSelect.getInput();
             var recurrences = recurrenceSelect.getInput();
             var excludeWeekends = weekendsCheckbox.excludeWeekends();
-            
-            controller.save( survey.campaignURN, 
-                             survey.surveyID, 
-                             survey.title, 
-                             date, 
-                             supression, 
+
+            controller.save( survey.campaignURN,
+                             survey.surveyID,
+                             survey.title,
+                             date,
+                             supression,
                              recurrences,
                              excludeWeekends
                            );
-            
+
             PageNavigation.openRemindersView();
 
        };
 
     };
-    
-    
-    var deleteReminderCallback = function(){        
+
+
+    var deleteReminderCallback = function(){
         var confirmMessage = "Are you sure you would like to delete the reminder for " + reminder.getTitle() + "?";
         var callback = function(yes){
             if(yes){
@@ -156,14 +160,14 @@ var ReminderView = function(reminder, controller){
         };
         showConfirm(confirmMessage, callback, "Yes,No");
     };
-    
+
     self.render = function(){
         var timePicker = createTimePickerInput();
-        var surveySelect = createSurveySelectInput();    
+        var surveySelect = createSurveySelectInput();
         var suppressionSelect = createSuppressionWindowSelectInput();
         var recurrenceSelect = createReminderRecurrenceSelectInput();
         var weekendsCheckbox = createExcludeWeekendsChecbkoxInput();
-        
+
         var inputs = mwf.decorator.Form("Create New Reminder");
         inputs.addLabel("Reminder Survey");
         inputs.addItem(surveySelect);
@@ -175,21 +179,21 @@ var ReminderView = function(reminder, controller){
         inputs.addItem(recurrenceSelect);
         inputs.addLabel("Preferences");
         inputs.addItem(weekendsCheckbox);
-        
+
         var saveCallback = save(surveySelect, timePicker, suppressionSelect, recurrenceSelect, weekendsCheckbox);
         var actions = document.createElement('div');
         actions.appendChild(mwf.decorator.DoubleClickButton("Cancel", cancel, "Save", saveCallback));
-        
+
         if(reminder.isSaved()){
-            actions.appendChild(mwf.decorator.SingleClickButton("Delete Reminder", deleteReminderCallback));    
+            actions.appendChild(mwf.decorator.SingleClickButton("Delete Reminder", deleteReminderCallback));
         }
-        
+
         var container = document.createElement('div');
         container.appendChild(inputs);
         container.appendChild(actions);
         return container;
-        
+
     };
-   
+
     return self;
 };

@@ -261,7 +261,7 @@ PromptHandler.Handlers = function(){
             var key = theEvent.keyCode || theEvent.which;
             key = String.fromCharCode( key );
 
-            var result = evt.srcElement.value + key;
+            var result = (evt.target || evt.srcElement).value + key;
             var cancelKey = function(){
                 theEvent.returnValue = false;
                 if(theEvent.preventDefault) {theEvent.preventDefault();}
@@ -333,11 +333,11 @@ PromptHandler.Handlers = function(){
             //Get the integerer representation of the current value.
             var currentValue = parseInt(count.innerHTML, 10);
 
-            plus.className = (currentValue < maxValue)? 'math-sign' :
-                                                        'math-sign-disabled';
+            plus.className = (currentValue < maxValue)? 'math-sign plus' :
+                                                        'math-sign-disabled plus';
 
-            minus.className = (currentValue > minValue)? 'math-sign' :
-                                                         'math-sign-disabled';
+            minus.className = (currentValue > minValue)? 'math-sign minus' :
+                                                         'math-sign-disabled minus';
         };
 
         updateSignStyle();

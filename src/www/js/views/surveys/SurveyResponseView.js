@@ -31,7 +31,7 @@ var SurveyResponseView = function(surveyResponseController){
                 continue;
             }
 
-            userResponsesView .addMenuLinkItem(prompt.getText(), null, prompt.summarizeResponse(value));
+            userResponsesView.addMenuLinkItem(prompt.getText(), null, prompt.summarizeResponse(value));
         }
         $(userResponsesView).find("a").css('background', "transparent");
         return userResponsesView;
