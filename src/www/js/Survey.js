@@ -89,7 +89,7 @@ var Survey = function(surveyData, campaign){
                     var uploader = new SurveyResponseUploader(self, surveyResponse);
                     
                     var onSuccess = function(response){
-                        showMessage("Successfully uploaded your survey response.", function(){
+                        MessageDialogController.showMessage("Successfully uploaded your survey response.", function(){
                         SurveyResponseModel.deleteSurveyResponse(surveyResponse);
                             afterSurveyComplete();
                         });
@@ -97,7 +97,7 @@ var Survey = function(surveyData, campaign){
                     };
                     
                     var onError = function(error){
-                        showMessage("Unable to upload your survey response at this time.", afterSurveyComplete);
+                        MessageDialogController.showMessage("Unable to upload your survey response at this time.", afterSurveyComplete);
                     };
                     
                     uploader.upload(onSuccess, onError);
@@ -108,7 +108,7 @@ var Survey = function(surveyData, campaign){
             }
 
             if(CONFIRM_TO_UPLOAD_ON_SUBMIT){
-                showConfirm(message, callback, buttonLabels, title);
+                MessageDialogController.showConfirm(message, callback, buttonLabels, title);
             }else{
                 callback(true);
             }

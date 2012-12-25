@@ -58,7 +58,7 @@ var SurveyResponseUploader = function(survey, surveyResponse){
 
                 var errorMessage = "Geolocation failed. Would you like to try again?"
 
-                showConfirm(errorMessage, function(yes){
+                MessageDialogController.showConfirm(errorMessage, function(yes){
 
                     //In case the user chooses to try the geolocation process
                     //again, then recursively call this function.
@@ -106,7 +106,7 @@ var SurveyResponseUploader = function(survey, surveyResponse){
                 }
             };
 
-            showConfirm(message, confirmCallback, "Yes,No");
+            MessageDialogController.showConfirm(message, confirmCallback, "Yes,No");
 
         //If validity of survey response location is not required or is
         //correctly set, then invoke the callback with the upload response data.
@@ -149,9 +149,9 @@ var SurveyResponseUploader = function(survey, surveyResponse){
 
             Spinner.show();
 
-            api(
+            ServiceController.serviceCall(
                  "POST",
-                 SURVEY_UPLOAD_URL,
+                 ConfigManager.getSurveyUploadUrl(),
                  data,
                  "JSON",
                  _onSuccess,

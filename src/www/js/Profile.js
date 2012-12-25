@@ -16,10 +16,10 @@ var Profile = new function(){
             var confirmCallback = function(confirmed){
                 if(confirmed){
                     CustomPropertiesVault.deleteAllCustomProperties();
-                    showMessage("All custom choices have been cleared.");
+                    MessageDialogController.showMessage("All custom choices have been cleared.");
                 }
             };
-            showConfirm(confirmMessage, confirmCallback, confirmButtonLabels);
+            MessageDialogController.showConfirm(confirmMessage, confirmCallback, confirmButtonLabels);
         };
         TouchEnabledItemModel.bindTouchEvent(clearCustomChoicesMenuItem, clearCustomChoicesMenuItem, clearCustomChoicesCallback, "menu-highlight");
         

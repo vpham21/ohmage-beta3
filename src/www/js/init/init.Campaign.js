@@ -1,4 +1,5 @@
- invokeOnReady(function(){
+ 
+ Init.invokeOnReady( function() {
      var campaignURN = PageNavigation.getPageParameter('campaign-urn');
 
      //If a specific campaign is not specified, take the user to the
@@ -22,7 +23,7 @@
          };
          
          var message = "All data will be lost. Are you sure you would like to proceed?";
-         showConfirm(message, deleteCampaignConfirmationCallback, "Yes,No");
+         MessageDialogController.showConfirm(message, deleteCampaignConfirmationCallback, "Yes,No");
          
      }));
      

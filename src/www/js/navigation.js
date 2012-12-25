@@ -120,7 +120,7 @@ function Navigation(survey, container){
 
         //Handle invalid responses.
         if(!prompt.isValid()){
-            showMessage(prompt.getErrorMessage());
+            MessageDialogController.showMessage(prompt.getErrorMessage());
             return false;
         }
 
@@ -273,7 +273,7 @@ function Navigation(survey, container){
      *        confirms the current action.
      */
     self.confirmSurveyExit = function(positiveConfirmationCallback){
-        showConfirm(confirmToLeaveMessage, function(isResponseYes){
+        MessageDialogController.showConfirm(confirmToLeaveMessage, function(isResponseYes){
             if( isResponseYes ){
                 self.abort();
                 if( typeof(positiveConfirmationCallback) === "function" ){

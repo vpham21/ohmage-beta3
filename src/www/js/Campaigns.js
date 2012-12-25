@@ -68,7 +68,7 @@ var Campaigns = new (function() {
                 //On error, just display an alert to the user with the error
                 //message.
                 var onError = function(){
-                    showMessage("Unable to install campaign. Please try again later.");
+                    MessageDialogController.showMessage("Unable to install campaign. Please try again later.");
                 };
                 
                 Campaign.install(urn, onSuccess, onError);
@@ -123,10 +123,10 @@ var Campaigns = new (function() {
             container.appendChild(availableMenu);
             container.appendChild(mwf.decorator.SingleClickButton("Refresh Campaigns", function(){
                 var onSuccess = function(){
-                    showMessage("All campaigns have been updated.", PageNavigation.openAvailableCampaignsView);
+                    MessageDialogController.showMessage("All campaigns have been updated.", PageNavigation.openAvailableCampaignsView);
                 };
                 var onError = function(){
-                    showMessage("Unable to download all campaigns. Please try again.");
+                    MessageDialogController.showMessage("Unable to download all campaigns. Please try again.");
                 };
                 Campaigns.download(true, onSuccess, onError);
             }));
@@ -178,9 +178,9 @@ var Campaigns = new (function() {
 
         Spinner.show();
 
-        api(
+        ServiceController.serviceCall(
              "POST",
-             CAMPAIGN_READ_URL,
+             ConfigManager.getCampaignReadUrl(),
              {
                  user:          auth.getUsername(),
                  password:      auth.getHashedPassword(),

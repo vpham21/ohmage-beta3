@@ -1,4 +1,4 @@
-invokeOnReady(function(){
+Init.invokeOnReady(function() {
 
     //Required for retreiving specific campaign configuration file.
     var campaignURN = PageNavigation.getPageParameter('campaign-urn');

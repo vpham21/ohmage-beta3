@@ -1,4 +1,4 @@
-invokeOnReady(function(){
+Init.invokeOnReady( function() {
     var helpController = new HelpController();
     var sectionIndex = PageNavigation.getPageParameter('help-section-index');
     if(sectionIndex === null){ PageNavigation.goBack(); }

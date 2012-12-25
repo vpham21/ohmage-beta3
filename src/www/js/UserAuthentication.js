@@ -190,7 +190,7 @@ function UserAuthentication() {
         
         var message = "All data will be lost. Are you sure you would like to proceed?";
 
-        showConfirm(message, function(yes){
+        MessageDialogController.showConfirm(message, function(yes){
             if(yes){
 
                 console.log("UserAuthentication: User confirmed logout. Deleting data...");
@@ -312,7 +312,7 @@ function UserAuthentication() {
 
 
        //Make an API call.
-       api(
+       ServiceController.serviceCall(
            "POST",
            HASH_AUTH_URL,
            {
@@ -360,7 +360,7 @@ function UserAuthentication() {
         };
 
         //Make an API call.
-        api(
+        ServiceController.serviceCall(
            "POST",
            TOKEN_AUTH_URL,
            {

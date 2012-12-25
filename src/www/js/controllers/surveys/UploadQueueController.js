@@ -18,7 +18,7 @@ var UploadQueueController = function(){
                 refreshView();
             }
         };
-        showConfirm(message, confirmationCallback, buttonLabels);
+        MessageDialogController.showConfirm(message, confirmationCallback, buttonLabels);
     };
     
     self.uploadAllCallback = function(){
@@ -29,7 +29,7 @@ var UploadQueueController = function(){
             }else{
                 message = "Successfully uploaded " + successfulUploadCount + " survey(s).";
             }  
-            showMessage(message, function(){
+            MessageDialogController.showMessage(message, function(){
                 refreshView();
             });
         };

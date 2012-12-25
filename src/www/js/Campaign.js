@@ -147,9 +147,9 @@ Campaign.install = function(urn, onSuccess, onError){
 
     };
 
-    api(
+    ServiceController.serviceCall(
          "POST",
-         CAMPAIGN_READ_URL,
+         ConfigManager.getCampaignReadUrl(),
          {
              user:            auth.getUsername(),
              password:        auth.getHashedPassword(),

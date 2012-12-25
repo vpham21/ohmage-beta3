@@ -150,18 +150,18 @@ var ReminderView = function(reminder, controller){
     };
 
 
-    var deleteReminderCallback = function(){
+    var deleteReminderCallback = function() {
         var confirmMessage = "Are you sure you would like to delete the reminder for " + reminder.getTitle() + "?";
-        var callback = function(yes){
-            if(yes){
+        var callback = function( yes ) {
+            if( yes ) {
                 reminder.deleteReminder();
                 PageNavigation.openRemindersView();
             }
         };
-        showConfirm(confirmMessage, callback, "Yes,No");
+        MessageDialogController.showConfirm( confirmMessage, callback, "Yes,No" );
     };
 
-    self.render = function(){
+    self.render = function() {
         var timePicker = createTimePickerInput();
         var surveySelect = createSurveySelectInput();
         var suppressionSelect = createSuppressionWindowSelectInput();

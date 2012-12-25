@@ -116,7 +116,7 @@ PromptHandler.Handlers = function(){
             var newChoice = document.getElementById('new-choice').value;
 
             if(newChoice.length == 0){
-                showMessage('Please specify an option to add.');
+                MessageDialogController.showMessage('Please specify an option to add.');
                 return false;
             }
 
@@ -125,7 +125,7 @@ PromptHandler.Handlers = function(){
 
             //If the property is invalid, alert the user and cancel the add.
             if(!prop){
-                showMessage('Option with that label already exists.');
+                MessageDialogController.showMessage('Option with that label already exists.');
                 return false;
             }
 
@@ -484,7 +484,7 @@ PromptHandler.Handlers = function(){
                 }
 
                 function onFail(message) {
-                    showMessage('Failed because: ' + message);
+                    MessageDialogController.showMessage('Failed because: ' + message);
                 }
 
                 navigator.camera.getPicture(onSuccess, onFail, {quality: 25,
@@ -511,7 +511,7 @@ PromptHandler.Handlers = function(){
                         recordImage(imageData, false);
                     });
                 }else{
-                    showMessage("Please select an image.");
+                    MessageDialogController.showMessage("Please select an image.");
                 }
 
             }

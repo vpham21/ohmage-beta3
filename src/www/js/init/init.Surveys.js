@@ -1,4 +1,4 @@
-invokeOnReady(function(){
+Init.invokeOnReady(function() {
 
     var surveyMenu = mwf.decorator.Menu("Available Surveys");
 

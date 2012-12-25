@@ -1,7 +1,7 @@
 
-invokeOnReady(function(){
+Init.invokeOnReady( function() {
 
-    if(auth.isUserLocked()){
+    if( auth.isUserLocked() ) {
 
         //If the user is in a locked state, force the username field to
         //be read only.
@@ -23,7 +23,7 @@ invokeOnReady(function(){
     var isInputValid = function(){
 
         if($('#username').val().length == 0 && $('#password').val().length == 0){
-            showMessage('Please enter your username and password.', function(){
+            MessageDialogController.showMessage('Please enter your username and password.', function(){
                 $('#username').focus();
             });
 
@@ -31,7 +31,7 @@ invokeOnReady(function(){
         }
 
         if($('#username').val().length == 0){
-            showMessage('Please enter your username.', function(){
+            MessageDialogController.showMessage('Please enter your username.', function(){
                 $('#username').focus();
             });
 
@@ -39,7 +39,7 @@ invokeOnReady(function(){
         }
 
         if($('#password').val().length == 0){
-            showMessage('Please enter your password.', function(){
+            MessageDialogController.showMessage('Please enter your password.', function(){
                 $('#password').focus();
             });
 
@@ -67,9 +67,9 @@ invokeOnReady(function(){
                if(success){
                    PageNavigation.openDashboard();
                }else if(response){
-                   showMessage(response);
+                   MessageDialogController.showMessage( response );
                }else{
-                   showMessage("Unable to login. Please try again.");
+                   MessageDialogController.showMessage( "Unable to login. Please try again." );
                }
            });
 
