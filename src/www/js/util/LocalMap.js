@@ -6,45 +6,45 @@
  * @author Zorayr Khalapyan
  * @version 10/25/2012
  */
-var LocalMap = function (name) {
+var LocalMap = function ( name ) {
     var that = {};
 
     //Prevent compatability issues in different execution environments.
-    if (!localStorage) {
+    if ( !localStorage ) {
         localStorage = {};
     }
 
-    if (!localStorage[name]) {
+    if ( !localStorage[name] ) {
         localStorage[name] = "{}";
     }
 
-    var setMap = function (map) {
-        localStorage[name] = JSON.stringify(map);
+    var setMap = function ( map ) {
+        localStorage[name] = JSON.stringify( map );
     };
 
     that.getMap = function () {
-        return JSON.parse(localStorage[name]);
+        return JSON.parse( localStorage[name] );
     };
 
     /**
      * Stores the specified (key, value) pair in the localStorage
      * under the map's namespace.
      */
-    that.set = function (name, object) {
+    that.set = function ( name, object ) {
         var map = that.getMap();
-        map[name] = object;
-        setMap(map);
+        map[ name ] = object;
+        setMap( map );
     };
 
-    that.get = function (name) {
+    that.get = function ( name ) {
         var map = that.getMap();
-        return typeof(map[name]) !== "undefined" ? map[name] : null;
+        return typeof( map[ name ] ) !== "undefined" ? map[name] : null;
     };
 
-    that.importMap = function (object) {
+    that.importMap = function ( object ) {
         var map = that.getMap();
         var key;
-        for (key in object) {
+        for ( key in object ) {
             if (object.hasOwnProperty(key)) {
                 map[key] = object[key];
             }
@@ -88,9 +88,9 @@ var LocalMap = function (name) {
 };
 
 LocalMap.destroy = function () {
-    for (var item in localStorage) {
-        if (localStorage.hasOwnProperty(item)) {
-            delete localStorage[item];
+    for ( var item in localStorage ) {
+        if ( localStorage.hasOwnProperty( item ) ) {
+            delete localStorage[ item ];
         }
     }
 };

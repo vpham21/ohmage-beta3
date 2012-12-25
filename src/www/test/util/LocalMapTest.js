@@ -1,9 +1,15 @@
 module( "util.LocalMap", {
   setup: function() {
-    //No setup required.
+    fixture.localStorageBackup = {};
+    for(var key in localStorage){
+        fixture.localStorageBackup[key] = localStorage[ key ];
+    }
   },
   teardown: function() {
     LocalMap('test-namespace').deleteNamespace();
+    for( var key in fixture.localStorageBackup ) {
+        localStorage[ key ] = fixture.localStorageBackup[ key ];
+    }
   }
 });
 
@@ -151,14 +157,17 @@ test( "Test importMap()", function() {
     ok(map.isSet('var2'), "An imported variable var2 should be set.");
 });
 
+
 test( "Test destroy()", function() {
+    
     LocalMap('test-namespace-1');
     LocalMap('test-namespace-2');
 
     ///
     LocalMap.destroy();
     //
-
+    
     ok(!LocalMap.exists('test-namespace-1'), "Destroyed localStorage should not have any namespaces.");
     ok(!LocalMap.exists('test-namespace-1'), "Destroyed localStorage should not have any namespaces.");
+    
 });

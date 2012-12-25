@@ -36,3 +36,28 @@ test( "Test ConfigManager.getConfigProperty()", function() {
     ok( ( typeof( surveyUploadUrl ) !== "undefined" ),   "Should be able to get SURVEY_UPLOAD_URL property." );
     ok( ( typeof( passwordChangeUrl ) !== "undefined" ), "Should be able to get PASSWORD_CHANGE_URL property." );
 });
+
+test( "Test ConfigManager.getServers()", function() {
+    ///
+    var servers = ConfigManager.getServers();
+    ///
+    ok( servers.length > 1 ,    "There should be at least one server provided by the config manager." );
+});
+
+test( "Test ConfigManager.setServerEndpoint()", function() {
+  
+    var newServerEndpoint = "new-server-endpoint";
+    ///
+    ConfigManager.setServerEndpoint( newServerEndpoint );
+    ///
+    ok( ConfigManager.getServerEndpoint() === newServerEndpoint,    "The server endpoint returned by the ConfigManager should match the new server endpoint." ); 
+});
+
+test( "Test ConfigManager.reset()", function() {
+    var originalServerEndpoint = ConfigManager.getServerEndpoint();
+    ConfigManager.setServerEndpoint( "new-server-endpoint" );
+    ///
+    ConfigManager.reset();
+    ///
+    ok( ConfigManager.getServerEndpoint() === originalServerEndpoint,    "The server endpoint returned by the ConfigManager should match the new server endpoint." ); 
+});

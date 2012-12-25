@@ -139,6 +139,10 @@ var PageNavigation = (function(){
         self.redirect("campaign.html");
     };
     
+    self.openServerChangeView = function() {
+        self.redirect( "change-server.html" );
+    };
+    
     /**
      * Redirects the user to the page that displays the campaign's surveys.
      * @param campaignURN The unique identifier of the survey's campaign.
