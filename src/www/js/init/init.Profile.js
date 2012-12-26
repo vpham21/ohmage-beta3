@@ -1,3 +1,3 @@
 Init.invokeOnReady(function() {
-    $('#profile').append(Profile.render());
+    $('#view').append(ProfileController().renderProfileView());
 });
