@@ -170,31 +170,35 @@ var PageNavigation = (function(){
      * Opens survey response view that displays all the details about the 
      * specified response.
      */
-    self.openSurveyResponseView = function(surveyKey){
-        self.setPageParameter("survey-key", surveyKey);
-        self.redirect("survey-response-view.html");
+    self.openSurveyResponseView = function( surveyKey ) {
+        self.setPageParameter( "survey-key", surveyKey );
+        self.redirect( "survey-response-view.html" );
     };
 
     /**
      * Redirects the user to tha authentication page.
      */
-    self.openAuthenticationPage = function(){
-        self.redirect("auth.html");
+    self.openAuthenticationPage = function() {
+        self.redirect( "auth.html" );
     };
 
     /**
      * Redirects users to the main dashboard.
      */
-    self.openDashboard = function(){
-        self.redirect("index.html");
+    self.openDashboard = function() {
+        self.redirect( "index.html" );
     };
     
-    self.openChangePasswordPage = function(){
+    self.openChangePasswordPage = function() {
         self.redirect("change-password.html");
     };
     
-    self.openPrivacyPage = function(){
+    self.openPrivacyPage = function() {
         self.redirect("privacy.html");
+    };
+    
+    self.openProfilePage = function() {
+        self.redirect("profile.html");
     };
     
     self.openHelpMenuView = function(){

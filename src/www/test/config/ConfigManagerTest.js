@@ -3,7 +3,7 @@ module( "config.ConfigManager", {
     //No setup required.
   },
   teardown: function() {
-    //No teardown required.
+    ConfigManager.reset();
   }
 });
 
@@ -45,12 +45,11 @@ test( "Test ConfigManager.getServers()", function() {
 });
 
 test( "Test ConfigManager.setServerEndpoint()", function() {
-  
     var newServerEndpoint = "new-server-endpoint";
     ///
     ConfigManager.setServerEndpoint( newServerEndpoint );
     ///
-    ok( ConfigManager.getServerEndpoint() === newServerEndpoint,    "The server endpoint returned by the ConfigManager should match the new server endpoint." ); 
+    ok( ConfigManager.getServerEndpoint() === newServerEndpoint, "The server endpoint returned by the ConfigManager should match the new server endpoint." ); 
 });
 
 test( "Test ConfigManager.reset()", function() {
@@ -59,5 +58,19 @@ test( "Test ConfigManager.reset()", function() {
     ///
     ConfigManager.reset();
     ///
-    ok( ConfigManager.getServerEndpoint() === originalServerEndpoint,    "The server endpoint returned by the ConfigManager should match the new server endpoint." ); 
+    ok( ConfigManager.getServerEndpoint() === originalServerEndpoint, "The server endpoint returned by the ConfigManager should match the new server endpoint." ); 
+});
+
+test( "Test ConfigManager.setGpsEnabled( true )", function() {
+    ///
+    ConfigManager.setGpsEnabled( true );
+    ///
+    ok( ConfigManager.getGpsEnabled() === true, "ConfigManager should enable GPS." ); 
+});
+
+test( "Test ConfigManager.setGpsEnabled( false )", function() {
+    ///
+    ConfigManager.setGpsEnabled( false );
+    ///
+    ok( ConfigManager.getGpsEnabled() === false, "ConfigManager should disable GPS." ); 
 });

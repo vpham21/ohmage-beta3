@@ -22,8 +22,9 @@ var ConfigManager = (function() {
     ];
     
     /**
-     * Configuration store. To add new configuration value, add a new property
-     * to this object and an accessor function will be generated. 
+     * Configuration blueprint. To add new configuration value, add a new 
+     * property to this object and an accessor function will be generated. The
+     * actual working values will be saved in a localStorage object.
      */
     var config = {
         
@@ -45,7 +46,12 @@ var ConfigManager = (function() {
         /**
          * Allows users to change their passwords.
          */ 
-        PASSWORD_CHANGE_URL : '/app/user/change_password'
+        PASSWORD_CHANGE_URL : '/app/user/change_password',
+        
+        /**
+         * Enables GPS acquisition.
+         */
+        GPS_ENABLED : true
         
     };
     
@@ -56,8 +62,8 @@ var ConfigManager = (function() {
     /**
      * Generic method for accessing any available property.
      */
-    that.getProperty = function ( name ) {
-        return config[ name ];
+    that.getProperty = function ( propertyName ) {
+        return configMap.get( propertyName );
     };
     
     /**
@@ -80,13 +86,12 @@ var ConfigManager = (function() {
      */
     var addPropertyGetter = function( propertyName ) {
         return function(){
-            return config[ propertyName ];
+            return that.getProperty( propertyName );
         }
     };
     
     var addPropertySetter = function( propertyName ) {
       return function( newConfigValue ) {
-          config[ propertyName ] = newConfigValue;
           configMap.set( propertyName, newConfigValue );
       };   
     };
@@ -102,10 +107,10 @@ var ConfigManager = (function() {
         that[ camelCaseSetterName ] = addPropertySetter( property );
     }
     
-    //Restore any values that have been stored in localStorage.
+    //Transfer any values in config that have not been saved in localStorage.
     for( var key in config ) {
-        if ( configMap.isSet( key ) ) {
-            config[ key ] = configMap.get( key );
+        if ( !configMap.isSet( key ) ) {
+            configMap.set( key, config[ key ] );
         } 
     }
     

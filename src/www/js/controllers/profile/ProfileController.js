@@ -5,6 +5,16 @@ var ProfileController = function() {
         PageNavigation.openChangePasswordPage();
     };
     
+    that.enableGpsHandler = function() {
+        ConfigManager.setGpsEnabled( true );
+        PageNavigation.openProfilePage();
+    };
+    
+    that.disableGpsHandler = function() {
+        ConfigManager.setGpsEnabled( false );
+        PageNavigation.openProfilePage();
+    };
+    
     that.clearCustomizedChoicesHandler = function() {
         var confirmMessage = "Are you sure you would like to clear all your custom choices?";
         var confirmButtonLabels = "Yes,No";
@@ -26,9 +36,14 @@ var ProfileController = function() {
     that.renderProfileView = function() {
       
         var profileView = ProfileView();
+        
+        //Attach handlers to the view.
         profileView.changePasswordHandler = that.changePasswordHandler;
         profileView.clearCustomizedChoicesHandler = that.clearCustomizedChoicesHandler;
         profileView.logoutAndClearDataHandler = that.logoutAndClearDataHandler;
+        profileView.disableGpsHandler = that.disableGpsHandler;
+        profileView.enableGpsHandler = that.enableGpsHandler;
+        
         return profileView.render();
     };
     

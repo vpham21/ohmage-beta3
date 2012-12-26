@@ -70,14 +70,14 @@ function Navigation(survey, container){
      *
      * @return Current prompt.
      */
-    var getCurrentPrompt = function(){
+    var getCurrentPrompt = function() {
         return prompts[currentPromptIndex] || null;
     };
 
     /**
      * Returns current prompt's condition.
      */
-    var getCurrentCondition = function(){
+    var getCurrentCondition = function() {
         return getCurrentPrompt().getCondition();
     };
 
@@ -85,7 +85,7 @@ function Navigation(survey, container){
      * Boolean method that returns true if the current condition of the prompt
      * fails.
      */
-    var failsCondition = function(){
+    var failsCondition = function() {
         var currentCondition = getCurrentCondition();
         var currentResponse  = surveyResponse.getResponses();
         return currentCondition &&
@@ -237,10 +237,13 @@ function Navigation(survey, container){
      * @param callback Function that will be invoked when the survey has been
      *                 completed.
      */
-    self.start = function(callback){
-        //Update survey response geolocation information.
-        surveyResponse.setLocation();
-
+    self.start = function( callback ) {
+        
+        if( ConfigManager.getGpsEnabled() ) {
+            //Update survey response geolocation information.
+            surveyResponse.setLocation();
+        }
+        
         //Render the initial prompt.
         render();
 

@@ -88,19 +88,19 @@ var Survey = function(surveyData, campaign){
                     
                     var uploader = new SurveyResponseUploader(self, surveyResponse);
                     
-                    var onSuccess = function(response){
-                        MessageDialogController.showMessage("Successfully uploaded your survey response.", function(){
-                        SurveyResponseModel.deleteSurveyResponse(surveyResponse);
+                    var onSuccess = function( response ) {
+                        MessageDialogController.showMessage("Successfully uploaded your survey response.", function() {
+                            SurveyResponseModel.deleteSurveyResponse(surveyResponse);
                             afterSurveyComplete();
                         });
                         
                     };
                     
-                    var onError = function(error){
-                        MessageDialogController.showMessage("Unable to upload your survey response at this time.", afterSurveyComplete);
+                    var onError = function( error ) {
+                        MessageDialogController.showMessage( "Unable to upload your survey response at this time.", afterSurveyComplete );
                     };
                     
-                    uploader.upload(onSuccess, onError);
+                    uploader.upload( onSuccess, onError, ConfigManager.getGpsEnabled() );
 
                 }else{
                     afterSurveyComplete();
