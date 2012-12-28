@@ -184,7 +184,7 @@ var Campaigns = new (function() {
              {
                  user:          auth.getUsername(),
                  password:      auth.getHashedPassword(),
-                 client:        'MWoC',
+                 client:        ConfigManager.getClientName(),
                  output_format: 'short'
              },
              "JSON",

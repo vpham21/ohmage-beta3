@@ -26,7 +26,7 @@ var SurveyResponseController = function(surveyResponseModel){
         var onError = function(error){
             MessageDialogController.showMessage("Unable to upload survey response at this time. Please try again later.");
         };
-        (new SurveyResponseUploader(survey, surveyResponseModel)).upload( onSuccess, onError, ConfigManager.getGpsEnabled() );
+        (new SurveyResponseUploadController(survey, surveyResponseModel)).upload( onSuccess, onError, ConfigManager.getGpsEnabled() );
     };
 
     /**

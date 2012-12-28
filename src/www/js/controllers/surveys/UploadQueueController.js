@@ -33,7 +33,7 @@ var UploadQueueController = function(){
                 refreshView();
             });
         };
-        SurveyResponseUploader.uploadAll( pendingResponses, uploadAllDoneCallback, ConfigManager.getGpsEnabled() );
+        SurveyResponseUploadController.uploadAll( pendingResponses, uploadAllDoneCallback, ConfigManager.getGpsEnabled() );
     };
     
     that.getPendingResponses = function() {

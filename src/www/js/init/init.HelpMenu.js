@@ -1,4 +1,4 @@
 
 Init.invokeOnReady(function() {
-    $('#view').append( (new ChangerServerController()).renderChangerServerView() );
+    $('#help-container').append((new HelpController()).renderHelpMenu());
 });

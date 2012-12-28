@@ -51,7 +51,19 @@ var ConfigManager = (function() {
         /**
          * Enables GPS acquisition.
          */
-        GPS_ENABLED : true
+        GPS_ENABLED : true,
+        
+        /**
+         * If set to true, the user will be asked to either upload after submitting
+         * or wait and upload manually. This functionality is mostly useful for 
+         * debugging upload queue.
+         */
+        CONFIRM_TO_UPLOAD_ON_SUBMIT : true,
+        
+        /**
+         * Client property sent with AJAX requests.
+         */
+        CLIENT_NAME : "ohmage-mwf"
         
     };
     

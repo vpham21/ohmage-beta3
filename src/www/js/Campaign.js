@@ -1,14 +1,14 @@
-var Campaign = function(urn){
+var Campaign = function( urn ) {
 
-    var self = this;
+    var that = {};
 
     var metadata = (new LocalMap("all-campaigns").get(urn));
     var campaign = (new LocalMap("campaign-configurations")).get(urn);
 
-    self.render = function(){
+    that.render = function(){
 
-        if(self.isRunning()){
-            return self.renderSurveyList(mwf.decorator.Menu("Available Surveys"));
+        if(that.isRunning()){
+            return that.renderSurveyList(mwf.decorator.Menu("Available Surveys"));
 
         }else{
 
@@ -22,13 +22,13 @@ var Campaign = function(urn){
 
     };
 
-    self.renderSurveyList = function(surveyMenu){
+    that.renderSurveyList = function(surveyMenu){
         var openSurveyViewCallback = function(surveyID){
             return function(){
                 PageNavigation.openSurveyView(urn, surveyID);
             };
         };
-        var surveys = self.getSurveys();
+        var surveys = that.getSurveys();
         var surveyMenuItem;
         for(var i = 0; i < surveys.length; i++){
             surveyMenuItem = surveyMenu.addMenuLinkItem(surveys[i].title, null, surveys[i].description);
@@ -40,7 +40,7 @@ var Campaign = function(urn){
     /**
      * Returns surveys associated with this campaign.
      */
-    self.getSurveys = function(){
+    that.getSurveys = function(){
 
         //Get the list of surveys from the campaign.
         var surveys  = campaign.surveys.survey;
@@ -51,7 +51,7 @@ var Campaign = function(urn){
         return (!surveys.length)? [surveys] : surveys;
     };
 
-    self.isRunning = function(){
+    that.isRunning = function(){
         return metadata.running_state === 'running';
     };
 
@@ -60,16 +60,16 @@ var Campaign = function(urn){
     * doesn't contain a survey with the provided ID, a null value will be
     * returned.
     */
-    self.getSurvey = function(id){
+    that.getSurvey = function(id){
 
        //Get a list of all the possible surveys.
-       var surveys = self.getSurveys();
+       var surveys = that.getSurveys();
 
        //Iterate through the list of retrieved surveys. If a ID match is found,
        //return the survey.
        for(var i = 0; i < surveys.length; i++){
           if(surveys[i].id == id){
-              return new Survey(surveys[i], self);
+              return SurveyModel( surveys[i], that );
           }
        }
 
@@ -80,32 +80,32 @@ var Campaign = function(urn){
     /**
      * Returns the name of the current campaign.
      */
-    self.getName = function(){
+    that.getName = function(){
         return metadata.name;
     };
 
     /**
      * Returns the URN for this campaign.
      */
-    self.getURN = function(){
+    that.getURN = function(){
         return urn;
     };
 
     /**
      * Return's the campaign's creation timestamp.
      */
-    self.getCreationTimestamp = function(){
+    that.getCreationTimestamp = function(){
         return metadata.creation_timestamp;
     };
 
     /**
      * Returns the description for this campaign.
      */
-    self.getDescription = function(){
+    that.getDescription = function(){
         return metadata.description;
     };
 
-    return self;
+    return that;
 };
 
 /**
@@ -153,7 +153,7 @@ Campaign.install = function(urn, onSuccess, onError){
          {
              user:            auth.getUsername(),
              password:        auth.getHashedPassword(),
-             client:          'MWoC',
+             client:          ConfigManager.getClientName(),
              campaign_urn_list: urn,
              output_format:   'long'
          },

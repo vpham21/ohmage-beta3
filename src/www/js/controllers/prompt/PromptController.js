@@ -1,22 +1,19 @@
 
-function Navigation(survey, container){
+var PromptController = function( surveyController, container ) {
 
-    var self = this;
+    var that = {};
 
-    /**
-     * Namespace abbreviation for Mobile Web Framework JS Decorators library.
-     */
-    var mwfd = mwf.decorator;
-
+    var surveyModel = surveyController.getSurveyModel();
+    
     /**
      * An array of prompts associated with the current survey.
      */
-    var prompts = survey.getPrompts();
+    var prompts = surveyModel.getPrompts();
 
     /**
      * The response object for the current survey.
      */
-    var surveyResponse = SurveyResponseModel.init(survey.getID(), survey.getCampaign().getURN());
+    var surveyResponse = SurveyResponseModel.init(surveyModel.getID(), surveyModel.getCampaign().getURN());
 
     /**
     * Stores the index of the currently displayed prompt. Initialized to the
@@ -41,7 +38,6 @@ function Navigation(survey, container){
      * submitting.
      */
     var confirmToLeaveMessage = "Data from your current survey response will be lost. Are you sure you would like to continue?";
-
 
     var androidBackButtonCallbackWrapper = function(){
        if(androidBackButtonCallback !== null){
@@ -71,7 +67,7 @@ function Navigation(survey, container){
      * @return Current prompt.
      */
     var getCurrentPrompt = function() {
-        return prompts[currentPromptIndex] || null;
+        return prompts[ currentPromptIndex ] || null;
     };
 
     /**
@@ -102,30 +98,30 @@ function Navigation(survey, container){
     /**
      * Method invoked when the user completes the survey and clicks submit.
      */
-    var done = function(){
+    var done = function() {
         resetBackButtonFunctionality();
         surveyResponse.submit();
-        surveyDoneCallback(surveyResponse);
+        surveyDoneCallback( surveyResponse );
     };
 
-    var processResponse = function(skipped){
+    var processResponse = function( skipped ) {
         var prompt = getCurrentPrompt();
-        if(skipped){
-            if(!prompt.isSkippable()){
+        if( skipped ) {
+            if( !prompt.isSkippable() ){
                 return false;
             }
-            surveyResponse.promptSkipped(prompt.getID());
+            surveyResponse.promptSkipped( prompt.getID() );
             return true;
         }
 
         //Handle invalid responses.
-        if(!prompt.isValid()){
-            MessageDialogController.showMessage(prompt.getErrorMessage());
+        if( !prompt.isValid() ) {
+            MessageDialogController.showMessage( prompt.getErrorMessage() );
             return false;
         }
 
         //Save the response.
-        surveyResponse.respond(prompt.getID(), prompt.getResponse(), prompt.getType() == 'photo');
+        surveyResponse.respond( prompt.getID(), prompt.getResponse(), prompt.getType() == "photo" );
 
         return true;
     };
@@ -163,7 +159,7 @@ function Navigation(survey, container){
 
         //If the prompt is skippable, then enable the skip button.
         if(!submitPage && getCurrentPrompt().isSkippable()){
-            panel.appendChild(mwfd.SingleClickButton(getCurrentPrompt().getSkipLabel(), function(){
+            panel.appendChild(mwf.decorator.SingleClickButton(getCurrentPrompt().getSkipLabel(), function(){
                 nextPrompt(true);
             }));
         }
@@ -172,23 +168,23 @@ function Navigation(survey, container){
 
         //Handle first prompt.
         if(currentPromptIndex == 0){
-            panel.appendChild(mwfd.SingleClickButton("Next Prompt", function(){
+            panel.appendChild(mwf.decorator.SingleClickButton("Next Prompt", function(){
                 nextPrompt(false);
             }));
 
             androidBackButtonCallback = function(){
-                self.confirmSurveyExit(function(){
+                that.confirmSurveyExit(function(){
                     PageNavigation.goBack();
                 });
             };
 
         //Handle submit page.
         } else if(submitPage){
-           panel.appendChild(mwfd.DoubleClickButton("Previous", previousPrompt, "Submit", done));
+           panel.appendChild(mwf.decorator.DoubleClickButton("Previous", previousPrompt, "Submit", done));
 
         //Handle prompts in the middle.
         } else{
-            panel.appendChild(mwfd.DoubleClickButton("Previous", previousPrompt, "Next", function(){
+            panel.appendChild(mwf.decorator.DoubleClickButton("Previous", previousPrompt, "Next", function(){
                 nextPrompt(false);
             }));
         }
@@ -220,8 +216,8 @@ function Navigation(survey, container){
         //Render submit page if at the last prompt.
         } else {
 
-            var menu = mwfd.Menu('Survey Completed');
-            menu.addMenuTextItem('Done with ' + survey.getTitle());
+            var menu = mwf.decorator.Menu('Survey Completed');
+            menu.addMenuTextItem('Done with ' + surveyModel.getTitle());
             container.appendChild(menu);
 
             controlButtons = getControlButtons(true);
@@ -237,7 +233,7 @@ function Navigation(survey, container){
      * @param callback Function that will be invoked when the survey has been
      *                 completed.
      */
-    self.start = function( callback ) {
+    that.start = function( callback ) {
         
         if( ConfigManager.getGpsEnabled() ) {
             //Update survey response geolocation information.
@@ -259,7 +255,7 @@ function Navigation(survey, container){
      * This method should be called to do the clean up before the user navigates
      * to another page without completing the survey.
      */
-    self.abort = function(){
+    that.abort = function(){
         resetBackButtonFunctionality();
         if(surveyResponse !== null && !surveyResponse.isSubmitted()){
             SurveyResponseModel.deleteSurveyResponse(surveyResponse);
@@ -275,10 +271,10 @@ function Navigation(survey, container){
      * @param positiveConfirmationCallback A callback invoked when the user
      *        confirms the current action.
      */
-    self.confirmSurveyExit = function(positiveConfirmationCallback){
+    that.confirmSurveyExit = function(positiveConfirmationCallback){
         MessageDialogController.showConfirm(confirmToLeaveMessage, function(isResponseYes){
             if( isResponseYes ){
-                self.abort();
+                that.abort();
                 if( typeof(positiveConfirmationCallback) === "function" ){
                     positiveConfirmationCallback();
                 }
@@ -286,7 +282,7 @@ function Navigation(survey, container){
         }, "Yes,No");
     };
 
-    return self;
+    return that;
 }
 
 

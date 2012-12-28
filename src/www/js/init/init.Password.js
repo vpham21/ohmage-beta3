@@ -78,7 +78,7 @@ Init.invokeOnReady(function() {
              ConfigManager.getPasswordChangeUrl(),
              {
                  auth_token:   auth.getHashedPassword(),
-                 client:       'MWoC',
+                 client:       ConfigManager.getClientName(),
                  user:         auth.getUsername(),
                  password:     currentPassword,
                  new_password: newPassword
