@@ -1,7 +1,0 @@
-//
-// Prefix header for all source files of the 'MWoC' target in the 'MWoC' project
-//
-
-#ifdef __OBJC__
-    #import <UIKit/UIKit.h>
-#endif
