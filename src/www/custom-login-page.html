@@ -24,6 +24,7 @@
 
                     auth.authenticateByToken(username, password, function (success) {
                         if (success) {
+                            $.cookie("auth_token", auth.getAuthToken());
                             PageNavigation.openDashboard();
                         } else {
                             alert("Wrong username or password! Please try agian.");
