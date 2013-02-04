@@ -1,5 +1,6 @@
 Init.invokeOnReady( function() {
 
+    alert("BITCH");
     var onSuccess = function(){
         $('#campaigns').append(Campaigns.render(false));
     };

@@ -3,9 +3,9 @@
  * data.
  */
 var SurveyResponseUploadController = function( surveyModel, surveyResponse ) {
-    
+
     var that = {};
-    
+
     /**
      * Compiles and returns an upload package with the current values set in the
      * survey response. In this case, no extra check of validity or availaility
@@ -18,9 +18,6 @@ var SurveyResponseUploadController = function( surveyModel, surveyResponse ) {
         var data = {
                         campaign_urn               : surveyResponse.getCampaignURN(),
                         campaign_creation_timestamp: surveyModel.getCampaign().getCreationTimestamp(),
-                        user                       : auth.getUsername(),
-                        password                   : auth.getHashedPassword(),
-                        client                     : ConfigManager.getClientName(),
                         surveys                    : JSON.stringify([responseData.responses]),
                         images                     : JSON.stringify(responseData.images)
                    };
@@ -118,18 +115,18 @@ var SurveyResponseUploadController = function( surveyModel, surveyResponse ) {
     };
 
     /**
-     * Uploads a single survey response object. 
+     * Uploads a single survey response object.
      * @param onSuccess Success response callback from API call.
      * @param onError Error response callback from API call.
-     * @param requireLocation If set to true, the user will be asked to try to 
-     *        set the GPS location if the survey is lacking one. 
+     * @param requireLocation If set to true, the user will be asked to try to
+     *        set the GPS location if the survey is lacking one.
      */
     that.upload = function( onSuccess, onError, requireLocation ) {
 
         if( typeof(requireLocation) === "undefined" ) {
             requireLocation = new Date().getTime() - surveyResponse.getSubmitDate().getTime() < 120000;
         }
-        
+
         getFinalizedUploadResponse( function( data ) {
 
             var _onError = function( error ) {
@@ -139,7 +136,7 @@ var SurveyResponseUploadController = function( surveyModel, surveyResponse ) {
                     }
                 });
             };
-            
+
             var _onSuccess = function( response ) {
                 console.log("SurveyResponseUploadController: Successfully returned from single survey response upload script.");
                 Spinner.hide( function() {
@@ -151,6 +148,7 @@ var SurveyResponseUploadController = function( surveyModel, surveyResponse ) {
 
             Spinner.show();
 
+            console.log(data);
             ServiceController.serviceCall(
                  "POST",
                  ConfigManager.getSurveyUploadUrl(),
@@ -159,18 +157,18 @@ var SurveyResponseUploadController = function( surveyModel, surveyResponse ) {
                  _onSuccess,
                  _onError
             );
-                
+
         }, requireLocation);
 
     };
-    
+
     return that;
 
 };
 
 /**
- * Given an object of pending responses with key == uuid of the response, 
- * recursively tries to upload the surveys and invokes the callback with the 
+ * Given an object of pending responses with key == uuid of the response,
+ * recursively tries to upload the surveys and invokes the callback with the
  * final number of successfully uploaded surveys.
  */
 SurveyResponseUploadController.uploadAll = function( pendingResponses, uploadCompletedCallback, requireLocation ){
@@ -195,25 +193,25 @@ SurveyResponseUploadController.uploadAll = function( pendingResponses, uploadCom
             });
 
         }else{
-            
+
             //Get the current survey and surveyResponse object to upload.
             var survey = pendingResponses[uuidList[i]].survey;
             var surveyResponse = pendingResponses[uuidList[i]].response;
-            
+
             var uploadNextSurveyResponse = function(){
                 upload(++i);
             };
-            
-            var onSuccess = function(response){    
+
+            var onSuccess = function(response){
                 count++;
                 SurveyResponseModel.deleteSurveyResponse(surveyResponse);
                 uploadNextSurveyResponse();
             };
-            
+
             var onError = function(error){
                 uploadNextSurveyResponse();
             };
-            
+
             new SurveyResponseUploadController(survey, surveyResponse).upload(onSuccess, onError, requireLocation);
 
         }

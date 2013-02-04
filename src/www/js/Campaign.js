@@ -151,9 +151,6 @@ Campaign.install = function(urn, onSuccess, onError){
          "POST",
          ConfigManager.getCampaignReadUrl(),
          {
-             user:            auth.getUsername(),
-             password:        auth.getHashedPassword(),
-             client:          ConfigManager.getClientName(),
              campaign_urn_list: urn,
              output_format:   'long'
          },
