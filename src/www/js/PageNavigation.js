@@ -182,7 +182,7 @@ var PageNavigation = (function(){
         if (DeviceDetection.isOnDevice()) {
             self.redirect( "auth.html" );
         } else {
-            self.redirect( "custom-login-page.html" );
+            self.redirect( "browser-auth.html" );
         }
     };
 

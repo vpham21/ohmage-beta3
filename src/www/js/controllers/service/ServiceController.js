@@ -91,15 +91,13 @@ var ServiceController = ( function( ) {
 
 
         if (auth.isUserAuthenticated()) {
-            if (!data["user"]) {
-                data["user"] = auth.getUsername();
-            }
 
             if (!data["password"] && !data["auth_token"]) {
                 if (auth.isUserAuthenticatedByToken()) {
                     console.log("setting auth_token");
                     data["auth_token"] = auth.getAuthToken();
                 } else {
+                    data["user"] = auth.getUsername();
                     data["password"] = auth.getHashedPassword();
                 }
             }
