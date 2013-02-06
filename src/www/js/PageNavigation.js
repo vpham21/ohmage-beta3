@@ -179,7 +179,7 @@ var PageNavigation = (function(){
      * Redirects the user to tha authentication page.
      */
     self.openAuthenticationPage = function() {
-        if (DeviceDetection.isOnDevice()) {
+        if (DeviceDetection.isNativeApplication()) {
             self.redirect( "auth.html" );
         } else {
             self.redirect( "browser-auth.html" );
