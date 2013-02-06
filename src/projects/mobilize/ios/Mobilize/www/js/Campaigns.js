@@ -83,9 +83,21 @@ var Campaigns = new (function() {
         }
 
         var campaign, campaignMenuItem;
-        for(var urn in allCampaigns.getMap()){
+        var allCampaignsMap = allCampaigns.getMap();
+        var urnList = [];
+        for (var urn in allCampaignsMap) {
+            urnList.push(urn);
+        }
+        urnList.sort(function(a, b) {
+            var nameA = allCampaignsMap[a].name;
+            var nameB = allCampaignsMap[b].name;
+            return nameA.localeCompare(nameB);
+        });
+        for (var i = 0; i < urnList.length; i++) {
 
-            var campaign = new Campaign(urn);
+            urn = urnList[i];
+
+            campaign = new Campaign(urn);
 
             //Ignore inactive campaigns.
             if(!campaign.isRunning()){
@@ -178,15 +190,14 @@ var Campaigns = new (function() {
 
         Spinner.show();
 
+        var data = {
+                 output_format: 'short'
+        };
+
         ServiceController.serviceCall(
              "POST",
              ConfigManager.getCampaignReadUrl(),
-             {
-                 user:          auth.getUsername(),
-                 password:      auth.getHashedPassword(),
-                 client:        ConfigManager.getClientName(),
-                 output_format: 'short'
-             },
+             data,
              "JSON",
              _onSuccess,
              _onError

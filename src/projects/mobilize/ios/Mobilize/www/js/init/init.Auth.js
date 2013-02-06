@@ -18,8 +18,6 @@ Init.invokeOnReady( function() {
                 mwf.decorator.TopButton.remove();
             }
         }, true);
-    } else {
-        mwf.decorator.TopButton("Switch Server", null, PageNavigation.openServerChangeView, true);
     }
 
     var isInputValid = function(){

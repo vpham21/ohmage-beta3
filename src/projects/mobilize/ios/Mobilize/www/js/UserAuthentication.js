@@ -106,7 +106,7 @@ function UserAuthentication() {
 			"'}', " +
 			"'|', " +
 			"':'.";
-                    
+
     var sessionMap = new LocalMap('credentials');
     var session = function(name, value){
         if(typeof(value) !== "undefined"){
@@ -114,7 +114,7 @@ function UserAuthentication() {
         }
         return sessionMap.get(name);
     };
-    
+
     /**
      * Return true if cookie with the specified name exists. Optionally,
      * redirects the user to the provided redirect URL in case the user is
@@ -187,7 +187,7 @@ function UserAuthentication() {
      *
      */
     this.logout = function(){
-        
+
         var message = "All data will be lost. Are you sure you would like to proceed?";
 
         MessageDialogController.showConfirm(message, function(yes){
@@ -199,9 +199,9 @@ function UserAuthentication() {
                 session(HASH_AUTH_COOKIE_NAME, null);
                 session(USERNAME_COOKIE_NAME, null);
                 session(AUTH_ERROR_STATE_COOKIE_NAME, null);
-                
+
                 //ToDo: Decouple these two lines from user authentication. Maybe
-                //in the form of event subscribers. 
+                //in the form of event subscribers.
                 ReminderModel.cancelAll();
                 window.localStorage.clear();
                 window.localStorage['page-parameters'] = "{}";
@@ -210,12 +210,12 @@ function UserAuthentication() {
             }
         }, "Yes,No");
     };
-    
-    
+
+
     this.checkpoint = function(){
         if(!this.isUserAuthenticated() || this.isInAuthErrorState() ){
             console.log("User failed checkpoint - redirecting to the authentication page.");
-            PageNavigation.redirect('auth.html');
+            PageNavigation.openAuthenticationPage();
         }
     };
 
@@ -229,8 +229,7 @@ function UserAuthentication() {
      */
     this.isUserAuthenticated = function(redirectURL){
 
-        if(this.isUserAuthenticatedByHash() ||
-           this.isUserAuthenticatedByToken()){
+        if(this.isUserAuthenticatedByHash() || this.isUserAuthenticatedByToken()){
 
            PageNavigation.redirect(redirectURL);
 
@@ -339,7 +338,7 @@ function UserAuthentication() {
      */
     this.authenticateByToken = function(username, password, callback)
     {
-        if(this.isUserAuthorizedByToken()){
+        if(this.isUserAuthenticatedByToken()){
             callback(true);
         }
 

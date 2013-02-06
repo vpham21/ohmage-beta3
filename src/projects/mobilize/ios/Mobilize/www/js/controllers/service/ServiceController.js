@@ -1,7 +1,7 @@
 var ServiceController = ( function( ) {
 
     var that = {};
-    
+
     /**
      * Invokes the method 'fun' if it is a valid function. In case the function
      * method is null, or undefined then the error will be silently ignored.
@@ -14,11 +14,11 @@ var ServiceController = ( function( ) {
             fun( args );
         }
     };
-    
+
     var onSuccess = function( onSuccessCallback, onErrorCallback, url, redirectOnAuthError ) {
-        
+
         return function( response ) {
-            
+
             console.log("Received response for URL (" + url + ") with the following response data: " + JSON.stringify(response));
 
             switch( response.result ) {
@@ -51,18 +51,18 @@ var ServiceController = ( function( ) {
                     invoke( onSuccess, response );
                     break;
             }
-            
+
         };
-        
-        
+
+
     };
-    
+
     var onError = function( onErrorCallback, url ) {
         return function() {
             console.log("AJAX exception for url " + (ConfigManager.getServerEndpoint() + url));
             invoke( onErrorCallback, false );
         };
-        
+
     };
 
     /**
@@ -85,8 +85,27 @@ var ServiceController = ( function( ) {
      */
     that.serviceCall = function( type, url, data, dataType, onSuccessCallback, onErrorCallback, redirectOnAuthError ) {
 
+        console.log(data);
         //By default, redirect the user to the login page on authentication error.
         redirectOnAuthError = (typeof(redirectOnAuthError) == 'undefined')? true : redirectOnAuthError;
+
+
+        if (auth.isUserAuthenticated()) {
+
+            if (!data["password"] && !data["auth_token"]) {
+                if (auth.isUserAuthenticatedByToken()) {
+                    console.log("setting auth_token");
+                    data["auth_token"] = auth.getAuthToken();
+                } else {
+                    data["user"] = auth.getUsername();
+                    data["password"] = auth.getHashedPassword();
+                }
+            }
+        }
+
+        if (!data["client"]) {
+            data["client"] = ConfigManager.getClientName();
+        }
 
         console.log("Initiating an API call for URL (" + ConfigManager.getServerEndpoint() + url + ") with the following input data: " + JSON.stringify(data));
 
@@ -100,8 +119,8 @@ var ServiceController = ( function( ) {
         });
 
     };
-    
+
     return that;
-    
-  
+
+
 } )();
