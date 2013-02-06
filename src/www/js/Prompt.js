@@ -84,7 +84,7 @@ var Prompt = function(promptData, survey, campaign){
                 break;
 
             case 'single_choice':
-                summary = self.getProperty(responseValue[0]).label;
+                summary = self.getProperty(responseValue).label;
 
                 break;
 
@@ -101,7 +101,7 @@ var Prompt = function(promptData, survey, campaign){
             default:
                 summary = responseValue;
         }
-        
+
         return summary;
     };
 
