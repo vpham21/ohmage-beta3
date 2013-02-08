@@ -13,10 +13,16 @@ var Init = (function() {
             /**
              * The presence of this event handler disables previous page DOM
              * caching in some browsers - see issue #189 on GitHub for more
-             * details. 
+             * details.
              */
             window.onunload = function () {
                 console.log("Init: onunload invoked.");
+            };
+
+            window.onpageshow = function (event) {
+                if (event.persisted) {
+                    window.location.reload()
+                }
             };
 
             //Wait for the device ready event only if the the application is running
