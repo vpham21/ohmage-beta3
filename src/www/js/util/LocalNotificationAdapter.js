@@ -21,7 +21,7 @@ var LocalNotificationAdapter = (function(){
                     date        : options.date,
                     message     : options.message,
                     background  : "goToPendingSurveys",
-                    badge       : 1,
+                    badge       : 0,
                     id          : options.id,
                     sound       :'horn.caf'
                 });
