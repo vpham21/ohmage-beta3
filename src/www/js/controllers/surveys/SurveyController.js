@@ -1,7 +1,7 @@
 var SurveyController = function( surveyModel ) {
 
     var that = {};
-    
+
     /**
      * Callback for when the user completes the survey.
      */
@@ -10,7 +10,13 @@ var SurveyController = function( surveyModel ) {
         ReminderModel.supressSurveyReminders( surveyModel.getID() );
 
         var afterSurveyComplete = function() {
-            PageNavigation.goBack();
+
+            if (DeviceDetection.isNativeApplication()) {
+                PageNavigation.goBack();
+            } else {
+                window.onbeforeunload = null;
+                close();
+            }
         };
 
         //Confirmation box related properties.
@@ -19,7 +25,7 @@ var SurveyController = function( surveyModel ) {
         var message = "Would you like to upload your response?";
         var callback = function( yes ) {
 
-            //Yes upload my response now. 
+            //Yes upload my response now.
             if( yes ) {
 
                 var uploader = new SurveyResponseUploadController( surveyModel, surveyResponse);
@@ -50,13 +56,13 @@ var SurveyController = function( surveyModel ) {
         }
 
     };
-    
+
     /**
-     * If the survey is currently rendered, this stores the PromptController 
+     * If the survey is currently rendered, this stores the PromptController
      * object used to iterate through different prompts.
      */
     that.promptController = null;
-    
+
     /**
      * Starts a new PromptController object with the current survey. This method
      * should be used to start off the survey. The prompts will be displayed one
@@ -67,17 +73,17 @@ var SurveyController = function( surveyModel ) {
         //Start the actual survey.
         that.promptController = new PromptController( that, container );
         that.promptController.start( onSurveyComplete );
-        
+
         return that.promptController;
     };
-    
+
     /**
      * Returns the survey model associated with this controller.
      */
     that.getSurveyModel = function() {
         return surveyModel;
     };
-    
+
     return that;
-    
+
 };

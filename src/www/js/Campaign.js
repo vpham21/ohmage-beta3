@@ -25,7 +25,14 @@ var Campaign = function( urn ) {
     that.renderSurveyList = function(surveyMenu){
         var openSurveyViewCallback = function(surveyID){
             return function(){
-                PageNavigation.openSurveyView(urn, surveyID);
+                if (DeviceDetection.isNativeApplication()) {
+                    PageNavigation.openSurveyView(urn, surveyID);
+                } else {
+                    var loc = window.location.pathname;
+                    var dir = loc.substring(0, loc.lastIndexOf('/'));
+                    open(dir + "/survey.html?campaign-urn=" + urn + "&survey-id=" + surveyID, "Prompt Display", "toolbar=no,location=no,toolbar=no");
+                }
+
             };
         };
         var surveys = that.getSurveys();
