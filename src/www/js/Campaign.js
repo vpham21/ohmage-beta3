@@ -34,7 +34,7 @@ var Campaign = function( urn ) {
 
                         var left = wLeft + (window.innerWidth / 2) - (w / 2);
                         var top = wTop + (window.innerHeight / 2) - (h / 2);
-                        return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+                        return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
                     }
 
                     var loc = window.location.pathname;
