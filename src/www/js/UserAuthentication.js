@@ -133,7 +133,7 @@ function UserAuthentication() {
             return false;
         }
 
-        if(session(authCookieName) !== null){
+        if(session(authCookieName) !== null || $.cookie(authCookieName)){
 
             PageNavigation.redirect(redirectURL);
 
@@ -169,7 +169,7 @@ function UserAuthentication() {
      * @return The authentication token if it exists, or null otherwise.
      */
     this.getAuthToken = function(){
-        return session(TOKEN_AUTH_COOKIE_NAME);
+        return session(TOKEN_AUTH_COOKIE_NAME) || $.cookie(TOKEN_AUTH_COOKIE_NAME);
     }
 
     /**
@@ -201,7 +201,7 @@ function UserAuthentication() {
                 session(AUTH_ERROR_STATE_COOKIE_NAME, null);
 
                 $.cookie("auth_token", null, {path:"/"});
-                
+
                 //ToDo: Decouple these two lines from user authentication. Maybe
                 //in the form of event subscribers.
                 ReminderModel.cancelAll();
@@ -276,7 +276,7 @@ function UserAuthentication() {
      */
     this.getUsername = function(){
         return session(USERNAME_COOKIE_NAME);
-    }
+    };
 
     /**
      * Checks if the user is authenticated via the hashed password method. If
@@ -337,8 +337,9 @@ function UserAuthentication() {
      * @param username User's username.
      * @param password User's password.
      * @param callback Invoked on authentication check.
+     * @useLocalStorage if set to true, the auth_token will be saved on local storage.
      */
-    this.authenticateByToken = function(username, password, callback)
+    this.authenticateByToken = function(username, password, callback, useLocalStorage)
     {
         if(this.isUserAuthenticatedByToken()){
             callback(true);
@@ -347,9 +348,15 @@ function UserAuthentication() {
         //On successful authentication, save the token in a cookie and the
         //invoke the callback.
         var onSuccess = function(response){
-            //Save the authentication token in a cookie and invoke the callback.
-            session(TOKEN_AUTH_COOKIE_NAME, response.token);
+
             session(USERNAME_COOKIE_NAME, username);
+
+            if(useLocalStorage) {
+                //Save the authentication token in a cookie and invoke the callback.
+                session(TOKEN_AUTH_COOKIE_NAME, response.token);
+            } else {
+                $.cookie(TOKEN_AUTH_COOKIE_NAME, response.token, {path:"/"});
+            }
 
             self.setAuthErrorState(false);
 
@@ -382,3 +389,5 @@ var auth = new UserAuthentication ();
 if(typeof(checkpoint) != 'undefined'){
     auth.checkpoint();
 }
+
+

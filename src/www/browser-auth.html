@@ -35,10 +35,7 @@
 
                 } else {
                     auth.authenticateByToken(username, password, function (success) {
-                        var expiration = new Date((new Date()).getTime() + 30 * 60 * 1000);
-                        
                         if (success) {
-                            $.cookie("auth_token", auth.getAuthToken(), {path:"/", expires: expiration});
                             PageNavigation.openDashboard();
                         } else {
                             alert("Wrong username or password! Please try agian.");
