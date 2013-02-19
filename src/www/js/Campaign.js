@@ -28,9 +28,18 @@ var Campaign = function( urn ) {
                 if (DeviceDetection.isNativeApplication()) {
                     PageNavigation.openSurveyView(urn, surveyID);
                 } else {
+                    function popupWindow(url, title, w, h) {
+                        var wLeft = window.screenLeft ? window.screenLeft : window.screenX;
+                        var wTop = window.screenTop ? window.screenTop : window.screenY;
+
+                        var left = wLeft + (window.innerWidth / 2) - (w / 2);
+                        var top = wTop + (window.innerHeight / 2) - (h / 2);
+                        return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+                    }
+
                     var loc = window.location.pathname;
                     var dir = loc.substring(0, loc.lastIndexOf('/'));
-                    open(dir + "/survey.html?campaign-urn=" + urn + "&survey-id=" + surveyID, "Prompt Display", "toolbar=no,location=no,toolbar=no");
+                    popupWindow(dir + "/survey.html?campaign-urn=" + urn + "&survey-id=" + surveyID, "Prompt Display", 300, 500);
                 }
 
             };

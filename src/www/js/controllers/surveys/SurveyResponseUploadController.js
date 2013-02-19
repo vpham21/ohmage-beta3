@@ -123,8 +123,8 @@ var SurveyResponseUploadController = function( surveyModel, surveyResponse ) {
      */
     that.upload = function( onSuccess, onError, requireLocation ) {
 
-        if( typeof(requireLocation) === "undefined" ) {
-            requireLocation = new Date().getTime() - surveyResponse.getSubmitDate().getTime() < 120000;
+        if( typeof(requireLocation) === "undefined" || new Date().getTime() - surveyResponse.getSubmitDate().getTime() > 120000) {
+            requireLocation = false;
         }
 
         getFinalizedUploadResponse( function( data ) {

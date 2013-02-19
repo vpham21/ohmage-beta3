@@ -45,7 +45,9 @@ var SurveyController = function( surveyModel ) {
                 uploader.upload( onSuccess, onError, ConfigManager.getGpsEnabled() );
 
             } else {
-                afterSurveyComplete();
+                MessageDialogController.showMessage("Your survey response has been saved. You may upload it any time from the survey upload queue.", function () {
+                    afterSurveyComplete();
+                });
             }
         }
 
