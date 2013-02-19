@@ -26,6 +26,7 @@ var Campaigns = new (function() {
      * @param urn Unique campaign identifier.
      */
     self.uninstallCampaign = function(urn){
+        console.log("Campaigns: Uninsalling campaign with urn [" + urn + "].");
         installedCampaigns.release(urn);
         ReminderModel.deleteCampaignReminders(urn);
     };
@@ -103,6 +104,8 @@ var Campaigns = new (function() {
             if(!campaign.isRunning()){
                 continue;
             }
+
+            console.log(installedCampaigns);
 
             //If the campaign has been installed, place it in the installed
             //campaigns menu.

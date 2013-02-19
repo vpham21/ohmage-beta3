@@ -200,6 +200,8 @@ function UserAuthentication() {
                 session(USERNAME_COOKIE_NAME, null);
                 session(AUTH_ERROR_STATE_COOKIE_NAME, null);
 
+                $.cookie("auth_token", null, {path:"/"});
+                
                 //ToDo: Decouple these two lines from user authentication. Maybe
                 //in the form of event subscribers.
                 ReminderModel.cancelAll();

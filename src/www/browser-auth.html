@@ -24,7 +24,7 @@
             $("#loginform").submit(function () {
                 var username = $("#username").val(),
                     password = $("#password").val();
-                    
+
                 if (username.length === 0) {
                     alert("Please enter your username.");
                     $("#username").focus();
@@ -35,8 +35,10 @@
 
                 } else {
                     auth.authenticateByToken(username, password, function (success) {
+                        var expiration = new Date((new Date()).getTime() + 30 * 60 * 1000);
+                        
                         if (success) {
-                            $.cookie("auth_token", auth.getAuthToken());
+                            $.cookie("auth_token", auth.getAuthToken(), {path:"/", expires: expiration});
                             PageNavigation.openDashboard();
                         } else {
                             alert("Wrong username or password! Please try agian.");

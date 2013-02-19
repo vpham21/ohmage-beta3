@@ -1,5 +1,7 @@
 Init.invokeOnReady(function() {
 
+    console.log("init.InsalledCampaigns: Initializing.");
+    
     var onSuccess = function(){
         $('#campaigns').append(Campaigns.render(true));
     };
