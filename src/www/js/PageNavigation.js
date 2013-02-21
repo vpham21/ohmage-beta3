@@ -31,6 +31,15 @@ var PageNavigation = (function(){
         pageParameters.erase();
     };
 
+    var popupWindow = function(url, title, w, h) {
+        var wLeft = window.screenLeft ? window.screenLeft : window.screenX;
+        var wTop = window.screenTop ? window.screenTop : window.screenY;
+
+        var left = wLeft + (window.innerWidth / 2) - (w / 2);
+        var top = wTop + (window.innerHeight / 2) - (h / 2);
+        return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, scrollbars=yes, menubar=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+    };
+
     /**
      * Sets a page parameter for the current page transition. If both value and
      * defaultValue parameters are not defined not the parameter will not be
@@ -149,9 +158,17 @@ var PageNavigation = (function(){
      * @param surveyID The unique identifier of the survey to display.
      */
     self.openSurveyView = function(campaignURN, surveyID){
-        self.setPageParameter("campaign-urn", campaignURN);
-        self.setPageParameter("survey-id", surveyID);
-        self.redirect("survey.html");
+        if(auth.checkpoint()) {
+            if (DeviceDetection.isNativeApplication()) {
+                self.setPageParameter("campaign-urn", campaignURN);
+                self.setPageParameter("survey-id", surveyID);
+                self.redirect("survey.html");
+            } else {
+                var loc = window.location.pathname;
+                var dir = loc.substring(0, loc.lastIndexOf('/'));
+                popupWindow(dir + "/survey.html?campaign-urn=" + campaignURN + "&survey-id=" + surveyID, "Prompt Display", 300, 500);
+            }
+        }
     };
 
     self.openPendingSurveysView = function(){
