@@ -218,6 +218,10 @@ function UserAuthentication() {
         if(!this.isUserAuthenticated() || this.isInAuthErrorState() ){
             console.log("User failed checkpoint - redirecting to the authentication page.");
             PageNavigation.openAuthenticationPage();
+            return false;
+        } else {
+            console.log("User passed checkpoint.");
+            return true;
         }
     };
 

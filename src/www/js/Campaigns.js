@@ -105,8 +105,6 @@ var Campaigns = new (function() {
                 continue;
             }
 
-            console.log(installedCampaigns);
-
             //If the campaign has been installed, place it in the installed
             //campaigns menu.
             if(installedCampaigns.isSet(urn)){

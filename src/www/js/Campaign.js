@@ -24,24 +24,8 @@ var Campaign = function( urn ) {
 
     that.renderSurveyList = function(surveyMenu){
         var openSurveyViewCallback = function(surveyID){
-            return function(){
-                if (DeviceDetection.isNativeApplication()) {
-                    PageNavigation.openSurveyView(urn, surveyID);
-                } else {
-                    function popupWindow(url, title, w, h) {
-                        var wLeft = window.screenLeft ? window.screenLeft : window.screenX;
-                        var wTop = window.screenTop ? window.screenTop : window.screenY;
-
-                        var left = wLeft + (window.innerWidth / 2) - (w / 2);
-                        var top = wTop + (window.innerHeight / 2) - (h / 2);
-                        return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
-                    }
-
-                    var loc = window.location.pathname;
-                    var dir = loc.substring(0, loc.lastIndexOf('/'));
-                    popupWindow(dir + "/survey.html?campaign-urn=" + urn + "&survey-id=" + surveyID, "Prompt Display", 300, 500);
-                }
-
+            return function () {
+                PageNavigation.openSurveyView(urn, surveyID);
             };
         };
         var surveys = that.getSurveys();
