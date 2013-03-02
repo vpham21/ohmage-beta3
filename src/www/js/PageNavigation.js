@@ -192,6 +192,16 @@ var PageNavigation = (function(){
         self.redirect( "survey-response-view.html" );
     };
 
+    var linkRedirect = function (url) {
+        $(document).ready(function () {
+            var a = document.createElement('a');
+            a.setAttribute("href", url);
+            a.style.display = "none";
+            document.body.appendChild(a);
+            a.click();
+        });
+    };
+
     /**
      * Redirects the user to tha authentication page.
      */
@@ -199,7 +209,7 @@ var PageNavigation = (function(){
         if (DeviceDetection.isNativeApplication()) {
             self.redirect( "auth.html" );
         } else {
-            self.redirect( "browser-auth.html" );
+            linkRedirect( "https://test.ohmage.org/web/#login" );
         }
     };
 
