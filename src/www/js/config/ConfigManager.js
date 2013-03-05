@@ -15,7 +15,7 @@ var ConfigManager = (function() {
     var SERVERS = [
 
         //Test server.
-        //"https://lausd.mobilizingcs.org",
+        "https://lausd.mobilizingcs.org",
 
         "https://test.ohmage.org",
 
