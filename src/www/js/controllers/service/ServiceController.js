@@ -35,7 +35,9 @@ var ServiceController = ( function( ) {
                     if( redirectOnAuthError ) {
                         for( var i = 0; i < response.errors.length; i++ ) {
                             if(response.errors[i].code == '0200'){
-                                auth.setAuthErrorState( true );
+                                if (DeviceDetection.isNativeApplication()) {
+                                    auth.setAuthErrorState( true );    
+                                }
                                 PageNavigation.openAuthenticationPage();
                                 break;
                             }
