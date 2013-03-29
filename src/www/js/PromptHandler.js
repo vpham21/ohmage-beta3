@@ -464,14 +464,20 @@ PromptHandler.Handlers = function(){
         //or after the user uploads/selects a picture via the file input method.
         var recordImage = function(imageData, encode){
 
-            //Display the capture image.
-            image.src =  ((encode) ? "data:image/jpeg;base64," : "") + imageData;
-            imgForm.style.display = 'block';
+            try {
+                
+                //Save the image and store the returned UUID within the image's
+                //alt attribute.
+                image.alt = SurveyResponseModel.saveImage(imageData);    
+                
+                //Display the capture image.
+                image.src =  ((encode) ? "data:image/jpeg;base64," : "") + imageData;
+                imgForm.style.display = 'block';
 
-            //Save the image and store the returned UUID within the image's
-            //alt attribute.
-            image.alt = SurveyResponseModel.saveImage(imageData);
-
+            } catch (err) {
+                MessageDialogController.showMessage("Unfortunately, you have exceeded the storage capacity. Please upload a smaller image.");
+            }
+            
         };
 
         //Detect PhoneGap camera support. If possible, allow the user to take a
