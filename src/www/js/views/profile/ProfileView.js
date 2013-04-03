@@ -10,9 +10,12 @@ var ProfileView = function( ) {
     
     that.render = function() {
         var menu = mwf.decorator.Menu( auth.getUsername() );
-        
-        var changePasswordMenuItem = menu.addMenuLinkItem('Change Password', null, 'Easily change your password.');
-        TouchEnabledItemModel.bindTouchEvent(changePasswordMenuItem, changePasswordMenuItem, that.changePasswordHandler, "menu-highlight");
+
+        if(DeviceDetection.isNativeApplication()) {
+            var changePasswordMenuItem = menu.addMenuLinkItem('Change Password', null, 'Easily change your password.');
+            TouchEnabledItemModel.bindTouchEvent(changePasswordMenuItem, changePasswordMenuItem, that.changePasswordHandler, "menu-highlight");
+        }
+
         var clearCustomChoicesMenuItem = menu.addMenuLinkItem('Clear Customized Choices', null, "Erase any saved custom choices.");
         TouchEnabledItemModel.bindTouchEvent(clearCustomChoicesMenuItem, clearCustomChoicesMenuItem, that.clearCustomizedChoicesHandler, "menu-highlight");
         
