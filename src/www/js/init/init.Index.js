@@ -12,7 +12,13 @@ Init.invokeOnReady( function() {
     dashboard.addMenuImageItem( queueLabel, 'upload-queue.html',           'img/dash/dash_upqueue.png');
     dashboard.addMenuImageItem('Profile',   'profile.html',                'img/dash/dash_profile.png');
     dashboard.addMenuImageItem('Help',      'help-menu.html',              'img/dash/dash_help.png');
-    dashboard.addMenuImageItem('Reminders', 'reminders.html',              'img/dash/dash_reminders.png');
+
+    if(DeviceDetection.isNativeApplication()) {
+        dashboard.addMenuImageItem('Reminders', 'reminders.html',              'img/dash/dash_reminders.png');
+    } else {
+        dashboard.addMenuImageItem('ohmage Web', ConfigManager.getServerEndpoint() + "/web", 'img/dash/dash_ohmage.png');
+    }
+
     
     if(DeviceDetection.isDeviceAndroid()){
         var androidBackButtonCallback = function(){
