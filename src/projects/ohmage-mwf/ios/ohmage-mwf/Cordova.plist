@@ -28,6 +28,7 @@
 	<string>cloud</string>
 	<key>ExternalHosts</key>
 	<array>
+		<string>*</string>
 		<string>*.mobilizelabs.org</string>
 		<string>*.ohmage.org</string>
 	</array>

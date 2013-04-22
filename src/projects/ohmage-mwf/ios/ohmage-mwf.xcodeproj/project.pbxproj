@@ -43,6 +43,7 @@
 		30E1352710E2C1420031B30D /* Cordova.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30E1352610E2C1420031B30D /* Cordova.plist */; };
 		30E5649213A7FCAF007403D8 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30E5649113A7FCAF007403D8 /* CoreMedia.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		8413DD95165105FF00396715 /* horn.caf in Resources */ = {isa = PBXBuildFile; fileRef = 8413DD94165105FF00396715 /* horn.caf */; };
+		84356246165DC738003FE88C /* icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84356245165DC738003FE88C /* icon-72@2x.png */; };
 		8499CE28165107C70003A922 /* LocalNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 8499CE27165107C70003A922 /* LocalNotification.m */; };
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
 /* End PBXBuildFile section */
@@ -105,6 +106,7 @@
 		30E5649113A7FCAF007403D8 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		32CA4F630368D1EE00C91783 /* ohmage-mwf-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ohmage-mwf-Prefix.pch"; sourceTree = "<group>"; };
 		8413DD94165105FF00396715 /* horn.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = horn.caf; sourceTree = "<group>"; };
+		84356245165DC738003FE88C /* icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-72@2x.png"; sourceTree = "<group>"; };
 		8499CE26165107C70003A922 /* LocalNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalNotification.h; sourceTree = "<group>"; };
 		8499CE27165107C70003A922 /* LocalNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalNotification.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* ohmage-mwf-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "ohmage-mwf-Info.plist"; path = "../ohmage-mwf-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
@@ -259,6 +261,7 @@
 		308D052D1370CCF300D202BF /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				84356245165DC738003FE88C /* icon-72@2x.png */,
 				308D052E1370CCF300D202BF /* icon-72.png */,
 				308D052F1370CCF300D202BF /* icon.png */,
 				308D05301370CCF300D202BF /* icon@2x.png */,
@@ -389,6 +392,7 @@
 				3088BBC2154F3926009F9C59 /* Default~iphone.png in Resources */,
 				D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */,
 				8413DD95165105FF00396715 /* horn.caf in Resources */,
+				84356246165DC738003FE88C /* icon-72@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -475,6 +479,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_WARN_OBJCPP_ARC_ABI = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -485,6 +490,7 @@
 				INFOPLIST_FILE = "ohmage-mwf/ohmage-mwf-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "ohmage-mwf";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -511,8 +517,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Zorayr Khalapyan (2FVX3EVC2A)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zorayr Khalapyan (2FVX3EVC2A)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Zorayr Khalapyan";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zorayr Khalapyan";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -537,8 +543,8 @@
 					"-all_load",
 					"-Obj-C",
 				);
-				PROVISIONING_PROFILE = "22CBDF55-6443-4C07-A997-65E1E6D1471D";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "22CBDF55-6443-4C07-A997-65E1E6D1471D";
+				PROVISIONING_PROFILE = "61F431DB-4A4D-446C-AF7C-DB5B00E6B9B3";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "61F431DB-4A4D-446C-AF7C-DB5B00E6B9B3";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -549,8 +555,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Zorayr Khalapyan (2FVX3EVC2A)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zorayr Khalapyan (2FVX3EVC2A)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Zorayr Khalapyan";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zorayr Khalapyan";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -575,8 +581,8 @@
 					"-all_load",
 					"-Obj-C",
 				);
-				PROVISIONING_PROFILE = "22CBDF55-6443-4C07-A997-65E1E6D1471D";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "22CBDF55-6443-4C07-A997-65E1E6D1471D";
+				PROVISIONING_PROFILE = "61F431DB-4A4D-446C-AF7C-DB5B00E6B9B3";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "61F431DB-4A4D-446C-AF7C-DB5B00E6B9B3";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				USER_HEADER_SEARCH_PATHS = "";

@@ -1,5 +1,5 @@
 var UploadQueueController = function(){
-    var self = {};
+    var that = {};
     
     var pendingResponses = SurveyResponseModel.getPendingResponses();
     
@@ -7,7 +7,7 @@ var UploadQueueController = function(){
         PageNavigation.openUploadQueueView();
     };
     
-    self.deleteAllCallback = function(){
+    that.deleteAllCallback = function(){
         var message = "Are you sure you would like to delete all your responses?";
         var buttonLabels = 'Yes,No';
         var confirmationCallback = function(yes){
@@ -18,10 +18,10 @@ var UploadQueueController = function(){
                 refreshView();
             }
         };
-        showConfirm(message, confirmationCallback, buttonLabels);
+        MessageDialogController.showConfirm(message, confirmationCallback, buttonLabels);
     };
     
-    self.uploadAllCallback = function(){
+    that.uploadAllCallback = function(){
         var uploadAllDoneCallback = function(successfulUploadCount){
             var message;
             if(successfulUploadCount === 0){
@@ -29,21 +29,21 @@ var UploadQueueController = function(){
             }else{
                 message = "Successfully uploaded " + successfulUploadCount + " survey(s).";
             }  
-            showMessage(message, function(){
+            MessageDialogController.showMessage(message, function(){
                 refreshView();
             });
         };
-        SurveyResponseUploader.uploadAll(pendingResponses, uploadAllDoneCallback);
+        SurveyResponseUploadController.uploadAll( pendingResponses, uploadAllDoneCallback, ConfigManager.getGpsEnabled() );
     };
     
-    self.getPendingResponses = function(){
+    that.getPendingResponses = function() {
         return pendingResponses;
     };
     
-    self.render = function(){
-        var uploadQueueView = new UploadQueueView(self);
+    that.render = function() {
+        var uploadQueueView = new UploadQueueView(that);
         return uploadQueueView.render();
     };
     
-    return self;
+    return that;
 };

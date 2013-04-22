@@ -84,15 +84,16 @@ var Prompt = function(promptData, survey, campaign){
                 break;
 
             case 'single_choice':
-                summary = self.getProperty(responseValue[0]).label;
+                summary = self.getProperty(responseValue).label;
 
                 break;
 
             case 'multi_choice':
-                var keys = new String(responseValue).split(',');
+                var keys = responseValue,
+                    i;
                 var labels = [];
-                for(var key in keys){
-                    labels.push(self.getProperty(key).label);
+                for (i = 0; i < keys.length; i += 1) {
+                    labels.push(self.getProperty(keys[i]).label);
                 }
                 summary = labels.join(", ");
 

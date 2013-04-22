@@ -1,4 +1,4 @@
-invokeOnReady(function(){
+Init.invokeOnReady( function() {
     
     mwf.decorator.TopButton("Logout" , null, auth.logout, true);
     

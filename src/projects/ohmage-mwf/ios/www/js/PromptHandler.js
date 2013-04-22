@@ -116,7 +116,7 @@ PromptHandler.Handlers = function(){
             var newChoice = document.getElementById('new-choice').value;
 
             if(newChoice.length == 0){
-                showMessage('Please specify an option to add.');
+                MessageDialogController.showMessage('Please specify an option to add.');
                 return false;
             }
 
@@ -125,7 +125,7 @@ PromptHandler.Handlers = function(){
 
             //If the property is invalid, alert the user and cancel the add.
             if(!prop){
-                showMessage('Option with that label already exists.');
+                MessageDialogController.showMessage('Option with that label already exists.');
                 return false;
             }
 
@@ -150,6 +150,13 @@ PromptHandler.Handlers = function(){
 
         form.addInputButton('Create New Choice', addProperty);
         form.addInputButton('Cancel', hideCustomChoiceMenu);
+
+        //Cancel's form's default action to prevent the page from refreshing.
+        $(form).submit(function(e){
+           addProperty();
+           e.preventDefault();
+           return false;
+        });
 
         //This continer will hold both prexisting options and the new option
         //form.
@@ -254,7 +261,7 @@ PromptHandler.Handlers = function(){
             var key = theEvent.keyCode || theEvent.which;
             key = String.fromCharCode( key );
 
-            var result = evt.srcElement.value + key;
+            var result = (evt.target || evt.srcElement).value + key;
             var cancelKey = function(){
                 theEvent.returnValue = false;
                 if(theEvent.preventDefault) {theEvent.preventDefault();}
@@ -326,11 +333,11 @@ PromptHandler.Handlers = function(){
             //Get the integerer representation of the current value.
             var currentValue = parseInt(count.innerHTML, 10);
 
-            plus.className = (currentValue < maxValue)? 'math-sign' :
-                                                        'math-sign-disabled';
+            plus.className = (currentValue < maxValue)? 'math-sign plus' :
+                                                        'math-sign-disabled plus';
 
-            minus.className = (currentValue > minValue)? 'math-sign' :
-                                                         'math-sign-disabled';
+            minus.className = (currentValue > minValue)? 'math-sign minus' :
+                                                         'math-sign-disabled minus';
         };
 
         updateSignStyle();
@@ -477,7 +484,7 @@ PromptHandler.Handlers = function(){
                 }
 
                 function onFail(message) {
-                    showMessage('Failed because: ' + message);
+                    MessageDialogController.showMessage('Failed because: ' + message);
                 }
 
                 navigator.camera.getPicture(onSuccess, onFail, {quality: 25,
@@ -504,7 +511,7 @@ PromptHandler.Handlers = function(){
                         recordImage(imageData, false);
                     });
                 }else{
-                    showMessage("Please select an image.");
+                    MessageDialogController.showMessage("Please select an image.");
                 }
 
             }

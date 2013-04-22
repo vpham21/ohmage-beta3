@@ -1,4 +1,4 @@
-invokeOnReady(function(){
+Init.invokeOnReady(function() {
     var surveyKey = PageNavigation.getPageParameter('survey-key');
     if(surveyKey === null){ PageNavigation.goBack(); }
     var surveyResponse = SurveyResponseModel.restoreSurveyResponse(surveyKey);

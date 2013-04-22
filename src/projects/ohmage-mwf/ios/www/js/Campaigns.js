@@ -1,23 +1,23 @@
 var Campaigns = new (function() {
 
-    var self = this;
-    
+    var self = {};
+
     var allCampaigns       = new LocalMap("all-campaigns");
-    
+
     var installedCampaigns = new LocalMap("installed-campaigns");
 
     /**
-     * Returns true campaign metadata has not been downloaded. This doesn't 
+     * Returns true campaign metadata has not been downloaded. This doesn't
      * have anything to do installed campaigns.
      */
-    this.isEmpty = function(){
+    self.isEmpty = function(){
         return allCampaigns.length() == 0;
     };
-    
+
     /**
      * Returns the number of currently installed campaigns.
      */
-    this.getInstalledCampaignsCount = function(){
+    self.getInstalledCampaignsCount = function(){
         return self.getInstalledCampaigns().length;
     };
 
@@ -25,7 +25,8 @@ var Campaigns = new (function() {
      * Deletes the specified campaign from the local storage.
      * @param urn Unique campaign identifier.
      */
-    this.uninstallCampaign = function(urn){
+    self.uninstallCampaign = function(urn){
+        console.log("Campaigns: Uninsalling campaign with urn [" + urn + "].");
         installedCampaigns.release(urn);
         ReminderModel.deleteCampaignReminders(urn);
     };
@@ -33,7 +34,7 @@ var Campaigns = new (function() {
     /**
      * Returns a list of campaign objects that the user has currently installed.
      */
-    this.getInstalledCampaigns = function(){
+    self.getInstalledCampaigns = function(){
         var campaigns = [];
         for(var urn in installedCampaigns.getMap()){
             campaigns.push(new Campaign(urn));
@@ -41,7 +42,7 @@ var Campaigns = new (function() {
         return campaigns;
     };
 
-    this.render = function(installed){
+    self.render = function(installed){
 
         //By default, only the installed campaigns will be displayed.
         if(typeof(installed) == 'undefined')
@@ -64,35 +65,47 @@ var Campaigns = new (function() {
                 var onSuccess = function(){
                     PageNavigation.openInstalledCampaignsView();
                 };
-                
+
                 //On error, just display an alert to the user with the error
                 //message.
                 var onError = function(){
-                    showMessage("Unable to install campaign. Please try again later.");
+                    MessageDialogController.showMessage("Unable to install campaign. Please try again later.");
                 };
-                
+
                 Campaign.install(urn, onSuccess, onError);
             }
         };
-        
+
         //Callback for opening an already installed campaign.
         var open = function(urn){
             return function(){
                 PageNavigation.openCampaignView(urn);
             }
         }
-        
-        var campaign, campaignMenuItem;
-        for(var urn in allCampaigns.getMap()){
 
-            var campaign = new Campaign(urn);
-            
+        var campaign, campaignMenuItem;
+        var allCampaignsMap = allCampaigns.getMap();
+        var urnList = [];
+        for (var urn in allCampaignsMap) {
+            urnList.push(urn);
+        }
+        urnList.sort(function(a, b) {
+            var nameA = allCampaignsMap[a].name;
+            var nameB = allCampaignsMap[b].name;
+            return nameA.localeCompare(nameB);
+        });
+        for (var i = 0; i < urnList.length; i++) {
+
+            urn = urnList[i];
+
+            campaign = new Campaign(urn);
+
             //Ignore inactive campaigns.
             if(!campaign.isRunning()){
                 continue;
             }
 
-            //If the campaign has been installed, place it in the installed 
+            //If the campaign has been installed, place it in the installed
             //campaigns menu.
             if(installedCampaigns.isSet(urn)){
                 campaignMenuItem = installedMenu.addMenuLinkItem(allCampaigns.get(urn).name);
@@ -123,10 +136,10 @@ var Campaigns = new (function() {
             container.appendChild(availableMenu);
             container.appendChild(mwf.decorator.SingleClickButton("Refresh Campaigns", function(){
                 var onSuccess = function(){
-                    showMessage("All campaigns have been updated.", PageNavigation.openAvailableCampaignsView);
+                    MessageDialogController.showMessage("All campaigns have been updated.", PageNavigation.openAvailableCampaignsView);
                 };
                 var onError = function(){
-                    showMessage("Unable to download all campaigns. Please try again.");
+                    MessageDialogController.showMessage("Unable to download all campaigns. Please try again.");
                 };
                 Campaigns.download(true, onSuccess, onError);
             }));
@@ -135,7 +148,7 @@ var Campaigns = new (function() {
     };
 
 
-    this.download = function(force, onSuccess, onError){
+    self.download = function(force, onSuccess, onError){
 
         if(typeof(force) == undefined)
             force = false;
@@ -178,21 +191,20 @@ var Campaigns = new (function() {
 
         Spinner.show();
 
-        api(
-             "POST",
-             CAMPAIGN_READ_URL,
-             {
-                 user:          auth.getUsername(),
-                 password:      auth.getHashedPassword(),
-                 client:        'MWoC',
+        var data = {
                  output_format: 'short'
-             },
+        };
+
+        ServiceController.serviceCall(
+             "POST",
+             ConfigManager.getCampaignReadUrl(),
+             data,
              "JSON",
              _onSuccess,
              _onError
         );
     }
 
+    return self;
 })();
-
 

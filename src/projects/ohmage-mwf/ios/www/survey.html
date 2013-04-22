@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <meta name="viewport" content="height=device-height,width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;" />
 
-    <title>ohmage |survey</title>
+    <title>Ohmage | Survey</title>
 
     <style type="text/css">
         @import url("css/mwoc.css");
@@ -47,16 +47,18 @@
 
     <!-- IMPORT OHMAGE API JS LIB -->
     <script type="text/javascript" src="js/pegjs/ConditionalParser.js"></script>
-    <script type="text/javascript" src="js/api.js"></script>
     <script type="text/javascript" src="js/PageNavigation.js"></script>
     <script type="text/javascript" src="js/UserAuthentication.js"></script>
-    <script type="text/javascript" src="js/SurveyResponseUploader.js"></script>
     <script type="text/javascript" src="js/Campaigns.js"></script>
     <script type="text/javascript" src="js/Campaign.js"></script>
-    <script type="text/javascript" src="js/Survey.js"></script>
     <script type="text/javascript" src="js/Prompt.js"></script>
     <script type="text/javascript" src="js/PromptHandler.js"></script>
-    <script type="text/javascript" src="js/navigation.js"></script>
+
+    <script type="text/javascript" src="js/controllers/prompt/PromptController.js"></script>
+    <script type="text/javascript" src="js/controllers/surveys/SurveyResponseUploadController.js"></script>
+    <script type="text/javascript" src="js/controllers/surveys/SurveyController.js"></script>
+    <script type="text/javascript" src="js/models/surveys/SurveyModel.js"></script>
+    <script type="text/javascript" src="js/views/surveys/SurveyView.js"></script>
 
     <script type="text/javascript" src="js/models/surveys/SurveyResponseModel.js"></script>
     <script type="text/javascript" src="js/models/CustomPropertiesVault.js"></script>
@@ -66,7 +68,11 @@
     <script type="text/javascript" src="js/views/reminders/ReminderListView.js"></script>
     <script type="text/javascript" src="js/views/reminders/ReminderView.js"></script>
 
+    <script type="text/javascript" src="js/config/ConfigManager.js"></script>
+    <script type="text/javascript" src="js/controllers/messaging/MessageDialogController.js"></script>
+    <script type="text/javascript" src="js/controllers/service/ServiceController.js"></script>
 
+    <script type="text/javascript" src="js/init/init.js"></script>
     <script type="text/javascript" src="js/init/init.Survey.js"></script>
 
 </head>
@@ -75,7 +81,7 @@
     <h1 id="header">
         <a id="header-link">
             <img src="img/home-icon.gif" alt="ohmage"/>
-            <span>ohmage</span>
+            <span>Ohmage MWF</span>
          </a>
 
     </h1>
@@ -83,7 +89,7 @@
     <div id="survey"></div>
 
     <div id="footer">
-        <p>Copyright &copy; 2012 MobilizeLabs<br />
+        <p>Copyright &copy; 2013 MobilizeLabs<br />
     </div>
 
 </body>

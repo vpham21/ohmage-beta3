@@ -1,4 +1,4 @@
-invokeOnReady(function(){
+Init.invokeOnReady(function() {
 
     (function(){
 

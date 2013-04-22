@@ -18,15 +18,15 @@ var SurveyResponseController = function(surveyResponseModel){
      */
     self.uploadSurveyResponseCallback = function() {
         var onSuccess = function(response){
-            showMessage("Successfully uploaded your survey response.", function(){
+            MessageDialogController.showMessage("Successfully uploaded your survey response.", function(){
                 SurveyResponseModel.deleteSurveyResponse(surveyResponseModel);
                 PageNavigation.openUploadQueueView();
             });
         };
         var onError = function(error){
-            showMessage("Unable to upload survey response at this time. Please try again later.");
+            MessageDialogController.showMessage("Unable to upload survey response at this time. Please try again later.");
         };
-        (new SurveyResponseUploader(survey, surveyResponseModel)).upload(onSuccess, onError);
+        (new SurveyResponseUploadController(survey, surveyResponseModel)).upload( onSuccess, onError, ConfigManager.getGpsEnabled() );
     };
 
     /**
@@ -35,7 +35,7 @@ var SurveyResponseController = function(surveyResponseModel){
      */
     self.deleteSurveyResponseCallback = function(){
         var message = "Are you sure you would like to delete your response?";
-        showConfirm(message, function(yes){
+        MessageDialogController.showConfirm(message, function(yes){
             if(yes){
                 SurveyResponseModel.deleteSurveyResponse(surveyResponseModel);
                 PageNavigation.openUploadQueueView();
