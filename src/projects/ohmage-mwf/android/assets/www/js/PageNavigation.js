@@ -185,10 +185,16 @@ var PageNavigation = (function(){
         self.redirect("index.html");
     };
     
-    self.openChangePasswordPage = function(){
+    self.openChangePasswordPage = function(username, password){
+        self.setPageParameter("username", username);
+        self.setPageParameter("password", password);
         self.redirect("change-password.html");
     };
     
+    self.openProfile = function() {
+        self.redirect("profile.html")
+    }
+
     self.openPrivacyPage = function(){
         self.redirect("privacy.html");
     };

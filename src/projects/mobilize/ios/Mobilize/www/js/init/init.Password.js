@@ -1,5 +1,16 @@
 Init.invokeOnReady(function() {
 
+    var username = PageNavigation.getPageParameter('username');
+    var password = PageNavigation.getPageParameter('password');
+    PageNavigation.unsetPageParameter('username');
+    PageNavigation.unsetPageParameter('password');
+    $('#current-password').val(password);
+
+    if(auth.getUsername()) {
+        $("#change-password").append(mwf.decorator.SingleClickButton("Profile", PageNavigation.openProfile));
+        mwf.decorator.TopButton("Dashboard", null, PageNavigation.openDashboard , true);
+    }
+
     var isInputValid = function(){
 
         if($('#current-password').val().length == 0){
@@ -38,7 +49,7 @@ Init.invokeOnReady(function() {
 
     };
 
-    $("#change-password").click(function(){
+    $("#change-password-submit").click(function(){
 
         if(!isInputValid())
             return;
@@ -46,11 +57,11 @@ Init.invokeOnReady(function() {
         var currentPassword = $("#current-password").val();
         var newPassword     = $("#new-password").val();
 
-        var onSuccess = function() {
+        var onSuccess = function(response) {
             Spinner.hide(function(){
-                auth.setAuthErrorState(true);
-                MessageDialogController.showMessage('Your password has been successfully changed. Please login to continue.');
-                PageNavigation.openAuthenticationPage();
+                auth.saveHashedPasswordResponse(response, username);
+                MessageDialogController.showMessage('Your password has been successfully changed.');
+                PageNavigation.openDashboard();
             });
 
 
@@ -77,9 +88,8 @@ Init.invokeOnReady(function() {
              "POST",
              ConfigManager.getPasswordChangeUrl(),
              {
-                 auth_token:   auth.getHashedPassword(),
                  client:       ConfigManager.getClientName(),
-                 user:         auth.getUsername(),
+                 user:         username || auth.getUsername(),
                  password:     currentPassword,
                  new_password: newPassword
 

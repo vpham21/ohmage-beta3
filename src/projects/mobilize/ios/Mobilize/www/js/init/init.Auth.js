@@ -61,15 +61,20 @@ Init.invokeOnReady( function() {
         Spinner.show();
 
         //On successful authentication, redirects the user to the dashboard.
-        auth.authenticateByHash(username, password, function(success, response){
+        auth.authenticateByHash(username, password, function(success, response, code){
 
            Spinner.hide(function(){
                if(success){
                    PageNavigation.openDashboard();
                }else if(response){
-                   MessageDialogController.showMessage( response );
+                   if("0202" === code) {
+                       MessageDialogController.showMessage("You need to change your password");
+                       PageNavigation.openChangePasswordPage(username, password);
+                   } else {
+                       MessageDialogController.showMessage(response);
+                   }
                }else{
-                   MessageDialogController.showMessage( "Unable to login. Please try again." );
+                   MessageDialogController.showMessage("Unable to login. Please try again.");
                }
            });
 

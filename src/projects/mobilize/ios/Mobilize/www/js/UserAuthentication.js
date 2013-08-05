@@ -297,16 +297,13 @@ function UserAuthentication() {
         var onSuccess = function(response){
 
             //Save the hashed password in a cookie.
-            session(HASH_AUTH_COOKIE_NAME, response.hashed_password);
-            session(USERNAME_COOKIE_NAME, username);
-
-            self.setAuthErrorState(false);
+            auth.saveHashedPasswordResponse(response, username);
 
             callback(true);
         };
 
         var onError = function(response){
-            callback(false, (response) ? response.errors[0].text : null);
+            callback(false, (response) ? response.errors[0].text : null, response.errors[0].code);
         };
 
 
@@ -346,11 +343,7 @@ function UserAuthentication() {
         //invoke the callback.
         var onSuccess = function(response){
             //Save the authentication token in a cookie and invoke the callback.
-            session(TOKEN_AUTH_COOKIE_NAME, response.token);
-            session(USERNAME_COOKIE_NAME, username);
-
-            self.setAuthErrorState(false);
-
+            auth.saveTokenPasswordResponse(response, username);
             callback(true);
         };
 
@@ -373,6 +366,18 @@ function UserAuthentication() {
          );
 
     };
+
+    this.saveHashedPasswordResponse = function(response, username) {
+        session(TOKEN_AUTH_COOKIE_NAME, response.hashed_password);
+        session(USERNAME_COOKIE_NAME, username);
+        self.setAuthErrorState(false);
+    }
+
+    this.saveTokenPasswordResponse = function(response, username) {
+        session(TOKEN_AUTH_COOKIE_NAME, response.token);
+        session(USERNAME_COOKIE_NAME, username);
+        self.setAuthErrorState(false);
+    }
 }
 
 var auth = new UserAuthentication ();

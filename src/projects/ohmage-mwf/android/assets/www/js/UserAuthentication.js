@@ -307,7 +307,7 @@ function UserAuthentication() {
         };
 
         var onError = function(response){
-            callback(false, (response) ? response.errors[0].text : null);
+            callback(false, (response) ? response.errors[0].text : null, response.errors[0].code);
         };
 
 

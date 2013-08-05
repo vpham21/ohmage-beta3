@@ -190,10 +190,12 @@ var PageNavigation = (function(){
      * Redirects users to the main dashboard.
      */
     self.openDashboard = function() {
-        self.redirect( "index.html" );
+        self.redirect("index.html");
     };
 
-    self.openChangePasswordPage = function() {
+    self.openChangePasswordPage = function(username, password){
+        self.setPageParameter("username", username);
+        self.setPageParameter("password", password);
         self.redirect("change-password.html");
     };
 
