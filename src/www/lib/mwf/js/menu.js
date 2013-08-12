@@ -391,7 +391,12 @@ mwf.decorator.Menu = function(title)
         var linkItem = document.createElement('a');
 
         linkItem.innerHTML = (typeof(text) != "undefined") ? text : "";
-        linkItem.href = (typeof(url) != "undefined")? url : null;
+        linkItem.href = (typeof (url) != "undefined") ? url : null;
+
+        // Fixes issue 255.
+        if ($.browser.mozilla && url === undefined) {
+            linkItem.href = "";
+        }
 
         //If details are defined, then add the details text within a span tag.
         if( typeof(details) !== "undefined" && details != null ) {
