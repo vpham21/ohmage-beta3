@@ -368,7 +368,7 @@ function UserAuthentication() {
     };
 
     this.saveHashedPasswordResponse = function(response, username) {
-        session(TOKEN_AUTH_COOKIE_NAME, response.hashed_password);
+        session(HASH_AUTH_COOKIE_NAME, response.hashed_password);
         session(USERNAME_COOKIE_NAME, username);
         self.setAuthErrorState(false);
     }
