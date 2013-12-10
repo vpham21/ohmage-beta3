@@ -63,7 +63,7 @@ var ConfigManager = (function() {
         /**
          * Client property sent with AJAX requests.
          */
-        CLIENT_NAME : "ohmage-mwf"
+        CLIENT_NAME : "mobilize-mwf"
         
     };
     
