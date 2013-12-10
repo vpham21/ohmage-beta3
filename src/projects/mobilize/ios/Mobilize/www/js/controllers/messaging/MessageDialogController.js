@@ -17,7 +17,7 @@ var MessageDialogController = (function () {
     
     that.showMessage = function( message, callback, title, buttonName ) {
 
-        title = title || "ohmage";
+        title = title || "Mobilize MWF";
         buttonName = buttonName || 'OK';
 
         if( navigator.notification && navigator.notification.alert ) {
@@ -43,7 +43,7 @@ var MessageDialogController = (function () {
         buttonLabels = buttonLabels || 'OK,Cancel';
         var buttonList = buttonLabels.split(',');
 
-        title = title || "ohmage";
+        title = title || "Mobilize MWF";
 
         //Use Cordova version of the confirm box if possible.
         if(navigator.notification && navigator.notification.confirm){
