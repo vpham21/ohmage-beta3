@@ -247,6 +247,12 @@ mwf.decorator.TopButton = function(label, url, callback, place){
 
     var topButton = mwf.decorator.Button(label, url, callback);
     topButton.id = "button-top";
+    
+    // On iOS greater than 7.0, add a bit of space to the top so that the content
+    // doesn't touch the status bar (battery, time, etc.)
+    if (parseFloat(window.device.version) === 7.0) {
+        topButton.style.top = "20px";
+    }
 
     //This part cannot really be done by attributes, as it's a negation.
     topButton.setBasic = function(isBasic){
