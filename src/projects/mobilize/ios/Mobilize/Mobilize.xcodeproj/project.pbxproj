@@ -322,6 +322,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0430;
+				TargetAttributes = {
+					1D6058900D05DD3D006BFB54 = {
+						DevelopmentTeam = LK957CJAWU;
+					};
+				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Mobilize" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -472,6 +477,7 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_WARN_OBJCPP_ARC_ABI = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -482,7 +488,7 @@
 				INFOPLIST_FILE = "Mobilize/Mobilize-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = Mobilize;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "3E7CA7CD-165E-4C5D-A234-A79724C83956";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -493,7 +499,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_WARN_OBJCPP_ARC_ABI = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Zorayr Khalapyan";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Mobilize/Mobilize-Prefix.pch";
@@ -502,7 +509,7 @@
 				INFOPLIST_FILE = "Mobilize/Mobilize-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = Mobilize;
-				PROVISIONING_PROFILE = "0348DA1D-E0E6-49B3-87DE-93FD2B72BFA8";
+				PROVISIONING_PROFILE = "3E7CA7CD-165E-4C5D-A234-A79724C83956";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
