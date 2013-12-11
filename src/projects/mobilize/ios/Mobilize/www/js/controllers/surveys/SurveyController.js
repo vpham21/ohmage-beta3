@@ -14,7 +14,7 @@ var SurveyController = function( surveyModel ) {
         };
 
         //Confirmation box related properties.
-        var title = 'ohmage';
+        var title = 'Mobilize MWF';
         var buttonLabels = 'Yes,No';
         var message = "Would you like to upload your response?";
         var callback = function( yes ) {
