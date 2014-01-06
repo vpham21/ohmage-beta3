@@ -7,7 +7,7 @@ var ConfigManager = (function() {
     /**
      * If set to true, will use test server for deployement.
      */
-    var TEST_MODE = true;
+    var TEST_MODE = false;
     
     /**
      * List of available servers.
