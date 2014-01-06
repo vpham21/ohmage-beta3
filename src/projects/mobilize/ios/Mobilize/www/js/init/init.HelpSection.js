@@ -3,4 +3,5 @@ Init.invokeOnReady( function() {
     var sectionIndex = PageNavigation.getPageParameter('help-section-index');
     if(sectionIndex === null){ PageNavigation.goBack(); }
     $('#help-container').append(helpController.renderHelpSection(sectionIndex));
+    mwf.decorator.TopButton("Dashboard" , null, PageNavigation.openDashboard, true);
 });
