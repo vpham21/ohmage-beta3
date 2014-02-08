@@ -31,6 +31,9 @@ var DeviceDetection = (function() {
         return matchUserAgent( /(iPhone|iPod|iPad)/ );
     };
 
+    self.isDeviceiOS7 = function() {
+        return matchUserAgent(/(iPad|iPod|iPhone);.*CPU.*OS 7_\d/i);
+    }
     /**
      * Returns true if the user is currently on an Android device.
      */
