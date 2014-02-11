@@ -209,7 +209,7 @@ var PageNavigation = (function(){
         if (DeviceDetection.isNativeApplication()) {
             self.redirect( "auth.html" );
         } else {
-            linkRedirect( "https://test.ohmage.org/web/#login" );
+            linkRedirect( "/web/#login" );
         }
     };
 
