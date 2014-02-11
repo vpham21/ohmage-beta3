@@ -3,12 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="9dccb7ac-3bd6-4c1f-ba62-75948b883750" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/ohmage-mwf.xcodeproj/project.xcworkspace/xcuserdata/vinh.xcuserdatad/UserInterfaceState.xcuserstate" afterPath="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/ohmage-mwf.xcodeproj/project.xcworkspace/xcuserdata/vinh.xcuserdatad/UserInterfaceState.xcuserstate" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/util/DeviceDetection.js" afterPath="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/util/DeviceDetection.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/lib/mwf/js/button.js" afterPath="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/lib/mwf/js/button.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/change-server.html" afterPath="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/change-server.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/projects/ohmage-mwf/windows/OhmageMWF/OhmageMWF/www/js/PageNavigation.js" afterPath="$PROJECT_DIR$/src/projects/ohmage-mwf/windows/OhmageMWF/OhmageMWF/www/js/PageNavigation.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.ChangeServer.js" afterPath="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.ChangeServer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.js" afterPath="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/lib/mwf/css/mwf.css" afterPath="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/lib/mwf/css/mwf.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.Profile.js" afterPath="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.Profile.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/ohmage-mwf/ohmage-mwf-Info.plist" afterPath="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/ohmage-mwf/ohmage-mwf-Info.plist" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/profile.html" afterPath="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/profile.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="ohmage.iws" />
@@ -32,57 +31,37 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="help-menu.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/help-menu.html">
+      <file leaf-file-name="ohmage-mwf-Info.plist" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/ohmage-mwf/ohmage-mwf-Info.plist">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="58" column="0" selection-start="2728" selection-end="2728" vertical-scroll-proportion="-6.0416665" vertical-offset="725" max-vertical-offset="1125">
+            <state line="33" column="26" selection-start="929" selection-end="929" vertical-scroll-proportion="0.6469003" vertical-offset="255" max-vertical-offset="1035">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HelpMenuView.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/views/help/HelpMenuView.js">
+      <file leaf-file-name="init.Auth.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.Auth.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="345">
+            <state line="21" column="81" selection-start="629" selection-end="629" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="1425">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/index.html">
+      <file leaf-file-name="button.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/projects/mobilize/ios/Mobilize/www/lib/mwf/js/button.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="67" column="16" selection-start="3238" selection-end="3238" vertical-scroll-proportion="-1.7083334" vertical-offset="964" max-vertical-offset="1335">
+            <state line="246" column="0" selection-start="7704" selection-end="7704" vertical-scroll-proportion="0.0" vertical-offset="3180" max-vertical-offset="3735">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="init.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.js">
+      <file leaf-file-name="auth.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/auth.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="44" selection-start="370" selection-end="370" vertical-scroll-proportion="0.0" vertical-offset="341" max-vertical-offset="735">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="button.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/lib/mwf/js/button.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="269" column="0" selection-start="8410" selection-end="8410" vertical-scroll-proportion="2.2944162" vertical-offset="3131" max-vertical-offset="4260">
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DeviceDetection.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/util/DeviceDetection.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="36" selection-start="852" selection-end="852" vertical-scroll-proportion="0.0" vertical-offset="731" max-vertical-offset="1125">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="33.125" vertical-offset="795" max-vertical-offset="1305">
               <folding />
             </state>
           </provider>
@@ -91,16 +70,52 @@
       <file leaf-file-name="init.Password.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.Password.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="1129" max-vertical-offset="1500">
+            <state line="18" column="53" selection-start="558" selection-end="640" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="1500">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="init.Index.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.Index.js">
+      <file leaf-file-name="PageNavigation.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/projects/mobilize/ios/Mobilize/www/js/PageNavigation.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="4" selection-start="37" selection-end="37" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="540">
+            <state line="141" column="9" selection-start="4211" selection-end="4211" vertical-scroll-proportion="0.0" vertical-offset="844" max-vertical-offset="3645">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="init.ChangeServer.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.ChangeServer.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="1" column="79" selection-start="111" selection-end="111" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="120">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="init.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="12" column="55" selection-start="431" selection-end="431" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="735">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="init.HelpMenu.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.HelpMenu.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="2" column="73" selection-start="106" selection-end="190" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="150">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="init.Survey.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.Survey.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="551" max-vertical-offset="945">
               <folding />
             </state>
           </provider>
@@ -124,19 +139,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/www/index.html" />
-        <option value="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/index.html" />
-        <option value="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/help-menu.html" />
         <option value="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.HelpMenu.js" />
-        <option value="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/ohmage-mwf/ohmage-mwf-Info.plist" />
         <option value="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/controllers/messaging/MessageDialogController.js" />
         <option value="$PROJECT_DIR$/src/www/js/controllers/messaging/MessageDialogController.js" />
         <option value="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/lib/mwf/css/mwf.css" />
         <option value="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/change-server.html" />
-        <option value="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.ChangeServer.js" />
-        <option value="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.js" />
         <option value="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/util/DeviceDetection.js" />
         <option value="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/lib/mwf/js/button.js" />
+        <option value="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/profile.html" />
+        <option value="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.Profile.js" />
+        <option value="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.Auth.js" />
+        <option value="$PROJECT_DIR$/src/projects/mobilize/ios/Mobilize/www/lib/mwf/js/button.js" />
+        <option value="$PROJECT_DIR$/src/projects/mobilize/ios/Mobilize/www/js/PageNavigation.js" />
+        <option value="$PROJECT_DIR$/src/projects/ohmage-mwf/windows/OhmageMWF/OhmageMWF/www/js/PageNavigation.js" />
+        <option value="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.ChangeServer.js" />
+        <option value="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.js" />
+        <option value="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/ohmage-mwf/ohmage-mwf-Info.plist" />
       </list>
     </option>
   </component>
@@ -203,256 +221,6 @@
               <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ohmage" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ohmage" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ohmage" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ohmage" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ohmage" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ohmage" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controllers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="surveys" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ohmage" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ohmage" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controllers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="service" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ohmage" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ohmage" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controllers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="reminders" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ohmage" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ohmage" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controllers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="prompt" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ohmage" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ohmage" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controllers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ohmage" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ohmage" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controllers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="messaging" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ohmage" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ohmage" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="config" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -531,20 +299,34 @@
               <option name="myItemId" value="ios" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+          </PATH>
+          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
+              <option name="myItemId" value="ohmage" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ohmage" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="lib" />
+              <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="mwf" />
+              <option name="myItemId" value="projects" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
+              <option name="myItemId" value="ohmage-mwf" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ios" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ohmage-mwf" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -574,109 +356,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="lib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mwf" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ohmage" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ohmage" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="projects" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="ohmage-mwf" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="ios" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="lib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ohmage" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ohmage" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="projects" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ohmage-mwf" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ios" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ohmage" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ohmage" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="projects" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ohmage-mwf" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ios" />
+              <option name="myItemId" value="Resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -801,117 +485,115 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/lib/mwf/css/mwf.css">
+    <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.Password.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="91" column="17" selection-start="1814" selection-end="1814" vertical-scroll-proportion="0.25139666" vertical-offset="1275" max-vertical-offset="18930">
+        <state line="18" column="53" selection-start="558" selection-end="640" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="1500">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/www/js/controllers/profile/ProfileController.js">
+    <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.Profile.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="840">
+        <state line="2" column="67" selection-start="163" selection-end="163" vertical-scroll-proportion="0.08086254" vertical-offset="0" max-vertical-offset="371">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/www/js/controllers/messaging/MessageDialogController.js">
+    <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/windows/OhmageMWF/OhmageMWF/www/js/UserAuthentication.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="47" selection-start="1710" selection-end="1710" vertical-scroll-proportion="0.0" vertical-offset="578" max-vertical-offset="1230">
+        <state line="154" column="9" selection-start="4991" selection-end="4991" vertical-scroll-proportion="0.33153638" vertical-offset="2187" max-vertical-offset="5835">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/help-menu.html">
+    <entry file="file://$PROJECT_DIR$/src/projects/mobilize/ios/Mobilize/www/lib/mwf/js/button.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="0" selection-start="2728" selection-end="2728" vertical-scroll-proportion="-6.0416665" vertical-offset="725" max-vertical-offset="1125">
+        <state line="246" column="0" selection-start="7704" selection-end="7704" vertical-scroll-proportion="0.0" vertical-offset="3180" max-vertical-offset="3735">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/views/help/HelpSectionView.js">
+    <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/windows/OhmageMWF/OhmageMWF/www/js/PageNavigation.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="420">
+        <state line="186" column="4" selection-start="5661" selection-end="5661" vertical-scroll-proportion="0.47826087" vertical-offset="2625" max-vertical-offset="3435">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/profile.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="64" column="55" selection-start="3150" selection-end="3150" vertical-scroll-proportion="0.8270893" vertical-offset="673" max-vertical-offset="1320">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/auth.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="33.125" vertical-offset="795" max-vertical-offset="1305">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.Auth.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="81" selection-start="629" selection-end="629" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="1425">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/projects/mobilize/ios/Mobilize/www/js/PageNavigation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="141" column="9" selection-start="4211" selection-end="4211" vertical-scroll-proportion="0.0" vertical-offset="844" max-vertical-offset="3645">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/config/ConfigManager.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-4.134771" vertical-offset="1534" max-vertical-offset="2010">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-4.41779" vertical-offset="1639" max-vertical-offset="2010">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.Password.js">
+    <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/models/CustomPropertiesVault.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1500">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.7277628" vertical-offset="270" max-vertical-offset="795">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.ChangeServer.js">
+    <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/lib/mwf/css/mwf.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="3" selection-start="206" selection-end="206" vertical-scroll-proportion="0.1212938" vertical-offset="0" max-vertical-offset="371">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-3.1843576" vertical-offset="1140" max-vertical-offset="18930">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.HelpMenu.js">
+    <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.Survey.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="3" selection-start="194" selection-end="194" vertical-scroll-proportion="0.15228426" vertical-offset="0" max-vertical-offset="394">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/views/help/HelpMenuView.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="371">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="67" column="16" selection-start="3238" selection-end="3238" vertical-scroll-proportion="-1.7083334" vertical-offset="964" max-vertical-offset="1335">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/change-server.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="6" selection-start="2453" selection-end="2453" vertical-scroll-proportion="0.2837838" vertical-offset="645" max-vertical-offset="1065">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.Index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="4" selection-start="37" selection-end="37" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="540">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/util/DeviceDetection.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="36" selection-start="852" selection-end="852" vertical-scroll-proportion="0.0" vertical-offset="731" max-vertical-offset="1125">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="945">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="44" selection-start="370" selection-end="370" vertical-scroll-proportion="0.0" vertical-offset="341" max-vertical-offset="735">
+        <state line="12" column="55" selection-start="431" selection-end="431" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="735">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/lib/mwf/js/button.js">
+    <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.ChangeServer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="269" column="0" selection-start="8410" selection-end="8410" vertical-scroll-proportion="2.2944162" vertical-offset="3131" max-vertical-offset="4260">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+        <state line="1" column="79" selection-start="111" selection-end="111" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="120">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/ohmage-mwf/ohmage-mwf-Info.plist">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="26" selection-start="929" selection-end="929" vertical-scroll-proportion="0.6469003" vertical-offset="255" max-vertical-offset="1035">
+          <folding />
         </state>
       </provider>
     </entry>
