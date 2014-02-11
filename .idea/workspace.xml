@@ -3,12 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="9dccb7ac-3bd6-4c1f-ba62-75948b883750" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/ohmage-mwf.xcodeproj/project.xcworkspace/xcuserdata/vinh.xcuserdatad/UserInterfaceState.xcuserstate" afterPath="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/ohmage-mwf.xcodeproj/project.xcworkspace/xcuserdata/vinh.xcuserdatad/UserInterfaceState.xcuserstate" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/projects/ohmage-mwf/windows/OhmageMWF/OhmageMWF/www/js/PageNavigation.js" afterPath="$PROJECT_DIR$/src/projects/ohmage-mwf/windows/OhmageMWF/OhmageMWF/www/js/PageNavigation.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.ChangeServer.js" afterPath="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.ChangeServer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.Profile.js" afterPath="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.Profile.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/ohmage-mwf/ohmage-mwf-Info.plist" afterPath="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/ohmage-mwf/ohmage-mwf-Info.plist" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/profile.html" afterPath="$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/profile.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="ohmage.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -31,19 +25,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ohmage-mwf-Info.plist" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ohmage-mwf-Info.plist" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/ohmage-mwf/ohmage-mwf-Info.plist">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="26" selection-start="929" selection-end="929" vertical-scroll-proportion="0.6469003" vertical-offset="255" max-vertical-offset="1035">
+            <state line="22" column="14" selection-start="668" selection-end="668" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1035">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="init.Auth.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="init.Auth.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.Auth.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="81" selection-start="629" selection-end="629" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="1425">
+            <state line="21" column="81" selection-start="629" selection-end="629" vertical-scroll-proportion="0.8490566" vertical-offset="0" max-vertical-offset="1425">
               <folding />
             </state>
           </provider>
@@ -452,14 +446,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="22" y="26" width="1400" height="798" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.6002845" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3997155" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.6002845" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3997155" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -534,13 +528,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.Auth.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="81" selection-start="629" selection-end="629" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="1425">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/projects/mobilize/ios/Mobilize/www/js/PageNavigation.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="141" column="9" selection-start="4211" selection-end="4211" vertical-scroll-proportion="0.0" vertical-offset="844" max-vertical-offset="3645">
@@ -592,7 +579,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/ohmage-mwf/ohmage-mwf-Info.plist">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="26" selection-start="929" selection-end="929" vertical-scroll-proportion="0.6469003" vertical-offset="255" max-vertical-offset="1035">
+        <state line="22" column="14" selection-start="668" selection-end="668" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1035">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/projects/ohmage-mwf/ios/www/js/init/init.Auth.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="81" selection-start="629" selection-end="629" vertical-scroll-proportion="0.8490566" vertical-offset="0" max-vertical-offset="1425">
           <folding />
         </state>
       </provider>
