@@ -4,7 +4,7 @@ var ReminderView = function(reminder, controller){
 
     var createSuppressionWindowSelectInput = function(){
         var select = document.createElement('select');
-        select.className = "supression-window-select";
+        select.className = "suppression-window-select";
         for(var i = 1; i <= 24; i++){
             var option = document.createElement('option');
             option.value = i;
@@ -88,9 +88,7 @@ var ReminderView = function(reminder, controller){
         return timePicker;
     };
 
-    var createExcludeWeekendsChecbkoxInput = function(){
-
-
+    var createExcludeWeekendsCheckboxInput = function(){
         var checkbox = document.createElement('input');
         var id = UUIDGen.generate();
         checkbox.setAttribute('type', 'checkbox');
@@ -120,7 +118,7 @@ var ReminderView = function(reminder, controller){
     var save = function(surveySelect, timePicker, suppressionSelect, recurrenceSelect, weekendsCheckbox){
        return function(){
             if(surveySelect.selectedIndex === 0){
-                alert("Please select a survey to add a reminder.");
+                MessageDialogController.showMessage("Please select a survey to add a reminder.");
                 return;
             }
 
@@ -130,7 +128,7 @@ var ReminderView = function(reminder, controller){
             date.setMinutes(timePicker.getMinutes());
             console.log("time picker getMinutes() -- " + timePicker.getMinutes());
             console.log("date getMinutes() -- " + date.getMinutes());
-            var supression = suppressionSelect.getInput();
+            var suppression = suppressionSelect.getInput();
             var recurrences = recurrenceSelect.getInput();
             var excludeWeekends = weekendsCheckbox.excludeWeekends();
 
@@ -138,7 +136,7 @@ var ReminderView = function(reminder, controller){
                              survey.surveyID,
                              survey.title,
                              date,
-                             supression,
+                             suppression,
                              recurrences,
                              excludeWeekends
                            );
@@ -158,7 +156,7 @@ var ReminderView = function(reminder, controller){
                 PageNavigation.openRemindersView();
             }
         };
-        MessageDialogController.showConfirm( confirmMessage, callback, "Yes,No" );
+        MessageDialogController.showConfirm(confirmMessage, callback, "Yes,No" );
     };
 
     self.render = function() {
@@ -166,7 +164,7 @@ var ReminderView = function(reminder, controller){
         var surveySelect = createSurveySelectInput();
         var suppressionSelect = createSuppressionWindowSelectInput();
         var recurrenceSelect = createReminderRecurrenceSelectInput();
-        var weekendsCheckbox = createExcludeWeekendsChecbkoxInput();
+        var weekendsCheckbox = createExcludeWeekendsCheckboxInput();
 
         var inputs = mwf.decorator.Form("Create New Reminder");
         inputs.addLabel("Reminder Survey");
