@@ -189,6 +189,17 @@ var Prompt = function(promptData, survey, campaign){
         return maxProperty !== null ? maxProperty.label : null;
     };
 
+    /**
+     * Returns maximum dimension allowed for the current prompt's response, or 800
+     * if the maximum dimension is undefined (to match android client)
+     * @return maximum dimension allowed for the current prompt's response, or 800
+     *        if undefined.
+     */
+    self.getMaxDimension = function(){
+        var maxDimension = self.getProperty("maxDimension");
+        return maxDimension !== null ? maxDimension.label : 800;
+    };
+
    /**
     * Adds a new property to this prompt. If the property label already exists,
     * then the method will have no side effects and will return false.
