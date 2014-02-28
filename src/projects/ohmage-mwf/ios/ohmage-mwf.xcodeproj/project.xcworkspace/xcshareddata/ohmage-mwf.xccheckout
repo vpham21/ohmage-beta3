@@ -5,18 +5,28 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
+<<<<<<< HEAD
 	<string>59159707-C800-4FCB-8725-9B75AC76AABA</string>
+=======
+	<string>9255C469-A59C-4A31-8FD7-5DEB11B188D9</string>
+>>>>>>> 52c443090303ad5b987ef413a15414d5df001f90
 	<key>IDESourceControlProjectName</key>
 	<string>ohmage-mwf</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
+<<<<<<< HEAD
 		<key>8F0F54B3-B812-4C23-806C-E02A98C59E4A</key>
 		<string>ssh://github.com/ucla/ohmage.git</string>
+=======
+		<key>07F81A27-D79A-48A9-8A60-8E8551B63509</key>
+		<string>https://github.com/vpham21/ohmage</string>
+>>>>>>> 52c443090303ad5b987ef413a15414d5df001f90
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>src/projects/ohmage-mwf/ios/ohmage-mwf.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
+<<<<<<< HEAD
 		<key>8F0F54B3-B812-4C23-806C-E02A98C59E4A</key>
 		<string>../../../../../..</string>
 	</dict>
@@ -26,13 +36,28 @@
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
 	<string>8F0F54B3-B812-4C23-806C-E02A98C59E4A</string>
+=======
+		<key>07F81A27-D79A-48A9-8A60-8E8551B63509</key>
+		<string>../../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/vpham21/ohmage</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>07F81A27-D79A-48A9-8A60-8E8551B63509</string>
+>>>>>>> 52c443090303ad5b987ef413a15414d5df001f90
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
+<<<<<<< HEAD
 			<string>8F0F54B3-B812-4C23-806C-E02A98C59E4A</string>
+=======
+			<string>07F81A27-D79A-48A9-8A60-8E8551B63509</string>
+>>>>>>> 52c443090303ad5b987ef413a15414d5df001f90
 			<key>IDESourceControlWCCName</key>
 			<string>ohmage</string>
 		</dict>

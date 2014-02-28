@@ -9,7 +9,9 @@ var Init = (function() {
     */
     that.invokeOnReady = function ( callback ) {
         $(document).ready(function() {
-
+            if (DeviceDetection.isDeviceiOS7()) {
+                document.body.style.marginTop = "20px";
+            }
             /**
              * The presence of this event handler disables previous page DOM
              * caching in some browsers - see issue #189 on GitHub for more
@@ -29,6 +31,7 @@ var Init = (function() {
             //on a mobile browser embedded in a Cordova deployment.
             if ( DeviceDetection.isOnDevice() && DeviceDetection.isNativeApplication() ) {
                 document.addEventListener("deviceready", callback, false);
+
             } else if ( callback && typeof( callback ) === 'function' ) {
                 callback();
             }

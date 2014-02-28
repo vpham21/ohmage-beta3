@@ -89,7 +89,7 @@ mwf.decorator.Button = function(label, url, callback)
 
 
 /**
- * Creats a single button that is primarily used by responding to click events.
+ * Creates a single button that is primarily used by responding to click events.
  *
  * Example Use:
  *
@@ -166,7 +166,7 @@ mwf.decorator.SingleButton = function(label, url, callback){
 }
 
 /**
- * Convinience method designed to bypass the hassle with creating a DoubleButton
+ * Convenience method designed to bypass the hassle with creating a DoubleButton
  * with no callbacks, or URLs. The method takes only two parameters - the first
  * button label, and the second button label.
  *
@@ -263,6 +263,9 @@ mwf.decorator.TopButton = function(label, url, callback, place){
         }
 
         document.body.appendChild(topButton);
+    }
+    if(DeviceDetection.isDeviceiOS7()) {
+        topButton.setAttribute("style", "margin-top: 25px");
     }
 
     return topButton;

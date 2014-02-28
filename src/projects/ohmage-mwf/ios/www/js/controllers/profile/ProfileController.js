@@ -7,6 +7,7 @@ var ProfileController = function() {
     
     that.enableGpsHandler = function() {
         ConfigManager.setGpsEnabled( true );
+        MessageDialogController.showMessage("Please remember to enable the GPS in the device settings.");
         PageNavigation.openProfilePage();
     };
     

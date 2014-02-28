@@ -184,7 +184,7 @@ var PageNavigation = (function(){
     self.openDashboard = function(){
         self.redirect("index.html");
     };
-    
+
     self.openChangePasswordPage = function(){
         self.redirect("change-password.html");
     };
