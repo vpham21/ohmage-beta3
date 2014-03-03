@@ -493,7 +493,9 @@ PromptHandler.Handlers = function(){
                     MessageDialogController.showMessage('Failed because: ' + message);
                 }
 
-                navigator.camera.getPicture(onSuccess, onFail, {quality: 25,
+                navigator.camera.getPicture(onSuccess, onFail, {quality: 50,
+		    targetWidth: maxDimension,
+		    targetHeight: maxDimension,
                     destinationType: Camera.DestinationType.DATA_URL
                 });
             });

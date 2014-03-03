@@ -103,7 +103,7 @@ function SurveyResponseModel(id, uuid, urn){
         self.data.location_status = SurveyResponseModel.LocationStatus.UNAVAILABLE;
         self.data.location = null;
         
-        mwf.touch.geolocation.getPosition(
+        mwf.touch.geolocation.getCurrentPosition(
 
             function(pos){
 
@@ -144,7 +144,8 @@ function SurveyResponseModel(id, uuid, urn){
             function(message){
 
                 self.data.location = null;
-                self.data.location_status = SurveyResponseModel.LocationStatus.UNAVAILABLE;
+                self.data.location_status = (message.code == '1')? SurveyResponseModel.LocationStatus.PERMISSION_DENIED:
+								   SurveyResponseModel.LocationStatus.UNAVAILABLE;
 
                 self.save();
 
@@ -356,6 +357,7 @@ SurveyResponseModel.LocationStatus = {
     UNAVAILABLE : "unavailable",
     VALID       : "valid",
     INACCURATE  : 'inaccurate',
+    PERMISSION_DENIED : "gps_off",
     STALE       : 'stale'
 };
 
