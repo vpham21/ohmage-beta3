@@ -394,7 +394,7 @@ mwf.decorator.Menu = function(title)
         linkItem.href = (typeof (url) != "undefined") ? url : null;
 
         // Fixes issue 255.
-        if ($.browser.mozilla && url === undefined || url === null) {
+        if (url === undefined || url === null) {
             linkItem.href = "";
         }
 
