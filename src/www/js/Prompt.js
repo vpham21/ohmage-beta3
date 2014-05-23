@@ -200,6 +200,17 @@ var Prompt = function(promptData, survey, campaign){
         return maxDimension !== null ? maxDimension.label : 800;
     };
 
+    /**
+     * Returns wholeNumber property, true if only whole number is allowed, false 
+     *        if decimal is allowed.
+     * @return wholeNumber property, true if only whole number is allowed, false 
+     *        if decimal allowed.
+     */
+    self.getWholeNumber = function(){
+        var wholeNumber = self.getProperty("wholeNumber");
+        return wholeNumber !== null ? (wholeNumber.label === "false" ? false : true) : true;
+    };
+
    /**
     * Adds a new property to this prompt. If the property label already exists,
     * then the method will have no side effects and will return false.

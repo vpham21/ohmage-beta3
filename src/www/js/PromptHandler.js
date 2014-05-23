@@ -236,23 +236,25 @@ PromptHandler.Handlers = function(){
 
     var createNumberInput = function(prompt, defaultValue){
 
+	var wholeNumber = prompt.getWholeNumber();
         var minValue = prompt.getMinValue();
         var maxValue = prompt.getMaxValue();
 
-        var rangeMessage = "Please enter a number between " + minValue + " and " + maxValue + ", inclusive.";
+        var rangeMessage = "Please enter a number between " + minValue + " and " + maxValue + ", inclusive" +
+			   (wholeNumber ? "." : " (decimals allowed).");
 
         var isValueInRange = function(inputString){
             if(inputString === ""){return false;}
-            var input = parseInt(inputString, 10);
+            var input = parseFloat(inputString);
             return (minValue <= input && input <= maxValue);
         };
 
         var isInteger = function(s) {
-            return String(s).search (/^(\+|-)?\d+\s*$/) !== -1
+            return String(s).search (/^(\+|-)?(\d*)$/) !== -1
         };
 
-        var isSign = function(s){
-            return String(s).search (/^(\+|-)?$/) !== -1
+        var isDecimal = function(s) {
+            return String(s).search (/^(\+|-)?\d*\.?\d{0,9}$/) !== -1
         };
 
         var validateNumberInputKeyPress = function(evt) {
@@ -267,10 +269,8 @@ PromptHandler.Handlers = function(){
                 if(theEvent.preventDefault) {theEvent.preventDefault();}
             };
 
-            if(!isSign(result)){
-                if(!isInteger(key)) {
-                    cancelKey();
-                }
+            if(wholeNumber ? !isInteger(result) : !isDecimal(result) ){
+              cancelKey();
             }
 
         };
@@ -296,10 +296,13 @@ PromptHandler.Handlers = function(){
         };
 
         var container = document.createElement('div');
+        //don't allow switching to number picker if decimal is allowed.
+        if (wholeNumber){
         container.appendChild(mwfd.SingleClickButton("Switch to Number Picker", function(){
            container.innerHTML = "";
            container.appendChild(createNumberPicker(prompt, (isValueInRange(textBox.value))? prompt.getResponse():false));
         }));
+	};
         container.appendChild(form);
         return container;
 
@@ -395,7 +398,7 @@ PromptHandler.Handlers = function(){
     var MAX_RANGE_FOR_NUMBER_PICKER = 20;
 
     this.number = function(prompt){
-        if(prompt.getMaxValue() - prompt.getMinValue() <= MAX_RANGE_FOR_NUMBER_PICKER){
+        if(prompt.getMaxValue() - prompt.getMinValue() <= MAX_RANGE_FOR_NUMBER_PICKER && prompt.getWholeNumber()){
             return createNumberPicker(prompt);
         }else{
             return createNumberInput(prompt);
