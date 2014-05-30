@@ -292,7 +292,7 @@ PromptHandler.Handlers = function(){
         };
 
         prompt.getResponse = function(){
-            return parseInt(textBox.value, 10);
+            return parseFloat(textBox.value);
         };
 
         var container = document.createElement('div');
