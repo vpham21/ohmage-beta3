@@ -53,6 +53,8 @@ nbproject/*
 /platforms/ios/ohmage/config.xml
 /platforms/ios/ohmage/Plugins
 /platforms/ios/ohmage/main.m
+/platforms/ios/ohmage/Resources/CDVCapture.bundle
+/platforms/ios/ohmage/Resources/CDVNotification.bundle
 /platforms/ios/ohmage/ohmage-Info.plist
 /platforms/ios/ohmage/ohmage-Prefix.pch
 /platforms/ios/ohmage.xcodeproj
