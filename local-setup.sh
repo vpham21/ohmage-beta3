@@ -43,15 +43,21 @@ mv www-temp temp/www
 rm temp/config.xml
 mv config.xml temp/config.xml
 
+echo "************"
+echo "adding iOS platform to project..."
+echo "************"
+cd temp
+cordova platform add ios
+
+# Remove auto-generated iOS platform Resources directory, replace with ours
+rm -R platforms/ios/ohmage/Resources
+cd ..
+mv platforms/ios/ohmage/Resources temp/platforms/ios/ohmage/Resources
+
 # move the contents of temp into current directory
 cp -R temp/. .
 
 rm -R temp
-
-echo "************"
-echo "adding iOS platform to project..."
-echo "************"
-cordova platform add ios
 
 
 # gets the list of plugin modules to install from our text file.
