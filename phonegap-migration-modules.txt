@@ -16,3 +16,4 @@ org.apache.cordova.media-capture
 org.apache.cordova.network-information
 org.apache.cordova.splashscreen
 org.apache.cordova.vibration
+com.cmpsoft.mobile.plugin.localnotification
