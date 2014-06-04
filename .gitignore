@@ -60,3 +60,4 @@ nbproject/*
 /platforms/ios/platform_www
 /platforms/ios/www
 /plugins
+/.cordova
